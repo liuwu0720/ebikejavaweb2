@@ -1,0 +1,20 @@
+#MyEclipse Hibernate Properties
+#Fri Mar 11 19:05:30 GMT+08:00 2016
+genBasicCompId=true
+sessionFactoryName=com.clt.finance.model.HibernateSessionFactory
+profile=
+daoSFId=
+jndiPath=
+detectM2M=false
+reStrategyClass=
+detectO2O=false
+springDaoFile=
+useJavaTypes=true
+keyGenerator=sequence
+genVersionTag=false
+sessionFactoryId=
+basePersistenceClass=
+genAnnotations=true
+reSettingsFile=/ebike2/hibernate.reveng.xml
+configFile=/ebike2/src/hibernate.cfg.xml
+createConfigFile=true

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<type-mapping>
+		<sql-type jdbc-type="DATE" hibernate-type="date"></sql-type>
+	</type-mapping>
+
+
+	<table name="DDC_DAXXB" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+		<column name="TRAN_DATE" type="date"></column>
+	</table>
+	<table name="HYXH_MENU" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="int" />
+		</primary-key>
+	</table>
+<table name="DDC_HYXH_SSDW" schema="EBIKEOUT">
+	<primary-key>
+		<generator class="sequence"></generator>
+
+		<key-column name="ID" type="Long"/>
+	</primary-key>
+</table>
+</hibernate-reverse-engineering>
