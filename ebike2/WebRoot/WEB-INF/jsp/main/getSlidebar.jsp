@@ -57,10 +57,10 @@
 				<c:forEach items="${nodeResources }" var="node">
 					<li class="menu-li">
 					<span style="color:blue;"><a href="javascript:void(0)">
-					<i class="iconfont">${node.vcIcon }</i>${node.vcResourceName } </a></span>
+					<i class="iconfont">${node.vcIcon }</i>${node.vcMenu } </a></span>
 						<ul>
-						<c:forEach items="${node.subTresources }" var="sub">
-							<li><a href="${sub.vcUrl }" target="main"><i class="iconfont">${sub.vcIcon }</i>${sub.vcResourceName }</a></li>
+						<c:forEach items="${node.subhHyxhMenus }" var="sub">
+							<li><a href="${sub.vcUrl }" target="main"><i class="iconfont">${sub.vcIcon }</i>${sub.vcMenu }</a></li>
 						</c:forEach>	
 						</ul>
 					</li>
