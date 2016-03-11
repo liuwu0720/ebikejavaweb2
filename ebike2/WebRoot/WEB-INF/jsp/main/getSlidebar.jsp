@@ -47,10 +47,7 @@
 </head>
 <body>
 	<div class="menu">
-		<div class="menu-title">
-			<p>当前用户:管理员</p>
-		</div>
-
+	
 		<div class="menu-header">
 			<div class="menu-icon">菜单管理</div>
 			<ul class="menu-ul">

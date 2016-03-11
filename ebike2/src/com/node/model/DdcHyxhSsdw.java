@@ -32,20 +32,20 @@ public class DdcHyxhSsdw implements java.io.Serializable {
 	private String hyxhzh;
 	private String dwmc;// 单位名称
 	private String zzjgdmzh;// 组织机构代码证号
-	private String zsdz;
+	private String zsdz;// 住所地址（深圳市福田区）
 	private String lxr;// 联系人
 	private String lxdh;// 联系电话
-	private String bz;// 单位配额
+	private String bz;// 备注信息
 	private String sqr;
 	private Date sqrq;// 申请时间
-	private String zt;
-	private String shr;
+	private String zt;// 状态
+	private String shr;// 审核人
 	private Date shrq;
-	private String shbm;
-	private String synFlag;
+	private String shbm;// 审核部门
+	private String synFlag;// 同步标志
 	private String tranFlag;
 	private Date tranDate;
-	private Integer dwpe;
+	private Integer dwpe;// 单位配额
 
 	// Constructors
 

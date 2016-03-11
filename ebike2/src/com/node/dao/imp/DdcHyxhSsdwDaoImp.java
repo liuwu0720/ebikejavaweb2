@@ -10,6 +10,7 @@ package com.node.dao.imp;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcHyxhSsdwDao;
+import com.node.model.DdcHyxhSsdw;
 
 /**
  * 类描述：
@@ -19,6 +20,7 @@ import com.node.dao.IDdcHyxhSsdwDao;
  * @version: 2016年3月11日 下午7:22:08
  */
 @Service
-public class DdcHyxhSsdwDaoImp implements IDdcHyxhSsdwDao {
+public class DdcHyxhSsdwDaoImp extends
+		GenericHibernateDao<DdcHyxhSsdw, Integer> implements IDdcHyxhSsdwDao {
 
 }

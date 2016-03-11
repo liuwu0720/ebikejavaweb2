@@ -1,3 +1,10 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -19,7 +26,7 @@ $(document).ready(function(){
 
 		url : "<%=basePath%>companyAction/queryAll?time=" + randomNu,
 		title :  "所属单位信息管理",
-		iconCls : 'icon-edit',
+		iconCls : 'icon-danweixinxi',
 		striped : true,
 		fitColumns:true,   //数据列太少 未自适应
 		pagination : true,
@@ -47,7 +54,7 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
-			field : 'bz',
+			field : 'dwpe',
 			title : '单位配额',
 			align:'center',
 			width : 120
@@ -58,6 +65,7 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,index){
 				var unixTimestamp = new Date(value);   
+				return unixTimestamp.toLocaleString();
 			}   
 		},{
 			field : 'zt',
@@ -99,110 +107,26 @@ $(document).ready(function(){
 	
 	
 });
-
-function deleteRow(id){
-	$.messager.confirm('警告', '确认删除这条记录码', function(r){
-		if (r){
-			$.post("<%=basePath%>resourceAction/del", 
-					{ id:id},     
-					   function (data, textStatus)
-					   {     
-							
-						if (data.isSuccess) {
-							$.messager.show({ // show error message
-								title : '提示',
-								msg : data.message
-							});
-							$('#dgformDiv').dialog('close');
-							$("#dg").datagrid('reload');
-						}else{
-							alert(data.message);
-						}
-					   }
-				  ,"json");
-		}
+//查询功能
+function doSearch(){
+	$('#dg').datagrid('load',{
+		dwmc: $('#itemid').val(),
+		lxr: $('#productid').val()
 	});
-	
-}  
-
-//修改
-function updateRowData(){
-	
-	 var row = $('#dg').datagrid('getSelected');
-   if (row){
-    	 $('#dgformDiv').dialog('open').dialog('setTitle', '编辑用户');
-    	 $('#dgform').form('load', row);
-     }else{
-    	 $.messager.alert('提示','请选择你要修改的行');    
-     } 
-
-   $('#cc').combobox({    
-	    url:'<%=basePath%>resourceAction/getParentResource',    
-	    valueField:'vcResourceName',    
-	    textField:'vcResourceName',
-	    value:row.vcParent   //默认选中的值       
-	}); 
- 
 }
-//添加
-function addRowData(){
-	$('#dgform').form('clear');
-	 $('#dgformDiv').dialog('open').dialog('setTitle', '编辑用户');
-	$('#cc').combobox({    
-	    url:'<%=basePath%>resourceAction/getParentResource',    
-	    valueField:'vcResourceName',    
-	    textField:'vcResourceName',
-	    value:''
-	});  
-
-}
-function clearSelect(){
-	$('#cc').combobox("clear")
-}
-
-//保存操作
-
-function updateSaveData(){
-	$.messager.progress();
-	$('#dgform').form('submit', {
-				url : "<%=basePath%>resourceAction/saveOrUpdate",
-				onSubmit : function() {
-					var isValid = $("#dgform").form('enableValidation').form(
-							'validate');
-
-					if (!isValid) {
-						$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
-					}
-					return isValid; // 返回false终止表单提交
-				},
-				success : function(data) {
-					var data = eval('(' + data + ')'); // change the JSON
-					if (data.isSuccess) {
-						$.messager.show({ // show error message
-							title : '提示',
-							msg : data.message
-						});
-						$('#dgformDiv').dialog('close');
-						$("#dg").datagrid('reload');
-					}else{
-						alert(data.message);
-					}
-					$.messager.progress('close'); // 如果提交成功则隐藏进度条
-
-				}
-
-			});
-}
-
-
-
 </script>
 </head>
 <body class="easyui-layout">
 
 	<div>
 	<table id="dg" style="width:90%;">
-		
+		<div id="tb" style="padding: 5px; background: #E8F1FF;">
+			<span>单位名称:</span> <input id="itemid"
+				style="line-height:26px;border:1px solid #ccc"> <span>
+				联系人:</span> <input id="productid"
+				style="line-height:26px;border:1px solid #ccc"> 
+				<a 	class="easyui-linkbutton" plain="true" onclick="doSearch()" iconCls="icon-search" >查询</a>
+		</div>
 	</table>
 </div>
 	<!-- 点编辑时弹出的表单 -->
@@ -218,38 +142,35 @@ function updateSaveData(){
 					</td>
 				</tr>
 				<tr>
-					<td>菜单名称：</td>
+					<td>单位名称：</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="vcResourceName" ></input></td>
+						data-options="required:true" name="dwmc" ></input></td>
 				</tr>
 				<tr>
-					<td>链接地址：</td>
+					<td> 组织机构代码证号：</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="vcUrl" style="height: 32px;width:200px;"></input>
-						<span  style="color: red;">根菜单的链接地址为空</span>
+						name="zzjgdmzh" style="height: 32px;width:200px;"></input>
 						</td>
 				</tr>
 				<tr>
-					<td>排序</td>
-					<td><input class="easyui-numberspinner" name="nSort" data-options="increment:1" style="width:120px;height:30px;"></input>
+					<td>住所地址</td>
+					<td><input class="easyui-numberspinner" name="zsdz" data-options="increment:1" style="width:120px;height:30px;"></input>
 					</td>
 				</tr>
 				<tr>
-					<td>菜单图标：</td>
+					<td>联系人：</td>
 					<td><input class="easyui-validatebox" type="text"
-						 name="vcIcon" style="height: 32px"></input><span  style="color: red;">(菜单图案编码联系开发人员)</span>
+						 name="lxr" style="height: 32px"></input>
 					</td>
 				</tr>
 				<tr >
-					<td>父菜单</td>
-					<td><input id="cc" name="vcParent" style="height:30px;">
-					<a style="cursor: pointer;" onclick="clearSelect()">清空</a><span  style="color: red;">(为空则为根菜单)</span>  
-					</td>
+					<td>联系电话:</td>
+					<td><input class="easyui-validatebox" type="text" name="lxdh" style="height: 32px"></input>
+						 </td>
 				</tr>
 				<tr>
-					<td>功能描述</td>
-					<td>
-						<textarea rows="5" cols="30" name="vcDesc"></textarea>  
+					<td>单位配额</td>
+					<input class="easyui-numberspinner" name="dwpe" data-options="increment:1" style="width:120px;height:30px;"></input>
 					</td>
 				</tr>
 			</table>
