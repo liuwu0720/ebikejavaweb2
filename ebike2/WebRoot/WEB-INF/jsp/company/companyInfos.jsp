@@ -278,12 +278,14 @@ function changeRowData(){
 
 	<div>
 	<table id="dg" style="width:90%;">
+		
 		<div id="tb" style="padding: 5px; background: #E8F1FF;">
 			<span>单位名称:</span> <input id="itemid"
 				style="line-height:26px;border:1px solid #ccc"> <span>
 				联系人:</span> <input id="productid"
 				style="line-height:26px;border:1px solid #ccc"> 
-				<a 	class="easyui-linkbutton" plain="true" onclick="doSearch()" iconCls="icon-search" >查询</a>
+				<a 	class="easyui-linkbutton" plain="true" onclick="doSearch()" iconCls="icon-search" >查询 </a>
+				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 		</div>
 	</table>
 </div>

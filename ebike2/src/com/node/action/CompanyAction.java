@@ -34,6 +34,7 @@ import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwLog;
 import com.node.model.PicPath;
 import com.node.service.ICompanyService;
+import com.node.service.IUserService;
 import com.node.util.AjaxUtil;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
@@ -54,6 +55,9 @@ public class CompanyAction {
 	@Autowired
 	ICompanyService iCompanyService;
 
+	@Autowired
+	IUserService iUserService;
+
 	/**
 	 * 
 	 * 方法描述：页面跳转
@@ -64,7 +68,8 @@ public class CompanyAction {
 	 * @version: 2016年3月11日 下午10:07:14
 	 */
 	@RequestMapping("/getAll")
-	public String getAll() {
+	public String getAll(HttpServletRequest request) {
+
 		return "company/companyInfos";
 
 	}
@@ -90,7 +95,8 @@ public class CompanyAction {
 		hql.addEqual("hyxhzh", ddcHyxhBase.getHyxhzh());
 		hql.setQueryPage(p);
 		Map<String, Object> resultMap = iCompanyService.queryByHql(hql);
-
+		DdcHyxhBase ddcHyxhBase2 = iUserService.getById(ddcHyxhBase.getId());// 重新查一次，因为数量有变化在session中体现不了
+		request.setAttribute("ddcHyxhBase", ddcHyxhBase2);
 		return resultMap;
 	}
 
@@ -177,6 +183,10 @@ public class CompanyAction {
 					iCompanyService.save(ddcHyxhSsdw);
 					// 保存操作日志
 					saveLog(ddcHyxhSsdw, "新增", request);
+					// 总配额减少
+					ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
+							- ddcHyxhSsdw.getDwpe());
+					iUserService.save(ddcHyxhBase);
 					AjaxUtil.rendJson(response, true, "操作成功");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -194,9 +204,16 @@ public class CompanyAction {
 					message = iCompanyService.queryIsSame(ddcHyxhSsdw);
 				}
 				if (message.equals("success")) {
+					// 行业协会总配额
+					int minus = ddcHyxhSsdw.getDwpe()
+							- beforeDdcHyxhSsdw.getDwpe();
+					ddcHyxhBase
+							.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe() - minus);
 					iCompanyService.update(ddcHyxhSsdw);
+					iUserService.update(ddcHyxhBase);
 					// 保存操作日志
 					saveLog(ddcHyxhSsdw, "修改", request);
+
 					AjaxUtil.rendJson(response, true, "操作成功");
 				} else {
 					AjaxUtil.rendJson(response, false, message);

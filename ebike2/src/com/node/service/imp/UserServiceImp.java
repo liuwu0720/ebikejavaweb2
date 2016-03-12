@@ -61,4 +61,37 @@ public class UserServiceImp implements IUserService {
 		List<HyxhMenu> hyxhMenus = iHyxhMenuDao.findAll();
 		return hyxhMenus;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IUserService#save(com.node.model.DdcHyxhBase)
+	 */
+	@Override
+	public void save(DdcHyxhBase ddcHyxhBase) {
+		// TODO Auto-generated method stub
+		iDdcHyxhBaseDao.save(ddcHyxhBase);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IUserService#update(com.node.model.DdcHyxhBase)
+	 */
+	@Override
+	public void update(DdcHyxhBase ddcHyxhBase) {
+		// TODO Auto-generated method stub
+		iDdcHyxhBaseDao.updateCleanBefore(ddcHyxhBase);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IUserService#getById(java.lang.Long)
+	 */
+	@Override
+	public DdcHyxhBase getById(Long id) {
+		// TODO Auto-generated method stub
+		return iDdcHyxhBaseDao.get(id);
+	}
 }

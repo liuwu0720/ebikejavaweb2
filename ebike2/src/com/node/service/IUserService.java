@@ -28,4 +28,35 @@ public interface IUserService {
 	 */
 	List<HyxhMenu> getAllMenus();
 
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhBase
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 下午6:56:36
+	 */
+	void save(DdcHyxhBase ddcHyxhBase);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhBase
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 下午6:57:03
+	 */
+	void update(DdcHyxhBase ddcHyxhBase);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 下午7:00:17
+	 */
+	DdcHyxhBase getById(Long id);
+
 }

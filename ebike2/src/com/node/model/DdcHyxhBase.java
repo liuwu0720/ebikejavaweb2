@@ -36,7 +36,7 @@ public class DdcHyxhBase implements java.io.Serializable {
 	private String hyxhdz;
 	private String hyxhfzr;
 	private String hyxhfzrdh;
-	private Long hyxhsjzpe;
+	private Integer hyxhsjzpe;// 行业协会实际总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数）
 	private String bz;
 	private String cjr;
 	private Date cjrq;
@@ -59,7 +59,7 @@ public class DdcHyxhBase implements java.io.Serializable {
 
 	/** full constructor */
 	public DdcHyxhBase(String hyxhzh, String hyxhmm, String hyxhmc,
-			String hyxhdz, String hyxhfzr, String hyxhfzrdh, Long hyxhsjzpe,
+			String hyxhdz, String hyxhfzr, String hyxhfzrdh, Integer hyxhsjzpe,
 			String bz, String cjr, Date cjrq, String cjbm, String hyxhlb,
 			String synFlag, String tranFlag, Date tranDate) {
 		this.hyxhzh = hyxhzh;
@@ -146,11 +146,11 @@ public class DdcHyxhBase implements java.io.Serializable {
 	}
 
 	@Column(name = "HYXHSJZPE", precision = 0)
-	public Long getHyxhsjzpe() {
+	public Integer getHyxhsjzpe() {
 		return this.hyxhsjzpe;
 	}
 
-	public void setHyxhsjzpe(Long hyxhsjzpe) {
+	public void setHyxhsjzpe(Integer hyxhsjzpe) {
 		this.hyxhsjzpe = hyxhsjzpe;
 	}
 
