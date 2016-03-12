@@ -18,6 +18,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "HYXH_MENU")
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class HyxhMenu implements java.io.Serializable {
 
 	/* serialVersionUID: serialVersionUID */

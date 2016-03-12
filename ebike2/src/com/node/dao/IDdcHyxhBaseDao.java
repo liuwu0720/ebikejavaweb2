@@ -16,6 +16,6 @@ import com.node.model.DdcHyxhBase;
  * @author: liuwu
  * @version: 2016年3月11日 下午4:06:32
  */
-public interface IDdcHyxhBaseDao extends GenericDao<DdcHyxhBase, Integer> {
+public interface IDdcHyxhBaseDao extends GenericDao<DdcHyxhBase, Long> {
 
 }

@@ -16,6 +16,6 @@ import com.node.model.DdcHyxhSsdw;
  * @author: liuwu
  * @version: 2016年3月11日 下午7:20:08
  */
-public interface IDdcHyxhSsdwDao extends GenericDao<DdcHyxhSsdw, Integer> {
+public interface IDdcHyxhSsdwDao extends GenericDao<DdcHyxhSsdw, Long> {
 
 }

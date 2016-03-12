@@ -16,6 +16,6 @@ import com.node.model.HyxhMenu;
  * @author: liuwu
  * @version: 2016年3月11日 下午5:32:40
  */
-public interface IHyxhMenuDao extends GenericDao<HyxhMenu, Integer> {
+public interface IHyxhMenuDao extends GenericDao<HyxhMenu, Long> {
 
 }

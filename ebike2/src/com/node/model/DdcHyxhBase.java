@@ -14,7 +14,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * DdcHyxhBase entity. @author MyEclipse Persistence Tools
+ * 
+ * 类描述：电动车行业协会基本信息表：由内网同步过来
+ * 
+ * @version: 1.0
+ * @author: liuwu
+ * @version: 2016年3月12日 上午10:25:34
  */
 @Entity
 @Table(name = "DDC_HYXH_BASE")

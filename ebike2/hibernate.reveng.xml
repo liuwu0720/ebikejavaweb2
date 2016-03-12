@@ -2,9 +2,7 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-	<type-mapping>
-		<sql-type jdbc-type="DATE" hibernate-type="date"></sql-type>
-	</type-mapping>
+
 
 
 	<table name="DDC_DAXXB" schema="EBIKEOUT">
@@ -20,11 +18,27 @@
 			<key-column name="ID" type="int" />
 		</primary-key>
 	</table>
-<table name="DDC_HYXH_SSDW" schema="EBIKEOUT">
-	<primary-key>
-		<generator class="sequence"></generator>
+	<table name="DDC_HYXH_SSDW" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
 
-		<key-column name="ID" type="Long"/>
-	</primary-key>
-</table>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+	</table>
+	<table name="PIC_PATH" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Integer" />
+		</primary-key>
+		<column name="DT_ADD" type="Date"></column>
+	</table>
+	<table name="DDC_HYXH_SSDW_LOG" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+		<column name="SHRQ" type="Date"></column>
+		<column name="TRAN_DATE" type="Date"></column>
+		<column name="SQRQ" type="Date"></column>
+	</table>
 </hibernate-reverse-engineering>

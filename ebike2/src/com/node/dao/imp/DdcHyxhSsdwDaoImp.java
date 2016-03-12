@@ -20,7 +20,7 @@ import com.node.model.DdcHyxhSsdw;
  * @version: 2016年3月11日 下午7:22:08
  */
 @Service
-public class DdcHyxhSsdwDaoImp extends
-		GenericHibernateDao<DdcHyxhSsdw, Integer> implements IDdcHyxhSsdwDao {
+public class DdcHyxhSsdwDaoImp extends GenericHibernateDao<DdcHyxhSsdw, Long>
+		implements IDdcHyxhSsdwDao {
 
 }

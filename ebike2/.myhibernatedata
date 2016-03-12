@@ -1,5 +1,5 @@
 #MyEclipse Hibernate Properties
-#Fri Mar 11 19:05:30 GMT+08:00 2016
+#Sat Mar 12 17:41:35 GMT+08:00 2016
 genBasicCompId=true
 sessionFactoryName=com.clt.finance.model.HibernateSessionFactory
 profile=

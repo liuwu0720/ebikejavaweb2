@@ -20,7 +20,7 @@ import com.node.model.DdcHyxhBase;
  * @version: 2016年3月11日 下午4:07:44
  */
 @Repository
-public class DdcHyxhBaseDaoImp extends
-		GenericHibernateDao<DdcHyxhBase, Integer> implements IDdcHyxhBaseDao {
+public class DdcHyxhBaseDaoImp extends GenericHibernateDao<DdcHyxhBase, Long>
+		implements IDdcHyxhBaseDao {
 
 }

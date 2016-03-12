@@ -36,5 +36,9 @@ public class SystemConstants {
 	 * 无效
 	 */
 	public static final Integer DISABLE = 1;
+	/**
+	 * 营业执照图片上传路径ID
+	 */
+	public static final Integer PIC_LICENSE = 1;
 
 }

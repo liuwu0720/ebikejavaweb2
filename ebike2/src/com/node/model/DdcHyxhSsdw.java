@@ -2,7 +2,7 @@ package com.node.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
- * 11 类描述：行业协会所属单位信息
+ * 11 类描述：行业协会所属单位信息，由外网新增后同步至内网
  * 
  * @version: 1.0
  * @author: liuwu
@@ -42,10 +43,12 @@ public class DdcHyxhSsdw implements java.io.Serializable {
 	private String shr;// 审核人
 	private Date shrq;
 	private String shbm;// 审核部门
-	private String synFlag;// 同步标志
+	private String synFlag;// 同步标志 刚开始为空 Y1-外网同步，不可修改等待晚上同步到内网 ;Y2-晚上已同步至内网
 	private String tranFlag;
 	private Date tranDate;
 	private Integer dwpe;// 单位配额
+	private String vcPicPath;// 图片名称
+	private String vcShowPath;// 图片显示路径 不与数据库关联
 
 	// Constructors
 
@@ -83,7 +86,7 @@ public class DdcHyxhSsdw implements java.io.Serializable {
 	}
 
 	@Id
-	@SequenceGenerator(name = "DDC_HYXH_SSDW", sequenceName = "SEQ_DDC_HYXH_SSDW", allocationSize = 1)
+	@SequenceGenerator(name = "DDC_HYXH_SSDW", sequenceName = "SEQ_HYXH_SSDW_XH", allocationSize = 1)
 	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_HYXH_SSDW")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
@@ -245,6 +248,32 @@ public class DdcHyxhSsdw implements java.io.Serializable {
 
 	public void setDwpe(Integer dwpe) {
 		this.dwpe = dwpe;
+	}
+
+	@Column(name = "VC_PICPATH", length = 500)
+	public String getVcPicPath() {
+		return vcPicPath;
+	}
+
+	/**
+	 * @param vcPicPath
+	 *            : set the property vcPicPath.
+	 */
+	public void setVcPicPath(String vcPicPath) {
+		this.vcPicPath = vcPicPath;
+	}
+
+	@Transient
+	public String getVcShowPath() {
+		return vcShowPath;
+	}
+
+	/**
+	 * @param vcShowPath
+	 *            : set the property vcShowPath.
+	 */
+	public void setVcShowPath(String vcShowPath) {
+		this.vcShowPath = vcShowPath;
 	}
 
 }

@@ -9,6 +9,9 @@ package com.node.service;
 
 import java.util.Map;
 
+import com.node.model.DdcHyxhSsdw;
+import com.node.model.DdcHyxhSsdwLog;
+import com.node.model.PicPath;
 import com.node.util.HqlHelper;
 
 /**
@@ -30,5 +33,68 @@ public interface ICompanyService {
 	 * @version: 2016年3月11日 下午10:13:13
 	 */
 	Map<String, Object> queryByHql(HqlHelper hql);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param dwId
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 上午9:46:48
+	 */
+	DdcHyxhSsdw queryInfoById(long dwId);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhSsdw
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 上午10:36:21
+	 */
+	String queryIsSame(DdcHyxhSsdw ddcHyxhSsdw);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhSsdw
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 上午10:44:02
+	 */
+	void save(DdcHyxhSsdw ddcHyxhSsdw);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhSsdw
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 上午11:03:25
+	 */
+	void update(DdcHyxhSsdw ddcHyxhSsdw);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param picLicense
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 下午2:25:13
+	 */
+	PicPath getPathById(Integer picLicense);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhSsdwLog
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 下午6:07:36
+	 */
+	void saveLog(DdcHyxhSsdwLog ddcHyxhSsdwLog);
 
 }
