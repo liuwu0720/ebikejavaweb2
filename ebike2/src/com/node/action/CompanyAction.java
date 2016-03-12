@@ -210,7 +210,7 @@ public class CompanyAction {
 	}
 
 	/**
-	 * 方法描述：
+	 * 方法描述：保存操作日志
 	 * 
 	 * @param ddcHyxhSsdw
 	 * @param type
