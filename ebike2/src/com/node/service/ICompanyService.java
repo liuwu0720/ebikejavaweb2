@@ -7,6 +7,7 @@
  */
 package com.node.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.node.model.DdcHyxhSsdw;
@@ -96,5 +97,16 @@ public interface ICompanyService {
 	 * @version: 2016年3月12日 下午6:07:36
 	 */
 	void saveLog(DdcHyxhSsdwLog ddcHyxhSsdwLog);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param hyxhzh
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月14日 下午8:33:56
+	 */
+	List<DdcHyxhSsdw> getAllCompany(String hyxhzh);
 
 }

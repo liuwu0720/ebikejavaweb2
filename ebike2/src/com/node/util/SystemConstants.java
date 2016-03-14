@@ -40,5 +40,13 @@ public class SystemConstants {
 	 * 营业执照图片上传路径ID
 	 */
 	public static final Integer PIC_LICENSE = 1;
+	/**
+	 * 待审核
+	 */
+	public static final String SYSNFLAG1 = "UC";
+	/**
+	 * 已审核
+	 */
+	public static final String SYSNFLAG2 = "UW";
 
 }

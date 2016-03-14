@@ -41,4 +41,18 @@
 		<column name="TRAN_DATE" type="Date"></column>
 		<column name="SQRQ" type="Date"></column>
 	</table>
+	<table name="DDC_HYXH_SSDWCLSB" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+		<column name="TRAN_DATE" type="Date"></column>
+	</table>
+	<table name="DDC_SJZD" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+		<column name="TRAN_DATE" type="Date"></column>
+	</table>
 </hibernate-reverse-engineering>

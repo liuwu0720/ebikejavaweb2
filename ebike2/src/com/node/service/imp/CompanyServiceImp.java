@@ -127,4 +127,15 @@ public class CompanyServiceImp implements ICompanyService {
 		iDcHyxhSsdwLogDao.save(ddcHyxhSsdwLog);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.ICompanyService#getAllCompany(java.lang.String)
+	 */
+	@Override
+	public List<DdcHyxhSsdw> getAllCompany(String hyxhzh) {
+		// TODO Auto-generated method stub
+		return iDdcHyxhSsdwDao.findByProperty("hyxhzh", hyxhzh);
+	}
+
 }

@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -163,7 +164,7 @@ public class CompanyAction {
 		ddcHyxhSsdw.setHyxhzh(ddcHyxhBase.getHyxhzh());
 		ddcHyxhSsdw.setSqrq(new Date());
 		ddcHyxhSsdw.setSqr(ddcHyxhBase.getHyxhmc());
-
+		ddcHyxhSsdw.setZt("1");
 		try {
 			String jpgPath = uploadImg(request, file);
 			String imgPath = ddcHyxhSsdw.getVcPicPath();
@@ -335,8 +336,9 @@ public class CompanyAction {
 			for (int i = 0; i < ids.length; i++) {
 				long id = Long.parseLong(ids[i]);
 				DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(id);
-				ddcHyxhSsdw.setSynFlag("Y1");// 同步标志 刚开始为空 Y1-外网同步，不可修改等待晚上同步到内网
-												// ;Y2-晚上已同步至内网
+				ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG1);// 同步标志
+																	// UC-外网已同步
+																	// UW-内网已同步
 
 				iCompanyService.update(ddcHyxhSsdw);
 			}
@@ -345,5 +347,27 @@ public class CompanyAction {
 			AjaxUtil.rendJson(response, false, "系统错误");
 		}
 
+	}
+
+	/**
+	 * 
+	 * 方法描述：ajax查询当前协会下的所有单位
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月14日 下午8:30:08
+	 */
+	@RequestMapping("/getAllCompanyAjax")
+	@ResponseBody
+	public List<DdcHyxhSsdw> getAllCompanyAjax(HttpServletRequest request,
+			HttpServletResponse response) {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute("ddcHyxhBase");
+		List<DdcHyxhSsdw> ddcHyxhSsdws = iCompanyService
+				.getAllCompany(ddcHyxhBase.getHyxhzh());
+		return ddcHyxhSsdws;
 	}
 }

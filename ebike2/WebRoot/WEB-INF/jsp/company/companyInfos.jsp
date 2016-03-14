@@ -21,6 +21,9 @@ $(document).ready(function(){
 	$.ajaxSetup ({
 		   cache: false //缓存
 		});
+	var h = getHeight('dg');
+	var size = getPageSize(h);
+	var w = getWidth(400);
 	var randomNu = (new Date().getTime()) ^ Math.random();
 	$("#dg").datagrid({
 
@@ -32,7 +35,10 @@ $(document).ready(function(){
 		pagination : true,
 		rownumbers : true,
 		//singleSelect : true,//只选中单行
-		height:700,
+		pageSize:size,
+		//singleSelect : true,//只选中单行
+		height:h,
+		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
 			field : 'id',
 			title : 'ID',
@@ -91,7 +97,7 @@ $(document).ready(function(){
 			align:'center',
 			width : 120,
 			formatter:function(value,index){
-				if(value == 'Y1'){
+				if(value == 'UC' || value == 'UW'){
 					return "<p style='color:red'>已同步</p>";
 				}else{
 					return "未同步";
@@ -105,7 +111,7 @@ $(document).ready(function(){
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.id+")'>查看</a>&nbsp;&nbsp;&nbsp;"
 				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>修改</a>"
-				if(row.synFlag == 'Y1'){
+				if(row.synFlag == 'UC' || row.synFlag == 'UW'){
 					return query;
 				}else{
 					return query+update;
@@ -225,7 +231,8 @@ function updateSaveData(){
 							msg : data.message
 						});
 						$('#dgformDiv').dialog('close');
-						$("#dg").datagrid('reload');
+						window.location.reload();
+						//$("#dg").datagrid('reload');
 					}else{
 						alert(data.message);
 					}

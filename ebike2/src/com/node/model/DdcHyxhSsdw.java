@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
- * 11 类描述：行业协会所属单位信息，由外网新增后同步至内网
+ * 类描述：行业协会所属单位信息，由外网新增后同步至内网
  * 
  * @version: 1.0
  * @author: liuwu
@@ -39,7 +39,7 @@ public class DdcHyxhSsdw implements java.io.Serializable {
 	private String bz;// 备注信息
 	private String sqr;
 	private Date sqrq;// 申请时间
-	private String zt;// 状态
+	private String zt;// 状态 0 禁用 1 启用
 	private String shr;// 审核人
 	private Date shrq;
 	private String shbm;// 审核部门
