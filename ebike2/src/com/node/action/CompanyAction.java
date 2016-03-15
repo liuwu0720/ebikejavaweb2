@@ -8,11 +8,10 @@
 package com.node.action;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -133,7 +132,7 @@ public class CompanyAction {
 	private String parseUrl(String vcPicPath) {
 		if (StringUtils.isNotBlank(vcPicPath)) {
 			PicPath picPath = iCompanyService
-					.getPathById(SystemConstants.PIC_LICENSE);
+					.getPathById(SystemConstants.PIC_IMG);
 			String subPath = picPath.getVcParsePath();
 			if (!subPath.endsWith("/")) {
 				subPath += "/";
@@ -159,6 +158,12 @@ public class CompanyAction {
 			DdcHyxhSsdw ddcHyxhSsdw,
 			@RequestParam(value = "file_upload", required = false) MultipartFile file,
 			HttpServletRequest request, HttpServletResponse response) {
+		if (!file.isEmpty()
+				&& file.getSize() / 1024 / 1024 > SystemConstants.MAXFILESIZE) {
+			AjaxUtil.rendJson(response, false, "最大允许上传大小为"
+					+ SystemConstants.MAXFILESIZE + "MB");
+			return;
+		}
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
 		ddcHyxhSsdw.setHyxhzh(ddcHyxhBase.getHyxhzh());
@@ -168,8 +173,10 @@ public class CompanyAction {
 		try {
 			String jpgPath = uploadImg(request, file);
 			String imgPath = ddcHyxhSsdw.getVcPicPath();
-			if (StringUtils.isBlank(imgPath)) {
+			if (StringUtils.isNotBlank(jpgPath)) {
 				ddcHyxhSsdw.setVcPicPath(jpgPath);
+			} else {
+				ddcHyxhSsdw.setVcPicPath(imgPath);
 			}
 
 		} catch (IOException e1) {
@@ -279,8 +286,10 @@ public class CompanyAction {
 			throws FileNotFoundException, IOException {
 		if (!file.isEmpty()) {
 			PicPath imgPath = iCompanyService
-					.getPathById(SystemConstants.PIC_LICENSE);
+					.getPathById(SystemConstants.PIC_IMG);
 			String source = imgPath.getVcAddpath();// 图片保存路径
+			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
+			source = source + "/" + format.format(new Date());
 			if (!source.endsWith("/")) {
 				source += "/";
 			}
@@ -289,28 +298,17 @@ public class CompanyAction {
 				return null;
 			}
 			String path = source;
-			File pathFile = new File(path);
+			String jpgPath = file.getOriginalFilename();
+			File pathFile = new File(path, jpgPath);
 			if (!pathFile.exists()) {
 				pathFile.mkdirs();
 			}
-			String jpgPath = new Date().getTime() + file.getOriginalFilename();
-			// path += new Date().getTime() +
-			// files[i].getOriginalFilename();
-			path += jpgPath;
-			// 拿到输出流，同时重命名上传的文件
-			FileOutputStream os = new FileOutputStream(path);
-			// 拿到上传文件的输入流
-			FileInputStream in = (FileInputStream) file.getInputStream();
 
-			// 以写字节的方式写文件
-			int b = 0;
-			while ((b = in.read()) != -1) {
-				os.write(b);
-			}
-			os.flush();
-			os.close();
-			in.close();
-			return jpgPath;
+			path += jpgPath;
+
+			file.transferTo(pathFile);
+
+			return format.format(new Date()) + "/" + jpgPath;
 		} else {
 			return null;
 		}

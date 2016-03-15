@@ -39,7 +39,7 @@ public class SystemConstants {
 	/**
 	 * 营业执照图片上传路径ID
 	 */
-	public static final Integer PIC_LICENSE = 1;
+	public static final Integer PIC_IMG = 1;
 	/**
 	 * 待审核
 	 */
@@ -48,5 +48,9 @@ public class SystemConstants {
 	 * 已审核
 	 */
 	public static final String SYSNFLAG2 = "UW";
+	/**
+	 * 最大文件
+	 */
+	public static final long MAXFILESIZE = 10;
 
 }

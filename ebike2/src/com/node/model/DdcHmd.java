@@ -12,25 +12,30 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * DdcSjzd entity. @author MyEclipse Persistence Tools
+ * 
+ * 类描述：黑名单信息表：由内网录入同步过来
+ * 
+ * @version: 1.0
+ * @author: liuwu
+ * @version: 2016年3月15日 下午2:19:04
  */
 @Entity
-@Table(name = "DDC_SJZD")
-public class DdcSjzd implements java.io.Serializable {
+@Table(name = "DDC_HMD")
+public class DdcHmd implements java.io.Serializable {
 
-	/* serialVersionUID: serialVersionUID */
-	private static final long serialVersionUID = -670824204661471129L;
 	// Fields
 
+	/* serialVersionUID: serialVersionUID */
+	private static final long serialVersionUID = 3666407019996062418L;
 	private Long id;
-	private String dmz;
-	private String dmms1;
-	private String dmms2;
-	private String dmlb;// 代码类别
+	private String jsrxm;
+	private String sfzhm;
+	private String xb;
+	private String lxdh;
 	private String bz;
 	private String cjr;
-	private Date cjrq;
 	private String cjbm;
+	private Date cjrq;
 	private String synFlag;
 	private String tranFlag;
 	private Date tranDate;
@@ -38,21 +43,21 @@ public class DdcSjzd implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public DdcSjzd() {
+	public DdcHmd() {
 	}
 
 	/** full constructor */
-	public DdcSjzd(String dmz, String dmms1, String dmms2, String dmlb,
-			String bz, String cjr, Date cjrq, String cjbm, String synFlag,
+	public DdcHmd(String jsrxm, String sfzhm, String xb, String lxdh,
+			String bz, String cjr, String cjbm, Date cjrq, String synFlag,
 			String tranFlag, Date tranDate) {
-		this.dmz = dmz;
-		this.dmms1 = dmms1;
-		this.dmms2 = dmms2;
-		this.dmlb = dmlb;
+		this.jsrxm = jsrxm;
+		this.sfzhm = sfzhm;
+		this.xb = xb;
+		this.lxdh = lxdh;
 		this.bz = bz;
 		this.cjr = cjr;
-		this.cjrq = cjrq;
 		this.cjbm = cjbm;
+		this.cjrq = cjrq;
 		this.synFlag = synFlag;
 		this.tranFlag = tranFlag;
 		this.tranDate = tranDate;
@@ -60,8 +65,8 @@ public class DdcSjzd implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@SequenceGenerator(name = "DDC_SJZD", sequenceName = "SEQ_DDC_SJZD", allocationSize = 1)
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_SJZD")
+	@SequenceGenerator(name = "DDC_HMD", sequenceName = "SEQ_DDC_HMD", allocationSize = 1)
+	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_HMD")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
@@ -71,43 +76,43 @@ public class DdcSjzd implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "DMZ", length = 20)
-	public String getDmz() {
-		return this.dmz;
+	@Column(name = "JSRXM", length = 20)
+	public String getJsrxm() {
+		return this.jsrxm;
 	}
 
-	public void setDmz(String dmz) {
-		this.dmz = dmz;
+	public void setJsrxm(String jsrxm) {
+		this.jsrxm = jsrxm;
 	}
 
-	@Column(name = "DMMS1", length = 200)
-	public String getDmms1() {
-		return this.dmms1;
+	@Column(name = "SFZHM", length = 20)
+	public String getSfzhm() {
+		return this.sfzhm;
 	}
 
-	public void setDmms1(String dmms1) {
-		this.dmms1 = dmms1;
+	public void setSfzhm(String sfzhm) {
+		this.sfzhm = sfzhm;
 	}
 
-	@Column(name = "DMMS2", length = 200)
-	public String getDmms2() {
-		return this.dmms2;
+	@Column(name = "XB", length = 10)
+	public String getXb() {
+		return this.xb;
 	}
 
-	public void setDmms2(String dmms2) {
-		this.dmms2 = dmms2;
+	public void setXb(String xb) {
+		this.xb = xb;
 	}
 
-	@Column(name = "DMLB", length = 20)
-	public String getDmlb() {
-		return this.dmlb;
+	@Column(name = "LXDH", length = 20)
+	public String getLxdh() {
+		return this.lxdh;
 	}
 
-	public void setDmlb(String dmlb) {
-		this.dmlb = dmlb;
+	public void setLxdh(String lxdh) {
+		this.lxdh = lxdh;
 	}
 
-	@Column(name = "BZ", length = 50)
+	@Column(name = "BZ", length = 200)
 	public String getBz() {
 		return this.bz;
 	}
@@ -125,15 +130,6 @@ public class DdcSjzd implements java.io.Serializable {
 		this.cjr = cjr;
 	}
 
-	@Column(name = "CJRQ", length = 7)
-	public Date getCjrq() {
-		return this.cjrq;
-	}
-
-	public void setCjrq(Date cjrq) {
-		this.cjrq = cjrq;
-	}
-
 	@Column(name = "CJBM", length = 20)
 	public String getCjbm() {
 		return this.cjbm;
@@ -141,6 +137,15 @@ public class DdcSjzd implements java.io.Serializable {
 
 	public void setCjbm(String cjbm) {
 		this.cjbm = cjbm;
+	}
+
+	@Column(name = "CJRQ", length = 7)
+	public Date getCjrq() {
+		return this.cjrq;
+	}
+
+	public void setCjrq(Date cjrq) {
+		this.cjrq = cjrq;
 	}
 
 	@Column(name = "SYN_FLAG", length = 10)

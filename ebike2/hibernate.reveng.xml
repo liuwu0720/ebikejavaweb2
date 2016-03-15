@@ -55,4 +55,19 @@
 		</primary-key>
 		<column name="TRAN_DATE" type="Date"></column>
 	</table>
+	<table name="DDC_HMD" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+		<column name="TRAN_DATE" type="Date"></column>
+	</table>
+	<table name="DDC_HYXH_SSDWCLSB_LOG" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+		<column name="SSDW_ID" type="Long"></column>
+		<column name="TRAN_DATE" type="Date"></column>
+	</table>
 </hibernate-reverse-engineering>

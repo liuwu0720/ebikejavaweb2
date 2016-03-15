@@ -154,8 +154,10 @@ $(document).ready(function(){
 //查询功能
 function doSearch(){
 	$('#dg').datagrid('load',{
-		dwmc: $('#itemid').val(),
-		lxr: $('#productid').val()
+		zt: $('#zt').val(),
+		djh: $('#djh').val(),
+		dtstart:$('#dtstart').val(),
+		dtend:$('#dtend').val()
 	});
 }
 
@@ -166,10 +168,29 @@ function addRowData(){
 	//所属单位
 	$('#dw').combobox({    
 	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
-	    valueField:'dwmc',    
+	    valueField:'id',    
 	    textField:'dwmc',
-	    value:""   //默认选中的值       
+	    value:"请选择"   //默认选中的值       
 	}); 
+	//车身颜色
+	$('#cysy').combobox({
+		 url:'<%=basePath%>applyAction/getAllColorsAjax',    
+		    valueField:'dmz',    
+		    textField:'dmms1',
+		    value:"请选择"   //默认选中的值       
+	});
+	//行驶区域
+	$('#xsqy').combobox({
+		 url:'<%=basePath%>applyAction/getAllAreaAjax',    
+		    valueField:'dmz',    
+		    textField:'dmms1',
+		    value:"请选择"   //默认选中的值       
+	})
+	
+	$('#xb1,#xb2,#jtzz').combobox({
+		value:0
+	});
+	$("#file_tr1,#file_tr2").hide();
 }
 //查看
 function queryRow(id){
@@ -194,7 +215,7 @@ function queryRow(id){
 //修改
 function updateRow(id){
 	$('#dgform').form('clear');
-	
+	$("#file_tr1,#file_tr2").show();
 	$.ajax({
 		type: "GET",
    	    url: "<%=basePath%>applyAction/queryInfoById",
@@ -203,12 +224,35 @@ function updateRow(id){
 	   }, 
 	   dataType: "json",
 	   success:function(data){
- 			 
+ 			 console.log(data);
  			  if(data){
  				 $('#dgformDiv').dialog('open').dialog('setTitle', '详情信息');
  				 $('#dgform').form('load', data);
- 				$("#img_tr").show();
- 				 $("#img").attr("src",data.vcShowPath);
+ 				 $("#img").attr("src",data.vcShowEbikeImg);
+ 				 $("#img1").attr("src",data.vcShowUser1Img);
+ 				 $("#img2").attr("src",data.vcShowUser2Img);
+ 				//所属单位
+ 				$('#dw').combobox({    
+ 				    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
+ 				    valueField:'id',    
+ 				    textField:'dwmc',
+ 				    value:data.ssdwId,   //默认选中的值       
+ 				    text:data.ssdwName
+ 				}); 
+ 				//车身颜色
+ 				$('#cysy').combobox({
+ 					 url:'<%=basePath%>applyAction/getAllColorsAjax',    
+ 					    valueField:'dmz',    
+ 					    textField:'dmms1',
+ 					    value:data.cysy  //默认选中的值       
+ 				});
+ 				//行驶区域
+ 				$('#xsqy').combobox({
+ 					 url:'<%=basePath%>applyAction/getAllAreaAjax',    
+ 					    valueField:'dmz',    
+ 					    textField:'dmms1',
+ 					    value:data.xsqy   //默认选中的值       
+ 				})
  			  }
  		  }
 	})
@@ -222,7 +266,7 @@ function updateSaveData(){
 	$('#dgform').form('submit', {
 				url : "<%=basePath%>applyAction/saveOrUpdate",
 				onSubmit : function() {
-					var flag = checkImgs();
+					
 					var isValid = $("#dgform").form('enableValidation').form(
 							'validate');
 
@@ -239,8 +283,8 @@ function updateSaveData(){
 							msg : data.message
 						});
 						$('#dgformDiv').dialog('close');
-						window.location.reload();
-						//$("#dg").datagrid('reload');
+						
+						$("#dg").datagrid('reload');
 					}else{
 						alert(data.message);
 					}
@@ -251,9 +295,6 @@ function updateSaveData(){
 			});
 }
 
-function checkImgs(){
-	console.log($(".easyui-filebox").val())
-}
 
 
 //同步
@@ -312,9 +353,12 @@ function CheckFileSize(obj){
 		<table id="dg" style="width:90%;">
 
 			<div id="tb" style="padding: 5px; background: #E8F1FF;">
-				<span>电机号:</span> <input id="itemid"
-					style="line-height:26px;border:1px solid #ccc"> <span>状态:</span>
-				<select class="easyui-combobox" style="width:100px;height:32px; ">
+				<span>申报时间：</span>
+				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
+				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>				
+				<span>电机号:</span> <input id="djh"
+					style="line-height:26px;border:1px solid #ccc"> &nbsp;&nbsp;&nbsp;<span>状态:</span>
+				<select class="easyui-combobox" style="width:100px;height:32px; " id="zt">
 					<option value="">未同步</option>
 					<option value="UC">待审核</option>
 					<option value="UW">已审核</option>
@@ -337,7 +381,7 @@ function CheckFileSize(obj){
 				</tr>
 				<tr>
 					<td>申报单位：</td>
-					<td><input id="dw" name="vcParent" style="height:30px;"></td>
+					<td><input id="dw" name="ssdwId" style="height:30px;"></td>
 					<td>车身照片</td>
 					<td><input  type="file" id="file_upload"
 						name="file_upload" /><br /></td>
@@ -346,11 +390,9 @@ function CheckFileSize(obj){
 					<td>品牌型号</td>
 					<td><input class="easyui-validatebox" type="text"
 						data-options="required:true" name="ppxh"
-						style="height: 32px;width:200px;"></input></td>
+						style="height: 32px;"></input></td>
 					<td>车身颜色</td>
-					<td><input class="easyui-validatebox"
-						data-options="required:true" name="cysy" type="text"
-						style="height: 32px;width:200px;"></input>
+					<td><input id="cysy" name="cysy" style="height:30px;"></td>
 				</tr>
 				<tr>
 					<td>电机号：</td>
@@ -358,7 +400,7 @@ function CheckFileSize(obj){
 						data-options="required:true" name="djh" style="height: 32px"></input>
 					</td>
 					<td>脚踏装置:</td>
-					<td><select class="easyui-combobox" name="jtzz"
+					<td><select id="jtzz" class="easyui-combobox" name="jtzz"
 						style="height:32px;width: 50px;">
 							<option value="0">有</option>
 							<option value="1">无</option>
@@ -371,18 +413,18 @@ function CheckFileSize(obj){
 
 					<td>驾驶人姓名2</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="jsrxm2" style="height: 32px"></td>
+						data-options="required:false" name="jsrxm2" style="height: 32px"></td>
 				</tr>
 				<tr>
 					<td>驾驶人性别1</td>
-					<td><select class="easyui-combobox" name="xb1"
+					<td><select id="xb1" class="easyui-combobox" name="xb1" required="true"  
 						style="height:32px;width: 50px;">
 							<option value="0">男</option>
 							<option value="1">女</option>
 					</select></td>
 
 					<td>驾驶人性别2</td>
-					<td><select class="easyui-combobox" name="xb2"
+					<td><select id="xb2" class="easyui-combobox" name="xb2" required="false"  
 						style="height:32px;width: 50px;">
 							<option value="0">男</option>
 							<option value="1">女</option>
@@ -390,45 +432,58 @@ function CheckFileSize(obj){
 				</tr>
 				<tr>
 					<td>身份证号码1</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="sfzmhm1" style="height: 32px">
+					<td><input class="easyui-validatebox" type="text" id="sfzmhm1"
+						data-options="required:true,validType:'idcard'" name="sfzmhm1" style="height: 32px">
 					</td>
 					<td>身份证号码2</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="sfzmhm2" style="height: 32px">
+					<td><input class="easyui-validatebox" type="text"  validType="notequals['#sfzmhm1']" 
+					  name="sfzmhm2" style="height: 32px">
 					</td>
 				</tr>
 				<tr>
 					<td>联系电话1</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="lxdh1" style="height: 32px">
+						data-options="required:true,validType:'phoneNum'" name="lxdh1" style="height: 32px">
 					</td>
 					<td>联系电话2</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="lxdh2" style="height: 32px">
+						data-options="required:false,validType:'phoneNum'" name="lxdh2" style="height: 32px">
 					</td>
 				</tr>
 				<tr>
 					<td>驾驶人照片1</td>
-					<td><input id="file_upload1" type="file"
+					<td><input  type="file" 
 						name="file_upload1" onchange="CheckFileSize(this);" /><br /></td>
 					<td>驾驶人照片2</td>
 					<td><input  type="file" id="file_upload2"
 						name="file_upload2" /><br /></td>
 				</tr>
 				<tr>
+					<td>行驶区域</td>
+					<td><input id="xsqy" name="xsqy" style="height:30px;" required="true"  ></td>
+					<td>备注</td>
+					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
+				</tr>
+				<tr id="file_tr1">
 					<td colspan="2"><img id="img1" class="easyui-validatebox"
 						style="width:300px" /></td>
 					<td colspan="2"><img id="img2" class="easyui-validatebox"
 						style="width:300px" /><br /></td>
 
 				</tr>
-				<tr>
-					<td colspan="4"><img id="img" class="easyui-validatebox"
+				<tr id="file_tr2">
+					<td>车身照片</td>
+					<td colspan="3"><img id="img" class="easyui-validatebox"
 						style="width:300px" /></td>
 				</tr>
 			</table>
-			<input class="easyui-validatebox" type="hidden" name="vcPicPath"
+			<input class="easyui-validatebox" type="hidden" name="vcEbikeImg"
+				style="height: 32px">
+				<input class="easyui-validatebox" type="hidden" name="vcUser1Img"
+				style="height: 32px">
+				<input class="easyui-validatebox" type="hidden" name="vcUser2Img"
+				style="height: 32px">
+			<input class="easyui-validatebox" type="hidden" name="lsh"
 				style="height: 32px">
 		</form>
 		<div id="dlg-buttons2">

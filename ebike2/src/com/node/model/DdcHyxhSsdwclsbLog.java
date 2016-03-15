@@ -10,32 +10,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 /**
- * DdcHyxhSsdwclsb entity. @author MyEclipse Persistence Tools
+ * DdcHyxhSsdwclsbLog entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "DDC_HYXH_SSDWCLSB", uniqueConstraints = @UniqueConstraint(columnNames = "LSH"))
+@Table(name = "DDC_HYXH_SSDWCLSB_LOG")
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
-public class DdcHyxhSsdwclsb implements java.io.Serializable {
+public class DdcHyxhSsdwclsbLog implements java.io.Serializable {
 
 	// Fields
 
 	/* serialVersionUID: serialVersionUID */
-	private static final long serialVersionUID = 204700208717659645L;
+	private static final long serialVersionUID = -6118560860080765661L;
 	private Long id;
 	private String lsh;
 	private String hyxhzh;
-	private String ssdwId;// 所属单位ID,对应 DDC_HYXH_SSDW的记录ID
-	private String ssdwName;// 申报单位名称
+	private Long ssdwId;
 	private String cphm;
 	private String ppxh;
-	private String cysy;// 车身颜色code
-	private String cysyName;// 车身颜色
+	private String cysy;
 	private String djh;
 	private String jtzz;
 	private String jsrxm1;
@@ -50,8 +44,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 	private String xb3;
 	private String sfzmhm3;
 	private String lxdh3;
-	private String xsqy;// 行驶区域
-	private String xsqyName;
+	private String xsqy;
 	private String bz;
 	private String sqr;
 	private Date sqrq;
@@ -64,34 +57,33 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 	private String synFlag;
 	private String tranFlag;
 	private Date tranDate;
+	private String czr;
+	private String czbm;
+	private Date czrq;
+	private String cznr;
 	private String sqip;
-	private String vcEbikeImg;// 车身图片
-	private String vcUser1Img;// 驾驶人1图片
-	private String vcUser2Img;// 驾驶人2图片
-	private String vcShowEbikeImg;
-	private String vcShowUser1Img;
-	private String vcShowUser2Img;
 
 	// Constructors
 
 	/** default constructor */
-	public DdcHyxhSsdwclsb() {
+	public DdcHyxhSsdwclsbLog() {
 	}
 
 	/** minimal constructor */
-	public DdcHyxhSsdwclsb(String lsh) {
+	public DdcHyxhSsdwclsbLog(String lsh) {
 		this.lsh = lsh;
 	}
 
 	/** full constructor */
-	public DdcHyxhSsdwclsb(String lsh, String hyxhzh, String ssdwId,
+	public DdcHyxhSsdwclsbLog(String lsh, String hyxhzh, Long ssdwId,
 			String cphm, String ppxh, String cysy, String djh, String jtzz,
 			String jsrxm1, String xb1, String sfzmhm1, String lxdh1,
 			String jsrxm2, String xb2, String sfzmhm2, String lxdh2,
 			String jsrxm3, String xb3, String sfzmhm3, String lxdh3,
 			String xsqy, String bz, String sqr, Date sqrq, String slzl,
 			String slyj, String slbz, String slr, Date slrq, String slbm,
-			String synFlag, String tranFlag, Date tranDate, String sqip) {
+			String synFlag, String tranFlag, Date tranDate, String czr,
+			String czbm, Date czrq, String cznr, String sqip) {
 		this.lsh = lsh;
 		this.hyxhzh = hyxhzh;
 		this.ssdwId = ssdwId;
@@ -125,12 +117,16 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.synFlag = synFlag;
 		this.tranFlag = tranFlag;
 		this.tranDate = tranDate;
+		this.czr = czr;
+		this.czbm = czbm;
+		this.czrq = czrq;
+		this.cznr = cznr;
 		this.sqip = sqip;
 	}
 
 	@Id
-	@SequenceGenerator(name = "DDC_HYXH_SSDWCLSB", sequenceName = "SEQ_HYXH_SSDWCLSB_XH", allocationSize = 1)
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_HYXH_SSDWCLSB")
+	@SequenceGenerator(name = "DDC_HYXH_SSDWCLSB_LOG", sequenceName = "seq_hyxh_ssdwclsb_log_xh", allocationSize = 1)
+	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_HYXH_SSDWCLSB_LOG")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
@@ -140,7 +136,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "LSH", unique = true, nullable = false, length = 50)
+	@Column(name = "LSH", nullable = false, length = 20)
 	public String getLsh() {
 		return this.lsh;
 	}
@@ -149,7 +145,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.lsh = lsh;
 	}
 
-	@Column(name = "HYXHZH", length = 50)
+	@Column(name = "HYXHZH", length = 20)
 	public String getHyxhzh() {
 		return this.hyxhzh;
 	}
@@ -159,15 +155,15 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 	}
 
 	@Column(name = "SSDW_ID", length = 200)
-	public String getSsdwId() {
+	public Long getSsdwId() {
 		return this.ssdwId;
 	}
 
-	public void setSsdwId(String ssdwId) {
+	public void setSsdwId(Long ssdwId) {
 		this.ssdwId = ssdwId;
 	}
 
-	@Column(name = "CPHM", length = 50)
+	@Column(name = "CPHM", length = 20)
 	public String getCphm() {
 		return this.cphm;
 	}
@@ -176,7 +172,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.cphm = cphm;
 	}
 
-	@Column(name = "PPXH", length = 50)
+	@Column(name = "PPXH", length = 20)
 	public String getPpxh() {
 		return this.ppxh;
 	}
@@ -185,7 +181,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.ppxh = ppxh;
 	}
 
-	@Column(name = "CYSY", length = 50)
+	@Column(name = "CYSY", length = 20)
 	public String getCysy() {
 		return this.cysy;
 	}
@@ -203,7 +199,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.djh = djh;
 	}
 
-	@Column(name = "JTZZ", length = 50)
+	@Column(name = "JTZZ", length = 20)
 	public String getJtzz() {
 		return this.jtzz;
 	}
@@ -212,7 +208,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.jtzz = jtzz;
 	}
 
-	@Column(name = "JSRXM1", length = 50)
+	@Column(name = "JSRXM1", length = 20)
 	public String getJsrxm1() {
 		return this.jsrxm1;
 	}
@@ -221,7 +217,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.jsrxm1 = jsrxm1;
 	}
 
-	@Column(name = "XB1", length = 50)
+	@Column(name = "XB1", length = 20)
 	public String getXb1() {
 		return this.xb1;
 	}
@@ -230,7 +226,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.xb1 = xb1;
 	}
 
-	@Column(name = "SFZMHM1", length = 50)
+	@Column(name = "SFZMHM1", length = 20)
 	public String getSfzmhm1() {
 		return this.sfzmhm1;
 	}
@@ -239,7 +235,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.sfzmhm1 = sfzmhm1;
 	}
 
-	@Column(name = "LXDH1", length = 50)
+	@Column(name = "LXDH1", length = 20)
 	public String getLxdh1() {
 		return this.lxdh1;
 	}
@@ -248,7 +244,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.lxdh1 = lxdh1;
 	}
 
-	@Column(name = "JSRXM2", length = 50)
+	@Column(name = "JSRXM2", length = 20)
 	public String getJsrxm2() {
 		return this.jsrxm2;
 	}
@@ -257,7 +253,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.jsrxm2 = jsrxm2;
 	}
 
-	@Column(name = "XB2", length = 50)
+	@Column(name = "XB2", length = 20)
 	public String getXb2() {
 		return this.xb2;
 	}
@@ -266,7 +262,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.xb2 = xb2;
 	}
 
-	@Column(name = "SFZMHM2", length = 50)
+	@Column(name = "SFZMHM2", length = 20)
 	public String getSfzmhm2() {
 		return this.sfzmhm2;
 	}
@@ -275,7 +271,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.sfzmhm2 = sfzmhm2;
 	}
 
-	@Column(name = "LXDH2", length = 50)
+	@Column(name = "LXDH2", length = 20)
 	public String getLxdh2() {
 		return this.lxdh2;
 	}
@@ -284,7 +280,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.lxdh2 = lxdh2;
 	}
 
-	@Column(name = "JSRXM3", length = 50)
+	@Column(name = "JSRXM3", length = 20)
 	public String getJsrxm3() {
 		return this.jsrxm3;
 	}
@@ -293,7 +289,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.jsrxm3 = jsrxm3;
 	}
 
-	@Column(name = "XB3", length = 50)
+	@Column(name = "XB3", length = 20)
 	public String getXb3() {
 		return this.xb3;
 	}
@@ -302,7 +298,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.xb3 = xb3;
 	}
 
-	@Column(name = "SFZMHM3", length = 50)
+	@Column(name = "SFZMHM3", length = 20)
 	public String getSfzmhm3() {
 		return this.sfzmhm3;
 	}
@@ -311,7 +307,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.sfzmhm3 = sfzmhm3;
 	}
 
-	@Column(name = "LXDH3", length = 50)
+	@Column(name = "LXDH3", length = 20)
 	public String getLxdh3() {
 		return this.lxdh3;
 	}
@@ -320,7 +316,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.lxdh3 = lxdh3;
 	}
 
-	@Column(name = "XSQY", length = 50)
+	@Column(name = "XSQY", length = 20)
 	public String getXsqy() {
 		return this.xsqy;
 	}
@@ -329,7 +325,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.xsqy = xsqy;
 	}
 
-	@Column(name = "BZ", length = 500)
+	@Column(name = "BZ", length = 200)
 	public String getBz() {
 		return this.bz;
 	}
@@ -428,7 +424,6 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.tranFlag = tranFlag;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TRAN_DATE", length = 7)
 	public Date getTranDate() {
 		return this.tranDate;
@@ -438,6 +433,42 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.tranDate = tranDate;
 	}
 
+	@Column(name = "CZR", length = 10)
+	public String getCzr() {
+		return this.czr;
+	}
+
+	public void setCzr(String czr) {
+		this.czr = czr;
+	}
+
+	@Column(name = "CZBM", length = 20)
+	public String getCzbm() {
+		return this.czbm;
+	}
+
+	public void setCzbm(String czbm) {
+		this.czbm = czbm;
+	}
+
+	@Column(name = "CZRQ", length = 7)
+	public Date getCzrq() {
+		return this.czrq;
+	}
+
+	public void setCzrq(Date czrq) {
+		this.czrq = czrq;
+	}
+
+	@Column(name = "CZNR", length = 20)
+	public String getCznr() {
+		return this.cznr;
+	}
+
+	public void setCznr(String cznr) {
+		this.cznr = cznr;
+	}
+
 	@Column(name = "SQIP", length = 50)
 	public String getSqip() {
 		return this.sqip;
@@ -445,123 +476,6 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 
 	public void setSqip(String sqip) {
 		this.sqip = sqip;
-	}
-
-	@Transient
-	public String getSsdwName() {
-		return ssdwName;
-	}
-
-	/**
-	 * @param ssdwName
-	 *            : set the property ssdwName.
-	 */
-	public void setSsdwName(String ssdwName) {
-		this.ssdwName = ssdwName;
-	}
-
-	@Transient
-	public String getCysyName() {
-		return cysyName;
-	}
-
-	/**
-	 * @param cysyName
-	 *            : set the property cysyName.
-	 */
-	public void setCysyName(String cysyName) {
-		this.cysyName = cysyName;
-	}
-
-	@Transient
-	public String getXsqyName() {
-		return xsqyName;
-	}
-
-	/**
-	 * @param xsqyName
-	 *            : set the property xsqyName.
-	 */
-	public void setXsqyName(String xsqyName) {
-		this.xsqyName = xsqyName;
-	}
-
-	@Column(name = "VC_EBIKE_IMG", length = 100)
-	public String getVcEbikeImg() {
-		return vcEbikeImg;
-	}
-
-	/**
-	 * @param vcEbikeImg
-	 *            : set the property vcEbikeImg.
-	 */
-	public void setVcEbikeImg(String vcEbikeImg) {
-		this.vcEbikeImg = vcEbikeImg;
-	}
-
-	@Column(name = "VC_USER1IMG", length = 100)
-	public String getVcUser1Img() {
-		return vcUser1Img;
-	}
-
-	/**
-	 * @param vcUser1Img
-	 *            : set the property vcUser1Img.
-	 */
-	public void setVcUser1Img(String vcUser1Img) {
-		this.vcUser1Img = vcUser1Img;
-	}
-
-	@Column(name = "VC_USER2IMG", length = 100)
-	public String getVcUser2Img() {
-		return vcUser2Img;
-	}
-
-	/**
-	 * @param vcUser2Img
-	 *            : set the property vcUser2Img.
-	 */
-	public void setVcUser2Img(String vcUser2Img) {
-		this.vcUser2Img = vcUser2Img;
-	}
-
-	@Transient
-	public String getVcShowEbikeImg() {
-		return vcShowEbikeImg;
-	}
-
-	/**
-	 * @param vcShowEbikeImg
-	 *            : set the property vcShowEbikeImg.
-	 */
-	public void setVcShowEbikeImg(String vcShowEbikeImg) {
-		this.vcShowEbikeImg = vcShowEbikeImg;
-	}
-
-	@Transient
-	public String getVcShowUser1Img() {
-		return vcShowUser1Img;
-	}
-
-	/**
-	 * @param vcShowUser1Img
-	 *            : set the property vcShowUser1Img.
-	 */
-	public void setVcShowUser1Img(String vcShowUser1Img) {
-		this.vcShowUser1Img = vcShowUser1Img;
-	}
-
-	@Transient
-	public String getVcShowUser2Img() {
-		return vcShowUser2Img;
-	}
-
-	/**
-	 * @param vcShowUser2Img
-	 *            : set the property vcShowUser2Img.
-	 */
-	public void setVcShowUser2Img(String vcShowUser2Img) {
-		this.vcShowUser2Img = vcShowUser2Img;
 	}
 
 }

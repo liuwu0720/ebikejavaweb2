@@ -151,16 +151,17 @@ $(function() {
 							},
 							message : '请输入有效的msn账号(例：abc@hotnail(msn/live).com)'
 						},
-						same : {
-							validator : function(value, param) {
-								if ($("#" + param[0]).val() != ""
-										&& value != "") {
-									return$("#" + param[0]).val() == value;
-								} else {
-									return true;
-								}
-							},
-							message : '两次输入的密码不一致！'
+						equals: {    
+					        validator: function(value,param){    
+					            return value == $(param[0]).val();    
+					        },    
+					        message: '两次输入需相同'   
+					    },
+						notequals : {
+							 validator: function(value,param){    
+						            return value != $(param[0]).val();    
+						        },    
+						        message: '两次输入不能相同'  
 						}
 					});
 })
