@@ -547,4 +547,6 @@ public interface GenericDao<T extends Serializable, PK extends Serializable> {
 	public List<T> findByPropertysOrderBy(String[] propertyNames,
 			Object[] values, String orderByParam);
 
+	public Map<String, Object> getSpringHql(String hql, Page page);
+
 }

@@ -148,6 +148,7 @@ $(document).ready(function(){
 //查询功能
 function doSearch(){
 	$('#dg').datagrid('load',{
+		zt: $("#zt").combobox('getValue'),
 		dwmc: $('#itemid').val(),
 		lxr: $('#productid').val()
 	});
@@ -291,6 +292,12 @@ function changeRowData(){
 				style="line-height:26px;border:1px solid #ccc"> <span>
 				联系人:</span> <input id="productid"
 				style="line-height:26px;border:1px solid #ccc"> 
+				<span>状态:</span>
+				<select class="easyui-combobox" style="width:100px;height:32px; " id="zt">
+					<option value="">全部</option>
+					<option value="0">禁用</option>
+					<option value="1">启用</option>
+				</select>
 				<a 	class="easyui-linkbutton" plain="true" onclick="doSearch()" iconCls="icon-search" >查询 </a>
 				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 		</div>

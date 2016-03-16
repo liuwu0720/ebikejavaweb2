@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -23,7 +24,7 @@ import javax.persistence.UniqueConstraint;
  * @version: 2016年3月11日 下午5:47:46
  */
 @Entity
-@Table(name = "DDC_DAXXB", schema = "EBIKEOUT", uniqueConstraints = @UniqueConstraint(columnNames = "DABH"))
+@Table(name = "DDC_DAXXB", uniqueConstraints = @UniqueConstraint(columnNames = "DABH"))
 public class DdcDaxxb implements java.io.Serializable {
 
 	// Fields
@@ -35,7 +36,8 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String ywlx;// 业务类型
 	private String ywyy;// 业务原因
 	private String hyxhzh;//
-	private String zzjgdmzh;// 行业协会账户
+	private String zzjgdmzh;// 组织机构代码证号
+	private String zzjgdmzhName;
 	private String cphm;// 车牌号码，办结后，以流水转入本表的车牌号码数据填充本表
 	private String ppxh;// 品牌型号
 	private String cysy;// 车身验色
@@ -56,6 +58,7 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String xsqy;// 行驶区域(福田区、罗湖区.....)
 	private String bz;// 备注
 	private String zt;// 车辆状态 填字典
+	private String ztName;
 	private Date syrq;// 审验日期：新车归档日期+2年或年审验车合格后的归档日期+2年
 	private String slzl;// 受理资料，分割 字典表
 	private String slyj;// 受理意见 0 同意 1 不同意 特别注意 档案更正是要填写本表记录
@@ -82,6 +85,18 @@ public class DdcDaxxb implements java.io.Serializable {
 	/** minimal constructor */
 	public DdcDaxxb(String dabh) {
 		this.dabh = dabh;
+	}
+
+	public DdcDaxxb(Long id, String dabh, String cphm, String djh, Date slrq,
+			String zzjgdmzh, String zt) {
+		this.id = id;
+		this.dabh = dabh;
+		this.cphm = cphm;
+		this.djh = djh;
+		this.slrq = slrq;
+		this.zzjgdmzh = zzjgdmzh;
+		this.zt = zt;
+
 	}
 
 	/** full constructor */
@@ -519,6 +534,32 @@ public class DdcDaxxb implements java.io.Serializable {
 
 	public void setTranDate(Date tranDate) {
 		this.tranDate = tranDate;
+	}
+
+	@Transient
+	public String getZzjgdmzhName() {
+		return zzjgdmzhName;
+	}
+
+	/**
+	 * @param zzjgdmzhName
+	 *            : set the property zzjgdmzhName.
+	 */
+	public void setZzjgdmzhName(String zzjgdmzhName) {
+		this.zzjgdmzhName = zzjgdmzhName;
+	}
+
+	@Transient
+	public String getZtName() {
+		return ztName;
+	}
+
+	/**
+	 * @param ztName
+	 *            : set the property ztName.
+	 */
+	public void setZtName(String ztName) {
+		this.ztName = ztName;
 	}
 
 }

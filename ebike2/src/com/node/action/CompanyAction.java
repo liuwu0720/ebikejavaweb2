@@ -86,13 +86,24 @@ public class CompanyAction {
 	 */
 	@RequestMapping("/queryAll")
 	@ResponseBody
-	public Map<String, Object> queryAll(HttpServletRequest request) {
+	public Map<String, Object> queryAll(HttpServletRequest request, String zt,
+			String dwmc, String lxr) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
 		Page p = ServiceUtil.getcurrPage(request);
 
 		HqlHelper hql = new HqlHelper(DdcHyxhSsdw.class);
 		hql.addEqual("hyxhzh", ddcHyxhBase.getHyxhzh());
+		if (StringUtils.isNotBlank(zt)) {
+			hql.addEqual("zt", zt);
+		}
+		if (StringUtils.isNotBlank(dwmc)) {
+			hql.addEqual("dwmc", dwmc);
+		}
+		if (StringUtils.isNotBlank(lxr)) {
+			hql.addEqual("lxr", lxr);
+		}
+
 		hql.setQueryPage(p);
 		Map<String, Object> resultMap = iCompanyService.queryByHql(hql);
 		DdcHyxhBase ddcHyxhBase2 = iUserService.getById(ddcHyxhBase.getId());// 重新查一次，因为数量有变化在session中体现不了
@@ -164,12 +175,23 @@ public class CompanyAction {
 					+ SystemConstants.MAXFILESIZE + "MB");
 			return;
 		}
+
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
 		ddcHyxhSsdw.setHyxhzh(ddcHyxhBase.getHyxhzh());
 		ddcHyxhSsdw.setSqrq(new Date());
 		ddcHyxhSsdw.setSqr(ddcHyxhBase.getHyxhmc());
 		ddcHyxhSsdw.setZt("1");
+		/**
+		 * 验证剩余配额数量
+		 */
+		if (ddcHyxhSsdw.getId() == null) {
+			if (ddcHyxhBase.getHyxhsjzpe() <= 0) {
+				AjaxUtil.rendJson(response, false, "配额不足不能再分配");
+				return;
+			}
+		}
+
 		try {
 			String jpgPath = uploadImg(request, file);
 			String imgPath = ddcHyxhSsdw.getVcPicPath();
@@ -191,6 +213,7 @@ public class CompanyAction {
 					iCompanyService.save(ddcHyxhSsdw);
 					// 保存操作日志
 					saveLog(ddcHyxhSsdw, "新增", request);
+
 					// 总配额减少
 					ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
 							- ddcHyxhSsdw.getDwpe());

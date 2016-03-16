@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +21,23 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jxl.Workbook;
+import jxl.format.Alignment;
+import jxl.format.Colour;
+import jxl.format.UnderlineStyle;
+import jxl.format.VerticalAlignment;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,29 +95,35 @@ public class ApplyAction {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年3月14日 下午5:40:32
+	 * @throws ParseException
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/queryAll")
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request, String zt,
-			String djh, Date dtstart, Date dtend) {
+			String djh, String dtstart, String dtend) throws ParseException {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
 		Page p = ServiceUtil.getcurrPage(request);
 
 		HqlHelper hql = new HqlHelper(DdcHyxhSsdwclsb.class);
 		hql.addEqual("hyxhzh", ddcHyxhBase.getHyxhzh());
-		if (StringUtils.isNotBlank(zt)) {
+		if (StringUtils.isBlank(zt)) {
+			hql.addEqual("synFlag", "");
+		} else {
 			hql.addEqual("synFlag", zt);
 		}
+
 		if (StringUtils.isNotBlank(djh)) {
 			hql.addEqual("djh", djh);
 		}
-		if (dtstart != null) {
-			hql.addGreatThan("sqrq", dtstart);
+		if (StringUtils.isNotBlank(dtstart)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			hql.addGreatThan("sqrq", sdf.parse(dtstart));
 		}
-		if (dtend != null) {
-			hql.addLessThan("sqrq", dtend);
+		if (StringUtils.isNotBlank(dtend)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			hql.addLessThan("sqrq", sdf.parse(dtend));
 		}
 
 		hql.addOrderBy("sqrq", "desc");
@@ -293,6 +313,20 @@ public class ApplyAction {
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
+		/**
+		 * 新增时检查单位配额
+		 */
+		DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
+				.parseLong(ddcHyxhSsdwclsb.getSsdwId()));
+		if (ddcHyxhSsdwclsb.getId() == null) {
+			if (ddcHyxhSsdw.getDwpe() <= 0) {
+				AjaxUtil.rendJson(response, false, "该单位配额已用完，不能再申报");
+				return;
+			} else {
+				ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() - 1);
+			}
+		}
+
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
 		ddcHyxhSsdwclsb.setHyxhzh(ddcHyxhBase.getHyxhzh());
@@ -417,5 +451,164 @@ public class ApplyAction {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * 
+	 * 方法描述：批量同步
+	 * 
+	 * @param request
+	 * @param response
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月16日 上午10:37:57
+	 */
+	@RequestMapping(value = "/changeRowData", method = RequestMethod.POST)
+	public void changeRowData(HttpServletRequest request,
+			HttpServletResponse response) {
+		String[] ids = request.getParameterValues("array[]");
+		System.out.println("ids = " + ids);
+		try {
+			for (int i = 0; i < ids.length; i++) {
+				long id = Long.parseLong(ids[i]);
+				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
+						.getDdcHyxhSsdwclsbById(id);
+				if (StringUtils.isBlank(ddcHyxhSsdwclsb.getSynFlag())) {
+					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG1);
+				}
+				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
+			}
+			AjaxUtil.rendJson(response, true, "成功");
+		} catch (Exception e) {
+			AjaxUtil.rendJson(response, false, "系统错误");
+		}
+
+	}
+
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param request
+	 * @param response
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月16日 下午1:31:33
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
+	@ResponseBody
+	public String exportExcel(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String[] ids = request.getParameterValues("array[]");
+
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = new ArrayList<DdcHyxhSsdwclsb>();
+		for (int i = 0; i < ids.length; i++) {
+			long id = Long.parseLong(ids[i]);
+			DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
+					.getDdcHyxhSsdwclsbById(id);
+			ddcHyxhSsdwclsbs.add(ddcHyxhSsdwclsb);
+		}
+
+		String filename = "ebike";
+		String basePath = request.getSession().getServletContext()
+				.getRealPath("/static/downexcel");
+		String basePath2 = request.getScheme() + "://"
+				+ request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath() + "/";
+		String filepath = filename + ".xls";
+		String filepath2 = filename + ".xls";
+		String cpath = basePath2 + "/static/downexcel/" + filepath2;
+		try {
+			// 写入excel
+			String path = basePath + "/" + filepath;
+			// String path = "C://sblslist.xls";
+			File fileWrite = new File(path);
+			WritableWorkbook wwb = null;
+			fileWrite.createNewFile();
+			wwb = Workbook.createWorkbook(fileWrite);
+			WritableSheet ws = wwb.createSheet("Sheet1", 0);
+
+			// //////////
+			WritableFont wfc = new WritableFont(WritableFont.ARIAL, 15,
+					WritableFont.BOLD, false, UnderlineStyle.NO_UNDERLINE,
+					Colour.BLACK);
+
+			// WritableFont wfc1 = new WritableFont(WritableFont.ARIAL, 10,
+			// WritableFont.BOLD, false, UnderlineStyle.NO_UNDERLINE,
+			// Colour.RED);
+			WritableFont wfc2 = new WritableFont(WritableFont.ARIAL, 10,
+					WritableFont.BOLD, false, UnderlineStyle.NO_UNDERLINE,
+					Colour.BLACK);
+			WritableCellFormat wcfFC = new WritableCellFormat(wfc);
+			// wcfFC.setBackground(Colour.DARK_YELLOW); 背景
+			// WritableCellFormat wcfFC1 = new WritableCellFormat(wfc1);
+			WritableCellFormat wcfFC2 = new WritableCellFormat(wfc2);
+
+			// wcfFC.setWrap(true);//自动换行
+			wcfFC.setAlignment(Alignment.CENTRE);// 把水平对齐方式指定为居中
+			wcfFC.setVerticalAlignment(VerticalAlignment.CENTRE);// 把垂直对齐方式指定为居中
+			// //////////
+
+			Label label = new Label(0, 0, "车辆申报流水报表", wcfFC);
+			ws.mergeCells(0, 0, 6, 0);
+			ws.addCell(label);
+			Label label1 = new Label(0, 2, "序号", wcfFC2);
+			ws.addCell(label1);
+			Label label2 = new Label(1, 2, "流水号", wcfFC2);
+			ws.addCell(label2);
+			Label label3 = new Label(2, 2, "品牌型号", wcfFC2);
+			ws.addCell(label3);
+			Label label4 = new Label(3, 2, "车身颜色", wcfFC2);
+			ws.addCell(label4);
+			Label label5 = new Label(4, 2, "电机号", wcfFC2);
+			ws.addCell(label5);
+			Label label6 = new Label(5, 2, "行驶区域", wcfFC2);
+			ws.addCell(label6);
+			Label label7 = new Label(6, 2, "驾驶人", wcfFC2);
+			ws.addCell(label7);
+			Label label8 = new Label(7, 2, "申报单位", wcfFC2);
+			ws.addCell(label8);
+			Label label9 = new Label(8, 2, "申报时间", wcfFC2);
+			ws.addCell(label9);
+
+			int i = 3;
+			int j = 1;
+			for (DdcHyxhSsdwclsb dhsc : ddcHyxhSsdwclsbs) {
+				Label labelC8 = new Label(0, i, j + "");
+				ws.addCell(labelC8);
+				Label labelC0 = new Label(1, i, dhsc.getLsh());
+				ws.addCell(labelC0);
+				Label labelC1 = new Label(2, i, dhsc.getPpxh());
+				ws.addCell(labelC1);
+				Label labelC2 = new Label(3, i, dhsc.getCysyName());
+				ws.addCell(labelC2);
+				Label labelC3 = new Label(4, i, dhsc.getDjh());
+				ws.addCell(labelC3);
+				Label labelC4 = new Label(5, i, dhsc.getXsqyName());
+				ws.addCell(labelC4);
+				Label labelC5 = new Label(6, i, dhsc.getJsrxm1());
+				ws.addCell(labelC5);
+				Label labelC6 = new Label(7, i, dhsc.getSsdwName());
+				ws.addCell(labelC6);
+				Label labelC7 = new Label(8, i, dhsc.getSqrq().toString());
+				ws.addCell(labelC7);
+				i++;
+				j++;
+			}
+
+			wwb.write();
+			wwb.close();
+			response.getWriter().print(cpath);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// String jsonString = JsonUtil.string2json("2");
+			// response.setContentType("text/xml; charset=UTF-8");
+			// response.setHeader("Cache-Control", "no-cache");
+			// response.setDateHeader("Expires", 0);
+			response.getWriter().print("2");
+		}
+		return null;
+
 	}
 }
