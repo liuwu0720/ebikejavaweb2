@@ -3,6 +3,7 @@ package com.node.model;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * DdcFlow entity. @author MyEclipse Persistence Tools
@@ -27,13 +29,17 @@ public class DdcFlow implements java.io.Serializable {
 	private Long id;
 	private String lsh;
 	private String ywlx;
+	private String ywlxName;
 	private String ywyy;
+	private String ywyyName;
 	private String hyxhzh;
 	private String dabh;
 	private String zzjgdmzh;
+	private String zzjgdmzhName;
 	private String cphm;
 	private String ppxh;
 	private String cysy;
+	private String cysyName;// 车身颜色
 	private String djh;
 	private String jtzz;
 	private String jsrxm1;
@@ -49,6 +55,7 @@ public class DdcFlow implements java.io.Serializable {
 	private String sfzmhm3;
 	private String lxdh3;
 	private String xsqy;
+	private String xsqyName;
 	private String bz;
 	private String slzl;
 	private String slyj;
@@ -69,6 +76,10 @@ public class DdcFlow implements java.io.Serializable {
 	private String vcEbikeImg;// 车身图片
 	private String vcUser1Img;// 驾驶人1图片
 	private String vcUser2Img;// 驾驶人2图片
+	private String vcShowEbikeImg;
+	private String vcShowUser1Img;
+	private String vcShowUser2Img;
+	private List<String> slzlList;
 
 	// Constructors
 
@@ -409,6 +420,7 @@ public class DdcFlow implements java.io.Serializable {
 		this.slr = slr;
 	}
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "SLRQ", length = 7)
 	public Date getSlrq() {
 		return this.slrq;
@@ -463,6 +475,7 @@ public class DdcFlow implements java.io.Serializable {
 		this.gdr = gdr;
 	}
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "GDRQ", length = 7)
 	public Date getGdrq() {
 		return this.gdrq;
@@ -555,6 +568,123 @@ public class DdcFlow implements java.io.Serializable {
 	 */
 	public void setVcUser2Img(String vcUser2Img) {
 		this.vcUser2Img = vcUser2Img;
+	}
+
+	@Transient
+	public String getVcShowEbikeImg() {
+		return vcShowEbikeImg;
+	}
+
+	/**
+	 * @param vcShowEbikeImg
+	 *            : set the property vcShowEbikeImg.
+	 */
+	public void setVcShowEbikeImg(String vcShowEbikeImg) {
+		this.vcShowEbikeImg = vcShowEbikeImg;
+	}
+
+	@Transient
+	public String getVcShowUser1Img() {
+		return vcShowUser1Img;
+	}
+
+	/**
+	 * @param vcShowUser1Img
+	 *            : set the property vcShowUser1Img.
+	 */
+	public void setVcShowUser1Img(String vcShowUser1Img) {
+		this.vcShowUser1Img = vcShowUser1Img;
+	}
+
+	@Transient
+	public String getVcShowUser2Img() {
+		return vcShowUser2Img;
+	}
+
+	/**
+	 * @param vcShowUser2Img
+	 *            : set the property vcShowUser2Img.
+	 */
+	public void setVcShowUser2Img(String vcShowUser2Img) {
+		this.vcShowUser2Img = vcShowUser2Img;
+	}
+
+	@Transient
+	public String getCysyName() {
+		return cysyName;
+	}
+
+	/**
+	 * @param cysyName
+	 *            : set the property cysyName.
+	 */
+	public void setCysyName(String cysyName) {
+		this.cysyName = cysyName;
+	}
+
+	@Transient
+	public String getXsqyName() {
+		return xsqyName;
+	}
+
+	/**
+	 * @param xsqyName
+	 *            : set the property xsqyName.
+	 */
+	public void setXsqyName(String xsqyName) {
+		this.xsqyName = xsqyName;
+	}
+
+	@Transient
+	public String getZzjgdmzhName() {
+		return zzjgdmzhName;
+	}
+
+	/**
+	 * @param zzjgdmzhName
+	 *            : set the property zzjgdmzhName.
+	 */
+	public void setZzjgdmzhName(String zzjgdmzhName) {
+		this.zzjgdmzhName = zzjgdmzhName;
+	}
+
+	@Transient
+	public String getYwlxName() {
+		return ywlxName;
+	}
+
+	/**
+	 * @param ywlxName
+	 *            : set the property ywlxName.
+	 */
+	public void setYwlxName(String ywlxName) {
+		this.ywlxName = ywlxName;
+	}
+
+	@Transient
+	public String getYwyyName() {
+		return ywyyName;
+	}
+
+	/**
+	 * @param ywyyName
+	 *            : set the property ywyyName.
+	 */
+	public void setYwyyName(String ywyyName) {
+		this.ywyyName = ywyyName;
+	}
+
+	@Transient
+	public List<String> getSlzlList() {
+		return slzlList;
+	}
+
+	/**
+	 * @param slzlList
+	 *            : set the property slzlList.
+	 */
+	public void setSlzlList(List<String> slzlList) {
+		this.slzlList = slzlList;
 	}
 
 }

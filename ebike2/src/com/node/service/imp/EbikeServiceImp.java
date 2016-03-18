@@ -140,4 +140,15 @@ public class EbikeServiceImp implements IEbikeService {
 		// TODO Auto-generated method stub
 		iDdcFlowDao.save(ddcFlow);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#getFlowById(long)
+	 */
+	@Override
+	public DdcFlow getFlowById(long flowId) {
+
+		return iDdcFlowDao.get(flowId);
+	}
 }

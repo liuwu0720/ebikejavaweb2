@@ -110,4 +110,15 @@ public interface IEbikeService {
 	 */
 	void saveDdcFlow(DdcFlow ddcFlow);
 
+	/**
+	 * 方法描述：
+	 * 
+	 * @param flowId
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月18日 下午6:27:07
+	 */
+	DdcFlow getFlowById(long flowId);
+
 }

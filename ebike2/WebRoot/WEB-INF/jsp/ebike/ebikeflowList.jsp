@@ -116,82 +116,16 @@ $(document).ready(function(){
 	
 	
 });
-//注销
-function deleteRow(id){
-	$('#dgformDiv3').dialog('open').dialog('setTitle', '详情信息');
-	 $('#dgform3').form('load',{
-		 id:id
-	 } );
-	
-}
-function zhuxiaoSure(){
-	var flag = checkValues();
-	
-		if(flag){
-			$.messager.progress({
-				text:"正在处理，请稍候..."
-			});
-			$('#dgform3').form('submit', {
-						url : "<%=basePath%>ebikeChangeAction/zhuxiao",
-						onSubmit : function() {
-							
-							var isValid = $("#dgform").form('enableValidation').form(
-									'validate');
-
-							if (!isValid) {
-								$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
-							}
-							return isValid; // 返回false终止表单提交
-						},
-						success : function(data) {
-							var data = eval('(' + data + ')'); // change the JSON
-							if (data.isSuccess) {
-								$.messager.show({ // show error message
-									title : '提示',
-									msg : data.message
-								});
-								$('#dgformDiv3').dialog('close');
-								
-								$("#dg").datagrid('reload');
-							}else{
-								alert(data.message);
-							}
-							$.messager.progress('close'); // 如果提交成功则隐藏进度条
-
-						}
-
-					});
-		}
-		
-	
-}
-
-function checkValues(){
-	if($("[id='ywyys']:checked").length==0){
-		alert("请选择业务原因！");
-		return false;
-	}else if($("[id='slzls']:checked").length==0){
-		alert("请选择受理资料！");
-		return false;
-	}else{
-		var vs="";
-		$('[id=slzls]:checked').each(function(){
-			vs += $(this).val()+',';
-		});
-		vs=vs.substr(0,vs.lastIndexOf(','));
-		$("#slzllist").val(vs);
-		return true;
-	}	
-}
-
 
 
 //查询功能
 function doSearch(){
 	 $('#dg').datagrid('load',{
-		dabh: $("#dabh").val(),
+		ywlx: $("#ywlx").combobox('getValue'),
 		djh: $('#djh').val(),
-		cphm:$("#cphm").val()
+		cphm:$("#cphm").val(),
+		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值)
+		dtend:$('#dtend').datebox('getValue')
 	}); 
 }
 
@@ -200,7 +134,7 @@ function doSearch(){
 function queryRow(id){
 	$.ajax({
 		type: "GET",
-   	    url: "<%=basePath%>ebikeChangeAction/queryInfoById",
+   	    url: "<%=basePath%>ebikeWaterAction/queryInfoById",
    	   data:{
 		  id:id
 	   }, 
@@ -210,9 +144,20 @@ function queryRow(id){
  			  if(data){
  				 $('#dgformDiv2').dialog('open').dialog('setTitle', '详情信息');
  				$('#dgform2').form('clear');
+ 				if(data.slyj == '0'){
+ 					data.slyj = '同意';
+ 				}else{
+ 					data.slyj = '不同意';
+ 				}
+ 				if(data.gdyj == '0'){
+ 					data.gdyj = '办洁';
+ 				}else{
+ 					data.gdyj = '退办';
+ 				}
+ 				
  				 $('#dgform2').form('load', data);
  				
- 				if(data.vcShowEbikeImg == null){
+ 			 	if(data.vcShowEbikeImg == null){
 					 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
 				}else{
 					$("#img_0").attr("src",data.vcShowEbikeImg);
@@ -226,32 +171,13 @@ function queryRow(id){
 					 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
 				}else{
 					$("#img1_1").attr("src",data.vcShowUser1Img);
-				}
+				} 
  			  }
  		  }
 	})
 }
 
-//修改
-function updateRow(id){
-	window.location.href="<%=basePath%>ebikeChangeAction/changeInfo?id="+id
-}
 
-
-
-
-var AllowExt=".jpg|.jpeg|.gif|.bmp|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
-function CheckFileSize(obj){
-	 if(obj.value != ""){
-         //检测类型
-         var val = obj.value;
-         var FileExt=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
-         if(AllowExt.indexOf(FileExt+"|") == -1){//判断文件类型是否允许上传
-        	 $.messager.alert('警告','你上传的不是图片文件');    
-         	return false;
-         }
-	 }     
-}
 
 </script>
 </head>
@@ -261,13 +187,21 @@ function CheckFileSize(obj){
 		<table id="dg" style="width:90%;">
 
 			<div id="tb" style="padding: 5px; background: #E8F1FF;">
-				<span>档案编号：</span>
-				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
-				<span>电机号:</span> <input id="djh" name="djh"
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
+				<span>业务类型</span>
+				<select class="easyui-combobox" style="width:100px;height:32px; " id="ywlx">
+					<option value="">未同步</option>
+					<c:forEach items="${ywylxs }" var="lx">
+						<option value="${lx.dmz }">${lx.dmms1 }</option>
+					</c:forEach>
+				</select>	
+				<span>受理时间：</span>
+				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
+				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>		
 				<span>车牌号:</span> <input id="cphm" name="cphm"
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
-				</select> <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
+				<span>电机号:</span> <input id="djh" name="djh"
+					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;	
+				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
 		</table>
@@ -289,8 +223,8 @@ function CheckFileSize(obj){
 				<tr>
 					<th>申报单位：</th>
 					<td><input  name="zzjgdmzhName" class="easyui-validatebox" type="text" style="height:30px;width: 200px;" readonly="readonly"></td>					
-					<th>档案编号：</th>
-					<td><input name="dabh"  type="text" class="easyui-validatebox" readonly="readonly"></td>
+					<th>业务流水号：</th>
+					<td><input name="lsh"  type="text" class="easyui-validatebox" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th>业务类型：</th>
@@ -367,20 +301,34 @@ function CheckFileSize(obj){
 				</tr>
 				<tr>
 					<th>行驶区域</th>
-					<td><span ></span> <input id="xsqy" name="xsqyName"  style="height:30px;"  readonly="readonly" ></td>
+					<td><input id="xsqy" name="xsqyName"  style="height:30px;"  readonly="readonly" ></td>
 					<th>备注</th>
 					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
+				</tr>
+				<tr>
+					<th>受理意见</th>
+					<td><input id="slyj" name="slyj"  style="height:30px;"   readonly="readonly" ></td>
+					<th>受理日期</th>
+					<td><input id="xsqy" name="slrq"  style="height:30px;"   readonly="readonly" ></td>
+				</tr>
+				<tr>
+					<th>受理资料</th>
+					<td colspan="3"><input id="slzlList" name="slzlList"  style="height:30px;width:100%"   readonly="readonly" ></td>
+				</tr>
+				<tr>
+					<th>归档意见</th>
+					<td><input id="slyj" name="gdyj"  style="height:30px;"   readonly="readonly" ></td>
+					<th>归档日期</th>
+					<td><input id="xsqy" name="gdrq"  style="height:30px;"   readonly="readonly" ></td>
 				</tr>
 					<tr>
 					<td colspan="2">
 					<div  class="imgdiv">
-					<p>驾驶人1</p><img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"
-						/></div>
+					<p>驾驶人1</p><img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"/></div>
 					</td>
 					<td colspan="2">
 					<div  class="imgdiv">
 					<p>驾驶人2</p><img id="img2_2" src="<%=basePath%>static/images/iconfont-wu.png" /></div></td>
-
 				</tr>
 				<tr>
 					<th>车身照片</th>
@@ -392,38 +340,6 @@ function CheckFileSize(obj){
 	
 	</div>
 	
-	
-	<!--注销  -->
-	<div id="dgformDiv3" class="easyui-dialog"
-		style="width:550px;height:400px;padding:10px 20px 20px 20px;"
-		closed="true" >
-		<div>
-		<form id="dgform3" class="easyui-form" enctype="multipart/form-data"
-			method="post">
-			<input type="hidden" name="id" id="daId'>
-			<input type="text"  name="slzllist" id="slzllist">
-		<ul>
-			<li>业务原因：
-				<c:forEach items="${ywyys }" var="yw">
-				<input type="checkbox" id="ywyys" name="ywyys" value="${yw.dmz}" />${yw.dmms1 }</c:forEach>
-			</li>
-			<li>受理资料：
-				<c:forEach items="${slzls }" var="zl">
-					<p style="margin-left:55px;"><input type="checkbox" id="slzls" name="slzls" value="${zl.dmz}" />${zl.dmms1}</p>
-				</c:forEach>
-			</li>
-			<li>受理备注：<textarea name="slbz" cols="63" rows="5"></textarea></li>
-		</ul>
-		</div>
-		<div style="text-align: center;padding-top:25px;">
-			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
-				iconCls="icon-ok" onclick="zhuxiaoSure()" style="width:90px">保存</a>
-			<a href="javascript:void(0)" class="easyui-linkbutton"
-				iconCls="icon-cancel"
-				onclick="javascript:$('#dgformDiv3').dialog('close')"
-				style="width:90px">取消</a>
-		</div>
-		</form>
-	</div>
+
 </body>
 </html>

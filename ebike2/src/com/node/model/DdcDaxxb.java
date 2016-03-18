@@ -501,6 +501,7 @@ public class DdcDaxxb implements java.io.Serializable {
 		this.gdr = gdr;
 	}
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "GDRQ", length = 7)
 	public Date getGdrq() {
 		return this.gdrq;
