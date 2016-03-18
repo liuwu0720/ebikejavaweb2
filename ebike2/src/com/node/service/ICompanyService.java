@@ -109,4 +109,15 @@ public interface ICompanyService {
 	 */
 	List<DdcHyxhSsdw> getAllCompany(String hyxhzh);
 
+	/**
+	 * 方法描述：
+	 * 
+	 * @param zzjgdmzh
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月17日 上午10:07:41
+	 */
+	DdcHyxhSsdw queryByProperties(String zzjgdmzh);
+
 }

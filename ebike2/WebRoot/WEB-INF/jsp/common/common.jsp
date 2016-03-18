@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript"
-	src="<%=basePath%>static/js/jquery.min.js"></script>
+	src="<%=basePath%>static/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript"
 	src="<%=basePath%>static/js/jquery.easyui.min.js"></script>
 <script type="text/javascript"

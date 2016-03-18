@@ -70,4 +70,13 @@
 		<column name="SSDW_ID" type="Long"></column>
 		<column name="TRAN_DATE" type="Date"></column>
 	</table>
+	<table name="DDC_DAXXB_LOG" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+		<column name="ID" type="Long"></column>
+		<column name="TRAN_DATE" type="Date"></column>
+		<column name="XSQY" type="Date"></column>
+		<column name="SLRQ" type="Date"></column>
+	</table>
 </hibernate-reverse-engineering>

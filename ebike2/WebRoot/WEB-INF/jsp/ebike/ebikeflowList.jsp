@@ -27,8 +27,8 @@ $(document).ready(function(){
 	var randomNu = (new Date().getTime()) ^ Math.random();
 	$("#dg").datagrid({
 
-		url : "<%=basePath%>ebikeChangeAction/queryAll?time=" + randomNu,
-		title :  "电动车变更管理",
+		url : "<%=basePath%>ebikeWaterAction/queryAll?time=" + randomNu,
+		title :  "电动车档案查询",
 		iconCls : 'icon-danweixinxi',
 		striped : true,
 		fitColumns:true,   //数据列太少 未自适应
@@ -50,8 +50,8 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
-			field : 'DABH',
-			title : '档案编号',
+			field : 'LSH',
+			title : '流水号',
 			align:'center',
 			width : 220
 		},{
@@ -65,6 +65,28 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
+			field : 'YWLX',
+			title : '业务类型',
+			align:'center',
+			width : 120
+		},{
+			field : 'SSQY',
+			title : '所属区域',
+			align:'center',
+			width : 120
+		},{
+			field : 'SLYJ',
+			title : '受理意见',
+			align:'center',
+			width : 120,
+			formatter:function(value,index){
+				if(value == 0){
+					return "同意";
+				}else{
+					return "不同意";
+				}
+			}
+		},{
 			field : 'SLRQ',
 			title : '归档时间',
 			align:'center',
@@ -74,35 +96,14 @@ $(document).ready(function(){
 				return unixTimestamp.toLocaleString();
 			}   
 		},{
-			field : 'ZT',
-			title : '车辆状态',
-			align:'center',
-			width : 120,
-			formatter:function(value,index){
-				if(value == '注销'){
-					
-					return "<p style='color:red'>注销</p>";
-				}else{
-					return value;
-				}
-			}
-		},{
 			field : 'null',
 			title:'操作',
 			align:'center',
 			width : 120,
 			formatter:function(value,row,index){
 				
-				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; ";
-				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>变更</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;";
-				var del = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.ID+")'>注销</a>";
-				if(row.ZT == '注销'){
-					return query;	
-				}else{
-					return query+update+del;	
-				}
-							
-			
+				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>";
+				return query;	
 			}
 		}
 

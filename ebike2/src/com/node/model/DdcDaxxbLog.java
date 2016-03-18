@@ -10,30 +10,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
- * DdcFlow entity. @author MyEclipse Persistence Tools
+ * DdcDaxxbLog entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "DDC_FLOW")
-public class DdcFlow implements java.io.Serializable {
-
-	// Fields
+@Table(name = "DDC_DAXXB_LOG")
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+public class DdcDaxxbLog implements java.io.Serializable {
 
 	/* serialVersionUID: serialVersionUID */
-	private static final long serialVersionUID = 1944942817973566027L;
+	private static final long serialVersionUID = 5117158049244294570L;
+	// Fields
+
 	private Long id;
-	private String lsh;
+	private String dabh;
 	private String ywlx;
 	private String ywyy;
 	private String hyxhzh;
-	private String dabh;
 	private String zzjgdmzh;
+	private String zzjgdmzhName;
 	private String cphm;
 	private String ppxh;
 	private String cysy;
+	private String cysyName;
 	private String djh;
 	private String jtzz;
 	private String jsrxm1;
@@ -49,7 +50,10 @@ public class DdcFlow implements java.io.Serializable {
 	private String sfzmhm3;
 	private String lxdh3;
 	private String xsqy;
+	private String xsqyName;
 	private String bz;
+	private String zt;
+	private Date syrq;
 	private String slzl;
 	private String slyj;
 	private String slbz;
@@ -65,38 +69,43 @@ public class DdcFlow implements java.io.Serializable {
 	private String synFlag;
 	private String tranFlag;
 	private Date tranDate;
-	private String yclb;
+	private String czr;
+	private String czbm;
+	private Date czrq;
+	private String cznr;
 	private String vcEbikeImg;// 车身图片
 	private String vcUser1Img;// 驾驶人1图片
 	private String vcUser2Img;// 驾驶人2图片
+	private String vcShowEbikeImg;
+	private String vcShowUser1Img;
+	private String vcShowUser2Img;
 
 	// Constructors
 
 	/** default constructor */
-	public DdcFlow() {
+	public DdcDaxxbLog() {
 	}
 
 	/** minimal constructor */
-	public DdcFlow(String lsh) {
-		this.lsh = lsh;
+	public DdcDaxxbLog(String dabh) {
+		this.dabh = dabh;
 	}
 
 	/** full constructor */
-	public DdcFlow(String lsh, String ywlx, String ywyy, String hyxhzh,
-			String dabh, String zzjgdmzh, String cphm, String ppxh,
-			String cysy, String djh, String jtzz, String jsrxm1, String xb1,
-			String sfzmhm1, String lxdh1, String jsrxm2, String xb2,
-			String sfzmhm2, String lxdh2, String jsrxm3, String xb3,
-			String sfzmhm3, String lxdh3, String xsqy, String bz, String slzl,
-			String slyj, String slbz, String slr, Date slrq, String slbm,
-			String gdyj, String tbyy, String gdbz, String gdr, Date gdrq,
-			String gdbm, String synFlag, String tranFlag, Date tranDate,
-			String yclb) {
-		this.lsh = lsh;
+	public DdcDaxxbLog(String dabh, String ywlx, String ywyy, String hyxhzh,
+			String zzjgdmzh, String cphm, String ppxh, String cysy, String djh,
+			String jtzz, String jsrxm1, String xb1, String sfzmhm1,
+			String lxdh1, String jsrxm2, String xb2, String sfzmhm2,
+			String lxdh2, String jsrxm3, String xb3, String sfzmhm3,
+			String lxdh3, String xsqy, String bz, String zt, Date syrq,
+			String slzl, String slyj, String slbz, String slr, Date slrq,
+			String slbm, String gdyj, String tbyy, String gdbz, String gdr,
+			Date gdrq, String gdbm, String synFlag, String tranFlag,
+			Date tranDate, String czr, String czbm, Date czrq, String cznr) {
+		this.dabh = dabh;
 		this.ywlx = ywlx;
 		this.ywyy = ywyy;
 		this.hyxhzh = hyxhzh;
-		this.dabh = dabh;
 		this.zzjgdmzh = zzjgdmzh;
 		this.cphm = cphm;
 		this.ppxh = ppxh;
@@ -117,6 +126,8 @@ public class DdcFlow implements java.io.Serializable {
 		this.lxdh3 = lxdh3;
 		this.xsqy = xsqy;
 		this.bz = bz;
+		this.zt = zt;
+		this.syrq = syrq;
 		this.slzl = slzl;
 		this.slyj = slyj;
 		this.slbz = slbz;
@@ -132,14 +143,16 @@ public class DdcFlow implements java.io.Serializable {
 		this.synFlag = synFlag;
 		this.tranFlag = tranFlag;
 		this.tranDate = tranDate;
-		this.yclb = yclb;
+		this.czr = czr;
+		this.czbm = czbm;
+		this.czrq = czrq;
+		this.cznr = cznr;
 	}
 
 	// Property accessors
-	@SequenceGenerator(name = "DDC_FLOW", sequenceName = "SEQ_DDL_FLOW", allocationSize = 1)
+	@SequenceGenerator(name = "DDC_DAXXBLOG", sequenceName = "SEQ_DDC_DAXXB_LOG", allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_FLOW")
-	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
+	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_DAXXBLOG")
 	public Long getId() {
 		return this.id;
 	}
@@ -148,13 +161,13 @@ public class DdcFlow implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "LSH", nullable = false, length = 20)
-	public String getLsh() {
-		return this.lsh;
+	@Column(name = "DABH", nullable = false, length = 20)
+	public String getDabh() {
+		return this.dabh;
 	}
 
-	public void setLsh(String lsh) {
-		this.lsh = lsh;
+	public void setDabh(String dabh) {
+		this.dabh = dabh;
 	}
 
 	@Column(name = "YWLX", length = 20)
@@ -182,15 +195,6 @@ public class DdcFlow implements java.io.Serializable {
 
 	public void setHyxhzh(String hyxhzh) {
 		this.hyxhzh = hyxhzh;
-	}
-
-	@Column(name = "DABH", length = 20)
-	public String getDabh() {
-		return this.dabh;
-	}
-
-	public void setDabh(String dabh) {
-		this.dabh = dabh;
 	}
 
 	@Column(name = "ZZJGDMZH", length = 200)
@@ -373,6 +377,24 @@ public class DdcFlow implements java.io.Serializable {
 		this.bz = bz;
 	}
 
+	@Column(name = "ZT", length = 10)
+	public String getZt() {
+		return this.zt;
+	}
+
+	public void setZt(String zt) {
+		this.zt = zt;
+	}
+
+	@Column(name = "SYRQ", length = 7)
+	public Date getSyrq() {
+		return this.syrq;
+	}
+
+	public void setSyrq(Date syrq) {
+		this.syrq = syrq;
+	}
+
 	@Column(name = "SLZL", length = 100)
 	public String getSlzl() {
 		return this.slzl;
@@ -436,7 +458,7 @@ public class DdcFlow implements java.io.Serializable {
 		this.gdyj = gdyj;
 	}
 
-	@Column(name = "TBYY", length = 100)
+	@Column(name = "TBYY", length = 10)
 	public String getTbyy() {
 		return this.tbyy;
 	}
@@ -499,7 +521,6 @@ public class DdcFlow implements java.io.Serializable {
 		this.tranFlag = tranFlag;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TRAN_DATE", length = 7)
 	public Date getTranDate() {
 		return this.tranDate;
@@ -509,13 +530,40 @@ public class DdcFlow implements java.io.Serializable {
 		this.tranDate = tranDate;
 	}
 
-	@Column(name = "YCLB", length = 20)
-	public String getYclb() {
-		return this.yclb;
+	@Column(name = "CZR", length = 20)
+	public String getCzr() {
+		return this.czr;
 	}
 
-	public void setYclb(String yclb) {
-		this.yclb = yclb;
+	public void setCzr(String czr) {
+		this.czr = czr;
+	}
+
+	@Column(name = "CZBM", length = 20)
+	public String getCzbm() {
+		return this.czbm;
+	}
+
+	public void setCzbm(String czbm) {
+		this.czbm = czbm;
+	}
+
+	@Column(name = "CZRQ", length = 7)
+	public Date getCzrq() {
+		return this.czrq;
+	}
+
+	public void setCzrq(Date czrq) {
+		this.czrq = czrq;
+	}
+
+	@Column(name = "CZNR", length = 20)
+	public String getCznr() {
+		return this.cznr;
+	}
+
+	public void setCznr(String cznr) {
+		this.cznr = cznr;
 	}
 
 	@Column(name = "VC_EBIKE_IMG", length = 100)
@@ -555,6 +603,84 @@ public class DdcFlow implements java.io.Serializable {
 	 */
 	public void setVcUser2Img(String vcUser2Img) {
 		this.vcUser2Img = vcUser2Img;
+	}
+
+	@Transient
+	public String getZzjgdmzhName() {
+		return zzjgdmzhName;
+	}
+
+	/**
+	 * @param zzjgdmzhName
+	 *            : set the property zzjgdmzhName.
+	 */
+	public void setZzjgdmzhName(String zzjgdmzhName) {
+		this.zzjgdmzhName = zzjgdmzhName;
+	}
+
+	@Transient
+	public String getCysyName() {
+		return cysyName;
+	}
+
+	/**
+	 * @param cysyName
+	 *            : set the property cysyName.
+	 */
+	public void setCysyName(String cysyName) {
+		this.cysyName = cysyName;
+	}
+
+	@Transient
+	public String getXsqyName() {
+		return xsqyName;
+	}
+
+	/**
+	 * @param xsqyName
+	 *            : set the property xsqyName.
+	 */
+	public void setXsqyName(String xsqyName) {
+		this.xsqyName = xsqyName;
+	}
+
+	@Transient
+	public String getVcShowEbikeImg() {
+		return vcShowEbikeImg;
+	}
+
+	/**
+	 * @param vcShowEbikeImg
+	 *            : set the property vcShowEbikeImg.
+	 */
+	public void setVcShowEbikeImg(String vcShowEbikeImg) {
+		this.vcShowEbikeImg = vcShowEbikeImg;
+	}
+
+	@Transient
+	public String getVcShowUser1Img() {
+		return vcShowUser1Img;
+	}
+
+	/**
+	 * @param vcShowUser1Img
+	 *            : set the property vcShowUser1Img.
+	 */
+	public void setVcShowUser1Img(String vcShowUser1Img) {
+		this.vcShowUser1Img = vcShowUser1Img;
+	}
+
+	@Transient
+	public String getVcShowUser2Img() {
+		return vcShowUser2Img;
+	}
+
+	/**
+	 * @param vcShowUser2Img
+	 *            : set the property vcShowUser2Img.
+	 */
+	public void setVcShowUser2Img(String vcShowUser2Img) {
+		this.vcShowUser2Img = vcShowUser2Img;
 	}
 
 }

@@ -14,7 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcDaxxbDao;
+import com.node.dao.IDdcDaxxbLogDao;
+import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHyxhSsdwDao;
+import com.node.model.DdcDaxxb;
+import com.node.model.DdcDaxxbLog;
+import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhSsdw;
 import com.node.service.IEbikeService;
 import com.node.util.HqlHelper;
@@ -33,7 +38,13 @@ public class EbikeServiceImp implements IEbikeService {
 	IDdcDaxxbDao iDdcDaxxbDao;
 
 	@Autowired
+	IDdcDaxxbLogDao iDdcDaxxbLogDao;
+
+	@Autowired
 	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
+
+	@Autowired
+	IDdcFlowDao iDdcFlowDao;
 
 	/*
 	 * (non-Javadoc)
@@ -82,5 +93,51 @@ public class EbikeServiceImp implements IEbikeService {
 	public Map<String, Object> queryBySpringHql(String sql, Page p) {
 		// TODO Auto-generated method stub
 		return iDdcDaxxbDao.getSpringHql(sql, p);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#getById(long)
+	 */
+	@Override
+	public DdcDaxxb getById(long sbId) {
+		// TODO Auto-generated method stub
+		return iDdcDaxxbDao.get(sbId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#update(com.node.model.DdcDaxxb)
+	 */
+	@Override
+	public void update(DdcDaxxb daxxb) {
+		// TODO Auto-generated method stub
+		iDdcDaxxbDao.updateCleanBefore(daxxb);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#saveDdcDaxxbLog(com.node.model.DdcDaxxbLog
+	 * )
+	 */
+	@Override
+	public void saveDdcDaxxbLog(DdcDaxxbLog daxxbLog) {
+		// TODO Auto-generated method stub
+		iDdcDaxxbLogDao.save(daxxbLog);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#saveDdcFlow(com.node.model.DdcFlow)
+	 */
+	@Override
+	public void saveDdcFlow(DdcFlow ddcFlow) {
+		// TODO Auto-generated method stub
+		iDdcFlowDao.save(ddcFlow);
 	}
 }

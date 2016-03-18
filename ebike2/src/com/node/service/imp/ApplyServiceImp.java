@@ -156,15 +156,13 @@ public class ApplyServiceImp implements IApplyService {
 	 * com.node.service.IApplyService#findHmd(com.node.model.DdcHyxhSsdwclsb)
 	 */
 	@Override
-	public String findHmd(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
-		List<DdcHmd> ddcHmds1 = iDdcHmdDao.findByProperty("sfzhm",
-				ddcHyxhSsdwclsb.getSfzmhm1());
-		List<DdcHmd> ddcHmds2 = iDdcHmdDao.findByProperty("sfzhm",
-				ddcHyxhSsdwclsb.getSfzmhm2());
+	public String findHmd(String man1, String man2) {
+		List<DdcHmd> ddcHmds1 = iDdcHmdDao.findByProperty("sfzhm", man1);
+		List<DdcHmd> ddcHmds2 = iDdcHmdDao.findByProperty("sfzhm", man2);
 		if (ddcHmds1 != null && ddcHmds1.size() > 0) {
-			return "身份证【" + ddcHyxhSsdwclsb.getSfzmhm1() + "】在黑名单里，不能申报";
+			return "身份证【" + man1 + "】在黑名单里，不能申报";
 		} else if (ddcHmds2 != null && ddcHmds2.size() > 0) {
-			return "身份证【" + ddcHyxhSsdwclsb.getSfzmhm2() + "】在黑名单里，不能申报";
+			return "身份证【" + man2 + "】在黑名单里，不能申报";
 		} else {
 			return "success";
 		}
@@ -179,6 +177,17 @@ public class ApplyServiceImp implements IApplyService {
 	public DdcHyxhSsdwclsb getDdcHyxhSsdwclsbById(long sbId) {
 		// TODO Auto-generated method stub
 		return iDdcHyxhSsdwclsbDao.get(sbId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#getSjzdByDmlb(java.lang.String)
+	 */
+	@Override
+	public List<DdcSjzd> getSjzdByDmlb(String string) {
+		// TODO Auto-generated method stub
+		return iDdcSjzdDao.findByProperty("dmlb", string);
 	}
 
 }

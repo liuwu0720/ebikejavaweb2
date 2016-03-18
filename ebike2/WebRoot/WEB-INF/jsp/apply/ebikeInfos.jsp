@@ -176,7 +176,8 @@ function addRowData(){
 	    	$('#pe').html("剩余配额："+row.dwpe);
 	    }
 	}); 
-
+	
+	
 
 
 	
@@ -195,7 +196,10 @@ function addRowData(){
 		    value:"请选择"   //默认选中的值       
 	})
 	
-	$('#xb1,#xb2,#jtzz').combobox({
+	$('#xb1,#xb2').combobox({
+		value:-1
+	});
+	$('#jtzz').combobox({
 		value:0
 	});
 	$("#file_tr1,#file_tr2").hide();
@@ -210,13 +214,28 @@ function queryRow(id){
 	   }, 
 	   dataType: "json",
 	   success:function(data){
- 			 
+		   		
  			  if(data){
  				 $('#dgformDiv2').dialog('open').dialog('setTitle', '详情信息');
+ 				$('#dgform2').form('clear');
  				 $('#dgform2').form('load', data);
- 				 $("#img_0").attr("src",data.vcShowEbikeImg);
- 				 $("#img1_1").attr("src",data.vcShowUser1Img);
- 				 $("#img2_2").attr("src",data.vcShowUser2Img);
+ 					
+ 					if(data.vcShowEbikeImg == null){
+ 						 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
+ 					}else{
+ 						$("#img_0").attr("src",data.vcShowEbikeImg);
+ 					}
+ 					if(data.vcShowUser2Img == null){
+						 $("#img2_2").attr("src","<%=basePath%>static/images/iconfont-wu.png");
+					}else{
+						$("#img2_2").attr("src",data.vcShowUser2Img);
+					}
+ 					if(data.vcShowUser1Img == null){
+						 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
+					}else{
+						$("#img1_1").attr("src",data.vcShowUser1Img);
+					}
+ 				
  			  }
  		  }
 	})
@@ -430,7 +449,7 @@ function exportRowData(){
 	<!-- 点新增，编辑时弹出的表单 -->
 	<div id="dgformDiv" class="easyui-dialog"
 		style="width:850px;height:550px;padding:10px 20px 20px 20px;"
-		closed="true" buttons="#dlg-buttons2">
+		closed="true">
 		<form id="dgform" class="easyui-form" enctype="multipart/form-data"
 			method="post">
 			<table class="table">
@@ -477,15 +496,16 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>驾驶人性别1</td>
-					<td><select id="xb1" class="easyui-combobox" name="xb1" required="true"  
-						style="height:32px;width: 50px;">
+					<td><select id="xb1" class="easyui-combobox" name="xb2" required="false"  
+						style="height:32px;width: 100px;">
+						    <option value="-1">--请选择--</option>
 							<option value="0">男</option>
 							<option value="1">女</option>
 					</select></td>
-
 					<td>驾驶人性别2</td>
 					<td><select id="xb2" class="easyui-combobox" name="xb2" required="false"  
-						style="height:32px;width: 50px;">
+						style="height:32px;width: 100px;">
+						    <option value="-1">--请选择--</option>
 							<option value="0">男</option>
 							<option value="1">女</option>
 					</select></td>
@@ -525,16 +545,13 @@ function exportRowData(){
 					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
 				</tr>
 				<tr id="file_tr1">
-					<td colspan="2"><img id="img1" class="easyui-validatebox"
-						style="width:300px" /></td>
-					<td colspan="2"><img id="img2" class="easyui-validatebox"
-						style="width:300px" /><br /></td>
+					<td colspan="2"><div  class="imgdiv"><p>驾驶人1</p><img id="img1" /></div></td>
+					<td colspan="2"><div  class="imgdiv"><p>驾驶人2</p><img id="img2"/></div></td>
 
 				</tr>
 				<tr id="file_tr2">
 					<td>车身照片</td>
-					<td colspan="3"><img id="img" class="easyui-validatebox"
-						style="width:300px" /></td>
+					<td colspan="3"><div  class="imgdiv"><img id="img"  /></div></td>
 				</tr>
 			</table>
 			<input class="easyui-validatebox" type="hidden" name="vcEbikeImg"
@@ -546,7 +563,7 @@ function exportRowData(){
 			<input class="easyui-validatebox" type="hidden" name="lsh"
 				style="height: 32px">
 		</form>
-		<div id="dlg-buttons2">
+		<div>
 			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
 				iconCls="icon-ok" onclick="updateSaveData()" style="width:90px">保存</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton"
@@ -604,14 +621,16 @@ function exportRowData(){
 				<tr>
 					<td>驾驶人性别1</td>
 					<td><select  class="easyui-combobox" name="xb1"   readonly="readonly"
-						style="height:32px;width: 50px;">
+						style="height:32px;width: 100px;">
+							 <option value="-1">--请选择--</option>
 							<option value="0">男</option>
 							<option value="1">女</option>
 					</select></td>
 
 					<td>驾驶人性别2</td>
 					<td><select id="xb2" class="easyui-combobox" name="xb2"    readonly="readonly"
-						style="height:32px;width: 50px;">
+						style="height:32px;width: 100px;">
+						 <option value="-1">--请选择--</option>
 							<option value="0">男</option>
 							<option value="1">女</option>
 					</select></td>
@@ -642,17 +661,21 @@ function exportRowData(){
 					<td>备注</td>
 					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
 				</tr>
-				<tr id="file_tr1">
-					<td colspan="2"><img id="img1_1" class="easyui-validatebox"
-						style="width:300px" /></td>
-					<td colspan="2"><img id="img2_2" class="easyui-validatebox"
-						style="width:300px" /><br /></td>
+				<tr>
+					<td colspan="2">
+					<div  class="imgdiv">
+					<p>驾驶人1</p><img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"
+						/></div>
+					</td>
+					<td colspan="2">
+					<div  class="imgdiv">
+					<p>驾驶人2</p><img id="img2_2" src="<%=basePath%>static/images/iconfont-wu.png" /></div></td>
 
 				</tr>
-				<tr id="file_tr2">
+				<tr>
 					<td>车身照片</td>
-					<td colspan="3"><img id="img_0" class="easyui-validatebox"
-						style="width:300px" /></td>
+					<td colspan="3"><div  class="imgdiv">
+					<img id="img_0"  src="<%=basePath%>static/images/iconfont-wu.png" /></div></td>
 				</tr>
 			</table>
 		</form>

@@ -9,6 +9,9 @@ package com.node.service;
 
 import java.util.Map;
 
+import com.node.model.DdcDaxxb;
+import com.node.model.DdcDaxxbLog;
+import com.node.model.DdcFlow;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
 
@@ -65,5 +68,46 @@ public interface IEbikeService {
 	 * @version: 2016年3月16日 下午6:36:16
 	 */
 	Map<String, Object> queryBySpringHql(String sql, Page p);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param sbId
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月17日 上午10:02:03
+	 */
+	DdcDaxxb getById(long sbId);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param daxxb
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月17日 下午7:51:13
+	 */
+	void update(DdcDaxxb daxxb);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param daxxbLog
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月17日 下午8:11:46
+	 */
+	void saveDdcDaxxbLog(DdcDaxxbLog daxxbLog);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcFlow
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月17日 下午10:06:10
+	 */
+	void saveDdcFlow(DdcFlow ddcFlow);
 
 }

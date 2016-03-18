@@ -124,7 +124,7 @@ public interface IApplyService {
 	 * @author: liuwu
 	 * @version: 2016年3月15日 下午6:37:47
 	 */
-	String findHmd(DdcHyxhSsdwclsb ddcHyxhSsdwclsb);
+	String findHmd(String man1, String man2);
 
 	/**
 	 * 方法描述：
@@ -136,5 +136,16 @@ public interface IApplyService {
 	 * @version: 2016年3月15日 下午6:48:09
 	 */
 	DdcHyxhSsdwclsb getDdcHyxhSsdwclsbById(long sbId);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param string代码类别
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月17日 下午3:39:40
+	 */
+	List<DdcSjzd> getSjzdByDmlb(String string);
 
 }

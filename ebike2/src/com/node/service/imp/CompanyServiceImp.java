@@ -138,4 +138,22 @@ public class CompanyServiceImp implements ICompanyService {
 		return iDdcHyxhSsdwDao.findByProperty("hyxhzh", hyxhzh);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.ICompanyService#queryByProperties(java.lang.String)
+	 */
+	@Override
+	public DdcHyxhSsdw queryByProperties(String zzjgdmzh) {
+		List<DdcHyxhSsdw> ddcHyxhSsdws = iDdcHyxhSsdwDao.findByProperty(
+				"zzjgdmzh", zzjgdmzh);
+		if (ddcHyxhSsdws != null && ddcHyxhSsdws.size() > 0) {
+			return ddcHyxhSsdws.get(0);
+
+		} else {
+			return null;
+		}
+
+	}
+
 }

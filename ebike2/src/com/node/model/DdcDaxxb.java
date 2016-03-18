@@ -25,6 +25,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "DDC_DAXXB", uniqueConstraints = @UniqueConstraint(columnNames = "DABH"))
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class DdcDaxxb implements java.io.Serializable {
 
 	// Fields
@@ -34,13 +35,16 @@ public class DdcDaxxb implements java.io.Serializable {
 	private Long id;
 	private String dabh;// 新进入的数据，自动生成档案编号4403 00000001；老数据去更新
 	private String ywlx;// 业务类型
+	private String ywlxName;
 	private String ywyy;// 业务原因
+	private String ywyyName;
 	private String hyxhzh;//
 	private String zzjgdmzh;// 组织机构代码证号
 	private String zzjgdmzhName;
 	private String cphm;// 车牌号码，办结后，以流水转入本表的车牌号码数据填充本表
 	private String ppxh;// 品牌型号
 	private String cysy;// 车身验色
+	private String cysyName;
 	private String djh;// 电机号
 	private String jtzz;// 脚踏装置（有、无）
 	private String jsrxm1;// 驾驶人姓名1
@@ -56,6 +60,7 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String sfzmhm3;// 身份证号码3
 	private String lxdh3;// 联系电话3
 	private String xsqy;// 行驶区域(福田区、罗湖区.....)
+	private String xsqyName;
 	private String bz;// 备注
 	private String zt;// 车辆状态 填字典
 	private String ztName;
@@ -75,6 +80,12 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String synFlag;// 同步标志,填写规则详看其他文档
 	private String tranFlag;// 传送标志(该字段必须有索引)
 	private Date tranDate;// 传送时间
+	private String vcEbikeImg;// 车身图片
+	private String vcUser1Img;// 驾驶人1图片
+	private String vcUser2Img;// 驾驶人2图片
+	private String vcShowEbikeImg;
+	private String vcShowUser1Img;
+	private String vcShowUser2Img;
 
 	// Constructors
 
@@ -560,6 +571,136 @@ public class DdcDaxxb implements java.io.Serializable {
 	 */
 	public void setZtName(String ztName) {
 		this.ztName = ztName;
+	}
+
+	@Column(name = "VC_EBIKE_IMG", length = 100)
+	public String getVcEbikeImg() {
+		return vcEbikeImg;
+	}
+
+	/**
+	 * @param vcEbikeImg
+	 *            : set the property vcEbikeImg.
+	 */
+	public void setVcEbikeImg(String vcEbikeImg) {
+		this.vcEbikeImg = vcEbikeImg;
+	}
+
+	@Column(name = "VC_USER1IMG", length = 100)
+	public String getVcUser1Img() {
+		return vcUser1Img;
+	}
+
+	/**
+	 * @param vcUser1Img
+	 *            : set the property vcUser1Img.
+	 */
+	public void setVcUser1Img(String vcUser1Img) {
+		this.vcUser1Img = vcUser1Img;
+	}
+
+	@Column(name = "VC_USER2IMG", length = 100)
+	public String getVcUser2Img() {
+		return vcUser2Img;
+	}
+
+	/**
+	 * @param vcUser2Img
+	 *            : set the property vcUser2Img.
+	 */
+	public void setVcUser2Img(String vcUser2Img) {
+		this.vcUser2Img = vcUser2Img;
+	}
+
+	@Transient
+	public String getVcShowEbikeImg() {
+		return vcShowEbikeImg;
+	}
+
+	/**
+	 * @param vcShowEbikeImg
+	 *            : set the property vcShowEbikeImg.
+	 */
+	public void setVcShowEbikeImg(String vcShowEbikeImg) {
+		this.vcShowEbikeImg = vcShowEbikeImg;
+	}
+
+	@Transient
+	public String getVcShowUser1Img() {
+		return vcShowUser1Img;
+	}
+
+	/**
+	 * @param vcShowUser1Img
+	 *            : set the property vcShowUser1Img.
+	 */
+	public void setVcShowUser1Img(String vcShowUser1Img) {
+		this.vcShowUser1Img = vcShowUser1Img;
+	}
+
+	@Transient
+	public String getVcShowUser2Img() {
+		return vcShowUser2Img;
+	}
+
+	/**
+	 * @param vcShowUser2Img
+	 *            : set the property vcShowUser2Img.
+	 */
+	public void setVcShowUser2Img(String vcShowUser2Img) {
+		this.vcShowUser2Img = vcShowUser2Img;
+	}
+
+	@Transient
+	public String getCysyName() {
+		return cysyName;
+	}
+
+	/**
+	 * @param cysyName
+	 *            : set the property cysyName.
+	 */
+	public void setCysyName(String cysyName) {
+		this.cysyName = cysyName;
+	}
+
+	@Transient
+	public String getXsqyName() {
+		return xsqyName;
+	}
+
+	/**
+	 * @param xsqyName
+	 *            : set the property xsqyName.
+	 */
+	public void setXsqyName(String xsqyName) {
+		this.xsqyName = xsqyName;
+	}
+
+	@Transient
+	public String getYwlxName() {
+		return ywlxName;
+	}
+
+	/**
+	 * @param ywlxName
+	 *            : set the property ywlxName.
+	 */
+	public void setYwlxName(String ywlxName) {
+		this.ywlxName = ywlxName;
+	}
+
+	@Transient
+	public String getYwyyName() {
+		return ywyyName;
+	}
+
+	/**
+	 * @param ywyyName
+	 *            : set the property ywyyName.
+	 */
+	public void setYwyyName(String ywyyName) {
+		this.ywyyName = ywyyName;
 	}
 
 }

@@ -308,7 +308,8 @@ public class ApplyAction {
 		/**
 		 * 检查黑名单
 		 */
-		String message = iApplyService.findHmd(ddcHyxhSsdwclsb);
+		String message = iApplyService.findHmd(ddcHyxhSsdwclsb.getJsrxm1(),
+				ddcHyxhSsdwclsb.getJsrxm2());
 		if (!message.equals("success")) {
 			AjaxUtil.rendJson(response, false, message);
 			return;
