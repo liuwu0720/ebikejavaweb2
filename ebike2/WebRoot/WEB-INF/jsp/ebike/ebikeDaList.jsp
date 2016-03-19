@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 		url : "<%=basePath%>ebikeQueryAction/queryAll?time=" + randomNu,
 		title :  "电动车档案查询管理",
-		iconCls : 'icon-danweixinxi',
+		iconCls : 'icon-search',
 		striped : true,
 		fitColumns:true,   //数据列太少 未自适应
 		pagination : true,

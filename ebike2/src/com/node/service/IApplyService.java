@@ -10,6 +10,7 @@ package com.node.service;
 import java.util.List;
 import java.util.Map;
 
+import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.DdcHyxhSsdwclsbLog;
 import com.node.model.DdcSjzd;
@@ -147,5 +148,26 @@ public interface IApplyService {
 	 * @version: 2016年3月17日 下午3:39:40
 	 */
 	List<DdcSjzd> getSjzdByDmlb(String string);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param sbId
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月19日 下午12:18:08
+	 */
+	DdcHyxhBasb getDdcHyxhBasbById(long sbId);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhBasb
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月19日 下午1:53:05
+	 */
+	void saveDdcHyxhBasb(DdcHyxhBasb ddcHyxhBasb);
 
 }

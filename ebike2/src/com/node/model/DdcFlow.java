@@ -20,6 +20,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "DDC_FLOW")
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class DdcFlow implements java.io.Serializable {
 
 	// Fields

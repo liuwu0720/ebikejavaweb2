@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'companyInfos.jsp' starting page</title>
+<title>电动车备案申报管理</title>
 
 <%@include file="../common/common.jsp"%>
 
@@ -164,6 +164,7 @@ function doSearch(){
 //新增弹出
 function addRowData(){
 	$('#dgform').form('clear');
+	$('#dw').attr("readonly",false);
 	$('#dgformDiv').dialog('open').dialog('setTitle', '新增用户');
 	//所属单位
 	$('#dw').combobox({    
@@ -245,6 +246,8 @@ function queryRow(id){
 function updateRow(id){
 	$('#dgform').form('clear');
 	$("#file_tr1,#file_tr2").show();
+	$('#pe').hide();
+	$('#dw').attr("readonly",true);
 	$.ajax({
 		type: "GET",
    	    url: "<%=basePath%>applyAction/queryInfoById",
@@ -253,7 +256,6 @@ function updateRow(id){
 	   }, 
 	   dataType: "json",
 	   success:function(data){
- 			 console.log(data);
  			  if(data){
  				 $('#dgformDiv').dialog('open').dialog('setTitle', '详情信息');
  				 $('#dgform').form('load', data);
@@ -460,7 +462,7 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>申报单位：</td>
-					<td><input id="dw" name="ssdwId" style="height:30px;"><span id="pe" style="color: red;display: none"></span></td>
+					<td><input id="dw" name="ssdwId" style="height:30px;width: 200px;"><span id="pe" style="color: red;display: none"></span></td>
 					<td>车身照片</td>
 					<td><input  type="file" id="file_upload"
 						name="file_upload" /><br /></td>
@@ -496,7 +498,7 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>驾驶人性别1</td>
-					<td><select id="xb1" class="easyui-combobox" name="xb2" required="false"  
+					<td><select id="xb1" class="easyui-combobox" name="xb1" required="true"  
 						style="height:32px;width: 100px;">
 						    <option value="-1">--请选择--</option>
 							<option value="0">男</option>

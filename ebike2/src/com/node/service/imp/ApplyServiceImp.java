@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcHmdDao;
+import com.node.dao.IDdcHyxhBasbDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IDdcHyxhSsdwclsbLogDao;
 import com.node.dao.IDdcSjzdDao;
 import com.node.model.DdcHmd;
+import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.DdcHyxhSsdwclsbLog;
 import com.node.model.DdcSjzd;
@@ -46,6 +48,9 @@ public class ApplyServiceImp implements IApplyService {
 
 	@Autowired
 	IDdcHyxhSsdwclsbLogDao iDdcHyxhSsdwclsbLogDao;
+
+	@Autowired
+	IDdcHyxhBasbDao iDdcHyxhBasbDao;
 
 	/*
 	 * (non-Javadoc)
@@ -188,6 +193,30 @@ public class ApplyServiceImp implements IApplyService {
 	public List<DdcSjzd> getSjzdByDmlb(String string) {
 		// TODO Auto-generated method stub
 		return iDdcSjzdDao.findByProperty("dmlb", string);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#getDdcHyxhBasbById(long)
+	 */
+	@Override
+	public DdcHyxhBasb getDdcHyxhBasbById(long sbId) {
+		// TODO Auto-generated method stub
+		return iDdcHyxhBasbDao.get(sbId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IApplyService#saveDdcHyxhBasb(com.node.model.DdcHyxhBasb
+	 * )
+	 */
+	@Override
+	public void saveDdcHyxhBasb(DdcHyxhBasb ddcHyxhBasb) {
+		// TODO Auto-generated method stub
+		iDdcHyxhBasbDao.save(ddcHyxhBasb);
 	}
 
 }

@@ -8,6 +8,7 @@
 package com.node.action;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,6 +96,7 @@ public class MainAction {
 				nodeHyxhMenus.add(hyxhMenu);
 			}
 		}
+		Collections.sort(hyxhMenus);
 		for (HyxhMenu hyxhMenu : nodeHyxhMenus) {
 			for (HyxhMenu subMenu : hyxhMenus) {
 				if (subMenu.getiPid().equals(hyxhMenu.getId())) {

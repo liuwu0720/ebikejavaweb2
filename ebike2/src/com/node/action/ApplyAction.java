@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
@@ -84,6 +85,119 @@ public class ApplyAction {
 	public String getAll() {
 		return "apply/ebikeInfos";
 
+	}
+
+	/**
+	 * 
+	 * 方法描述：配额申报
+	 * 
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月19日 上午9:48:46
+	 */
+	@RequestMapping("/applyQtys")
+	public String applyQtys(HttpServletRequest request) {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute("ddcHyxhBase");
+		request.setAttribute("ddcHyxhBase", ddcHyxhBase);
+		return "apply/ebikeQtys";
+	}
+
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param request
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月19日 上午10:29:57
+	 * @throws ParseException
+	 */
+	@RequestMapping("/queryAllQtys")
+	@ResponseBody
+	public Map<String, Object> queryAllQtys(HttpServletRequest request,
+			String dtend, String dtstart) throws ParseException {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute("ddcHyxhBase");
+		Page p = ServiceUtil.getcurrPage(request);
+		HqlHelper hql = new HqlHelper(DdcHyxhBasb.class);
+		hql.addEqual("hyxhzh", ddcHyxhBase.getHyxhzh());
+		if (StringUtils.isNotBlank(dtstart)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			hql.addGreatThan("sqrq", sdf.parse(dtstart));
+		}
+		if (StringUtils.isNotBlank(dtend)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			hql.addLessThan("sqrq", sdf.parse(dtend));
+		}
+
+		hql.setQueryPage(p);
+		Map<String, Object> resultMap = iCompanyService.queryByHql(hql);
+
+		return resultMap;
+	}
+
+	/**
+	 * 
+	 * 方法描述：配额申请保存
+	 * 
+	 * @param request
+	 * @param bz
+	 * @param id
+	 * @param hyxhsqpe
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月19日 上午11:35:43
+	 */
+	@RequestMapping("/saveOrUpdateQty")
+	public void saveOrUpdateQty(HttpServletRequest request,
+			HttpServletResponse response, String bz, String hyxhsqpe) {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute("ddcHyxhBase");
+		DdcHyxhBasb ddcHyxhBasb = new DdcHyxhBasb();
+		// 生成流水号
+		String sql = "select SEQ_HYXH_SSDWCLSB_XH.nextval from dual";
+		Object object = iApplyService.getDateBySQL(sql);
+		String seq = object.toString();
+		String md = new SimpleDateFormat("yyMMdd").format(new Date());
+		ddcHyxhBasb.setLsh("F" + md + seq);
+		ddcHyxhBasb.setBz(bz);
+		ddcHyxhBasb.setSqr(ddcHyxhBase.getHyxhzh());
+		ddcHyxhBasb.setSqrq(new Date());
+		ddcHyxhBasb.setHyxhsqpe(Integer.parseInt(hyxhsqpe));
+		ddcHyxhBasb.setHyxhzh(ddcHyxhBase.getHyxhzh());
+		ddcHyxhBasb.setHyxhmc(ddcHyxhBase.getHyxhmc());
+		try {
+
+			iApplyService.saveDdcHyxhBasb(ddcHyxhBasb);
+			AjaxUtil.rendJson(response, true, "操作成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			AjaxUtil.rendJson(response, false, "操作失败！系统错误");
+		}
+	}
+
+	/**
+	 * 
+	 * 方法描述：查询配额申报详情
+	 * 
+	 * @param response
+	 * @param request
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月19日 下午2:29:22
+	 */
+	@RequestMapping("/queryDdcHyxhBasbById")
+	@ResponseBody
+	public DdcHyxhBasb queryDdcHyxhBasbById(HttpServletResponse response,
+			HttpServletRequest request, String id) {
+		long sbId = Long.parseLong(id);
+		DdcHyxhBasb ddcHyxhBasb = iApplyService.getDdcHyxhBasbById(sbId);
+		return ddcHyxhBasb;
 	}
 
 	/**

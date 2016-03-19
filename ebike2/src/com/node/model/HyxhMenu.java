@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "HYXH_MENU")
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
-public class HyxhMenu implements java.io.Serializable {
+public class HyxhMenu implements java.io.Serializable, Comparable {
 
 	/* serialVersionUID: serialVersionUID */
 	private static final long serialVersionUID = 8279518359997118346L;
@@ -118,6 +118,20 @@ public class HyxhMenu implements java.io.Serializable {
 	 */
 	public void setSubhHyxhMenus(List<HyxhMenu> subhHyxhMenus) {
 		this.subhHyxhMenus = subhHyxhMenus;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Object o) {
+		if (this.getnIndex() > ((HyxhMenu) o).getnIndex()) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
 
 }

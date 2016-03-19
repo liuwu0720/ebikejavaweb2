@@ -193,9 +193,9 @@ $(document).ready(function(){
 		<form id="dgform" class="easyui-form" method="post"  >
 			<table class="table">
 				<tr>
-					<td>单位配额:</td>
+					<td>申请配额:</td>
 					<td><input id="ss" class="easyui-numberspinner" name="dwpe"
-						data-options="increment:1,editable:false"  min="0"
+						data-options="increment:1,editable:false,required:true,validType:'number'"  min="0"
 						style="width:120px;height:30px;"></input></td>
 				</tr>
 			</table>

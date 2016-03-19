@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'companyInfos.jsp' starting page</title>
+<title>业务流水查询</title>
 
 <%@include file="../common/common.jsp"%>
 
@@ -28,8 +28,8 @@ $(document).ready(function(){
 	$("#dg").datagrid({
 
 		url : "<%=basePath%>ebikeWaterAction/queryAll?time=" + randomNu,
-		title :  "电动车档案查询",
-		iconCls : 'icon-danweixinxi',
+		title :  "业务流水查询",
+		iconCls : 'icon-search',
 		striped : true,
 		fitColumns:true,   //数据列太少 未自适应
 		pagination : true,
@@ -189,7 +189,7 @@ function queryRow(id){
 			<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>业务类型</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="ywlx">
-					<option value="">未同步</option>
+					<option value="">--请选择--</option>
 					<c:forEach items="${ywylxs }" var="lx">
 						<option value="${lx.dmz }">${lx.dmms1 }</option>
 					</c:forEach>

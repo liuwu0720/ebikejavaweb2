@@ -11,7 +11,7 @@
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'companyInfos.jsp' starting page</title>
+    <title>所属单位信息管理</title>
     
 	<%@include file="../common/common.jsp"%>
 
@@ -343,7 +343,7 @@ function changeRowData(){
 				</tr>
 				<tr>
 					<td>单位配额</td>
-					<td><input id="ss" class="easyui-numberspinner" name="dwpe" data-options="increment:1" value="0" min="0" style="width:120px;height:30px;"></input>
+					<td><input id="ss" class="easyui-numberspinner" name="dwpe" data-options="increment:1,required:true,validType:'number'" value="0" min="0" style="width:120px;height:30px;"></input>
 					</td>
 				</tr>
 				<tr>
@@ -416,7 +416,7 @@ function changeRowData(){
 					</td>
 				</tr>
 				<tr>
-					<td>图片</td>
+					<td>营业执照图片</td>
 					<td>
 						<img id="img2"  class="easyui-validatebox" style="width:300px"   /><br/>
 					</td>
