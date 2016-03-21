@@ -12,9 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>配额申请</title>
   <%@include file="../common/common.jsp"%>
   <style type="text/css">
-  	#dgformDiv2 input{
-  	border-left:0px;border-top:0px;border-right:0px;border-bottom:1px ;
-  	}
+  
   
   </style>
   	
