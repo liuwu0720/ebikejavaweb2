@@ -100,4 +100,16 @@
 		<column name="KLDSPRQ" type="Date"></column>
 	</table>
 
+	<table name="DDC_HMD" schema="EBIKEIN">
+		<primary-key>
+			<generator class="sequence"></generator>
+			<key-column name="ID" type="Long" />
+		</primary-key>
+		<column name="TRAN_DATE" type="Date"></column>
+	</table>
+<table name="DDC_APPROVE_USER" schema="EBIKEOUT">
+	<primary-key>
+		<generator class="sequence"></generator>
+	</primary-key>
+</table>
 </hibernate-reverse-engineering>

@@ -52,5 +52,9 @@ public class SystemConstants {
 	 * 最大文件
 	 */
 	public static final long MAXFILESIZE = 10;
+	/**
+	 * session
+	 */
+	public static final String JTUSER = "ddcHyxhBase";
 
 }

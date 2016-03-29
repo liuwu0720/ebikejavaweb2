@@ -1,11 +1,11 @@
 #MyEclipse Hibernate Properties
-#Mon Mar 21 10:24:09 GMT+08:00 2016
+#Mon Mar 28 16:33:51 GMT+08:00 2016
 genBasicCompId=true
 sessionFactoryName=com.clt.finance.model.HibernateSessionFactory
 profile=
 daoSFId=
 jndiPath=
-detectM2M=false
+detectM2M=true
 reStrategyClass=
 detectO2O=false
 springDaoFile=

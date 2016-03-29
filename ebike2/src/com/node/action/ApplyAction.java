@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -551,7 +552,7 @@ public class ApplyAction {
 				return null;
 			}
 			String path = source;
-			String jpgPath = file.getOriginalFilename();
+			String jpgPath = UUID.randomUUID() + file.getOriginalFilename();
 
 			File pathFile = new File(path, jpgPath);
 			if (!pathFile.exists()) {
@@ -625,7 +626,7 @@ public class ApplyAction {
 			ddcHyxhSsdwclsbs.add(ddcHyxhSsdwclsb);
 		}
 
-		String filename = "ebike";
+		String filename = "ebike" + UUID.randomUUID();
 		String basePath = request.getSession().getServletContext()
 				.getRealPath("/static/downexcel");
 		String basePath2 = request.getScheme() + "://"

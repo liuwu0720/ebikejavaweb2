@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -321,7 +322,7 @@ public class CompanyAction {
 				return null;
 			}
 			String path = source;
-			String jpgPath = file.getOriginalFilename();
+			String jpgPath = UUID.randomUUID() + file.getOriginalFilename();
 			File pathFile = new File(path, jpgPath);
 			if (!pathFile.exists()) {
 				pathFile.mkdirs();

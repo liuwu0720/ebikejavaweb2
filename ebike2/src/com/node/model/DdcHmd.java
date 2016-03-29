@@ -12,21 +12,16 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * 
- * 类描述：黑名单信息表：由内网录入同步过来
- * 
- * @version: 1.0
- * @author: liuwu
- * @version: 2016年3月15日 下午2:19:04
+ * DdcHmd entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "DDC_HMD")
 public class DdcHmd implements java.io.Serializable {
 
+	/* serialVersionUID: serialVersionUID */
+	private static final long serialVersionUID = 5176637778815769903L;
 	// Fields
 
-	/* serialVersionUID: serialVersionUID */
-	private static final long serialVersionUID = 3666407019996062418L;
 	private Long id;
 	private String jsrxm;
 	private String sfzhm;
@@ -64,8 +59,8 @@ public class DdcHmd implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@Id
 	@SequenceGenerator(name = "DDC_HMD", sequenceName = "SEQ_DDC_HMD", allocationSize = 1)
+	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_HMD")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {

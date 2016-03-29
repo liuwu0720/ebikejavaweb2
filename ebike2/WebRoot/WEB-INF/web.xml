@@ -18,6 +18,20 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping> -->
+	
+	 <!-- 系统过滤器 -->
+ <filter>
+  <filter-name>sysFilter</filter-name>
+  <filter-class>com.node.filter.SysFilter</filter-class>
+  <init-param>
+   <param-name>exclude</param-name>
+   <param-value>/|/index.jsp|*.css|*.js|*.gif|*.png|*.jpg|/makeCodePic.jsp|/userAction/checkUser</param-value>
+  </init-param>
+ </filter>
+ <filter-mapping>
+  <filter-name>sysFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+ </filter-mapping>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
