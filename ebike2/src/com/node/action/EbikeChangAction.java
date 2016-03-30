@@ -187,7 +187,7 @@ public class EbikeChangAction {
 		List<DdcSjzd> colorsSjzds = iApplyService.getSjzdByDmlb("CSYS");// 车身颜色
 		List<DdcSjzd> bgDataSjzds = iApplyService.getSjzdByDmlb("BGSQZL");// 变更申请资料
 		List<DdcSjzd> ssqySjzds = iApplyService.getSjzdByDmlb("SSQY");// 所属区域
-		List<DdcSjzd> gdDataSjzds = iApplyService.getSjzdByDmlb("BASQZL");// 备案申请资料\归档资料
+		List<DdcSjzd> gdDataSjzds = iApplyService.getSjzdByDmlb("BASQZL");// 备案申请资料\归档资料退
 		request.setAttribute("colorsSjzds", colorsSjzds);
 		request.setAttribute("bgDataSjzds", bgDataSjzds);
 		request.setAttribute("ssqySjzds", ssqySjzds);

@@ -37,6 +37,7 @@ $(document).ready(function(){
 		singleSelect : true,//只选中单行
 		pageSize : size,
 		height : h,
+		width:w,
 		loadMsg : '正在加载,请稍等...',
 		columns : [ [
 					{
