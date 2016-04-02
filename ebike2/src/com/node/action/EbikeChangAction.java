@@ -347,8 +347,8 @@ public class EbikeChangAction {
 			newDaxxb.setVcUser2Img(daxxb.getVcUser2Img());
 		}
 		try {
-
-			saveDdcFlow(newDaxxb, slzls, null);
+			String type = "B";
+			saveDdcFlow(type, newDaxxb, slzls, null);
 
 			// 保存日志
 			saveDaxxblog(newDaxxb, request);
@@ -373,8 +373,9 @@ public class EbikeChangAction {
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
-	private void saveDdcFlow(DdcDaxxb newDaxxb, String slzls, String newYwyy)
-			throws IllegalAccessException, InvocationTargetException {
+	private void saveDdcFlow(String ywlxType, DdcDaxxb newDaxxb, String slzls,
+			String newYwyy) throws IllegalAccessException,
+			InvocationTargetException {
 		// TODO Auto-generated method stub
 		DdcFlow ddcFlow = new DdcFlow();
 		BeanUtils.copyProperties(ddcFlow, newDaxxb);
@@ -383,9 +384,9 @@ public class EbikeChangAction {
 		Object object = iApplyService.getDateBySQL(sql);
 		String seq = object.toString();
 		String md = new SimpleDateFormat("yyMMdd").format(new Date());
-		String lsh = "A" + md + seq;// 生成流水表流水号
+		String lsh = ywlxType + md + seq;// 生成流水表流水号
 		ddcFlow.setLsh(lsh);
-		ddcFlow.setYwlx("B");
+		ddcFlow.setYwlx(ywlxType);// A-管好 B-变更 C-转移 D-注销 E-检查
 		ddcFlow.setSlrq(new Date());
 		ddcFlow.setId(null);
 		ddcFlow.setYwyy(newYwyy);
@@ -498,8 +499,8 @@ public class EbikeChangAction {
 		newDaxxb.setTranDate(null);
 
 		try {
-
-			saveDdcFlow(newDaxxb, slzls, null);
+			String type = "C";
+			saveDdcFlow(type, newDaxxb, slzls, null);
 
 			// 保存日志
 			saveDaxxblog(newDaxxb, request);
@@ -555,7 +556,8 @@ public class EbikeChangAction {
 		daxxb.setSlbz(slbz);
 		try {
 			saveDaxxblog(daxxb, request);
-			saveDdcFlow(daxxb, newSlzl, newYwyy);
+			String type = "D";
+			saveDdcFlow(type, daxxb, newSlzl, newYwyy);
 			iEbikeService.update(daxxb);
 			AjaxUtil.rendJson(response, true, "操作成功！");
 		} catch (Exception e) {

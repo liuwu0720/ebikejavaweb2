@@ -7,18 +7,23 @@
  */
 package com.node.action;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,6 +48,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.node.model.DdcApproveUser;
 import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
@@ -55,6 +61,7 @@ import com.node.service.ICompanyService;
 import com.node.util.AjaxUtil;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
+import com.node.util.ScaleImage;
 import com.node.util.ServiceUtil;
 import com.node.util.SystemConstants;
 
@@ -216,7 +223,8 @@ public class ApplyAction {
 	@RequestMapping("/queryAll")
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request, String zt,
-			String djh, String dtstart, String dtend) throws ParseException {
+			String ssdw, String djh, String dtstart, String dtend)
+			throws ParseException {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
 		Page p = ServiceUtil.getcurrPage(request);
@@ -224,9 +232,14 @@ public class ApplyAction {
 		HqlHelper hql = new HqlHelper(DdcHyxhSsdwclsb.class);
 		hql.addEqual("hyxhzh", ddcHyxhBase.getHyxhzh());
 		if (StringUtils.isBlank(zt)) {
-			hql.addEqual("synFlag", "");
+			// 待审核
+			hql.addIsNull("slyj");
+
+		} else if (!zt.equals("ALL")) {
+			// 已审核
+			hql.addEqual("slyj", zt);
 		} else {
-			hql.addEqual("synFlag", zt);
+			hql.addIsNotNull("slyj");
 		}
 
 		if (StringUtils.isNotBlank(djh)) {
@@ -239,6 +252,9 @@ public class ApplyAction {
 		if (StringUtils.isNotBlank(dtend)) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			hql.addLessThan("sqrq", sdf.parse(dtend));
+		}
+		if (StringUtils.isNotBlank(ssdw)) {
+			hql.addEqual("ssdwId", ssdw);
 		}
 
 		hql.addOrderBy("sqrq", "desc");
@@ -448,6 +464,7 @@ public class ApplyAction {
 		ddcHyxhSsdwclsb.setHyxhzh(ddcHyxhBase.getHyxhzh());
 		ddcHyxhSsdwclsb.setSqrq(new Date());
 		ddcHyxhSsdwclsb.setSqr(ddcHyxhBase.getHyxhzh());
+
 		try {
 
 			String ebike_jpgPath = uploadImg(request, fileupload);// 上传车身照片
@@ -551,22 +568,66 @@ public class ApplyAction {
 				System.out.println("source路径查不到！");
 				return null;
 			}
-			String path = source;
-			String jpgPath = UUID.randomUUID() + file.getOriginalFilename();
+			String getImagePath = source;
 
-			File pathFile = new File(path, jpgPath);
-			if (!pathFile.exists()) {
-				pathFile.mkdirs();
+			// 得到上传文件的后缀名
+			String uploadName = file.getContentType();
+			System.out.println("图片类型 ------------" + uploadName);
+
+			String lastuploadName = uploadName.substring(
+					uploadName.indexOf("/") + 1, uploadName.length());
+			System.out.println("得到上传文件的后缀名 ------------" + lastuploadName);
+
+			// 得到文件的新名字
+			String fileNewName = generateFileName(file.getOriginalFilename());
+			System.out.println("// 得到文件的新名字 ------------" + fileNewName);
+
+			// 最后返回图片路径
+			String imagePath = source + "/" + fileNewName;
+			System.out.println("        //最后返回图片路径   " + imagePath);
+			File image = new File(getImagePath);
+			if (!image.exists()) {
+				image.mkdir();
 			}
-
-			path += jpgPath;
-
-			file.transferTo(pathFile);
-
-			return format.format(new Date()) + "/" + jpgPath;
+			// file.transferTo(pathFile);
+			BufferedImage srcBufferImage = ImageIO.read(file.getInputStream());
+			BufferedImage scaledImage;
+			ScaleImage scaleImage = ScaleImage.getInstance();
+			int yw = srcBufferImage.getWidth();
+			int yh = srcBufferImage.getHeight();
+			int w = 800, h = 600;
+			if (w > yw && h > yh) {
+				File image2 = new File(getImagePath, fileNewName);
+				file.transferTo(image2);
+			} else {
+				scaledImage = scaleImage.imageZoomOut(srcBufferImage, w, h);
+				FileOutputStream out = new FileOutputStream(getImagePath + "/"
+						+ fileNewName);
+				ImageIO.write(scaledImage, "jpeg", out);
+				out.close();
+			}
+			return format.format(new Date()) + "/" + fileNewName;// 将文件夹名和文件名返回
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param originalFilename
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月1日 下午3:31:37
+	 */
+	private String generateFileName(String fileName) {
+		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String formatDate = format.format(new Date());
+		int random = new Random().nextInt(10000);
+		int position = fileName.lastIndexOf(".");
+		String extension = fileName.substring(position);
+		return formatDate + random + extension;
 	}
 
 	/**
@@ -727,4 +788,88 @@ public class ApplyAction {
 		return null;
 
 	}
+
+	/**
+	 * 
+	 * 方法描述：查看审批的详情
+	 * 
+	 * @param request
+	 * @param response
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月2日 上午10:22:06
+	 */
+	@RequestMapping("/queryRecordApprovalInfoById")
+	public String queryRecordApprovalInfoById(HttpServletRequest request,
+			HttpServletResponse response, String id) {
+		long dId = Long.parseLong(id);
+		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
+				.getDdcHyxhSsdwclsbById(dId);
+		String cysyName = iApplyService.findByProPerties("CSYS",
+				ddcHyxhSsdwclsb.getCysy());
+
+		ddcHyxhSsdwclsb.setCysyName(cysyName);// 车身颜色
+		String xsqyName = iApplyService.findByProPerties("SSQY",
+				ddcHyxhSsdwclsb.getXsqy());
+		ddcHyxhSsdwclsb.setXsqyName(xsqyName);// 行驶区域
+
+		// 申报单位
+		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getSsdwId())) {
+			DdcHyxhSsdw ddcHyxhSsdw = iApplyService
+					.getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
+			if (ddcHyxhSsdw != null) {
+				ddcHyxhSsdwclsb.setSsdwName(ddcHyxhSsdw.getDwmc());
+			} else {
+				ddcHyxhSsdwclsb.setSsdwName(null);
+			}
+		}
+		String showEbikeImg = parseUrl(ddcHyxhSsdwclsb.getVcEbikeImg());
+		String showUser1Img = parseUrl(ddcHyxhSsdwclsb.getVcUser1Img());
+		String showUser2Img = parseUrl(ddcHyxhSsdwclsb.getVcUser2Img());
+		ddcHyxhSsdwclsb.setVcShowEbikeImg(showEbikeImg);
+		ddcHyxhSsdwclsb.setVcShowUser1Img(showUser1Img);
+		ddcHyxhSsdwclsb.setVcShowUser2Img(showUser2Img);
+		String approveTableName = SystemConstants.RECORDSBTABLE;
+		List<DdcApproveUser> approveUsers = iApplyService
+				.findApproveUsersByProperties(approveTableName,
+						ddcHyxhSsdwclsb.getId());
+		List<DdcSjzd> selectlTbyy = iApplyService.getDbyyList(
+				ddcHyxhSsdwclsb.getTbyy(), "TBYY");// 选中的退办原因
+		List<DdcSjzd> selectSlzls = iApplyService.getDbyyList(
+				ddcHyxhSsdwclsb.getSlzl(), "BASQZL");
+		request.setAttribute("selectSlzls", selectSlzls);
+		request.setAttribute("selectlTbyy", selectlTbyy);
+		request.setAttribute("approveUsers", approveUsers);
+		request.setAttribute("ddcHyxhSsdwclsb", ddcHyxhSsdwclsb);
+
+		return "apply/recordDetail";
+	}
+
+	/**
+	 * 
+	 * 方法描述：跳转查看配额申报的详情页面
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月2日 下午2:14:37
+	 */
+	@RequestMapping("/queryDdcHyxhBasbDetailById")
+	public String queryDdcHyxhBasbDetailById(HttpServletRequest request,
+			String id) {
+		long dId = Long.parseLong(id);
+		DdcHyxhBasb ddcHyxhBasb = iApplyService.getDdcHyxhBasbById(dId);
+		String approveTableName = SystemConstants.PESBTABLE;
+		List<DdcApproveUser> approveUsers = iApplyService
+				.findApproveUsersByProperties(approveTableName,
+						ddcHyxhBasb.getId());
+		request.setAttribute("approveUsers", approveUsers);
+		request.setAttribute("ddcHyxhBasb", ddcHyxhBasb);
+		return "apply/qtyApplyDetail";
+	}
+
 }

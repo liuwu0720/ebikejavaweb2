@@ -39,6 +39,11 @@ $(document).ready(function(){
 		height:h,
 		width:w,
 		loadMsg:'正在加载,请稍等...',
+		rowStyler: function(index,row){
+			if (row.slyj ==1){
+				return 'background-color:#7AF1B5;color:#red;font-weight:bold;';
+			}
+		},
 		columns : [ [{
 			field : 'id',
 			title : 'ID',
@@ -54,7 +59,7 @@ $(document).ready(function(){
 			field : 'ppxh',
 			title : '品牌型号',
 			align:'center',
-			width : 220
+			width : 120
 		},{
 			field : 'cysyName',
 			title : '车身颜色',
@@ -79,7 +84,7 @@ $(document).ready(function(){
 			field : 'ssdwName',
 			title : '申报单位',
 			align:'center',
-			width : 120
+			width : 220
 		},{
 			field : 'sqrq',
 			title : '申请时间',
@@ -90,17 +95,22 @@ $(document).ready(function(){
 				return unixTimestamp.toLocaleString();
 			}   
 		},{
-			field : 'synFlag',
-			title : '状态',
+			field : 'slyj',
+			title : '审批状态',
 			align:'center',
 			width : 120,
-			formatter:function(value,index){
+			formatter:function(value,row,index){
 				if(value == null){
-					return "<p style='color:red'>未同步</p>";
-				}else if(value == 'UC'){
-					return "待审核 ";
-				}else if(value == 'UW'){
-					return "已审核 ";
+					if(row.synFlag == null){
+						return "<p style='color:red'>审批中(未同步)</p>";
+					}else{
+						return "<p style='color:red'>审批中</p>";
+					}
+					
+				}else if(value == 0){
+					return "已审核(同意) ";
+				}else if(value == 1){
+					return "已审核(拒绝) ";
 				}
 			}
 		},{
@@ -150,7 +160,12 @@ $(document).ready(function(){
         }
 	});
 	
-	
+	//加载下拉框
+	$('#ssdw').combobox({    
+	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
+	    valueField:'id',    
+	    textField:'dwmc'   
+	}); 
 });
 //查询功能
 function doSearch(){
@@ -158,7 +173,8 @@ function doSearch(){
 		zt: $("#zt").combobox('getValue'),
 		djh: $('#djh').val(),
 		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值)
-		dtend:$('#dtend').datebox('getValue')
+		dtend:$('#dtend').datebox('getValue'),
+		ssdw:$("#ssdw").val()
 	}); 
 }
 
@@ -206,41 +222,12 @@ function addRowData(){
 	});
 	$("#file_tr1,#file_tr2").hide();
 }
-//查看
+//查看备案审批详情
 function queryRow(id){
-	$.ajax({
-		type: "GET",
-   	    url: "<%=basePath%>applyAction/queryInfoById",
-   	   data:{
-		  id:id
-	   }, 
-	   dataType: "json",
-	   success:function(data){
-		   		
- 			  if(data){
- 				 $('#dgformDiv2').dialog('open').dialog('setTitle', '详情信息');
- 				$('#dgform2').form('clear');
- 				 $('#dgform2').form('load', data);
- 					
- 					if(data.vcShowEbikeImg == null){
- 						 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
- 					}else{
- 						$("#img_0").attr("src",data.vcShowEbikeImg);
- 					}
- 					if(data.vcShowUser2Img == null){
-						 $("#img2_2").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-					}else{
-						$("#img2_2").attr("src",data.vcShowUser2Img);
-					}
- 					if(data.vcShowUser1Img == null){
-						 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-					}else{
-						$("#img1_1").attr("src",data.vcShowUser1Img);
-					}
- 				
- 			  }
- 		  }
-	})
+	$.messager.progress({
+		text:"正在处理，请稍候..."
+	});
+	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id;
 }
 
 //修改
@@ -404,26 +391,7 @@ function exportRowData(){
 				}
 			}						
 		});
-				
-			<%-- 	$.post("<%=basePath%>applyAction/exportExcel", 
-						{"array[]":array},    
-						   function (data, textStatus)
-						   {     
-								
-							if (data.isSuccess) {
-								$.messager.show({ // show error message
-									title : '提示',
-									msg : data.message
-								});
-								$('#dgformDiv').dialog('close');
-								$("#dg").datagrid('reload');
-							}else{
-								alert(data.message);
-							}
-						   }
-					  ,"html"); --%>
-			
-		
+	
 	}
 }
 
@@ -439,12 +407,16 @@ function exportRowData(){
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>				
 				<span>电机号:</span> <input id="djh"
-					style="line-height:26px;border:1px solid #ccc"> &nbsp;&nbsp;&nbsp;<span>状态:</span>
+					style="line-height:26px;border:1px solid #ccc"> &nbsp;&nbsp;&nbsp;<span>审批状态:</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="zt">
-					<option value="">未同步</option>
-					<option value="UC">待审核</option>
-					<option value="UW">已审核</option>
-				</select> <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
+					<option value="">审批中</option>
+					<option value="0">已同意</option>
+					<option value="1">已拒绝</option>
+					<option value="ALL">所有</option>
+				</select>	
+				<span>公司名称:</span>
+				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;	
+				 <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
 		</table>
@@ -566,7 +538,7 @@ function exportRowData(){
 			<input class="easyui-validatebox" type="hidden" name="lsh"
 				style="height: 32px">
 		</form>
-		<div>
+		<div class="table-btndiv">
 			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
 				iconCls="icon-ok" onclick="updateSaveData()" style="width:90px">保存</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton"

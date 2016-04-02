@@ -115,7 +115,12 @@ $(document).ready(function(){
         }
 	});
 	
-	
+	//加载下拉框
+	$('#ssdw').combobox({    
+	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
+	    valueField:'id',    
+	    textField:'dwmc'   
+	}); 
 });
 
 
@@ -126,56 +131,16 @@ function doSearch(){
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
 		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值)
-		dtend:$('#dtend').datebox('getValue')
+		dtend:$('#dtend').datebox('getValue'),
+		ssdw:$("#ssdw").val()
 	}); 
 }
 
 
 //查看
 function queryRow(id){
-	$.ajax({
-		type: "GET",
-   	    url: "<%=basePath%>ebikeWaterAction/queryInfoById",
-   	   data:{
-		  id:id
-	   }, 
-	   dataType: "json",
-	   success:function(data){
- 			 
- 			  if(data){
- 				 $('#dgformDiv2').dialog('open').dialog('setTitle', '详情信息');
- 				$('#dgform2').form('clear');
- 				if(data.slyj == '0'){
- 					data.slyj = '同意';
- 				}else{
- 					data.slyj = '不同意';
- 				}
- 				if(data.gdyj == '0'){
- 					data.gdyj = '办洁';
- 				}else{
- 					data.gdyj = '退办';
- 				}
- 				
- 				 $('#dgform2').form('load', data);
- 				
- 			 	if(data.vcShowEbikeImg == null){
-					 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-				}else{
-					$("#img_0").attr("src",data.vcShowEbikeImg);
-				}
-				if(data.vcShowUser2Img == null){
-					 $("#img2_2").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-				}else{
-					$("#img2_2").attr("src",data.vcShowUser2Img);
-				}
-				if(data.vcShowUser1Img == null){
-					 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-				}else{
-					$("#img1_1").attr("src",data.vcShowUser1Img);
-				} 
- 			  }
- 		  }
-	})
+	window.location.href="<%=basePath%>ebikeWaterAction/queryInfoById?id="+id
+	
 }
 
 
@@ -202,6 +167,8 @@ function queryRow(id){
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
 				<span>电机号:</span> <input id="djh" name="djh"
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;	
+				<span>公司名称:</span>
+				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;	
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>

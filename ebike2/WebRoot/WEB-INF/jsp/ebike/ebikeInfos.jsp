@@ -114,7 +114,12 @@ $(document).ready(function(){
         }
 	});
 	
-	
+	//加载下拉框
+	$('#ssdw').combobox({    
+	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
+	    valueField:'id',    
+	    textField:'dwmc'   
+	}); 
 });
 //注销
 function deleteRow(id){
@@ -191,7 +196,8 @@ function doSearch(){
 	 $('#dg').datagrid('load',{
 		dabh: $("#dabh").val(),
 		djh: $('#djh').val(),
-		cphm:$("#cphm").val()
+		cphm:$("#cphm").val(),
+		ssdw:$("#ssdw").val()
 	}); 
 }
 
@@ -267,7 +273,10 @@ function CheckFileSize(obj){
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
 				<span>车牌号:</span> <input id="cphm" name="cphm"
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
-				</select> <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
+				</select> 
+				<span>公司名称:</span>
+				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;
+				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
 		</table>

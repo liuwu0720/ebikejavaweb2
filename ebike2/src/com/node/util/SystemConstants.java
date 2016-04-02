@@ -55,6 +55,21 @@ public class SystemConstants {
 	/**
 	 * session
 	 */
-	public static final String JTUSER = "ddcHyxhBase";
-
+	public static final String SESSION_USER = "ddcHyxhBase";
+	/**
+	 * 配额申报表名
+	 */
+	public static final String PESBTABLE = "DDC_HYXH_BASB";
+	/**
+	 * 不同意
+	 */
+	public static final String NOTAGREE = "1";// 不同意
+	/**
+	 * 车辆备案申报表
+	 */
+	public static final String RECORDSBTABLE = "DDC_HYXH_SSDWCLSB";
+	/**
+	 * 同意
+	 */
+	public static final String AGREE = "0";
 }

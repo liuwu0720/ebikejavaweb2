@@ -10,7 +10,9 @@ package com.node.service;
 import java.util.List;
 import java.util.Map;
 
+import com.node.model.DdcApproveUser;
 import com.node.model.DdcHyxhBasb;
+import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.DdcHyxhSsdwclsbLog;
 import com.node.model.DdcSjzd;
@@ -169,5 +171,40 @@ public interface IApplyService {
 	 * @version: 2016年3月19日 下午1:53:05
 	 */
 	void saveDdcHyxhBasb(DdcHyxhBasb ddcHyxhBasb);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ssdwId
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月2日 上午10:30:36
+	 */
+	DdcHyxhSsdw getDdcHyxhSsdwById(String ssdwId);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param approveTableName
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月2日 上午10:32:56
+	 */
+	List<DdcApproveUser> findApproveUsersByProperties(String approveTableName,
+			Long id);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param tbyy
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月2日 上午10:39:08
+	 */
+	List<DdcSjzd> getDbyyList(String tbyy, String type);
 
 }

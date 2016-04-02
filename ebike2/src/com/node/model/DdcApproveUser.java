@@ -2,6 +2,8 @@ package com.node.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,8 +34,10 @@ public class DdcApproveUser implements java.io.Serializable {
 	private String userRoleName;
 	private Integer approveIndex;
 	private String approveNote;
+	private Integer approveState;// 审批意见 0-同意 1-拒绝
 	private String approveTable;
-	private Integer approveTableid;
+	private Long approveTableid;
+	private Date approveTime;
 
 	// Constructors
 
@@ -44,7 +48,7 @@ public class DdcApproveUser implements java.io.Serializable {
 	/** full constructor */
 	public DdcApproveUser(String userName, String userOrgname,
 			String userRoleName, Integer approveIndex, String approveNote,
-			String approveTable, Integer approveTableid) {
+			String approveTable, Long approveTableid) {
 		this.userName = userName;
 		this.userOrgname = userOrgname;
 		this.userRoleName = userRoleName;
@@ -121,12 +125,38 @@ public class DdcApproveUser implements java.io.Serializable {
 	}
 
 	@Column(name = "APPROVE_TABLEID", precision = 0)
-	public Integer getApproveTableid() {
+	public Long getApproveTableid() {
 		return this.approveTableid;
 	}
 
-	public void setApproveTableid(Integer approveTableid) {
+	public void setApproveTableid(Long approveTableid) {
 		this.approveTableid = approveTableid;
+	}
+
+	@Column(name = "APPROVE_TIME")
+	public Date getApproveTime() {
+		return approveTime;
+	}
+
+	/**
+	 * @param approveTime
+	 *            : set the property approveTime.
+	 */
+	public void setApproveTime(Date approveTime) {
+		this.approveTime = approveTime;
+	}
+
+	@Column(name = "APPROVE_STATE", precision = 0)
+	public Integer getApproveState() {
+		return approveState;
+	}
+
+	/**
+	 * @param approveState
+	 *            : set the property approveState.
+	 */
+	public void setApproveState(Integer approveState) {
+		this.approveState = approveState;
 	}
 
 }

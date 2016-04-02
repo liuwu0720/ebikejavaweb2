@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -44,6 +45,7 @@ public class DdcHyxhBasb implements java.io.Serializable {
 	private String bjbz;
 	private String bzjr;
 	private String bjbm;
+	private String bjbmName;
 	private Date bjrq;
 	private String synFlag;
 	private String tranFlag;
@@ -235,6 +237,19 @@ public class DdcHyxhBasb implements java.io.Serializable {
 	 */
 	public void setHyxhmc(String hyxhmc) {
 		this.hyxhmc = hyxhmc;
+	}
+
+	@Transient
+	public String getBjbmName() {
+		return bjbmName;
+	}
+
+	/**
+	 * @param bjbmName
+	 *            : set the property bjbmName.
+	 */
+	public void setBjbmName(String bjbmName) {
+		this.bjbmName = bjbmName;
 	}
 
 }

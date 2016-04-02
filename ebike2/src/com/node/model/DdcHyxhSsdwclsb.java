@@ -71,6 +71,8 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 	private String vcShowEbikeImg;
 	private String vcShowUser1Img;
 	private String vcShowUser2Img;
+	private Integer slIndex;
+	private String tbyy;// 退办原因
 
 	// Constructors
 
@@ -564,4 +566,29 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.vcShowUser2Img = vcShowUser2Img;
 	}
 
+	@Column(name = "TBYY", length = 100)
+	public String getTbyy() {
+		return tbyy;
+	}
+
+	/**
+	 * @param tbyy
+	 *            : set the property tbyy.
+	 */
+	public void setTbyy(String tbyy) {
+		this.tbyy = tbyy;
+	}
+
+	@Column(name = "SL_INDEX")
+	public Integer getSlIndex() {
+		return slIndex;
+	}
+
+	/**
+	 * @param slIndex
+	 *            : set the property slIndex.
+	 */
+	public void setSlIndex(Integer slIndex) {
+		this.slIndex = slIndex;
+	}
 }

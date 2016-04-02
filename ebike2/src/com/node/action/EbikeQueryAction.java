@@ -65,7 +65,7 @@ public class EbikeQueryAction {
 	@RequestMapping("/queryAll")
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request, String djh,
-			String cphm, String jsrxm1, String dabh, String sfzhm1,
+			String cphm, String jsrxm1, String dabh, String ssdw,
 			HttpServletResponse response) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
@@ -92,8 +92,8 @@ public class EbikeQueryAction {
 			sql += " and a.JSRXM1 like '%" + jsrxm1 + "%'";
 		}
 		// 身份证
-		if (StringUtils.isNotBlank(sfzhm1)) {
-			sql += " and a.SFZMHM1 like '%" + sfzhm1 + "%'";
+		if (StringUtils.isNotBlank(ssdw)) {
+			sql += " and a.ZZJGDMZH =" + ssdw + "";
 		}
 
 		sql += "  order by A.ID DESC";

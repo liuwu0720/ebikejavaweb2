@@ -322,7 +322,7 @@ public class CompanyAction {
 				return null;
 			}
 			String path = source;
-			String jpgPath = UUID.randomUUID() + file.getOriginalFilename();
+			String jpgPath = UUID.randomUUID() + ".png";
 			File pathFile = new File(path, jpgPath);
 			if (!pathFile.exists()) {
 				pathFile.mkdirs();
@@ -391,5 +391,29 @@ public class CompanyAction {
 		List<DdcHyxhSsdw> ddcHyxhSsdws = iCompanyService
 				.getAllCompany(ddcHyxhBase.getHyxhzh());
 		return ddcHyxhSsdws;
+	}
+
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param response
+	 * @param request
+	 * @param id
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月1日 下午5:26:17
+	 */
+	@RequestMapping("/deleteRowData")
+	public void deleteRowData(HttpServletResponse response,
+			HttpServletRequest request, String id) {
+		long dId = Long.parseLong(id);
+		try {
+			iCompanyService.deleteCompanyById(dId);
+			AjaxUtil.rendJson(response, true, "操作成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			AjaxUtil.rendJson(response, false, "操作失败，系统错误!");
+		}
 	}
 }

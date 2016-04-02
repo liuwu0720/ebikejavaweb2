@@ -826,7 +826,7 @@ public class GenericHibernateDao<T extends Serializable, PK extends Serializable
 	 * @create_date 2015-9-8 下午4:47:42
 	 */
 	public List<T> findByPropertysOrderBy(String[] propertyNames,
-			Object[] values, String orderByParam) {
+			Object[] values, String orderByParam, String type) {
 		StringBuffer strBuffer = new StringBuffer();
 		strBuffer.append("from " + getEntityClass().getName());
 		strBuffer.append(" as model where ");
@@ -840,9 +840,9 @@ public class GenericHibernateDao<T extends Serializable, PK extends Serializable
 
 		}
 		strBuffer.append(" order by ");
-		strBuffer.append("model.");
+		strBuffer.append(" model.");
 		strBuffer.append(orderByParam);
-		strBuffer.append(" desc");
+		strBuffer.append(" " + type);
 		String queryString = strBuffer.toString();
 		return this.getHibernateTemplate().find(queryString, values);
 	}

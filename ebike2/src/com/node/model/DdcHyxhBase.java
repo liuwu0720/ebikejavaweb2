@@ -33,7 +33,7 @@ public class DdcHyxhBase implements java.io.Serializable {
 	private String hyxhzh;
 	private String hyxhmm;
 	private String hyxhmc;//
-	private String hyxhdz;
+	private String hyxhdz;//
 	private String hyxhfzr;
 	private String hyxhfzrdh;
 	private Integer hyxhsjzpe;// 行业协会实际总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数）

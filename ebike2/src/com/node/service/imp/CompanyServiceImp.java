@@ -156,4 +156,15 @@ public class CompanyServiceImp implements ICompanyService {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.ICompanyService#deleteCompanyById(long)
+	 */
+	@Override
+	public void deleteCompanyById(long dId) {
+		// TODO Auto-generated method stub
+		iDdcHyxhSsdwDao.deleteByKey(dId);
+	}
+
 }

@@ -120,4 +120,14 @@ public interface ICompanyService {
 	 */
 	DdcHyxhSsdw queryByProperties(String zzjgdmzh);
 
+	/**
+	 * 方法描述：
+	 * 
+	 * @param dId
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月1日 下午5:30:33
+	 */
+	void deleteCompanyById(long dId);
+
 }

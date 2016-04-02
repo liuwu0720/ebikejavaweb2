@@ -79,14 +79,15 @@ public class EbikeWaterAction {
 	@RequestMapping("/queryAll")
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request,
-			String ywlx, String djh, String cphm, String dtstart, String dtend) {
+			String ssdw, String ywlx, String djh, String cphm, String dtstart,
+			String dtend) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute("ddcHyxhBase");
 		Page p = ServiceUtil.getcurrPage(request);
 
-		String sql = "select A.ID,A.LSH,A.CPHM,A.DJH,A.SLRQ,a.SLYJ,(SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH ) AS DWMC,"
-				+ " (select  D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='YWLX') as YWLX ,"
-				+ "  (select  D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.XSQY AND D.DMLB='SSQY') as SSQY ,"
+		String sql = "select A.ID,A.LSH,A.CPHM,A.DJH,A.SLRQ,a.SLYJ,(SELECT distinct S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH and rownum=1) AS DWMC,"
+				+ " (select distinct D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='YWLX' and rownum=1) as YWLX ,"
+				+ "  (select distinct D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.XSQY AND D.DMLB='SSQY' and rownum=1 ) as SSQY ,"
 				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='CLZT')AS ZT from DDC_FLOW A WHERE A.HYXHZH='"
 				+ ddcHyxhBase.getHyxhzh() + "'  ";
 		if (StringUtils.isNotBlank(ywlx)) {
@@ -104,6 +105,10 @@ public class EbikeWaterAction {
 		if (StringUtils.isNotBlank(dtend)) {
 			sql += " and a.slrq <=to_date('" + dtend + "','yyyy-MM-dd')";
 		}
+		if (StringUtils.isNotBlank(ssdw)) {
+			sql += " and a.ZZJGDMZH = " + ssdw;
+		}
+
 		sql += " order by a.id desc";
 		Map<String, Object> resultMap = iEbikeService.queryBySpringSql(sql, p);
 
@@ -123,8 +128,7 @@ public class EbikeWaterAction {
 	 * @version: 2016年3月18日 下午5:52:45
 	 */
 	@RequestMapping("/queryInfoById")
-	@ResponseBody
-	public DdcFlow queryInfoById(HttpServletRequest request, String id,
+	public String queryInfoById(HttpServletRequest request, String id,
 			HttpServletResponse response) {
 		long flowId = Long.parseLong(id);
 		DdcFlow ddcFlow = iEbikeService.getFlowById(flowId);
@@ -154,22 +158,35 @@ public class EbikeWaterAction {
 				ddcFlow.getYwyy());
 		ddcFlow.setYwyyName(ywyyName);
 		// 受理资料
-		String[] slzls = ddcFlow.getSlzl().split(",");
-		List<String> slzllist = new ArrayList<>();
-		for (String s : slzls) {
-			String dmz = s;
-			String dmlb = "BASQZL";
-			String ss = iApplyService.findByProPerties(dmlb, dmz);
-			slzllist.add(ss);
+		List<DdcSjzd> slzlDdcSjzds = new ArrayList<>();
+		// 退办原因
+		List<DdcSjzd> tbyyDdcSjzds = iApplyService.getDbyyList(
+				ddcFlow.getTbyy(), "TBYY");
+		if (ddcFlow.getYwlx().equals("A")) {// 备案
+			slzlDdcSjzds = iApplyService.getDbyyList(ddcFlow.getSlzl(),
+					"BASQZL");
 		}
-		ddcFlow.setSlzlList(slzllist);
+		// 变更、转移
+		if (ddcFlow.getYwlx().equals("B") || ddcFlow.getYwlx().equals("C")) {
+			slzlDdcSjzds = iApplyService.getDbyyList(ddcFlow.getSlzl(),
+					"BGSQZL");
+		}
+		// 注销
+		if (ddcFlow.getYwlx().equals("D")) {
+			slzlDdcSjzds = iApplyService.getDbyyList(ddcFlow.getSlzl(),
+					"ZXSQZL");
+		}
+
 		String showEbikeImg = parseUrl(ddcFlow.getVcEbikeImg());
 		String showUser1Img = parseUrl(ddcFlow.getVcUser1Img());
 		String showUser2Img = parseUrl(ddcFlow.getVcUser2Img());
 		ddcFlow.setVcShowEbikeImg(showEbikeImg);
 		ddcFlow.setVcShowUser1Img(showUser1Img);
 		ddcFlow.setVcShowUser2Img(showUser2Img);
-		return ddcFlow;
+		request.setAttribute("ddcFlow", ddcFlow);
+		request.setAttribute("slzlDdcSjzds", slzlDdcSjzds);
+		request.setAttribute("tbyyDdcSjzds", tbyyDdcSjzds);
+		return "ebike/flowDetail";
 
 	}
 

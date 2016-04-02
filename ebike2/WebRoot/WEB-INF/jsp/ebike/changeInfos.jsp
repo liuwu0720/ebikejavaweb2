@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	#main th{
 		text-align:right;
-		font-weight:normal;
+		font-weight:bold;
 		width:10%;
 	}
 	#main td{
@@ -265,7 +265,7 @@ function checkVarible(){
 						data-options="required:true" name="ppxh"></input></td>
 					<th>电机号：</th>
 					<td colspan="3"><input id="djh" class="easyui-validatebox" type="text" value="${ddcDaxxb.djh }"
-						 name="djh" style="height: 32px"  disabled="disabled"></input>
+						 name="djh" style="width: 200px"  disabled="disabled"></input>
 					</td>	
 					
 				</tr>
@@ -274,7 +274,12 @@ function checkVarible(){
 					<th>车身颜色</th>
 					<td colspan="3">${ddcDaxxb.cysyName }</td>
 					<th>脚踏装置:</th>
-					<td colspan="3">${ddcDaxxb.jtzz }</td>
+					<c:if test="${ddcDaxxb.jtzz ==0 }">
+					<td colspan="3">有</td>
+					</c:if>
+					<c:if test="${ddcDaxxb.jtzz ==1 }">
+					<td colspan="3">无</td>
+					</c:if>
 				</tr>
 				<tr>
 					<th>驾驶人1姓名</th>

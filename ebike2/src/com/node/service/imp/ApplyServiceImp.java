@@ -7,19 +7,25 @@
  */
 package com.node.service.imp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.node.dao.IDdcApprovalUserDao;
 import com.node.dao.IDdcHmdDao;
 import com.node.dao.IDdcHyxhBasbDao;
+import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IDdcHyxhSsdwclsbLogDao;
 import com.node.dao.IDdcSjzdDao;
+import com.node.model.DdcApproveUser;
 import com.node.model.DdcHmd;
 import com.node.model.DdcHyxhBasb;
+import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.DdcHyxhSsdwclsbLog;
 import com.node.model.DdcSjzd;
@@ -51,6 +57,10 @@ public class ApplyServiceImp implements IApplyService {
 
 	@Autowired
 	IDdcHyxhBasbDao iDdcHyxhBasbDao;
+	@Autowired
+	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
+	@Autowired
+	IDdcApprovalUserDao iDdcApprovalUserDao;
 
 	/*
 	 * (non-Javadoc)
@@ -219,4 +229,61 @@ public class ApplyServiceImp implements IApplyService {
 		iDdcHyxhBasbDao.save(ddcHyxhBasb);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#getDdcHyxhSsdwById(java.lang.String)
+	 */
+	@Override
+	public DdcHyxhSsdw getDdcHyxhSsdwById(String ssdwId) {
+		// TODO Auto-generated method stub
+		return iDdcHyxhSsdwDao.get(Long.parseLong(ssdwId));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IApplyService#findApproveUsersByProperties(java.lang
+	 * .String, java.lang.Long)
+	 */
+	@Override
+	public List<DdcApproveUser> findApproveUsersByProperties(
+			String approveTableName, Long id) {
+		String[] propertyNames = { "approveTable", "approveTableid" };
+		Object[] values = { approveTableName, id };
+		List<DdcApproveUser> ddcApproveUsers = iDdcApprovalUserDao
+				.findByPropertysOrderBy(propertyNames, values, "id", "asc");
+		if (ddcApproveUsers != null && ddcApproveUsers.size() > 0) {
+			return ddcApproveUsers;
+		} else {
+			return null;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#getDbyyList(java.lang.String)
+	 */
+	@Override
+	public List<DdcSjzd> getDbyyList(String tbyy, String type) {
+		if (StringUtils.isNotBlank(tbyy)) {
+			String[] tbyyStrings = tbyy.split(",");
+			List<DdcSjzd> allDdcSjzds = new ArrayList<>();
+			for (String dmz : tbyyStrings) {
+				List<DdcSjzd> ddcSjzds = iDdcSjzdDao.findByPropertys(
+						new String[] { "dmz", "dmlb" }, new Object[] { dmz,
+								type });
+				if (ddcSjzds != null && ddcSjzds.size() > 0) {
+					allDdcSjzds.addAll(ddcSjzds);
+				}
+
+			}
+
+			return allDdcSjzds;
+		} else {
+			return null;
+		}
+	}
 }

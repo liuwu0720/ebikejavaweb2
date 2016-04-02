@@ -127,23 +127,8 @@ function addRowData(){
 }
 //查看
 function queryRow(id){
+	window.location.href="<%=basePath%>applyAction/queryDdcHyxhBasbDetailById?id="+id
 	
-	$.ajax({
-		type: "GET",
-   	    url: "<%=basePath%>applyAction/queryDdcHyxhBasbById",
-   	   data:{
-		  id:id
-	   }, 
-	   dataType: "json",
-	   success:function(data){
- 			  if(data){
- 				 $('#dgformDiv2').dialog('open').dialog('setTitle', '详情信息');
- 				$('#dgform2').form('clear');
- 				 $('#dgform2').form('load', data);
- 				
- 			  }
- 		  }
-	})
 }
 
 //保存操作
@@ -233,53 +218,7 @@ function updateSaveData(){
 				style="width:90px">取消</a>
 		</div>
 	</div>	
-	<!-- 点查看时弹出的表单 -->
-	<div id="dgformDiv2" class="easyui-dialog" closed="true">
-		<form id="dgform2" class="easyui-form" style="width: 800px;height: 500px;" >
-			<table class="table">
-				<tr>
-					<th>申请配额:</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="hyxhsqpe" style="height: 32px"></td>
-					<th>申请人:</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="sqr" style="height: 32px"></td>
-					<th>申请日期</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="sqrq" style="height: 32px"></td>
-				</tr>
-				<tr>
-					<th>申请备注:</th>
-					<td colspan="3"><textarea rows="5" cols="25" name="bz" readonly="readonly"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>受理人</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="slr" style="height: 32px"></td>
-					<th>受理意见</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="slyj" style="height: 32px"></td>
-					<th>受理日期</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="slrq" style="height: 32px"></td>
-				</tr>
-				<tr>
-					<th>受理备注</th>
-					<td colspan="3"><textarea rows="5" cols="25" name="bz" readonly="readonly"></textarea>
-				</tr>
-				<tr>
-					<th>领导审批 人</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="bjr" style="height: 32px"></td>
-					<th>审批意见</th>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"  name="bjjg" style="height: 32px"></td>
-					<th>审批日期</th>
-					<td ><input class="easyui-validatebox" type="text" readonly="readonly"  name="bjrq" style="height: 32px"></td>
-					
-				</tr>
-				<tr>
-					<th>审批 备注</th>
-					<td colspan="3"><textarea rows="5" cols="25" name="bz" readonly="readonly"></textarea>
-				</tr>
-			</table>
-			<input type="hidden" name="id" />
-		</form>
-		
-	</div>	
+	
 	
   </body>
 </html>

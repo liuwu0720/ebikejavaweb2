@@ -111,11 +111,12 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.id+")'>查看</a>&nbsp;&nbsp;&nbsp;"
-				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>修改</a>"
+				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>修改</a>&nbsp;&nbsp;&nbsp;"
+				var deleteRow = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.id+")'>删除</a>&nbsp;&nbsp;&nbsp;"
 				if(row.synFlag == 'UC' || row.synFlag == 'UW'){
-					return query;
-				}else{
 					return query+update;
+				}else{
+					return query+update+deleteRow;
 				}
 				
 			
@@ -255,7 +256,7 @@ function changeRowData(){
 	if(selected.length == 0){
 		alert("请至少选择一条数据");
 	}else{
-		$.messager.confirm('警告', '同步以后不能再修改，请确认', function(r){
+		$.messager.confirm('警告', '同步以后不能再删除，请确认', function(r){
 			if (r){
 				
 				$.post("<%=basePath%>companyAction/changeRowData", 
@@ -279,6 +280,32 @@ function changeRowData(){
 		});
 	}
 	
+	
+}
+
+//删除
+function deleteRow(id){
+	$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+	    if (r){    
+	    	$.post("<%=basePath%>companyAction/deleteRowData", 
+	    			{"id":id},    
+	    			   function (data, textStatus)
+	    			   {     
+	    					
+	    				if (data.isSuccess) {
+	    					$.messager.show({ // show error message
+	    						title : '提示',
+	    						msg : data.message
+	    					});
+	    					$('#dgformDiv').dialog('close');
+	    					$("#dg").datagrid('reload');
+	    				}else{
+	    					alert(data.message);
+	    				}
+	    			   }
+	    		  ,"json");   
+	    }    
+	}); 
 	
 }
 </script>

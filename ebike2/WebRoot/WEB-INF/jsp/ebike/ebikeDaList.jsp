@@ -124,7 +124,12 @@ $(document).ready(function(){
         }
 	});
 	
-	
+	//加载下拉框
+	$('#ssdw').combobox({    
+	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
+	    valueField:'id',    
+	    textField:'dwmc'   
+	}); 
 });
 //注销
 function deleteRow(id){
@@ -203,7 +208,7 @@ function doSearch(){
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
 		jsrxm1:$("#jsrxm1").val(),
-		sfzhm:$("#sfzhm").val()
+		ssdw:$("#ssdw").val()
 	}); 
 }
 
@@ -275,12 +280,12 @@ function CheckFileSize(obj){
 			<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>档案编号：</span>
 				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
-				<span>电机号:</span> <input id="djh" name="djh"
+				<span>电机号:</span> <input id="djh" 
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
-				<span>姓名:</span> <input id="jsrxm1" name="jsrxm1"
+				<span>姓名:</span> <input id="jsrxm1" 
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
-				<span>身份证号:</span> <input id="sfzhm" name="sfzhm"
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
+				<span>公司名称:</span>
+				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
