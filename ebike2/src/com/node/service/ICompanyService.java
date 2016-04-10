@@ -14,6 +14,7 @@ import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwLog;
 import com.node.model.PicPath;
 import com.node.util.HqlHelper;
+import com.node.util.Page;
 
 /**
  * 类描述：
@@ -129,5 +130,17 @@ public interface ICompanyService {
 	 * @version: 2016年4月1日 下午5:30:33
 	 */
 	void deleteCompanyById(long dId);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param sql
+	 * @param page
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月9日 下午5:02:35
+	 */
+	Map<String, Object> getBySpringSql(String sql, Page page);
 
 }

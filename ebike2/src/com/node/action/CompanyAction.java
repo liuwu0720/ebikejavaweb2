@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,7 +69,10 @@ public class CompanyAction {
 	 */
 	@RequestMapping("/getAll")
 	public String getAll(HttpServletRequest request) {
-
+		DdcHyxhBase xh = (DdcHyxhBase) request.getSession().getAttribute(
+				SystemConstants.SESSION_USER);
+		DdcHyxhBase ddcHyxhBase = iUserService.getById(xh.getId());
+		request.setAttribute("ddcHyxhBase", ddcHyxhBase);
 		return "company/companyInfos";
 
 	}
@@ -90,7 +92,7 @@ public class CompanyAction {
 	public Map<String, Object> queryAll(HttpServletRequest request, String zt,
 			String dwmc, String lxr) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
 		HqlHelper hql = new HqlHelper(DdcHyxhSsdw.class);
@@ -104,6 +106,7 @@ public class CompanyAction {
 		if (StringUtils.isNotBlank(lxr)) {
 			hql.addEqual("lxr", lxr);
 		}
+		hql.addOrderBy("id", "desc");
 
 		hql.setQueryPage(p);
 		Map<String, Object> resultMap = iCompanyService.queryByHql(hql);
@@ -158,7 +161,7 @@ public class CompanyAction {
 
 	/**
 	 * 
-	 * 方法描述：新增、编辑保存
+	 * 方法描述：新增、编辑保存、单位信息
 	 * 
 	 * @param DdcHyxhSsdw
 	 * @version: 1.0
@@ -166,58 +169,51 @@ public class CompanyAction {
 	 * @version: 2016年3月12日 上午10:30:36
 	 */
 	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
-	public void saveOrUpdate(
-			DdcHyxhSsdw ddcHyxhSsdw,
-			@RequestParam(value = "file_upload", required = false) MultipartFile file,
+	public void saveOrUpdate(DdcHyxhSsdw ddcHyxhSsdw,
 			HttpServletRequest request, HttpServletResponse response) {
-		if (!file.isEmpty()
-				&& file.getSize() / 1024 / 1024 > SystemConstants.MAXFILESIZE) {
-			AjaxUtil.rendJson(response, false, "最大允许上传大小为"
-					+ SystemConstants.MAXFILESIZE + "MB");
-			return;
-		}
-
-		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+		DdcHyxhBase ba = (DdcHyxhBase) request.getSession().getAttribute(
+				SystemConstants.SESSION_USER);
+		DdcHyxhBase ddcHyxhBase = iUserService.getById(ba.getId());
 		ddcHyxhSsdw.setHyxhzh(ddcHyxhBase.getHyxhzh());
 		ddcHyxhSsdw.setSqrq(new Date());
 		ddcHyxhSsdw.setSqr(ddcHyxhBase.getHyxhmc());
-		ddcHyxhSsdw.setZt("1");
+		if (ddcHyxhSsdw.getId() == null) {
+			ddcHyxhSsdw.setPassWord("123456");
+		}
+
+		ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
 		/**
 		 * 验证剩余配额数量
 		 */
 		if (ddcHyxhSsdw.getId() == null) {
+			// 剩余配额减少
+			ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
+					- ddcHyxhSsdw.getDwpe());
 			if (ddcHyxhBase.getHyxhsjzpe() <= 0) {
 				AjaxUtil.rendJson(response, false, "配额不足不能再分配");
 				return;
 			}
 		}
 
-		try {
-			String jpgPath = uploadImg(request, file);
-			String imgPath = ddcHyxhSsdw.getVcPicPath();
-			if (StringUtils.isNotBlank(jpgPath)) {
-				ddcHyxhSsdw.setVcPicPath(jpgPath);
-			} else {
-				ddcHyxhSsdw.setVcPicPath(imgPath);
-			}
-
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		/*
+		 * try { String jpgPath = uploadImg(request, file); String imgPath =
+		 * ddcHyxhSsdw.getVcPicPath(); if (StringUtils.isNotBlank(jpgPath)) {
+		 * ddcHyxhSsdw.setVcPicPath(jpgPath); } else {
+		 * ddcHyxhSsdw.setVcPicPath(imgPath); }
+		 * 
+		 * } catch (IOException e1) { // TODO Auto-generated catch block
+		 * e1.printStackTrace(); }
+		 */
 
 		if (ddcHyxhSsdw.getId() == null) {
 			String message = iCompanyService.queryIsSame(ddcHyxhSsdw);
 			if (message.equals("success")) {
 				try {
+					ddcHyxhSsdw.setTotalPe(ddcHyxhSsdw.getDwpe());
 					iCompanyService.save(ddcHyxhSsdw);
 					// 保存操作日志
 					saveLog(ddcHyxhSsdw, "新增", request);
 
-					// 总配额减少
-					ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
-							- ddcHyxhSsdw.getDwpe());
 					iUserService.save(ddcHyxhBase);
 					AjaxUtil.rendJson(response, true, "操作成功");
 				} catch (Exception e) {
@@ -285,7 +281,7 @@ public class CompanyAction {
 			ip = request.getRemoteAddr();
 		}
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		DdcHyxhSsdwLog ddcHyxhSsdwLog = new DdcHyxhSsdwLog();
 		BeanUtils.copyProperties(ddcHyxhSsdwLog, ddcHyxhSsdw);
 		ddcHyxhSsdwLog.setCznr(type + "  ip=" + ip);// 操作内容
@@ -306,6 +302,7 @@ public class CompanyAction {
 	 * @version: 2016年3月12日 下午2:21:13
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unused")
 	private String uploadImg(HttpServletRequest request, MultipartFile file)
 			throws FileNotFoundException, IOException {
 		if (!file.isEmpty()) {
@@ -358,14 +355,16 @@ public class CompanyAction {
 			for (int i = 0; i < ids.length; i++) {
 				long id = Long.parseLong(ids[i]);
 				DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(id);
-				ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG1);// 同步标志
-																	// UC-外网已同步
-																	// UW-内网已同步
-
+				if (ddcHyxhSsdw.getZt().equals(SystemConstants.ENABLE_ZT)) {
+					ddcHyxhSsdw.setShFlag(Integer
+							.parseInt(SystemConstants.ENABLE_ZT));
+					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);// 同步标志
+				}
 				iCompanyService.update(ddcHyxhSsdw);
 			}
 			AjaxUtil.rendJson(response, true, "成功");
 		} catch (Exception e) {
+			e.printStackTrace();
 			AjaxUtil.rendJson(response, false, "系统错误");
 		}
 
@@ -387,7 +386,7 @@ public class CompanyAction {
 	public List<DdcHyxhSsdw> getAllCompanyAjax(HttpServletRequest request,
 			HttpServletResponse response) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		List<DdcHyxhSsdw> ddcHyxhSsdws = iCompanyService
 				.getAllCompany(ddcHyxhBase.getHyxhzh());
 		return ddcHyxhSsdws;
@@ -395,7 +394,7 @@ public class CompanyAction {
 
 	/**
 	 * 
-	 * 方法描述：
+	 * 方法描述：禁用
 	 * 
 	 * @param response
 	 * @param request
@@ -409,8 +408,46 @@ public class CompanyAction {
 			HttpServletRequest request, String id) {
 		long dId = Long.parseLong(id);
 		try {
-			iCompanyService.deleteCompanyById(dId);
+			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(dId);
+			ddcHyxhSsdw.setZt(SystemConstants.DISENABLE_ZT);
+			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+			iCompanyService.update(ddcHyxhSsdw);
+			DdcHyxhBase ddcHyxhBase = iUserService.getByUserAccount(ddcHyxhSsdw
+					.getHyxhzh());
+			if (ddcHyxhSsdw.getTotalPe() != null) {
+				ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
+						+ ddcHyxhSsdw.getTotalPe());
+				iUserService.update(ddcHyxhBase);
+			}
+
 			AjaxUtil.rendJson(response, true, "操作成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			AjaxUtil.rendJson(response, false, "操作失败，系统错误!");
+		}
+	}
+
+	/**
+	 * 
+	 * 方法描述：重置密码
+	 * 
+	 * @param request
+	 * @param id
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月9日 下午2:08:56
+	 */
+	@RequestMapping("/resetPassword")
+	public void resetPassword(HttpServletRequest request,
+			HttpServletResponse response, String id) {
+		long dId = Long.parseLong(id);
+		try {
+			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(dId);
+			ddcHyxhSsdw.setPassWord("123456");
+			ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
+			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+			iCompanyService.update(ddcHyxhSsdw);
+			AjaxUtil.rendJson(response, true, "密码重置成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
 			AjaxUtil.rendJson(response, false, "操作失败，系统错误!");

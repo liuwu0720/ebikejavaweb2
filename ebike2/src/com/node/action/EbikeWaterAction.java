@@ -82,7 +82,7 @@ public class EbikeWaterAction {
 			String ssdw, String ywlx, String djh, String cphm, String dtstart,
 			String dtend) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
 		String sql = "select A.ID,A.LSH,A.CPHM,A.DJH,A.SLRQ,a.SLYJ,(SELECT distinct S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH and rownum=1) AS DWMC,"

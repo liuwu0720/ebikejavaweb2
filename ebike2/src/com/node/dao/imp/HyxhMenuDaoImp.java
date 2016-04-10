@@ -20,7 +20,7 @@ import com.node.model.HyxhMenu;
  * @version: 2016年3月11日 下午5:33:22
  */
 @Repository
-public class HyxhMenuDaoImp extends GenericHibernateDao<HyxhMenu, Long>
+public class HyxhMenuDaoImp extends GenericHibernateDao<HyxhMenu, Integer>
 		implements IHyxhMenuDao {
 
 }

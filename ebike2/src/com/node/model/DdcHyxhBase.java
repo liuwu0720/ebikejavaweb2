@@ -36,7 +36,7 @@ public class DdcHyxhBase implements java.io.Serializable {
 	private String hyxhdz;//
 	private String hyxhfzr;
 	private String hyxhfzrdh;
-	private Integer hyxhsjzpe;// 行业协会实际总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数）
+	private Integer hyxhsjzpe;// 行业协会实际剩余配额
 	private String bz;
 	private String cjr;
 	private Date cjrq;
@@ -45,6 +45,7 @@ public class DdcHyxhBase implements java.io.Serializable {
 	private String synFlag;
 	private String tranFlag;
 	private Date tranDate;
+	private Integer totalPe;// 总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数
 
 	// Constructors
 
@@ -225,6 +226,19 @@ public class DdcHyxhBase implements java.io.Serializable {
 
 	public void setTranDate(Date tranDate) {
 		this.tranDate = tranDate;
+	}
+
+	@Column(name = "TOTALPE", precision = 0)
+	public Integer getTotalPe() {
+		return totalPe;
+	}
+
+	/**
+	 * @param totalPe
+	 *            : set the property totalPe.
+	 */
+	public void setTotalPe(Integer totalPe) {
+		this.totalPe = totalPe;
 	}
 
 }

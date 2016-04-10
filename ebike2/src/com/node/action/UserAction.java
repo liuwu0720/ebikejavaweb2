@@ -7,19 +7,36 @@
  */
 package com.node.action;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhSsdw;
+import com.node.model.PicPath;
+import com.node.service.ICompanyService;
 import com.node.service.IUserService;
 import com.node.util.AjaxUtil;
+import com.node.util.ScaleImage;
 import com.node.util.SystemConstants;
 
 /**
@@ -35,6 +52,9 @@ public class UserAction {
 
 	@Autowired
 	IUserService iUserService;
+
+	@Autowired
+	ICompanyService iCompanyService;
 
 	/**
 	 * 
@@ -54,7 +74,7 @@ public class UserAction {
 	@RequestMapping("/checkUser")
 	public void checkUser(HttpServletRequest request,
 			HttpServletResponse response, String cuser, String cpassword,
-			String ccode) {
+			String role, String ccode) {
 		/*
 		 * String code = (String) request.getSession().getAttribute("certCode");
 		 * 
@@ -65,15 +85,31 @@ public class UserAction {
 		 * if (!code.equalsIgnoreCase(ccode)) { AjaxUtil.rendJson(response,
 		 * false, "验证码不正确"); return; }
 		 */
+		if (role.equals(SystemConstants.ROLE_HYXH)) {
+			DdcHyxhBase ddcHyxhBase = iUserService.getByUserAccount(cuser);
+			if (ddcHyxhBase == null
+					|| !ddcHyxhBase.getHyxhmm().equals(cpassword)) {
 
-		DdcHyxhBase ddcHyxhBase = iUserService.getByUserAccount(cuser);
-		if (ddcHyxhBase == null || !ddcHyxhBase.getHyxhmm().equals(cpassword)) {
+				AjaxUtil.rendJson(response, false, "用户名或密码错误！");
+				return;
+			} else {
+				request.getSession().setAttribute(SystemConstants.SESSION_USER,
+						ddcHyxhBase);
+				AjaxUtil.rendJson(response, true, "验证通过");
+			}
+		}
+		if (role.equals(SystemConstants.ROLE_SSDW)) {
+			DdcHyxhSsdw ddcHyxhSsdw = iUserService.getSsdwByUserCode(cuser);
+			if (ddcHyxhSsdw == null
+					|| !ddcHyxhSsdw.getPassWord().equals(cpassword)) {
 
-			AjaxUtil.rendJson(response, false, "用户名或密码错误！");
-			return;
-		} else {
-			request.getSession().setAttribute("ddcHyxhBase", ddcHyxhBase);
-			AjaxUtil.rendJson(response, true, "验证通过");
+				AjaxUtil.rendJson(response, false, "用户名或密码错误！");
+				return;
+			} else {
+				request.getSession().setAttribute(SystemConstants.SESSION_USER,
+						ddcHyxhSsdw);
+				AjaxUtil.rendJson(response, true, "验证通过");
+			}
 		}
 
 	}
@@ -131,16 +167,62 @@ public class UserAction {
 	@RequestMapping("/modifyPassword")
 	public String modifyPassword(HttpServletRequest request,
 			HttpServletResponse response) {
-		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
+		Object object = request.getSession().getAttribute(
+				SystemConstants.SESSION_USER);
+		if (object.getClass().getSimpleName()
+				.equals(SystemConstants.CLASS_NAME_DDC_HYXHBASE)) {
+			DdcHyxhBase ba = (DdcHyxhBase) request.getSession().getAttribute(
+					SystemConstants.SESSION_USER);
+			DdcHyxhBase ddcHyxhBase = iUserService.getById(ba.getId());
+			if (ddcHyxhBase != null) {
+				request.setAttribute("ddcHyxhBase", ddcHyxhBase);
+			}
+		} else {
+			DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
 
-		request.setAttribute("ddcHyxhBase", ddcHyxhBase);
+			if (ddcHyxhSsdw != null) {
+				DdcHyxhSsdw newDdcHyxhSsdw = iCompanyService
+						.queryInfoById(ddcHyxhSsdw.getId());
+				String showImg = parseUrl(newDdcHyxhSsdw.getVcPicPath());
+				newDdcHyxhSsdw.setVcShowPath(showImg);
+				if (ddcHyxhSsdw.getShFlag() == 0) {
+					request.setAttribute("message", "您的帐号还没通过审核，请先完善资料!");
+				}
+				request.setAttribute("ddcHyxhSsdw", newDdcHyxhSsdw);
+			}
+		}
+
 		return "main/modifyUser";
 	}
 
 	/**
+	 * 方法描述：图片显示路径进行解析
 	 * 
-	 * 方法描述：
+	 * @param vcPicPath
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年3月12日 下午3:23:40
+	 */
+	private String parseUrl(String vcPicPath) {
+		if (StringUtils.isNotBlank(vcPicPath)) {
+			PicPath picPath = iCompanyService
+					.getPathById(SystemConstants.PIC_IMG);
+			String subPath = picPath.getVcParsePath();
+			if (!subPath.endsWith("/")) {
+				subPath += "/";
+			}
+			return subPath + vcPicPath;
+		} else {
+			return null;
+		}
+
+	}
+
+	/**
+	 * 
+	 * 方法描述：修改行业协会
 	 * 
 	 * @param request
 	 * @param response
@@ -164,6 +246,168 @@ public class UserAction {
 			e.printStackTrace();
 			AjaxUtil.rendJson(response, false, "失败！");
 		}
+	}
+
+	/**
+	 * 
+	 * 方法描述：修改单位信息
+	 * 
+	 * @param request
+	 * @param ddcHyxhSsdw
+	 * @param response
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月9日 下午2:40:10
+	 */
+	@RequestMapping("/saveModifySSdw")
+	public void saveModifySSdw(
+			HttpServletRequest request,
+			@RequestParam(value = "file_upload", required = false) MultipartFile fileupload,
+			DdcHyxhSsdw ddcHyxhSsdw, HttpServletResponse response) {
+		try {
+			ddcHyxhSsdw.setSqrq(new Date());
+			ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
+			String licenseImg = uploadImg(request, fileupload);// 上传车身照片
+			if (StringUtils.isNotBlank(licenseImg)) {
+				ddcHyxhSsdw.setVcPicPath(licenseImg);
+			} else {
+				ddcHyxhSsdw.setVcPicPath(ddcHyxhSsdw.getVcPicPath());
+			}
+			iCompanyService.update(ddcHyxhSsdw);
+			AjaxUtil.rendJson(response, true, "成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			AjaxUtil.rendJson(response, false, "失败！");
+		}
+	}
+
+	private String uploadImg(HttpServletRequest request, MultipartFile file)
+			throws FileNotFoundException, IOException {
+		if (!file.isEmpty()) {
+			PicPath imgPath = iCompanyService
+					.getPathById(SystemConstants.PIC_IMG);
+			String source = imgPath.getVcAddpath();// 图片保存路径
+			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
+			source = source + "/" + format.format(new Date());
+			if (!source.endsWith("/")) {
+				source += "/";
+			}
+			if (StringUtils.isBlank(source)) {
+				System.out.println("source路径查不到！");
+				return null;
+			}
+			String getImagePath = source;
+
+			// 得到上传文件的后缀名
+			String uploadName = file.getContentType();
+			System.out.println("图片类型 ------------" + uploadName);
+
+			String lastuploadName = uploadName.substring(
+					uploadName.indexOf("/") + 1, uploadName.length());
+			System.out.println("得到上传文件的后缀名 ------------" + lastuploadName);
+
+			// 得到文件的新名字
+			String fileNewName = generateFileName(file.getOriginalFilename());
+			System.out.println("// 得到文件的新名字 ------------" + fileNewName);
+
+			// 最后返回图片路径
+			String imagePath = source + "/" + fileNewName;
+			System.out.println("        //最后返回图片路径   " + imagePath);
+			File image = new File(getImagePath);
+			if (!image.exists()) {
+				image.mkdir();
+			}
+			// file.transferTo(pathFile);
+			BufferedImage srcBufferImage = ImageIO.read(file.getInputStream());
+			BufferedImage scaledImage;
+			ScaleImage scaleImage = ScaleImage.getInstance();
+			int yw = srcBufferImage.getWidth();
+			int yh = srcBufferImage.getHeight();
+			int w = SystemConstants.LICENCE_IMG_WITH, h = SystemConstants.LICENCE_IMG_HEIGHT;
+			if (w > yw && h > yh) {
+				File image2 = new File(getImagePath, fileNewName);
+				file.transferTo(image2);
+			} else {
+				scaledImage = scaleImage.imageZoomOut(srcBufferImage, w, h);
+				FileOutputStream out = new FileOutputStream(getImagePath + "/"
+						+ fileNewName);
+				ImageIO.write(scaledImage, "jpeg", out);
+				out.close();
+			}
+			return format.format(new Date()) + "/" + fileNewName;// 将文件夹名和文件名返回
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * 方法描述：导出excel
+	 * 
+	 * @param request
+	 * @param response
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月2日 下午5:53:39
+	 */
+	@RequestMapping("/exportExcel")
+	public void exportExcel(HttpServletRequest request,
+			HttpServletResponse response) {
+		response.reset();
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String hf = request.getParameter("hfs");
+		String type = request.getParameter("type");
+		String exportname = "grid";
+		try {
+			if (type.equals("excel")) {
+				exportname += ".xls";
+				response.setHeader(
+						"Content-disposition",
+						"attachment; filename="
+								+ java.net.URLEncoder.encode(exportname,
+										"UTF-8") + "");
+				response.setContentType("application/msexcel;charset=utf-8");
+			} else if (type.equals("word")) {
+				exportname += ".doc";
+				response.setHeader(
+						"Content-disposition",
+						"attachment; filename="
+								+ java.net.URLEncoder.encode(exportname,
+										"UTF-8") + "");
+				response.setContentType("application/ms-word;charset=UTF-8");
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(hf);
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private String generateFileName(String fileName) {
+		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String formatDate = format.format(new Date());
+		int random = new Random().nextInt(10000);
+		int position = fileName.lastIndexOf(".");
+		String extension = fileName.substring(position);
+		return formatDate + random + extension;
+	}
+
+	@RequestMapping("/export")
+	public String export() {
+		return "apply/export";
 	}
 
 }

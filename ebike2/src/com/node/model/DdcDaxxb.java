@@ -39,7 +39,7 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String ywyy;// 业务原因
 	private String ywyyName;
 	private String hyxhzh;//
-	private String zzjgdmzh;// 组织机构代码证号
+	private String zzjgdmzh;// 单位ID
 	private String zzjgdmzhName;
 	private String cphm;// 车牌号码，办结后，以流水转入本表的车牌号码数据填充本表
 	private String ppxh;// 品牌型号
@@ -77,7 +77,7 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String gdr;// 归档人
 	private Date gdrq;// 归档日期
 	private String gdbm;// 归档部门
-	private String synFlag;// 同步标志,填写规则详看其他文档
+	private String synFlag;// 同步标志 ADD新增 UP更改
 	private String tranFlag;// 传送标志(该字段必须有索引)
 	private Date tranDate;// 传送时间
 	private String vcEbikeImg;// 车身图片

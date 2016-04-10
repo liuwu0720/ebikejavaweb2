@@ -32,6 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var cpassword = $("#password").val();
 				var ccode = $("#code").val();
 				var nullReg = /[^\f\n\r\t\v]/;
+				var role = $("#role").val();
 			
 				if (!nullReg.test(cuser)) {
 					alert("请输入单位帐号!");
@@ -51,7 +52,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.post("<%=basePath %>userAction/checkUser",{
 					cuser : cuser,
 					cpassword : cpassword,
-					ccode : ccode
+					ccode : ccode,
+					role:role
 				},function(data, textStatus){
 					 if(!data.isSuccess){
 						 alert(data.message);
@@ -110,6 +112,16 @@ html,body {
 													<td height="24" align="right">密&nbsp;码：</td>
 													<td><input name="hyxhmm" type="password" id="password"
 														style="width: 100px; height: 17px; border: solid 1px #153966; font-size: 12px; color: #283439; background-color: #87adbf;">
+													</td>
+												</tr>
+												<tr>
+													<td height="24" align="right">角&nbsp;色：</td>
+													<td>
+														<select id="role">
+															<option value="1">行业协会</option>
+															<option value="2">所属单位</option>
+															<option value="3">管理员</option>
+														</select>
 													</td>
 												</tr>
 												<tr valign="bottom">

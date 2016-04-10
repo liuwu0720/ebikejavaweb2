@@ -11,51 +11,9 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'changeInfos.jsp' starting page</title>
+<title>流水详情</title>
 
 <%@include file="../common/common.jsp"%>
-<style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-	font-size: 12px;
-}
-
-#main {
-	border-collapse: collapse;
-}
-
-#main,#main tr,#main th,#main td {
-	border: 1px solid #C4E1FF;
-}
-
-#main tr {
-	height: 30px;
-	background-color: #EEF2FB;
-	line-height: 30px;
-}
-
-#main th {
-	text-align: right;
-	font-weight: bold;
-	width: 10%;
-}
-
-#main td {
-	width: 15%;
-	text-align: left;
-	padding-left: 5px;
-}
-
-.maindiv {
-	background-color: #E4E4FB;
-	vertical-align: middle;
-}
-
-.maindiv input {
-	vertical-align: middle;
-}
-</style>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -165,14 +123,11 @@ $(document).ready(function(){
 				</tr>
 				
 				<tr>
-					<th>受理人：</th>
-					<td>${ddcFlow.slr }</td>
+
 					<th>受理意见：</th>
-					<td>${ddcFlow.slyj=='0'?'同意':'不同意' }</td>
-					<th>受理部门：</th>
-					<td>${ddcFlow.slbm }</td>
+					<td colspan="3">${ddcFlow.slyj=='0'?'同意':'不同意' }</td>
 					<th>受理日期：</th>
-					<td><fmt:formatDate value="${ddcFlow.slrq }" pattern="yyyy-MM-dd"/> </td>
+					<td colspan="3"><fmt:formatDate value="${ddcFlow.slrq }" pattern="yyyy-MM-dd"/> </td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -196,12 +151,11 @@ $(document).ready(function(){
 						<br />
 					</td>
 				</tr>
-				<tr>
-					<td colspan="8" height="35" style="text-align:center;"><input
-						type="button" value=" 返 回 " class="btn"
-						onclick="javascript:window.history.back();"></td>
-				</tr>
+				
 			</table>
+			<div class="btndiv">
+			<button type="button" class="btn" onclick="history.back()">返回</button>
+			</div>
 		</form>
 
 	</div>

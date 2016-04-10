@@ -17,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.node.model.DdcHyxhSsdw;
 import com.node.model.HyxhMenu;
 import com.node.service.IUserService;
+import com.node.util.SystemConstants;
 
 /**
  * 类描述：主页的页面加载
@@ -72,7 +74,18 @@ public class MainAction {
 	 * @version: 2016年3月2日 上午9:36:01
 	 */
 	@RequestMapping("/getWelcome")
-	public String getWelcomePage() {
+	public String getWelcomePage(HttpServletRequest request) {
+		Object object = request.getSession().getAttribute(
+				SystemConstants.SESSION_USER);
+		if (object.getClass().getSimpleName()
+				.equals(SystemConstants.CLASS_NAME_DDC_HYXHSSDW)) {
+			DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
+			if (ddcHyxhSsdw.getShFlag() == 0) {
+				return "redirect:/userAction/modifyPassword";
+			}
+
+		}
 		return "main/welcome";
 	}
 
@@ -102,7 +115,8 @@ public class MainAction {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/getSidebar")
 	public String getSidebar(HttpServletRequest request) {
-		List<HyxhMenu> hyxhMenus = iUserService.getAllMenus();
+
+		List<HyxhMenu> hyxhMenus = iUserService.getAllMenus(request);
 		List<HyxhMenu> nodeHyxhMenus = new ArrayList<HyxhMenu>();
 
 		for (HyxhMenu hyxhMenu : hyxhMenus) {

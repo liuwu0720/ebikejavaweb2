@@ -24,38 +24,29 @@ public class SystemConstants {
 	 * 交警支队的档案类型
 	 */
 	public static final Integer IARCHIVETYPE_TRAFFICE = 1;
-	/**
-	 * 有效
-	 */
-	public static final Integer ENABLE = 0;
+
 	/**
 	 * 根菜单
 	 */
 	public static final Integer ROOT_PARENTID = 0;
-	/**
-	 * 无效
-	 */
-	public static final Integer DISABLE = 1;
+
 	/**
 	 * 营业执照图片上传路径ID
 	 */
 	public static final Integer PIC_IMG = 1;
 	/**
-	 * 待审核
+	 * 需要更新至内网
 	 */
-	public static final String SYSNFLAG1 = "UC";
+	public static final String SYSNFLAG_UPDATE = "UP";
 	/**
-	 * 已审核
+	 * 需要新增至内网
 	 */
-	public static final String SYSNFLAG2 = "UW";
+	public static final String SYSNFLAG_ADD = "ADD";
 	/**
 	 * 最大文件
 	 */
-	public static final long MAXFILESIZE = 10;
-	/**
-	 * session
-	 */
-	public static final String SESSION_USER = "ddcHyxhBase";
+	public static final long MAXFILESIZE = 50;
+
 	/**
 	 * 配额申报表名
 	 */
@@ -72,4 +63,42 @@ public class SystemConstants {
 	 * 同意
 	 */
 	public static final String AGREE = "0";
+	/**
+	 * 行业协会角色
+	 */
+	public static final String ROLE_HYXH = "1";
+	/**
+	 * 行业协会角色session
+	 */
+	public static final String SESSION_USER = "sessionuser";
+	/**
+	 * 所属单位
+	 */
+	public static final String ROLE_SSDW = "2";
+
+	/**
+	 * 0 禁用 1 启用
+	 */
+	public static final String ENABLE_ZT = "1";
+	/**
+	 * 0 禁用 1 启用
+	 */
+	public static final String DISENABLE_ZT = "0";
+	/**
+	 * 营业执照最大宽度
+	 */
+	public static final int LICENCE_IMG_WITH = 800;
+	/**
+	 * 营业执照最大高度
+	 */
+	public static final int LICENCE_IMG_HEIGHT = 600;
+
+	public static final String CLASS_NAME_DDC_HYXHBASE = "DdcHyxhBase";
+
+	public static final String CLASS_NAME_DDC_HYXHSSDW = "DdcHyxhSsdw";
+
+	public static void main(String[] args) {
+		String codeString = "13366665555";
+		System.out.println(codeString.substring(codeString.length() - 6));
+	}
 }

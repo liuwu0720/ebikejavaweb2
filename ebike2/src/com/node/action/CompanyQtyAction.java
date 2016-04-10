@@ -26,6 +26,7 @@ import com.node.util.AjaxUtil;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
 import com.node.util.ServiceUtil;
+import com.node.util.SystemConstants;
 
 /**
  * 类描述：配额管理
@@ -73,7 +74,7 @@ public class CompanyQtyAction {
 	public Map<String, Object> queryAll(HttpServletRequest request,
 			String dwmc, String lxr) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
 		HqlHelper hql = new HqlHelper(DdcHyxhSsdw.class);
@@ -110,8 +111,8 @@ public class CompanyQtyAction {
 		int ssdwDwpe = Integer.parseInt(dwpe);
 		DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(ssdwId);
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
-		int minusNum = ssdwDwpe - ddcHyxhSsdw.getDwpe();
+				.getAttribute(SystemConstants.SESSION_USER);
+		int minusNum = ssdwDwpe - ddcHyxhSsdw.getTotalPe();// 增加的配额
 		if (ssdwDwpe == ddcHyxhSsdw.getDwpe()) {
 			AjaxUtil.rendJson(response, true, "修改成功！");
 			return;
@@ -120,11 +121,23 @@ public class CompanyQtyAction {
 				AjaxUtil.rendJson(response, false, "配额不足，修改失败");
 				return;
 			} else {
-				ddcHyxhSsdw.setDwpe(ssdwDwpe);
-				iCompanyService.update(ddcHyxhSsdw);
-				ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe() - minusNum);
-				iUserService.update(ddcHyxhBase);
-				AjaxUtil.rendJson(response, true, "修改成功！");
+				int hasNum = ddcHyxhSsdw.getTotalPe() - ddcHyxhSsdw.getDwpe();// 单位已经使用的配额
+				if (ssdwDwpe < hasNum) {
+					// 如果输入的配额数量小于已经使用的配额
+					AjaxUtil.rendJson(response, false,
+							"单位名称【" + ddcHyxhSsdw.getDwmc() + "】已经使用了【"
+									+ hasNum + "】个配额，输入数量需要大于【" + hasNum + "】");
+					return;
+				} else {
+					ddcHyxhSsdw.setTotalPe(ssdwDwpe);
+					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe() - hasNum);
+					iCompanyService.update(ddcHyxhSsdw);
+					ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
+							- minusNum);
+					iUserService.update(ddcHyxhBase);
+					AjaxUtil.rendJson(response, true, "修改成功！");
+				}
+
 			}
 		}
 

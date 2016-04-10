@@ -52,6 +52,11 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
+			field : 'userCode',
+			title : '单位帐号',
+			align:'center',
+			width : 120
+		},{
 			field : 'zzjgdmzh',
 			title : '机构代码',
 			align:'center',
@@ -68,7 +73,12 @@ $(document).ready(function(){
 			width : 120
 		},{
 			field : 'dwpe',
-			title : '单位配额',
+			title : '单位剩余配额',
+			align:'center',
+			width : 120
+		},{
+			field : 'totalPe',
+			title : '单位总配额',
 			align:'center',
 			width : 120
 		},{
@@ -93,15 +103,15 @@ $(document).ready(function(){
 				}
 			}
 		},{
-			field : 'synFlag',
-			title : '是否同步',
+			field : 'shFlag',
+			title : '是否审核',
 			align:'center',
 			width : 120,
 			formatter:function(value,index){
-				if(value == 'UC' || value == 'UW'){
-					return "<p style='color:red'>已同步</p>";
+				if(value == 0 ){
+					return "<p style='color:red'>未审核</p>";
 				}else{
-					return "未同步";
+					return "已审核";
 				}
 			}
 		},{
@@ -111,12 +121,12 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.id+")'>查看</a>&nbsp;&nbsp;&nbsp;"
-				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>修改</a>&nbsp;&nbsp;&nbsp;"
-				var deleteRow = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.id+")'>删除</a>&nbsp;&nbsp;&nbsp;"
-				if(row.synFlag == 'UC' || row.synFlag == 'UW'){
-					return query+update;
-				}else{
+				var update = "<a  href='javascript:void(0)'  onclick='resetPassword("+row.id+")'>重置</a>&nbsp;&nbsp;&nbsp;"
+				var deleteRow = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.id+")'>禁用</a>&nbsp;&nbsp;&nbsp;"
+				if(row.zt == '1'){
 					return query+update+deleteRow;
+				}else{
+					return query
 				}
 				
 			
@@ -134,7 +144,7 @@ $(document).ready(function(){
 			}
 		}, {
 			id : 'btn2',
-			text : '同步',
+			text : '批量审核',
 			iconCls : 'icon-reload',
 			handler : function() {
 				changeRowData();
@@ -159,7 +169,7 @@ function doSearch(){
 //新增弹出
 function addRowData(){
 	$('#dgform').form('clear');
-	$('#dgformDiv').dialog('open').dialog('setTitle', '新增用户');
+	$('#dgformDiv').dialog('open').dialog('setTitle', '新增单位信息');
 	//$("#img").attr("src",null);
 	$("#img_tr").hide();
 	$('#ss').spinner({    
@@ -182,6 +192,7 @@ function queryRow(id){
  				 $('#dgformDiv2').dialog('open').dialog('setTitle', '详情信息');
  				 $('#dgform2').form('load', data);
  				 $("#img2").attr("src",data.vcShowPath);
+ 				$("#img_a").attr("href",data.vcShowPath);
  			  }
  		  }
 	})
@@ -205,6 +216,7 @@ function updateRow(id){
  				 $('#dgform').form('load', data);
  				$("#img_tr").show();
  				 $("#img").attr("src",data.vcShowPath);
+ 				 
  			  }
  		  }
 	})
@@ -256,7 +268,7 @@ function changeRowData(){
 	if(selected.length == 0){
 		alert("请至少选择一条数据");
 	}else{
-		$.messager.confirm('警告', '同步以后不能再删除，请确认', function(r){
+		$.messager.confirm('警告', '确认审批通过，请确认', function(r){
 			if (r){
 				
 				$.post("<%=basePath%>companyAction/changeRowData", 
@@ -297,8 +309,7 @@ function deleteRow(id){
 	    						title : '提示',
 	    						msg : data.message
 	    					});
-	    					$('#dgformDiv').dialog('close');
-	    					$("#dg").datagrid('reload');
+	    					window.location.reload();
 	    				}else{
 	    					alert(data.message);
 	    				}
@@ -307,6 +318,30 @@ function deleteRow(id){
 	    }    
 	}); 
 	
+}
+
+//密码重置
+function resetPassword(id){
+	$.messager.confirm('确认','您确认要重置为初始密码吗？',function(r){
+		if (r){    
+	    	$.post("<%=basePath%>companyAction/resetPassword", 
+	    			{"id":id},    
+	    			   function (data, textStatus)
+	    			   {     
+	    					
+	    				if (data.isSuccess) {
+	    					$.messager.show({ // show error message
+	    						title : '提示',
+	    						msg : data.message
+	    					});
+	    					window.location.reload();
+	    				}else{
+	    					alert(data.message);
+	    				}
+	    			   }
+	    		  ,"json");   
+	    }    
+	});
 }
 </script>
 </head>
@@ -327,7 +362,7 @@ function deleteRow(id){
 					<option value="1">启用</option>
 				</select>
 				<a 	class="easyui-linkbutton" plain="true" onclick="doSearch()" iconCls="icon-search" >查询 </a>
-				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
+				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">实际配额：${ddcHyxhBase.totalPe }   剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 		</div>
 	</table>
 </div>
@@ -337,58 +372,29 @@ function deleteRow(id){
 		closed="true" buttons="#dlg-buttons2">
 		<form id="dgform" class="easyui-form" enctype="multipart/form-data"  method="post">
 			<table class="table">
-				<tr style="display: none">
-					<td>id</td>
-					<td><input class="easyui-validatebox" type="text" name="id" ></input>
-					</td>
+				<tr>
+					<td colspan="2"><p style="color: red">单位默认密码为123456</p></td>
 				</tr>
 				<tr>
 					<td>单位名称：</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="dwmc"  style="height: 32px;width:200px;"></input></td>
+						data-options="required:true" name="dwmc"  style="height: 32px;"></input></td>
 				</tr>
 				<tr>
-					<td> 组织机构代码证号：</td>
-					<td><input class="easyui-validatebox" type="text" data-options="required:true" 
-						name="zzjgdmzh" style="height: 32px;width:200px;"></input>
-						</td>
+					<td>单位帐号：</td>
+					<td><input class="easyui-validatebox" type="text"
+						data-options="required:true,validType:'username'" name="userCode"  style="height: 32px;"></input></td>
 				</tr>
-				<tr>
-					<td>住所地址</td>
-					<td><input class="easyui-validatebox" data-options="required:true"  name="zsdz" type="text"  style="height: 32px;width:200px;"></input>
-					</td>
-				</tr>
-				<tr>
-					<td>联系人：</td>
-					<td><input class="easyui-validatebox" type="text" data-options="required:true" 
-						 name="lxr" style="height: 32px"></input>
-					</td>
-				</tr>
-				<tr >
-					<td>联系电话:</td>
-					<td><input class="easyui-validatebox" data-options="required:true,validType:'phoneNum'"  type="text" name="lxdh" style="height: 32px"></input>
-						 </td>
-				</tr>
+				
 				<tr>
 					<td>单位配额</td>
 					<td><input id="ss" class="easyui-numberspinner" name="dwpe" data-options="increment:1,required:true,validType:'number'" value="0" min="0" style="width:120px;height:30px;"></input>
 					</td>
 				</tr>
-				<tr>
-					<td>选择上传</td>
-					<td>
-						<input class="easyui-filebox" style="width:300px"  id="file_upload" name="file_upload"/><br/>
-					</td>
-				</tr>
-				<tr id="img_tr">
-					<td>营业执照图片</td>
-					<td>
-						<img id="img"  class="easyui-validatebox" style="width:300px"   /><br/>
-					</td>
-				</tr>
+				
 			</table>
-				<input class="easyui-validatebox" type="hidden"  
-						 name="vcPicPath" style="height: 32px">
+				<input type="hidden"   name="vcPicPath" >
+				<input  type="hidden"  name="id">
 		</form>
 		<div id="dlg-buttons2">
 			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
@@ -404,12 +410,8 @@ function deleteRow(id){
 	<div id="dgformDiv2" class="easyui-dialog"
 		style="width:550px;height:450px;padding:10px 20px 20px 20px;" closed="true" >
 		<form id="dgform2" class="easyui-form" method="post">
-			<table class="table">
-				<tr style="display: none">
-					<td>id</td>
-					<td><input class="easyui-validatebox" type="text" name="id" readonly="readonly" ></input>
-					</td>
-				</tr>
+			<table class="table input_border0">
+				
 				<tr>
 					<td>单位名称：</td>
 					<td><input class="easyui-validatebox" type="text" 
@@ -438,15 +440,19 @@ function deleteRow(id){
 						 </td>
 				</tr>
 				<tr>
-					<td>单位配额</td>
-					<td><input class="easyui-numberspinner" name="dwpe" data-options="increment:1"  readonly="readonly"  style="width:120px;height:30px;"></input>
-						
+					<td>单位总配额</td>
+					<td><input  name="totalPe"   readonly="readonly"  readonly="readonly"   type="text"></input>					
+					</td>
+				</tr>
+				<tr>
+					<td>剩余配额</td>
+					<td><input  name="dwpe" d readonly="readonly"  readonly="readonly"   type="text"></input>					
 					</td>
 				</tr>
 				<tr>
 					<td>营业执照图片</td>
 					<td>
-						<img id="img2"  class="easyui-validatebox" style="width:300px"   /><br/>
+						<a id="img_a" target="_blank"><img id="img2"  class="easyui-validatebox" style="width:300px"   /></a><br/>
 					</td>
 				</tr>
 			</table>

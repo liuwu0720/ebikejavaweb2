@@ -30,6 +30,7 @@ import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.DdcHyxhSsdwclsbLog;
 import com.node.model.DdcSjzd;
 import com.node.service.IApplyService;
+import com.node.service.ICompanyService;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
 
@@ -61,6 +62,9 @@ public class ApplyServiceImp implements IApplyService {
 	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
 	@Autowired
 	IDdcApprovalUserDao iDdcApprovalUserDao;
+
+	@Autowired
+	ICompanyService iCompanyService;
 
 	/*
 	 * (non-Javadoc)
@@ -190,7 +194,34 @@ public class ApplyServiceImp implements IApplyService {
 	 */
 	@Override
 	public DdcHyxhSsdwclsb getDdcHyxhSsdwclsbById(long sbId) {
-		// TODO Auto-generated method stub
+		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iDdcHyxhSsdwclsbDao.get(sbId);
+		String cysyName = findByProPerties("CSYS", ddcHyxhSsdwclsb.getCysy());
+
+		ddcHyxhSsdwclsb.setCysyName(cysyName);// 车身颜色
+		String xsqyName = findByProPerties("SSQY", ddcHyxhSsdwclsb.getXsqy());
+		ddcHyxhSsdwclsb.setXsqyName(xsqyName);// 行驶区域
+		// 申报单位
+		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getSsdwId())) {
+			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
+					.parseLong(ddcHyxhSsdwclsb.getSsdwId()));
+			if (ddcHyxhSsdw != null) {
+				ddcHyxhSsdwclsb.setSsdwName(ddcHyxhSsdw.getDwmc());
+			} else {
+				ddcHyxhSsdwclsb.setSsdwName(null);
+			}
+		}
+		if (StringUtils.isBlank(ddcHyxhSsdwclsb.getSlyj())) {
+			if (ddcHyxhSsdwclsb.getSlIndex() == 0) {
+				ddcHyxhSsdwclsb.setNote("等待行业协会审批");
+			} else {
+				ddcHyxhSsdwclsb.setNote("等待交警审批");
+			}
+		} else if (ddcHyxhSsdwclsb.getSlyj().equals("1")) {
+			ddcHyxhSsdwclsb.setNote("已拒绝");
+		} else if (ddcHyxhSsdwclsb.getSlyj().equals("0")) {
+			ddcHyxhSsdwclsb.setNote("已同意");
+		}
+
 		return iDdcHyxhSsdwclsbDao.get(sbId);
 	}
 

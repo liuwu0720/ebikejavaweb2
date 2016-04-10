@@ -45,9 +45,9 @@ $(document).ready(function(){
 					title : 'ID',
 					checkbox : true,
 					align : 'center',
-														width : 120
-													},
-													{
+					width : 120
+					},
+					{
 														field : 'dwmc',
 														title : '单位名称',
 														align : 'center',
@@ -73,7 +73,12 @@ $(document).ready(function(){
 													},
 													{
 														field : 'dwpe',
-														title : '单位配额',
+														title : '单位剩余配额',
+														align : 'center',
+														width : 120
+													},{
+														field : 'totalPe',
+														title : '单位总配额',
 														align : 'center',
 														width : 120
 													},

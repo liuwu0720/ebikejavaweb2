@@ -21,6 +21,7 @@ import com.node.model.DdcHyxhSsdwLog;
 import com.node.model.PicPath;
 import com.node.service.ICompanyService;
 import com.node.util.HqlHelper;
+import com.node.util.Page;
 
 /**
  * 类描述：
@@ -73,12 +74,18 @@ public class CompanyServiceImp implements ICompanyService {
 		String meesageString = "success";
 		List<DdcHyxhSsdw> ddcHyxhSsdws = iDdcHyxhSsdwDao.findByProperty("dwmc",
 				ddcHyxhSsdw.getDwmc());
+		List<DdcHyxhSsdw> ddcHyxhSsdws2 = iDdcHyxhSsdwDao.findByProperty(
+				"userCode", ddcHyxhSsdw.getUserCode());
 		if (ddcHyxhSsdws != null && ddcHyxhSsdws.size() > 0) {
-			return "单位名称【" + ddcHyxhSsdw.getDwmc() + "】重复";
+			meesageString = "单位名称【" + ddcHyxhSsdw.getDwmc() + "】重复";
 
-		} else {
-			return meesageString;
 		}
+		if (ddcHyxhSsdws2 != null && ddcHyxhSsdws2.size() > 0) {
+			meesageString = "单位帐号【" + ddcHyxhSsdw.getUserCode() + "】重复";
+
+		}
+
+		return meesageString;
 
 	}
 
@@ -165,6 +172,18 @@ public class CompanyServiceImp implements ICompanyService {
 	public void deleteCompanyById(long dId) {
 		// TODO Auto-generated method stub
 		iDdcHyxhSsdwDao.deleteByKey(dId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.ICompanyService#getBySpringSql(java.lang.String,
+	 * com.node.util.Page)
+	 */
+	@Override
+	public Map<String, Object> getBySpringSql(String sql, Page page) {
+		// TODO Auto-generated method stub
+		return iDdcHyxhSsdwDao.getSpringSQL(sql, page);
 	}
 
 }

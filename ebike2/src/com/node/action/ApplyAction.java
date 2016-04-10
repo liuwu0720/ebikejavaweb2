@@ -107,7 +107,7 @@ public class ApplyAction {
 	@RequestMapping("/applyQtys")
 	public String applyQtys(HttpServletRequest request) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		request.setAttribute("ddcHyxhBase", ddcHyxhBase);
 		return "apply/ebikeQtys";
 	}
@@ -128,7 +128,7 @@ public class ApplyAction {
 	public Map<String, Object> queryAllQtys(HttpServletRequest request,
 			String dtend, String dtstart) throws ParseException {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 		HqlHelper hql = new HqlHelper(DdcHyxhBasb.class);
 		hql.addEqual("hyxhzh", ddcHyxhBase.getHyxhzh());
@@ -163,7 +163,7 @@ public class ApplyAction {
 	public void saveOrUpdateQty(HttpServletRequest request,
 			HttpServletResponse response, String bz, String hyxhsqpe) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		DdcHyxhBasb ddcHyxhBasb = new DdcHyxhBasb();
 		// 生成流水号
 		String sql = "select SEQ_HYXH_SSDWCLSB_XH.nextval from dual";
@@ -226,7 +226,7 @@ public class ApplyAction {
 			String ssdw, String djh, String dtstart, String dtend)
 			throws ParseException {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
 		HqlHelper hql = new HqlHelper(DdcHyxhSsdwclsb.class);
@@ -460,7 +460,7 @@ public class ApplyAction {
 		}
 
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		ddcHyxhSsdwclsb.setHyxhzh(ddcHyxhBase.getHyxhzh());
 		ddcHyxhSsdwclsb.setSqrq(new Date());
 		ddcHyxhSsdwclsb.setSqr(ddcHyxhBase.getHyxhzh());
@@ -533,7 +533,7 @@ public class ApplyAction {
 			ip = request.getRemoteAddr();
 		}
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		DdcHyxhSsdwclsbLog ddcHyxhSsdwclsbLog = new DdcHyxhSsdwclsbLog();
 		BeanUtils.copyProperties(ddcHyxhSsdwclsbLog, ddcHyxhSsdwclsb);
 		ddcHyxhSsdwclsbLog.setSqip(ip);
@@ -651,12 +651,13 @@ public class ApplyAction {
 				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 						.getDdcHyxhSsdwclsbById(id);
 				if (StringUtils.isBlank(ddcHyxhSsdwclsb.getSynFlag())) {
-					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG1);
+					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 				}
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
 			AjaxUtil.rendJson(response, true, "成功");
 		} catch (Exception e) {
+			e.printStackTrace();
 			AjaxUtil.rendJson(response, false, "系统错误");
 		}
 
@@ -748,7 +749,8 @@ public class ApplyAction {
 			ws.addCell(label8);
 			Label label9 = new Label(8, 2, "申报时间", wcfFC2);
 			ws.addCell(label9);
-
+			Label label10 = new Label(9, 2, "状态", wcfFC2);
+			ws.addCell(label10);
 			int i = 3;
 			int j = 1;
 			for (DdcHyxhSsdwclsb dhsc : ddcHyxhSsdwclsbs) {
@@ -770,6 +772,8 @@ public class ApplyAction {
 				ws.addCell(labelC6);
 				Label labelC7 = new Label(8, i, dhsc.getSqrq().toString());
 				ws.addCell(labelC7);
+				Label labelC9 = new Label(9, i, dhsc.getNote());
+				ws.addCell(labelC9);
 				i++;
 				j++;
 			}
@@ -828,9 +832,21 @@ public class ApplyAction {
 		String showEbikeImg = parseUrl(ddcHyxhSsdwclsb.getVcEbikeImg());
 		String showUser1Img = parseUrl(ddcHyxhSsdwclsb.getVcUser1Img());
 		String showUser2Img = parseUrl(ddcHyxhSsdwclsb.getVcUser2Img());
+		String vcUser1CardImg1Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser1CardImg1());
+		String vcUser1CardImg2Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser1CardImg2());
+		String vcUser2CardImg1Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser2CardImg1());
+		String vcUser2CardImg2Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser2CardImg2());
 		ddcHyxhSsdwclsb.setVcShowEbikeImg(showEbikeImg);
 		ddcHyxhSsdwclsb.setVcShowUser1Img(showUser1Img);
 		ddcHyxhSsdwclsb.setVcShowUser2Img(showUser2Img);
+		ddcHyxhSsdwclsb.setVcUser1CardImg1Show(vcUser1CardImg1Show);
+		ddcHyxhSsdwclsb.setVcUser1CardImg2Show(vcUser1CardImg2Show);
+		ddcHyxhSsdwclsb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
+		ddcHyxhSsdwclsb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
 		String approveTableName = SystemConstants.RECORDSBTABLE;
 		List<DdcApproveUser> approveUsers = iApplyService
 				.findApproveUsersByProperties(approveTableName,

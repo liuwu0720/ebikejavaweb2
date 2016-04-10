@@ -107,9 +107,16 @@
 		</primary-key>
 		<column name="TRAN_DATE" type="Date"></column>
 	</table>
-<table name="DDC_APPROVE_USER" schema="EBIKEOUT">
-	<primary-key>
-		<generator class="sequence"></generator>
-	</primary-key>
-</table>
+	<table name="DDC_APPROVE_USER" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+	</table>
+	<table name="ROLE_MENU" schema="EBIKEOUT">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+		<column name="ID" type="Integer"></column>
+		<column name="ROLE" type="Integer"></column>
+	</table>
 </hibernate-reverse-engineering>

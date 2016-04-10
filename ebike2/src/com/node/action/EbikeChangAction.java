@@ -136,6 +136,61 @@ public class EbikeChangAction {
 
 	/**
 	 * 
+	 * 方法描述：
+	 * 
+	 * @param id
+	 * @param request
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月7日 上午9:47:39
+	 */
+	@RequestMapping("/queryDetailById")
+	public String queryDetailById(String id, HttpServletRequest request) {
+		long sbId = Long.parseLong(id);
+		DdcDaxxb ddcDaxxb = iEbikeService.getById(sbId);
+		String cysyName = iApplyService.findByProPerties("CSYS",
+				ddcDaxxb.getCysy());
+
+		ddcDaxxb.setCysyName(cysyName);// 车身颜色
+		String xsqyName = iApplyService.findByProPerties("SSQY",
+				ddcDaxxb.getXsqy());
+		ddcDaxxb.setXsqyName(xsqyName);// 所属区域
+
+		String ztName = iApplyService
+				.findByProPerties("CLZT", ddcDaxxb.getZt());
+		ddcDaxxb.setZtName(ztName);
+		// 申报单位
+		if (StringUtils.isNotBlank(ddcDaxxb.getZzjgdmzh())) {
+			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
+					.parseLong(ddcDaxxb.getZzjgdmzh()));
+			if (ddcHyxhSsdw != null) {
+				ddcDaxxb.setZzjgdmzhName(ddcHyxhSsdw.getDwmc());
+			} else {
+				ddcDaxxb.setZzjgdmzhName(null);
+			}
+		}
+		// 业务类型
+		String ywlxName = iApplyService.findByProPerties("YWLX",
+				ddcDaxxb.getYwlx());
+		ddcDaxxb.setYwlxName(ywlxName);
+		// 业务原因
+		String ywyyName = iApplyService.findByProPerties("YWYY_A",
+				ddcDaxxb.getYwyy());
+		ddcDaxxb.setYwyyName(ywyyName);
+
+		String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
+		String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
+		String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
+		ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
+		ddcDaxxb.setVcShowUser1Img(showUser1Img);
+		ddcDaxxb.setVcShowUser2Img(showUser2Img);
+		request.setAttribute("ddcDaxxb", ddcDaxxb);
+		return "ebike/ebikeDaInfo";
+	}
+
+	/**
+	 * 
 	 * 方法描述：跳转至变更详情页面
 	 * 
 	 * @return
@@ -214,7 +269,7 @@ public class EbikeChangAction {
 	public Map<String, Object> queryAll(HttpServletResponse response,
 			String djh, String dabh, String cphm, HttpServletRequest request) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
 		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.SLRQ,(SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH ) AS DWMC, "
@@ -347,7 +402,7 @@ public class EbikeChangAction {
 			newDaxxb.setVcUser2Img(daxxb.getVcUser2Img());
 		}
 		try {
-			String type = "B";
+			String type = "B";// 变更
 			saveDdcFlow(type, newDaxxb, slzls, null);
 
 			// 保存日志
@@ -390,6 +445,7 @@ public class EbikeChangAction {
 		ddcFlow.setSlrq(new Date());
 		ddcFlow.setId(null);
 		ddcFlow.setYwyy(newYwyy);
+		ddcFlow.setSlzl(slzls);
 		iEbikeService.saveDdcFlow(ddcFlow);
 	}
 
@@ -416,7 +472,7 @@ public class EbikeChangAction {
 			ip = request.getRemoteAddr();
 		}
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		DdcDaxxbLog daxxbLog = new DdcDaxxbLog();
 		BeanUtils.copyProperties(daxxbLog, newDaxxb);
 		daxxbLog.setId(null);

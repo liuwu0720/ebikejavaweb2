@@ -2,7 +2,10 @@ package com.node.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhSsdw;
 import com.node.model.HyxhMenu;
 
 public interface IUserService {
@@ -26,7 +29,7 @@ public interface IUserService {
 	 * @author: liuwu
 	 * @version: 2016年3月11日 下午5:31:24
 	 */
-	List<HyxhMenu> getAllMenus();
+	List<HyxhMenu> getAllMenus(HttpServletRequest request);
 
 	/**
 	 * 方法描述：
@@ -58,5 +61,16 @@ public interface IUserService {
 	 * @version: 2016年3月12日 下午7:00:17
 	 */
 	DdcHyxhBase getById(Long id);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param cuser
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月8日 下午2:24:06
+	 */
+	DdcHyxhSsdw getSsdwByUserCode(String cuser);
 
 }

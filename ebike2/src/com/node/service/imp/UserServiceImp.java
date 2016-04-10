@@ -7,17 +7,25 @@
  */
 package com.node.service.imp;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.node.dao.IDdcHyxhBaseDao;
+import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IHyxhMenuDao;
+import com.node.dao.IRoleMenuDao;
 import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhSsdw;
 import com.node.model.HyxhMenu;
+import com.node.model.RoleMenu;
 import com.node.service.IUserService;
+import com.node.util.SystemConstants;
 
 /**
  * 类描述：
@@ -33,6 +41,12 @@ public class UserServiceImp implements IUserService {
 
 	@Autowired
 	IHyxhMenuDao iHyxhMenuDao;
+
+	@Autowired
+	IRoleMenuDao iRoleMenuDao;
+
+	@Autowired
+	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
 
 	/*
 	 * (non-Javadoc)
@@ -57,9 +71,46 @@ public class UserServiceImp implements IUserService {
 	 * @see com.node.service.IUserService#getAllMenus()
 	 */
 	@Override
-	public List<HyxhMenu> getAllMenus() {
-		List<HyxhMenu> hyxhMenus = iHyxhMenuDao.findAll();
-		return hyxhMenus;
+	public List<HyxhMenu> getAllMenus(HttpServletRequest request) {
+		Object object = request.getSession().getAttribute(
+				SystemConstants.SESSION_USER);
+		if (object.getClass().getSimpleName()
+				.equals(SystemConstants.CLASS_NAME_DDC_HYXHBASE)) {
+			DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
+
+			if (ddcHyxhBase != null) {
+				RoleMenu roleMenu = iRoleMenuDao.findByProperty("role",
+						Integer.parseInt(SystemConstants.ROLE_HYXH)).get(0);
+				String[] roleArray = roleMenu.getMenu().split(",");
+				List<HyxhMenu> hyxhMenus = new ArrayList<HyxhMenu>();
+				for (String role : roleArray) {
+					HyxhMenu hyxhMenu = iHyxhMenuDao
+							.get(Integer.parseInt(role));
+					if (hyxhMenu != null) {
+						hyxhMenus.add(hyxhMenu);
+					}
+
+				}
+
+				return hyxhMenus;
+			}
+		} else {
+			RoleMenu roleMenu = iRoleMenuDao.findByProperty("role",
+					Integer.parseInt(SystemConstants.ROLE_SSDW)).get(0);
+			String[] roleArray = roleMenu.getMenu().split(",");
+			List<HyxhMenu> hyxhMenus = new ArrayList<HyxhMenu>();
+			for (String role : roleArray) {
+				HyxhMenu hyxhMenu = iHyxhMenuDao.get(Integer.parseInt(role));
+				if (hyxhMenu != null) {
+					hyxhMenus.add(hyxhMenu);
+				}
+			}
+
+			return hyxhMenus;
+		}
+		return null;
+
 	}
 
 	/*
@@ -93,5 +144,21 @@ public class UserServiceImp implements IUserService {
 	public DdcHyxhBase getById(Long id) {
 		// TODO Auto-generated method stub
 		return iDdcHyxhBaseDao.get(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IUserService#getSsdwByUserCode(java.lang.String)
+	 */
+	@Override
+	public DdcHyxhSsdw getSsdwByUserCode(String cuser) {
+		List<DdcHyxhSsdw> ddcHyxhSsdws = iDdcHyxhSsdwDao.findByProperty(
+				"userCode", cuser);
+		if (CollectionUtils.isEmpty(ddcHyxhSsdws)) {
+			return null;
+		} else {
+			return ddcHyxhSsdws.get(0);
+		}
 	}
 }

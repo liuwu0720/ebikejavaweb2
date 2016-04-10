@@ -22,6 +22,7 @@ import com.node.model.DdcHyxhBase;
 import com.node.service.IEbikeService;
 import com.node.util.Page;
 import com.node.util.ServiceUtil;
+import com.node.util.SystemConstants;
 
 /**
  * 类描述：档案查询
@@ -68,12 +69,12 @@ public class EbikeQueryAction {
 			String cphm, String jsrxm1, String dabh, String ssdw,
 			HttpServletResponse response) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute("ddcHyxhBase");
+				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
-		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.JSRXM1,A.GDYJ,A.SFZMHM1, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH ) AS DWMC,"
-				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz=a.xsqy and d.dmlb='SSQY') as xsqy, "
-				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.ZT AND D.DMLB='CLZT')AS ZT from DDC_DAXXB A WHERE A.HYXHZH='"
+		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.JSRXM1,A.GDYJ,A.SFZMHM1, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH and rownum = 1) AS DWMC,"
+				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz=a.xsqy and d.dmlb='SSQY' and rownum = 1) as xsqy, "
+				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.ZT AND D.DMLB='CLZT' and rownum = 1 )AS ZT from DDC_DAXXB A WHERE A.HYXHZH='"
 				+ ddcHyxhBase.getHyxhzh() + "'  ";
 		// 电机号
 		if (StringUtils.isNotBlank(djh)) {
@@ -102,4 +103,5 @@ public class EbikeQueryAction {
 		return resultMap;
 
 	}
+
 }

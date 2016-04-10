@@ -12,59 +12,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>备案详情</title>
     
 	<%@include file="../common/common.jsp"%>
-		<style type="text/css">
-	*{
-		margin:0;
-		padding:0;
-		font-size:12px;
-	}
-	#main{
-		border-collapse:collapse;
-	}
-	#main,#main tr,#main th,#main td{
-		border:1px solid #C4E1FF;
-	}
-	#main tr{
-		height:30px;
-		background-color:#EEF2FB;
-		line-height:30px;
-	}
-	#main th{
-		text-align:right;
-		font-weight:bold;
-		width:10%;
-	}
-	#main td{
-		width:15%;
-		text-align:left;
-		padding-left:5px;
-	}
-	.maindiv{
-		background-color: #E4E4FB;
-		vertical-align:middle;
-	}
-	.maindiv input{
-		vertical-align:middle;
-	}
-	.btn{
-	width: 100px;
-	height: 32px;
-	background-color: #A9A9F7;
-	text-align: center;
-	}
-	.btndiv{
-		text-align: center;
-	}
-	.tbdiv{
-		margin: 0 40px;
-	}
-	.tbdiv p{
-		font-weight: bolder;
-	}
-	</style>
 	<script type="text/javascript">
 	
-	$(document).ready(function(){
+	<%-- $(document).ready(function(){
 		if('${ddcHyxhSsdwclsb.vcShowEbikeImg}'==''){
 			 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
 		}else{
@@ -80,14 +30,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}else{
 			$("#img1_1").attr("src",'${ddcHyxhSsdwclsb.vcShowUser1Img}');
 		} 
-	})
+	}) --%>
 	
 	</script>
 	
   </head>
   
   <body>
+  <div  class="maindiv">
     <form action="">
+    		<h2>车辆申报详情</h2>
     	<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
     		<tr>
     			<th>流水号</th>
@@ -210,19 +162,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td colspan="2">
 					<div class="imgdiv"> 
 					<p>驾驶人1照片</p>
-					<img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"/></div>
+					<a href="${ddcHyxhSsdwclsb.vcShowUser1Img }" target="_blank">
+					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcShowUser1Img }"/>
+					</a></div>
 					</td>
 					<td colspan="2">
 					<div  class="imgdiv">
 					<p>驾驶人2照片</p>
-					<img id="img2_2"  src="<%=basePath%>static/images/iconfont-wu.png"/>
+					<a href="${ddcHyxhSsdwclsb.vcShowUser2Img }" target="_blank">
+					<img id="img2_2" src="${ddcHyxhSsdwclsb.vcShowUser2Img }"/>
+					</a>
 					</div><br /></td>
 					<td colspan="4">
+					<a href="${ddcHyxhSsdwclsb.vcShowEbikeImg }" target="_blank">
 					<div  class="imgdiv">
 					<p>车身照片</p>
-					<img id="img_0"  src="<%=basePath%>static/images/iconfont-wu.png"/>
-					</div><br /></td>
+					<img id="img_0"  src="${ddcHyxhSsdwclsb.vcShowEbikeImg }"/>
+					</div></a></td>
 				</tr>
+			<tr>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人1身份证正面</p>
+					<a href="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }" target="_blank">
+					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }"/>
+					</a></div>
+				</td>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人1身份证反面</p>
+					<a href="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }" target="_blank">
+					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }"/>
+					</a></div>
+				</td>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2身份证正面</p>
+					<a href="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }" target="_blank">
+					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }"/>
+					</a></div>
+				</td>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2身份证反面</p>
+					<a href="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }" target="_blank">
+					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }"/>
+					</a></div>
+				</td>
+			</tr>		
     	</table>
     	<table class="table table-condensed">
 				<caption style="text-align: center">审批人及审批意见</caption>
@@ -256,7 +243,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		
     </form>
-    
+  </div>  
  
   </body>
 </html>

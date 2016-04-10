@@ -160,7 +160,7 @@ function queryRow(id){
 						<option value="${lx.dmz }">${lx.dmms1 }</option>
 					</c:forEach>
 				</select>	
-				<span>受理时间：</span>
+				<span>受理时间</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>		
 				<span>车牌号:</span> <input id="cphm" name="cphm"

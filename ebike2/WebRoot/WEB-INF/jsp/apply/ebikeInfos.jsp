@@ -84,7 +84,11 @@ $(document).ready(function(){
 			field : 'ssdwName',
 			title : '申报单位',
 			align:'center',
-			width : 220
+			width : 220,
+			formatter:function(value,row,index){
+				var query = "<a  href='javascript:void(0)'  onclick='queryDwInfo("+row.ssdwId+")'>"+value+"</a>;"
+				return query;
+			}
 		},{
 			field : 'sqrq',
 			title : '申请时间',
@@ -101,12 +105,11 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,row,index){
 				if(value == null){
-					if(row.synFlag == null){
-						return "<p style='color:red'>审批中(未同步)</p>";
+					if(row.slIndex == 0){
+						return "等待协会审批";
 					}else{
-						return "<p style='color:red'>审批中</p>";
+						return "等待交警审批";
 					}
-					
 				}else if(value == 0){
 					return "已审核(同意) ";
 				}else if(value == 1){
@@ -120,8 +123,8 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.id+")'>查看</a>&nbsp;&nbsp;&nbsp;"
-				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>修改</a>"
-				if(row.synFlag == null){
+				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>审核</a>"
+				if(row.slIndex == 0){
 					return query+update;
 				}else{
 					return query;
@@ -134,15 +137,8 @@ $(document).ready(function(){
 		] ],
 
 		toolbar : [ {
-			id : 'btn1',
-			text : '新增',
-			iconCls : 'icon-add',
-			handler : function() {
-				addRowData();
-			}
-		}, {
 			id : 'btn2',
-			text : '同步',
+			text : '批量审核',
 			iconCls : 'icon-reload',
 			handler : function() {
 				changeRowData();
@@ -182,7 +178,7 @@ function doSearch(){
 function addRowData(){
 	$('#dgform').form('clear');
 	$('#dw').attr("readonly",false);
-	$('#dgformDiv').dialog('open').dialog('setTitle', '新增用户');
+	$('#dgformDiv').dialog('open').dialog('setTitle', '新增车辆申报');
 	//所属单位
 	$('#dw').combobox({    
 	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
@@ -326,7 +322,7 @@ function changeRowData(){
 	if(selected.length == 0){
 		alert("请至少选择一条数据");
 	}else{
-		$.messager.confirm('警告', '同步以后不能再修改，请确认', function(r){
+		$.messager.confirm('警告', '确认审批通过，请确认', function(r){
 			if (r){
 				
 				$.post("<%=basePath%>applyAction/changeRowData", 
@@ -395,6 +391,27 @@ function exportRowData(){
 	}
 }
 
+
+//查看单位信息
+function queryDwInfo(id){
+	$.ajax({
+		type: "GET",
+   	    url: "<%=basePath%>companyAction/queryInfoById",
+   	   data:{
+		  id:id
+	   }, 
+	   dataType: "json",
+	   success:function(data){
+ 			 
+ 			  if(data){
+ 				 $('#dwinfoDiv').dialog('open').dialog('setTitle', '详情信息');
+ 				 $('#dwform').form('load', data);
+ 				 $("#dwimg").attr("src",data.vcShowPath);
+ 				$("#dwimg_a").attr("href",data.vcShowPath);
+ 			  }
+ 		  }
+	})
+}
 </script>
 </head>
 <body class="easyui-layout">
@@ -655,6 +672,61 @@ function exportRowData(){
 			</table>
 		</form>
 	
+	</div>
+	
+	<!-- 单位信息详情的表单 -->
+	<div id="dwinfoDiv" class="easyui-dialog"
+		style="width:550px;height:450px;padding:10px 20px 20px 20px;" closed="true" >
+		<form id="dwform" class="easyui-form" method="post">
+			<table class="table input_border0">
+				
+				<tr>
+					<td>单位名称：</td>
+					<td><input class="easyui-validatebox" type="text" 
+						 name="dwmc"  style="height: 32px;width:200px;" readonly="readonly" ></input></td>
+				</tr>
+				<tr>
+					<td> 组织机构代码证号：</td>
+					<td><input class="easyui-validatebox" type="text"  readonly="readonly" 
+						name="zzjgdmzh" style="height: 32px;width:200px;"></input>
+						</td>
+				</tr>
+				<tr>
+					<td>住所地址</td>
+					<td><input class="easyui-validatebox"  readonly="readonly"   name="zsdz" type="text"  style="height: 32px;width:200px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td>联系人：</td>
+					<td><input class="easyui-validatebox" type="text"  readonly="readonly" 
+						 name="lxr" style="height: 32px"></input>
+					</td>
+				</tr>
+				<tr >
+					<td>联系电话:</td>
+					<td><input class="easyui-validatebox"  readonly="readonly"   type="text" name="lxdh" style="height: 32px"></input>
+						 </td>
+				</tr>
+				<tr>
+					<td>单位总配额</td>
+					<td><input  name="totalPe"   readonly="readonly"  readonly="readonly"   type="text"></input>					
+					</td>
+				</tr>
+				<tr>
+					<td>剩余配额</td>
+					<td><input  name="dwpe" d readonly="readonly"  readonly="readonly"   type="text"></input>					
+					</td>
+				</tr>
+				<tr>
+					<td>营业执照图片</td>
+					<td>
+						<a id="dwimg_a" target="_blank"><img id="dwimg"  class="easyui-validatebox" style="width:300px"   /></a><br/>
+					</td>
+				</tr>
+			</table>
+				
+		</form>
+		
 	</div>
 
 </body>
