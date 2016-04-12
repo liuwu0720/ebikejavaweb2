@@ -32,12 +32,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.node.model.DdcApproveUser;
+import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.DdcHyxhSsdwclsbLog;
 import com.node.model.PicPath;
 import com.node.service.IApplyService;
 import com.node.service.ICompanyService;
+import com.node.service.IEbikeService;
 import com.node.util.AjaxUtil;
 import com.node.util.Page;
 import com.node.util.ScaleImage;
@@ -60,6 +63,9 @@ public class SsdwAction {
 
 	@Autowired
 	IApplyService iApplyService;
+
+	@Autowired
+	IEbikeService iEbikeService;
 
 	/**
 	 * 
@@ -97,20 +103,21 @@ public class SsdwAction {
 	@ResponseBody
 	public Map<String, Object> queryBaList(HttpServletRequest request,
 			String djh, String dtStart, String dtend, String xsqy, String zt,
-			HttpServletResponse response) {
+			String jsrxm1, HttpServletResponse response) {
 		Page page = ServiceUtil.getcurrPage(request);
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		String sql = "select s.id,s.lsh,s.ppxh,(select d.DMMS1 from ddc_sjzd d where d.dmz = s.cysy and d.dmlb='CSYS' and rownum=1)as csysname,"
-				+ "s.djh,(select  d.DMMS1 from ddc_sjzd d where d.dmz = s.xsqy and d.dmlb='SSQY' and rownum=1 )as xsqyname ,s.sqrq,s.sl_index,s.slyj "
+				+ "s.JSRXM1,s.djh,(select  d.DMMS1 from ddc_sjzd d where d.dmz = s.xsqy and d.dmlb='SSQY' and rownum=1 )as xsqyname ,s.sqrq,s.sl_index,s.slyj "
 				+ "from DDC_HYXH_SSDWCLSB s where 1=1 and s.ENABLE = 1";
-		sql += " and s.SSDW_ID=" + ddcHyxhSsdw.getId();
-		if (StringUtils.isBlank(zt)) {
-			sql += " and s.SLYJ is null ";
-		} else {
+		sql += " and s.SSDWID=" + ddcHyxhSsdw.getId();
+		if (StringUtils.isNotBlank(zt)) {
 			if (zt.equals("0") || zt.equals("1")) {
 				sql += " and s.slyj =" + Integer.parseInt(zt);
+			} else {
+				sql += " and s.SLYJ is null ";
 			}
+
 		}
 		if (StringUtils.isNotBlank(dtStart)) {
 			sql += " and s.SQRQ > to_date('" + dtStart + "','yyyy-MM-dd')";
@@ -124,6 +131,10 @@ public class SsdwAction {
 		if (StringUtils.isNotBlank(xsqy)) {
 			sql += " and s.XSQY = '" + xsqy + "'";
 		}
+		if (StringUtils.isNotBlank(jsrxm1)) {
+			sql += " and s.jsrxm1 like '%" + jsrxm1 + "%'";
+		}
+
 		sql += " order by s.id desc";
 
 		Map<String, Object> map = iCompanyService.getBySpringSql(sql, page);
@@ -154,7 +165,16 @@ public class SsdwAction {
 			@RequestParam(value = "card2img_jsr1", required = false) MultipartFile card2img_jsr1,
 			@RequestParam(value = "card1img_jsr2", required = false) MultipartFile card1img_jsr2,
 			@RequestParam(value = "card2img_jsr2", required = false) MultipartFile card2img_jsr2,
+			@RequestParam(value = "ebike_invoice_img", required = false) MultipartFile ebike_invoice_img,
 			HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("headimg_jsr1 = " + headimg_jsr1);
+		System.out.println("headimg_jsr2 = " + headimg_jsr2);
+		System.out.println("ebike_img = " + ebike_img);
+		System.out.println("card1img_jsr1 = " + card1img_jsr1);
+		System.out.println("card2img_jsr1 = " + card2img_jsr1);
+		System.out.println("card1img_jsr2 = " + card1img_jsr2);
+		System.out.println("card2img_jsr2 = " + card2img_jsr2);
+		System.out.println("ebike_invoice_img = " + ebike_invoice_img);
 		/**
 		 * 检查黑名单
 		 */
@@ -183,7 +203,6 @@ public class SsdwAction {
 		ddcHyxhSsdwclsb.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
 		ddcHyxhSsdwclsb.setSqrq(new Date());
 		ddcHyxhSsdwclsb.setSqr(ddcHyxhSsdw.getUserCode());
-
 		try {
 
 			String ebike_jpgPath = uploadImg(request, ebike_img);// 上传车身照片
@@ -233,6 +252,13 @@ public class SsdwAction {
 			} else {
 				ddcHyxhSsdwclsb.setVcUser2CardImg2(ddcHyxhSsdwclsb
 						.getVcUser2CardImg2());
+			}
+			String vcEbikeInvoiceImg = uploadImg(request, ebike_invoice_img);// 购车发票
+			if (StringUtils.isNotBlank(vcEbikeInvoiceImg)) {
+				ddcHyxhSsdwclsb.setVcEbikeInvoiceImg(vcEbikeInvoiceImg);
+			} else {
+				ddcHyxhSsdwclsb.setVcEbikeInvoiceImg(ddcHyxhSsdwclsb
+						.getVcEbikeInvoiceImg());
 			}
 
 			if (ddcHyxhSsdwclsb.getId() == null) {
@@ -301,7 +327,7 @@ public class SsdwAction {
 	 */
 	private String uploadImg(HttpServletRequest request, MultipartFile file)
 			throws FileNotFoundException, IOException {
-		if (!file.isEmpty()) {
+		if (file != null && !file.isEmpty()) {
 			PicPath imgPath = iCompanyService
 					.getPathById(SystemConstants.PIC_IMG);
 			String source = imgPath.getVcAddpath();// 图片保存路径
@@ -411,4 +437,147 @@ public class SsdwAction {
 		}
 	}
 
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param state
+	 *            1--拒绝 0-同意
+	 * @param request
+	 * @param response
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月12日 上午9:56:36
+	 */
+	@RequestMapping("/sureApproveRecord")
+	public void sureApproveRecord(HttpServletRequest request, String state,
+			String id, String slzl, String tbyy, String note,
+			HttpServletResponse response) {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER);
+		long dId = Long.parseLong(id);
+		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
+				.getDdcHyxhSsdwclsbById(dId);
+		if (state.equals("1")) {
+			// 如果行业协会拒绝，则审批流程结束，不提交至内网审批
+			ddcHyxhSsdwclsb.setSlr(ddcHyxhBase.getHyxhmc());
+			ddcHyxhSsdwclsb.setSlyj(SystemConstants.NOTAGREE);
+			ddcHyxhSsdwclsb.setSlbz(note);
+			ddcHyxhSsdwclsb.setSlrq(new Date());
+			ddcHyxhSsdwclsb.setSlIndex(1);
+			if (StringUtils.isNotBlank(tbyy)) {
+				ddcHyxhSsdwclsb.setTbyy(tbyy);
+			}
+
+			// 审批人
+			DdcApproveUser ddcApproveUser = new DdcApproveUser();
+			ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
+			ddcApproveUser.setUserRoleName("行业协会");
+			ddcApproveUser.setApproveIndex(1);
+			ddcApproveUser.setApproveNote(note);
+			ddcApproveUser.setApproveState(Integer.parseInt(state));
+			ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
+			ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
+			ddcApproveUser.setApproveTime(new Date());
+			ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+			try {
+				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
+				iApplyService.saveDdcApproveUser(ddcApproveUser);
+				AjaxUtil.rendJson(response, true, "审批成功!");
+			} catch (Exception e) {
+				e.printStackTrace();
+				AjaxUtil.rendJson(response, false, "审批失败!系统错误");
+			}
+		} else if (state.equals("0")) {
+			// 同意，审批顺序改变
+			ddcHyxhSsdwclsb.setSlIndex(1);
+			// 审批人
+			DdcApproveUser ddcApproveUser = new DdcApproveUser();
+			ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
+			ddcApproveUser.setUserRoleName("行业协会");
+			ddcApproveUser.setApproveIndex(1);
+			ddcApproveUser.setApproveNote(note);
+			ddcApproveUser.setApproveState(Integer.parseInt(state));
+			ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
+			ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
+			ddcApproveUser.setApproveTime(new Date());
+			ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+			try {
+				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
+				iApplyService.saveDdcApproveUser(ddcApproveUser);
+				AjaxUtil.rendJson(response, true, "审批成功!");
+			} catch (Exception e) {
+				e.printStackTrace();
+				AjaxUtil.rendJson(response, false, "审批失败!系统错误");
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * 方法描述：档案的所有流水记录
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月12日 下午7:46:33
+	 */
+	@RequestMapping("/getFlowList")
+	public String getFlowList(HttpServletRequest request, String dabh) {
+		request.setAttribute("dabh", dabh);
+		return "ebike/flowList";
+	}
+
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param dabh
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月12日 下午8:05:44
+	 */
+	@RequestMapping("/queryFlowList")
+	@ResponseBody
+	public Map<String, Object> queryFlowList(HttpServletRequest request,
+			String dabh, String ssdw, String ywlx, String djh, String cphm,
+			String dtstart, String dtend) {
+		Page p = ServiceUtil.getcurrPage(request);
+		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER);
+		String sql = "select A.DABH, A.ID,A.LSH,A.CPHM,A.DJH,A.SLRQ,a.SLYJ,(SELECT distinct S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.SSDWID and rownum=1) AS DWMC,"
+				+ " (select distinct D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='YWLX' and rownum=1) as YWLX ,"
+				+ "  (select distinct D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.XSQY AND D.DMLB='SSQY' and rownum=1 ) as SSQY ,"
+				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='CLZT')AS ZT from DDC_FLOW A WHERE A.SSDWID='"
+				+ ddcHyxhSsdw.getId() + "'  ";
+		if (StringUtils.isNotBlank(ywlx)) {
+			sql += " AND A.YWLX = '" + ywlx + "'";
+		}
+		if (StringUtils.isNotBlank(djh)) {
+			sql += " AND A.djh = '" + djh + "'";
+		}
+		if (StringUtils.isNotBlank(cphm)) {
+			sql += " AND A.cphm = '" + cphm + "'";
+		}
+		if (StringUtils.isNotBlank(dtstart)) {
+			sql += " and a.slrq >=to_date('" + dtstart + "','yyyy-MM-dd')";
+		}
+		if (StringUtils.isNotBlank(dtend)) {
+			sql += " and a.slrq <=to_date('" + dtend + "','yyyy-MM-dd')";
+		}
+		if (StringUtils.isNotBlank(ssdw)) {
+			sql += " and a.SSDWID = " + ssdw;
+		}
+		if (StringUtils.isNotBlank(dabh)) {
+			sql += " and a.dabh = '" + dabh + "'";
+		}
+
+		sql += " order by a.id desc";
+		Map<String, Object> resultMap = iEbikeService.queryBySpringSql(sql, p);
+
+		return resultMap;
+	}
 }

@@ -107,24 +107,19 @@ public class EbikeChangAction {
 				.findByProPerties("CLZT", ddcDaxxb.getZt());
 		ddcDaxxb.setZtName(ztName);
 		// 申报单位
-		if (StringUtils.isNotBlank(ddcDaxxb.getZzjgdmzh())) {
+		if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
 			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
-					.parseLong(ddcDaxxb.getZzjgdmzh()));
+					.parseLong(ddcDaxxb.getSsdwId()));
 			if (ddcHyxhSsdw != null) {
-				ddcDaxxb.setZzjgdmzhName(ddcHyxhSsdw.getDwmc());
+				ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
 			} else {
-				ddcDaxxb.setZzjgdmzhName(null);
+				ddcDaxxb.setSsdwName(null);
 			}
 		}
 		// 业务类型
 		String ywlxName = iApplyService.findByProPerties("YWLX",
 				ddcDaxxb.getYwlx());
 		ddcDaxxb.setYwlxName(ywlxName);
-		// 业务原因
-		String ywyyName = iApplyService.findByProPerties("YWYY_A",
-				ddcDaxxb.getYwyy());
-		ddcDaxxb.setYwyyName(ywyyName);
-
 		String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
 		String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
 		String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
@@ -136,7 +131,7 @@ public class EbikeChangAction {
 
 	/**
 	 * 
-	 * 方法描述：
+	 * 方法描述：档案详情
 	 * 
 	 * @param id
 	 * @param request
@@ -161,31 +156,41 @@ public class EbikeChangAction {
 				.findByProPerties("CLZT", ddcDaxxb.getZt());
 		ddcDaxxb.setZtName(ztName);
 		// 申报单位
-		if (StringUtils.isNotBlank(ddcDaxxb.getZzjgdmzh())) {
+		if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
 			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
-					.parseLong(ddcDaxxb.getZzjgdmzh()));
+					.parseLong(ddcDaxxb.getSsdwId()));
 			if (ddcHyxhSsdw != null) {
-				ddcDaxxb.setZzjgdmzhName(ddcHyxhSsdw.getDwmc());
+				ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
 			} else {
-				ddcDaxxb.setZzjgdmzhName(null);
+				ddcDaxxb.setSsdwName(null);
 			}
 		}
 		// 业务类型
 		String ywlxName = iApplyService.findByProPerties("YWLX",
 				ddcDaxxb.getYwlx());
 		ddcDaxxb.setYwlxName(ywlxName);
-		// 业务原因
-		String ywyyName = iApplyService.findByProPerties("YWYY_A",
-				ddcDaxxb.getYwyy());
-		ddcDaxxb.setYwyyName(ywyyName);
+		// 受理资料
+		List<DdcSjzd> selectSlzls = iApplyService.getDbyyList(
+				ddcDaxxb.getSlzl(), "BASQZL");
 
 		String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
 		String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
 		String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
+		String vcUser1CardImg1Show = parseUrl(ddcDaxxb.getVcUser1CardImg1());
+		String vcUser1CardImg2Show = parseUrl(ddcDaxxb.getVcUser1CardImg2());
+		String vcUser2CardImg1Show = parseUrl(ddcDaxxb.getVcUser2CardImg1());
+		String vcUser2CardImg2Show = parseUrl(ddcDaxxb.getVcUser2CardImg2());
+		String vcEbikeInvoiceImgShow = parseUrl(ddcDaxxb.getVcEbikeInvoiceImg());
 		ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
 		ddcDaxxb.setVcShowUser1Img(showUser1Img);
 		ddcDaxxb.setVcShowUser2Img(showUser2Img);
+		ddcDaxxb.setVcUser1CardImg1Show(vcUser1CardImg1Show);
+		ddcDaxxb.setVcUser1CardImg2Show(vcUser1CardImg2Show);
+		ddcDaxxb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
+		ddcDaxxb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
+		ddcDaxxb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
 		request.setAttribute("ddcDaxxb", ddcDaxxb);
+		request.setAttribute("selectSlzls", selectSlzls);
 		return "ebike/ebikeDaInfo";
 	}
 
@@ -214,13 +219,13 @@ public class EbikeChangAction {
 				.findByProPerties("CLZT", ddcDaxxb.getZt());
 		ddcDaxxb.setZtName(ztName);
 		// 申报单位
-		if (StringUtils.isNotBlank(ddcDaxxb.getZzjgdmzh())) {
+		if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
 			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
-					.parseLong(ddcDaxxb.getZzjgdmzh()));
+					.parseLong(ddcDaxxb.getSsdwId()));
 			if (ddcHyxhSsdw != null) {
-				ddcDaxxb.setZzjgdmzhName(ddcHyxhSsdw.getDwmc());
+				ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
 			} else {
-				ddcDaxxb.setZzjgdmzhName(null);
+				ddcDaxxb.setSsdwName(null);
 			}
 		}
 		// 业务类型
@@ -242,11 +247,13 @@ public class EbikeChangAction {
 		List<DdcSjzd> colorsSjzds = iApplyService.getSjzdByDmlb("CSYS");// 车身颜色
 		List<DdcSjzd> bgDataSjzds = iApplyService.getSjzdByDmlb("BGSQZL");// 变更申请资料
 		List<DdcSjzd> ssqySjzds = iApplyService.getSjzdByDmlb("SSQY");// 所属区域
-		List<DdcSjzd> gdDataSjzds = iApplyService.getSjzdByDmlb("BASQZL");// 备案申请资料\归档资料退
+		// 受理资料
+		List<DdcSjzd> selectSlzls = iApplyService.getDbyyList(
+				ddcDaxxb.getSlzl(), "BASQZL");
 		request.setAttribute("colorsSjzds", colorsSjzds);
 		request.setAttribute("bgDataSjzds", bgDataSjzds);
 		request.setAttribute("ssqySjzds", ssqySjzds);
-		request.setAttribute("gdDataSjzds", gdDataSjzds);
+		request.setAttribute("selectSlzls", selectSlzls);
 		request.setAttribute("ddcDaxxb", ddcDaxxb);
 		return "ebike/changeInfos";
 	}
@@ -272,7 +279,7 @@ public class EbikeChangAction {
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
-		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.SLRQ,(SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH ) AS DWMC, "
+		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.SLRQ,(SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.SSDWID ) AS DWMC, "
 				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.ZT AND D.DMLB='CLZT')AS ZT from DDC_DAXXB A WHERE A.HYXHZH='"
 				+ ddcHyxhBase.getHyxhzh() + "'  ";
 		// 电机号
@@ -340,24 +347,7 @@ public class EbikeChangAction {
 			@RequestParam(value = "file_upload2", required = false) MultipartFile file_upload2,
 			HttpServletResponse response) throws FileNotFoundException,
 			IOException {
-		if (!fileupload.isEmpty()
-				&& fileupload.getSize() / 1024 / 1024 > SystemConstants.MAXFILESIZE) {
-			AjaxUtil.rendJson(response, false, "车身照片超出最大尺寸，允许上传大小为"
-					+ SystemConstants.MAXFILESIZE + "MB");
-			return;
-		}
-		if (!file_upload1.isEmpty()
-				&& file_upload1.getSize() / 1024 / 1024 > SystemConstants.MAXFILESIZE) {
-			AjaxUtil.rendJson(response, false, "驾驶人1照片超出最大尺寸，允许上传大小为"
-					+ SystemConstants.MAXFILESIZE + "MB");
-			return;
-		}
-		if (!file_upload2.isEmpty()
-				&& file_upload2.getSize() / 1024 / 1024 > SystemConstants.MAXFILESIZE) {
-			AjaxUtil.rendJson(response, false, "驾驶人2照片超出最大尺寸，允许上传大小为"
-					+ SystemConstants.MAXFILESIZE + "MB");
-			return;
-		}
+
 		/**
 		 * 检查黑名单
 		 */

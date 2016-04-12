@@ -317,4 +317,16 @@ public class ApplyServiceImp implements IApplyService {
 			return null;
 		}
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#saveDdcApproveUser(com.node.model.
+	 * DdcApproveUser)
+	 */
+	@Override
+	public void saveDdcApproveUser(DdcApproveUser ddcApproveUser) {
+		// TODO Auto-generated method stub
+		iDdcApprovalUserDao.save(ddcApproveUser);
+	}
 }

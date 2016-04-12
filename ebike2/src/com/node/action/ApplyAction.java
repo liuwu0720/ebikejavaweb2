@@ -223,67 +223,48 @@ public class ApplyAction {
 	@RequestMapping("/queryAll")
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request, String zt,
-			String ssdw, String djh, String dtstart, String dtend)
-			throws ParseException {
+			String xsqy, String jsrxm1, String ssdw, String djh,
+			String dtstart, String dtend) throws ParseException {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
-
-		HqlHelper hql = new HqlHelper(DdcHyxhSsdwclsb.class);
-		hql.addEqual("hyxhzh", ddcHyxhBase.getHyxhzh());
-		if (StringUtils.isBlank(zt)) {
-			// 待审核
-			hql.addIsNull("slyj");
-
-		} else if (!zt.equals("ALL")) {
-			// 已审核
-			hql.addEqual("slyj", zt);
-		} else {
-			hql.addIsNotNull("slyj");
-		}
-
-		if (StringUtils.isNotBlank(djh)) {
-			hql.addEqual("djh", djh);
-		}
-		if (StringUtils.isNotBlank(dtstart)) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			hql.addGreatThan("sqrq", sdf.parse(dtstart));
-		}
-		if (StringUtils.isNotBlank(dtend)) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			hql.addLessThan("sqrq", sdf.parse(dtend));
-		}
-		if (StringUtils.isNotBlank(ssdw)) {
-			hql.addEqual("ssdwId", ssdw);
-		}
-
-		hql.addOrderBy("sqrq", "desc");
-		hql.setQueryPage(p);
-		Map<String, Object> resultMap = iApplyService.queryByHql(hql);
-		List<DdcHyxhSsdwclsb> list = (List<DdcHyxhSsdwclsb>) resultMap
-				.get("rows");
-		for (DdcHyxhSsdwclsb ddcHyxhSsdwclsb : list) {
-			String cysyName = iApplyService.findByProPerties("CSYS",
-					ddcHyxhSsdwclsb.getCysy());
-
-			ddcHyxhSsdwclsb.setCysyName(cysyName);// 车身颜色
-			String xsqyName = iApplyService.findByProPerties("SSQY",
-					ddcHyxhSsdwclsb.getXsqy());
-			ddcHyxhSsdwclsb.setXsqyName(xsqyName);// 行驶区域
-			// 申报单位
-			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getSsdwId())) {
-				DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
-						.parseLong(ddcHyxhSsdwclsb.getSsdwId()));
-				if (ddcHyxhSsdw != null) {
-					ddcHyxhSsdwclsb.setSsdwName(ddcHyxhSsdw.getDwmc());
-				} else {
-					ddcHyxhSsdwclsb.setSsdwName(null);
-				}
+		String sql = "select s.id,s.lsh,s.ppxh,(select d.DMMS1 from ddc_sjzd d where d.dmz = s.cysy and d.dmlb='CSYS' and rownum=1)as csysname,"
+				+ " (select dw.DWMC from  DDC_HYXH_SSDW dw where dw.id = s.SSDWID and rownum = 1) as SSDWNAME,"
+				+ "s.JSRXM1,s.djh,(select  d.DMMS1 from ddc_sjzd d where d.dmz = s.xsqy and d.dmlb='SSQY' and rownum=1 )as xsqyname ,s.sqrq,s.sl_index,s.slyj "
+				+ "from DDC_HYXH_SSDWCLSB s where 1=1 and s.ENABLE = 1";
+		sql += " and s.HYXHZH = '" + ddcHyxhBase.getHyxhzh() + "'";
+		if (StringUtils.isNotBlank(zt)) {
+			if (zt.equals("0") || zt.equals("1")) {
+				sql += " and s.slyj =" + Integer.parseInt(zt);
+			} else {
+				sql += " and s.SLYJ is null ";
 			}
 
 		}
+		if (StringUtils.isNotBlank(ssdw)) {
+			sql += " and s.SSDWID = " + ssdw;
+		}
+		if (StringUtils.isNotBlank(dtstart)) {
+			sql += " and s.SQRQ > to_date('" + dtstart + "','yyyy-MM-dd')";
+		}
+		if (StringUtils.isNotBlank(dtend)) {
+			sql += " and s.SQRQ < to_date('" + dtend + "','yyyy-MM-dd')";
+		}
+		if (StringUtils.isNotBlank(djh)) {
+			sql += " and s.djh like '" + djh + "'";
+		}
+		if (StringUtils.isNotBlank(xsqy)) {
+			sql += " and s.XSQY = '" + xsqy + "'";
+		}
+		if (StringUtils.isNotBlank(jsrxm1)) {
+			sql += " and s.jsrxm1 like '%" + jsrxm1 + "%'";
+		}
 
-		return resultMap;
+		sql += " order by s.id desc";
+
+		Map<String, Object> map = iCompanyService.getBySpringSql(sql, p);
+		return map;
+
 	}
 
 	/**
@@ -632,7 +613,7 @@ public class ApplyAction {
 
 	/**
 	 * 
-	 * 方法描述：批量同步
+	 * 方法描述：批量审核
 	 * 
 	 * @param request
 	 * @param response
@@ -643,6 +624,8 @@ public class ApplyAction {
 	@RequestMapping(value = "/changeRowData", method = RequestMethod.POST)
 	public void changeRowData(HttpServletRequest request,
 			HttpServletResponse response) {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER);
 		String[] ids = request.getParameterValues("array[]");
 		System.out.println("ids = " + ids);
 		try {
@@ -653,7 +636,16 @@ public class ApplyAction {
 				if (StringUtils.isBlank(ddcHyxhSsdwclsb.getSynFlag())) {
 					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 				}
+				ddcHyxhSsdwclsb.setSlIndex(1);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
+				DdcApproveUser ddcApproveUser = new DdcApproveUser();
+				ddcApproveUser.setApproveIndex(1);
+				ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
+				ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
+				ddcApproveUser.setApproveTime(new Date());
+				ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
+				ddcApproveUser.setUserRoleName("行业协会");
+				iApplyService.saveDdcApproveUser(ddcApproveUser);
 			}
 			AjaxUtil.rendJson(response, true, "成功");
 		} catch (Exception e) {
@@ -807,7 +799,7 @@ public class ApplyAction {
 	 */
 	@RequestMapping("/queryRecordApprovalInfoById")
 	public String queryRecordApprovalInfoById(HttpServletRequest request,
-			HttpServletResponse response, String id) {
+			String type, HttpServletResponse response, String id) {
 		long dId = Long.parseLong(id);
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
@@ -840,6 +832,8 @@ public class ApplyAction {
 				.getVcUser2CardImg1());
 		String vcUser2CardImg2Show = parseUrl(ddcHyxhSsdwclsb
 				.getVcUser2CardImg2());
+		String vcEbikeInvoiceImgShow = parseUrl(ddcHyxhSsdwclsb
+				.getVcEbikeInvoiceImg());
 		ddcHyxhSsdwclsb.setVcShowEbikeImg(showEbikeImg);
 		ddcHyxhSsdwclsb.setVcShowUser1Img(showUser1Img);
 		ddcHyxhSsdwclsb.setVcShowUser2Img(showUser2Img);
@@ -847,6 +841,7 @@ public class ApplyAction {
 		ddcHyxhSsdwclsb.setVcUser1CardImg2Show(vcUser1CardImg2Show);
 		ddcHyxhSsdwclsb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
 		ddcHyxhSsdwclsb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
+		ddcHyxhSsdwclsb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
 		String approveTableName = SystemConstants.RECORDSBTABLE;
 		List<DdcApproveUser> approveUsers = iApplyService
 				.findApproveUsersByProperties(approveTableName,
@@ -855,11 +850,17 @@ public class ApplyAction {
 				ddcHyxhSsdwclsb.getTbyy(), "TBYY");// 选中的退办原因
 		List<DdcSjzd> selectSlzls = iApplyService.getDbyyList(
 				ddcHyxhSsdwclsb.getSlzl(), "BASQZL");
+		List<DdcSjzd> dbyyDdcSjzds = iApplyService.getSjzdByDmlb("TBYY");// 数据字典中所有的退办原因
+		List<DdcSjzd> slzList = iApplyService.getSjzdByDmlb("BASQZL");// 数据字典中所有的受理资料
 		request.setAttribute("selectSlzls", selectSlzls);
 		request.setAttribute("selectlTbyy", selectlTbyy);
 		request.setAttribute("approveUsers", approveUsers);
 		request.setAttribute("ddcHyxhSsdwclsb", ddcHyxhSsdwclsb);
-
+		request.setAttribute("dbyyDdcSjzds", dbyyDdcSjzds);
+		request.setAttribute("slzList", slzList);
+		if (StringUtils.isNotBlank(type)) {
+			request.setAttribute("type", type);
+		}
 		return "apply/recordDetail";
 	}
 

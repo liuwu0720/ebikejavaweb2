@@ -40,57 +40,53 @@ $(document).ready(function(){
 		width:w,
 		loadMsg:'正在加载,请稍等...',
 		rowStyler: function(index,row){
-			if (row.slyj ==1){
+			if (row.SLYJ ==1){
 				return 'background-color:#7AF1B5;color:#red;font-weight:bold;';
 			}
 		},
 		columns : [ [{
-			field : 'id',
+			field : 'ID',
 			title : 'ID',
 			checkbox : true,
 			align:'center',
 			width : 120
 		},{
-			field : 'lsh',
+			field : 'LSH',
 			title : '流水号',
 			align:'center',
 			width : 120
 		},{
-			field : 'ppxh',
+			field : 'PPXH',
 			title : '品牌型号',
 			align:'center',
 			width : 120
 		},{
-			field : 'cysyName',
+			field : 'CSYSNAME',
 			title : '车身颜色',
 			align:'center',
 			width : 120
 		},{
-			field : 'djh',
+			field : 'DJH',
 			title : '电机号',
 			align:'center',
 			width : 120
 		},{
-			field : 'xsqyName',
+			field : 'JSRXM1',
+			title : '驾驶人1',
+			align:'center',
+			width : 120
+		},{
+			field : 'XSQYNAME',
 			title : '行驶区域',
 			align:'center',
 			width : 120
 		},{
-			field : 'jsrxm1',
-			title : '驾驶人',
+			field : 'SSDWNAME',
+			title : '申报单位名称',
 			align:'center',
 			width : 120
 		},{
-			field : 'ssdwName',
-			title : '申报单位',
-			align:'center',
-			width : 220,
-			formatter:function(value,row,index){
-				var query = "<a  href='javascript:void(0)'  onclick='queryDwInfo("+row.ssdwId+")'>"+value+"</a>;"
-				return query;
-			}
-		},{
-			field : 'sqrq',
+			field : 'SQRQ',
 			title : '申请时间',
 			align:'center',
 			width : 120,
@@ -99,13 +95,13 @@ $(document).ready(function(){
 				return unixTimestamp.toLocaleString();
 			}   
 		},{
-			field : 'slyj',
+			field : 'SLYJ',
 			title : '审批状态',
 			align:'center',
 			width : 120,
 			formatter:function(value,row,index){
 				if(value == null){
-					if(row.slIndex == 0){
+					if(row.SL_INDEX == 0){
 						return "等待协会审批";
 					}else{
 						return "等待交警审批";
@@ -122,9 +118,9 @@ $(document).ready(function(){
 			align:'center',
 			width : 120,
 			formatter:function(value,row,index){
-				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.id+")'>查看</a>&nbsp;&nbsp;&nbsp;"
-				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>审核</a>"
-				if(row.slIndex == 0){
+				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;"
+				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>审核</a>"
+				if(row.SL_INDEX == 0){
 					return query+update;
 				}else{
 					return query;
@@ -162,6 +158,12 @@ $(document).ready(function(){
 	    valueField:'id',    
 	    textField:'dwmc'   
 	}); 
+	//行驶区域
+	$('#xsqy1').combobox({
+		 url:'<%=basePath%>applyAction/getAllAreaAjax',    
+		    valueField:'dmz',    
+		    textField:'dmms1'
+	})
 });
 //查询功能
 function doSearch(){
@@ -170,7 +172,9 @@ function doSearch(){
 		djh: $('#djh').val(),
 		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值)
 		dtend:$('#dtend').datebox('getValue'),
-		ssdw:$("#ssdw").val()
+		xsqy:$("#xsqy1").combobox('getValue'),
+		jsrxm1:$("#jsrxm1").val(),
+		ssdw:$("#ssdw").combobox('getValue')
 	}); 
 }
 
@@ -228,49 +232,10 @@ function queryRow(id){
 
 //修改
 function updateRow(id){
-	$('#dgform').form('clear');
-	$("#file_tr1,#file_tr2").show();
-	$('#pe').hide();
-	$('#dw').attr("readonly",true);
-	$.ajax({
-		type: "GET",
-   	    url: "<%=basePath%>applyAction/queryInfoById",
-   	   data:{
-		  id:id
-	   }, 
-	   dataType: "json",
-	   success:function(data){
- 			  if(data){
- 				 $('#dgformDiv').dialog('open').dialog('setTitle', '详情信息');
- 				 $('#dgform').form('load', data);
- 				 $("#img").attr("src",data.vcShowEbikeImg);
- 				 $("#img1").attr("src",data.vcShowUser1Img);
- 				 $("#img2").attr("src",data.vcShowUser2Img);
- 				//所属单位
- 				$('#dw').combobox({    
- 				    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
- 				    valueField:'id',    
- 				    textField:'dwmc',
- 				    value:data.ssdwId,   //默认选中的值       
- 				    text:data.ssdwName
- 				}); 
- 				//车身颜色
- 				$('#cysy').combobox({
- 					 url:'<%=basePath%>applyAction/getAllColorsAjax',    
- 					    valueField:'dmz',    
- 					    textField:'dmms1',
- 					    value:data.cysy  //默认选中的值       
- 				});
- 				//行驶区域
- 				$('#xsqy').combobox({
- 					 url:'<%=basePath%>applyAction/getAllAreaAjax',    
- 					    valueField:'dmz',    
- 					    textField:'dmms1',
- 					    value:data.xsqy   //默认选中的值       
- 				})
- 			  }
- 		  }
-	})
+	$.messager.progress({
+		text:"正在处理，请稍候..."
+	});
+	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+1;
 }
 
 //保存操作
@@ -312,7 +277,7 @@ function updateSaveData(){
 
 
 
-//同步
+//批量审核
 function changeRowData(){
 	var selected = $('#dg').datagrid('getSelections');
 	var array = [];
@@ -417,25 +382,29 @@ function queryDwInfo(id){
 <body class="easyui-layout">
 
 	<div>
-		<table id="dg" style="width:90%;">
-
-			<div id="tb" style="padding: 5px; background: #E8F1FF;">
+		<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>申报时间：</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>				
 				<span>电机号:</span> <input id="djh"
-					style="line-height:26px;border:1px solid #ccc"> &nbsp;&nbsp;&nbsp;<span>审批状态:</span>
+					style="line-height:26px;border:1px solid #ccc"><br/>
+				<span>审批状态:</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="zt">
-					<option value="">审批中</option>
+					<option value="">所有</option>
+					<option value="-1">审批中</option>
 					<option value="0">已同意</option>
 					<option value="1">已拒绝</option>
-					<option value="ALL">所有</option>
-				</select>	
+				</select>
+				<span>行驶区域</span>	
+				<input id="xsqy1" style="height:30px;" >
+				<span>驾驶人1</span>	
+				<input id="jsrxm1" style="height:30px;" >	
 				<span>公司名称:</span>
 				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;	
 				 <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
+		<table id="dg" style="width:90%;">
 		</table>
 	</div>
 	<!-- 点新增，编辑时弹出的表单 -->
@@ -463,7 +432,7 @@ function queryDwInfo(id){
 						data-options="required:true" name="ppxh"
 						style="height: 32px;"></input></td>
 					<td>车身颜色</td>
-					<td><input id="cysy" name="cysy" style="height:30px;"></td>
+					<td><input id="cysy" name="cysy"data-options="required:true" style="height:30px;"></td>
 				</tr>
 				<tr>
 					<td>电机号：</td>

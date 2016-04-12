@@ -24,10 +24,10 @@ $(document).ready(function(){
 	var h = getHeight('dg');
 	var size = getPageSize(h);
 	var w = getWidth(400);
-	var randomNu = (new Date().getTime()) ^ Math.random();
+	var dabh = '${dabh}'
 	$("#dg").datagrid({
 
-		url : "<%=basePath%>ebikeWaterAction/queryAll?time=" + randomNu,
+		url : "<%=basePath%>ssdwAction/queryFlowList?dabh=" + dabh,
 		title :  "业务流水查询",
 		iconCls : 'icon-search',
 		striped : true,
@@ -83,13 +83,15 @@ $(document).ready(function(){
 			formatter:function(value,index){
 				if(value == 0){
 					return "同意";
-				}else{
+				}else if(value == 1){
 					return "不同意";
+				}else{
+					return "审批中 ";
 				}
 			}
 		},{
 			field : 'SLRQ',
-			title : '归档时间',
+			title : '申请时间',
 			align:'center',
 			width : 120,
 			formatter:function(value,index){

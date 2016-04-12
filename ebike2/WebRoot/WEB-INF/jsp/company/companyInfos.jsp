@@ -348,8 +348,6 @@ function resetPassword(id){
 <body class="easyui-layout">
 
 	<div>
-	<table id="dg" style="width:90%;">
-		
 		<div id="tb" style="padding: 5px; background: #E8F1FF;">
 			<span>单位名称:</span> <input id="itemid"
 				style="line-height:26px;border:1px solid #ccc"> <span>
@@ -364,11 +362,14 @@ function resetPassword(id){
 				<a 	class="easyui-linkbutton" plain="true" onclick="doSearch()" iconCls="icon-search" >查询 </a>
 				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">实际配额：${ddcHyxhBase.totalPe }   剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 		</div>
+	<table id="dg" style="width:90%;">
+		
+		
 	</table>
 </div>
 	<!-- 点新增，编辑时弹出的表单 -->
 	<div id="dgformDiv" class="easyui-dialog"
-		style="width:550px;height:550px;padding:10px 20px 20px 20px;"
+		style="width:550px;height:350px;padding:10px 20px 20px 20px;"
 		closed="true" buttons="#dlg-buttons2">
 		<form id="dgform" class="easyui-form" enctype="multipart/form-data"  method="post">
 			<table class="table">
@@ -376,27 +377,29 @@ function resetPassword(id){
 					<td colspan="2"><p style="color: red">单位默认密码为123456</p></td>
 				</tr>
 				<tr>
-					<td>单位名称：</td>
+					<th>单位名称：</th>
 					<td><input class="easyui-validatebox" type="text"
 						data-options="required:true" name="dwmc"  style="height: 32px;"></input></td>
 				</tr>
 				<tr>
-					<td>单位帐号：</td>
+					<th>单位帐号：</th>
 					<td><input class="easyui-validatebox" type="text"
 						data-options="required:true,validType:'username'" name="userCode"  style="height: 32px;"></input></td>
 				</tr>
 				
 				<tr>
-					<td>单位配额</td>
+					<th>单位配额</th>
 					<td><input id="ss" class="easyui-numberspinner" name="dwpe" data-options="increment:1,required:true,validType:'number'" value="0" min="0" style="width:120px;height:30px;"></input>
 					</td>
 				</tr>
 				
 			</table>
+			<div >
 				<input type="hidden"   name="vcPicPath" >
 				<input  type="hidden"  name="id">
+			</div>
 		</form>
-		<div id="dlg-buttons2">
+		<div id="dlg-buttons2" class="btndiv">
 			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
 				iconCls="icon-ok" onclick="updateSaveData()" style="width:90px">保存</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton"

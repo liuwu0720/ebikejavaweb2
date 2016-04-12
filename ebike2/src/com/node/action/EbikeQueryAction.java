@@ -72,7 +72,7 @@ public class EbikeQueryAction {
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
-		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.JSRXM1,A.GDYJ,A.SFZMHM1, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.ZZJGDMZH and rownum = 1) AS DWMC,"
+		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.JSRXM1,A.GDYJ,A.SSDWID, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.SSDWID and rownum = 1) AS DWMC,"
 				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz=a.xsqy and d.dmlb='SSQY' and rownum = 1) as xsqy, "
 				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.ZT AND D.DMLB='CLZT' and rownum = 1 )AS ZT from DDC_DAXXB A WHERE A.HYXHZH='"
 				+ ddcHyxhBase.getHyxhzh() + "'  ";
@@ -94,7 +94,7 @@ public class EbikeQueryAction {
 		}
 		// 身份证
 		if (StringUtils.isNotBlank(ssdw)) {
-			sql += " and a.ZZJGDMZH =" + ssdw + "";
+			sql += " and a.SSDWID =" + ssdw + "";
 		}
 
 		sql += "  order by A.ID DESC";

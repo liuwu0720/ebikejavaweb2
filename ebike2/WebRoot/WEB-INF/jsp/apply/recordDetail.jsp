@@ -11,27 +11,136 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>备案详情</title>
     
-	<%@include file="../common/common.jsp"%>
+	<%@include file="../common/common.jsp"%>	
 	<script type="text/javascript">
-	
-	<%-- $(document).ready(function(){
-		if('${ddcHyxhSsdwclsb.vcShowEbikeImg}'==''){
-			 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-		}else{
-			$("#img_0").attr("src",'${ddcHyxhSsdwclsb.vcShowEbikeImg}');
+
+	function sureState(state){
+		//拒绝
+		if(state == 1){
+		 $('#dgformDiv').dialog('open').dialog('setTitle', '填写审批意见');	
+		 $('#dgform').form('load', {
+			 state:state
+			 });
 		}
-		if('${ddcHyxhSsdwclsb.vcShowUser2Img}'==''){
-			 $("#img2_2").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-		}else{
-			$("#img2_2").attr("src",'${ddcHyxhSsdwclsb.vcShowUser2Img}');
+		//同意
+		if(state == 0){
+			$('#dgformDiv2').dialog('open').dialog('setTitle', '填写审批意见');	
+			 $('#dgform2').form('load', {
+				 state:state
+			});
 		}
-		if('${ddcHyxhSsdwclsb.vcShowUser1Img}'==''){
-			 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-		}else{
-			$("#img1_1").attr("src",'${ddcHyxhSsdwclsb.vcShowUser1Img}');
-		} 
-	}) --%>
 	
+	}
+	//保存操作
+
+	function updateSaveData(){
+		var flag = checkVarible();
+		if(flag){
+			$.messager.progress({
+				text:"正在处理，请稍候..."
+			});
+		$('#dgform').form('submit', {
+					url : "<%=basePath%>ssdwAction/sureApproveRecord",
+					onSubmit : function() {
+						var isValid = $("#dgform").form('enableValidation').form(
+								'validate');
+
+						if (!isValid) {
+							$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
+						}
+						return isValid; // 返回false终止表单提交
+					},
+					success : function(data) {
+						var data = eval('(' + data + ')'); // change the JSON
+						if (data.isSuccess) {
+							$.messager.show({ // show error message
+								title : '提示',
+								msg : data.message
+							});
+							$('#dgformDiv').dialog('close');
+							window.location.href="<%=basePath%>applyAction/getAll"
+						}else{
+							alert(data.message);
+						}
+						$.messager.progress('close'); // 如果提交成功则隐藏进度条
+
+					}
+
+				});
+		}
+	}
+	
+	function checkVarible(){
+		if(!$("input[name='sltbyyzls']:checked").val()){
+			alert("请勾选退办原因!")
+			return false;
+		}else{
+			var vs="";
+			$('[id=sltbyyzls]:checked').each(function(){
+				vs += $(this).val()+',';
+			});
+			vs=vs.substr(0,vs.lastIndexOf(','));
+			$("#tbyy").val(vs);
+			return true;
+		}
+	}
+	
+	
+	function updateSaveData2(){
+		var flag = checkVarible2();
+		if(flag){
+			$.messager.progress({
+				text:"正在处理，请稍候..."
+			});
+		$('#dgform2').form('submit', {
+					url : "<%=basePath%>ssdwAction/sureApproveRecord",
+					onSubmit : function() {
+						var isValid = $("#dgform2").form('enableValidation').form(
+								'validate');
+
+						if (!isValid) {
+							$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
+						}
+						return isValid; // 返回false终止表单提交
+					},
+					success : function(data) {
+						var data = eval('(' + data + ')'); // change the JSON
+						if (data.isSuccess) {
+							$.messager.show({ // show error message
+								title : '提示',
+								msg : data.message
+							});
+							$('#dgformDiv2').dialog('close');
+							window.location.href="<%=basePath%>applyAction/getAll"
+						}else{
+							alert(data.message);
+						}
+						$.messager.progress('close'); // 如果提交成功则隐藏进度条
+
+					}
+
+				});
+		}
+	
+		
+	}
+	
+	
+	function checkVarible2(){
+		if(!$("input[name='slzList']:checked").val()){
+			alert("请勾选受理资料!")
+			return false;
+		}else{
+			var vs="";
+			$('[id=slzList]:checked').each(function(){
+				vs += $(this).val()+',';
+			});
+			vs=vs.substr(0,vs.lastIndexOf(','));
+			$("#slzl").val(vs);
+			return true;
+		}
+	}
+		
 	</script>
 	
   </head>
@@ -39,8 +148,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   <div  class="maindiv">
     <form action="">
-    		<h2>车辆申报详情</h2>
+    <!--startprint-->
     	<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
+    		<h2>已备案车辆详情</h2>
     		<tr>
     			<th>流水号</th>
     			<td>${ddcHyxhSsdwclsb.lsh }</td>
@@ -163,21 +273,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="imgdiv"> 
 					<p>驾驶人1照片</p>
 					<a href="${ddcHyxhSsdwclsb.vcShowUser1Img }" target="_blank">
-					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcShowUser1Img }"/>
+					<img  src="${ddcHyxhSsdwclsb.vcShowUser1Img }"/>
 					</a></div>
 					</td>
 					<td colspan="2">
 					<div  class="imgdiv">
 					<p>驾驶人2照片</p>
 					<a href="${ddcHyxhSsdwclsb.vcShowUser2Img }" target="_blank">
-					<img id="img2_2" src="${ddcHyxhSsdwclsb.vcShowUser2Img }"/>
+					<img  src="${ddcHyxhSsdwclsb.vcShowUser2Img }"/>
 					</a>
-					</div><br /></td>
-					<td colspan="4">
+					</div></td>
+					<td colspan="2">
 					<a href="${ddcHyxhSsdwclsb.vcShowEbikeImg }" target="_blank">
 					<div  class="imgdiv">
 					<p>车身照片</p>
-					<img id="img_0"  src="${ddcHyxhSsdwclsb.vcShowEbikeImg }"/>
+					<img  src="${ddcHyxhSsdwclsb.vcShowEbikeImg }"/>
+					</div></a></td>
+					<td colspan="2">
+					<a href="${ddcHyxhSsdwclsb.vcEbikeInvoiceImgShow }" target="_blank">
+					<div  class="imgdiv">
+					<p>购车发票</p>
+					<img   src="${ddcHyxhSsdwclsb.vcEbikeInvoiceImgShow }"/>
 					</div></a></td>
 				</tr>
 			<tr>
@@ -185,32 +301,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="imgdiv"> 
 					<p>驾驶人1身份证正面</p>
 					<a href="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }" target="_blank">
-					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }"/>
+					<img   src="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }"/>
 					</a></div>
 				</td>
 				<td colspan="2">
 					<div class="imgdiv"> 
 					<p>驾驶人1身份证反面</p>
 					<a href="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }" target="_blank">
-					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }"/>
+					<img  src="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }"/>
 					</a></div>
 				</td>
 				<td colspan="2">
 					<div class="imgdiv"> 
 					<p>驾驶人2身份证正面</p>
 					<a href="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }" target="_blank">
-					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }"/>
+					<img  src="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }"/>
 					</a></div>
 				</td>
 				<td colspan="2">
 					<div class="imgdiv"> 
 					<p>驾驶人2身份证反面</p>
 					<a href="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }" target="_blank">
-					<img id="img1_1"  src="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }"/>
+					<img   src="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }"/>
 					</a></div>
 				</td>
 			</tr>		
     	</table>
+    	<!--endprint-->		
     	<table class="table table-condensed">
 				<caption style="text-align: center">审批人及审批意见</caption>
 				<tr>
@@ -237,13 +354,81 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>		
 				</c:forEach>
 			</table>
-
 			<div class="btndiv">
+			<c:if test="${type == 1 }">
+			<button type="button" onclick="sureState(0)" class="btn">同意</button>
+			<button type="button" onclick="sureState(1)" class="btn">拒绝</button>
+			</c:if>	
+			<button type="button" class="btn" onclick="exportPage()">打印</button>
 			<button type="button" class="btn" onclick="history.back()">返回</button>
 			</div>
-		
     </form>
   </div>  
- 
+    <!-- 点退办时弹出的表单 -->
+	<div id="dgformDiv" class="easyui-dialog"
+		style="width:550px;padding:10px 20px 20px 20px;"
+		closed="true" buttons="#dlg-buttons2">
+		<form id="dgform" class="easyui-form" method="post">
+			<div class="tbdiv">
+			<input type="hidden" name="id" value="${ddcHyxhSsdwclsb.id }">
+			<input type="hidden" name="state">
+				<ul>
+					<li><p>退办原因:</p><li>
+					<li>
+	   				<c:forEach items="${dbyyDdcSjzds }" var="bg">
+	   				<input type="checkbox" id="sltbyyzls"  name="sltbyyzls" value="${bg.dmz}" />${bg.dmms1 }<br/>
+	   				</c:forEach>
+	   				</li>
+	   				<li><p>备注:</p></li>
+	   				<li>
+	   				<textarea rows="10" cols="65" name="note"></textarea>
+	   				</li>
+	   			</ul>	
+	   			<input type="hidden"  name="tbyy" id="tbyy">
+			</div>
+		</form>
+		<div id="dlg-buttons2" style="text-align: center;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
+			iconCls="icon-ok" onclick="updateSaveData()" style="width:90px">确定</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton"
+			iconCls="icon-cancel"
+			onclick="javascript:$('#dgformDiv').dialog('close')"
+			style="width:90px">取消</a>
+		</div>
+	</div>
+	
+	  <!-- 点同意时弹出的表单 -->
+	<div id="dgformDiv2" class="easyui-dialog"
+		style="width:550px;padding:10px 20px 20px 20px;"
+		closed="true" buttons="#dlg-buttons">
+		<form id="dgform2" class="easyui-form" method="post">
+			<div class="tbdiv">
+			<input type="hidden" name="id" value="${ddcHyxhSsdwclsb.id }">
+			<input type="hidden" name="state">
+				<ul>
+					<li><p>受理资料:</p><li>
+					<li>
+	   				<c:forEach items="${slzList }" var="bg">
+	   				<input type="checkbox" id="slzList"  name="slzList" checked="checked" value="${bg.dmz}" />${bg.dmms1 }<br/>
+	   				</c:forEach>
+	   				</li>
+	   				<li><p>备注:</p></li>
+	   				<li>
+	   				<textarea rows="10" cols="65" name="note"></textarea>
+	   				</li>
+	   			</ul>	
+	   			
+	   			<input type="hidden"  name="slzl" id="slzl">
+			</div>
+		</form>
+		<div id="dlg-buttons" style="text-align: center;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
+			iconCls="icon-ok" onclick="updateSaveData2()" style="width:90px">确定</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton"
+			iconCls="icon-cancel"
+			onclick="javascript:$('#dgformDiv2').dialog('close')"
+			style="width:90px">取消</a>
+		</div>
+	</div>
   </body>
 </html>

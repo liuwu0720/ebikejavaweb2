@@ -207,4 +207,14 @@ public interface IApplyService {
 	 */
 	List<DdcSjzd> getDbyyList(String tbyy, String type);
 
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcApproveUser
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月10日 上午11:44:27
+	 */
+	void saveDdcApproveUser(DdcApproveUser ddcApproveUser);
+
 }

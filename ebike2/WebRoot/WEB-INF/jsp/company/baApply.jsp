@@ -18,16 +18,13 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$.ajaxSetup ({
-		   cache: false //缓存
-		});
 	var h = getHeight('dg');
 	var size = getPageSize(h);
 	var w = getWidth(400);
-	var randomNu = (new Date().getTime()) ^ Math.random();
+
 	$("#dg").datagrid({
 
-		url : "<%=basePath%>ssdwAction/queryBaList?time=" + randomNu,
+		url : "<%=basePath%>ssdwAction/queryBaList" ,
 		title :  "备案申报",
 		iconCls : 'icon-danweixinxi',
 		striped : true,
@@ -40,7 +37,7 @@ $(document).ready(function(){
 		width:w,
 		loadMsg:'正在加载,请稍等...',
 		rowStyler: function(index,row){
-			if (row.slyj ==1){
+			if (row.SLYJ ==1){
 				return 'background-color:#7AF1B5;color:#red;font-weight:bold;';
 			}
 		},
@@ -68,6 +65,11 @@ $(document).ready(function(){
 		},{
 			field : 'DJH',
 			title : '电机号',
+			align:'center',
+			width : 120
+		},{
+			field : 'JSRXM1',
+			title : '驾驶人1',
 			align:'center',
 			width : 120
 		},{
@@ -127,13 +129,6 @@ $(document).ready(function(){
 			handler : function() {
 				addRowData();
 			}
-		}, {
-			id : 'btn2',
-			text : '同步',
-			iconCls : 'icon-reload',
-			handler : function() {
-				changeRowData();
-			}
 		},{
 			id : 'btn3',
 			text : '导出',
@@ -156,7 +151,7 @@ $(document).ready(function(){
 });
 
 function cancelSb(id){
-	$.messager.confirm('警告', '同步以后不能再修改，请确认', function(r){
+	$.messager.confirm('警告', '退回后该条记录将删除，请确认', function(r){
 		if (r){
 			
 			$.post("<%=basePath%>ssdwAction/cancelSb", 
@@ -188,7 +183,8 @@ function doSearch(){
 		djh: $('#djh').val(),
 		dtStart:$('#dd').datebox('getValue'),
 		dtend:$('#dtend').datebox('getValue'),
-		xsqy:$("#xsqy1").combobox('getValue')
+		xsqy:$("#xsqy1").combobox('getValue'),
+		jsrxm1:$("#jsrxm1").val()
 	}); 
 }
 
@@ -252,9 +248,7 @@ function updateSaveData(){
 							title : '提示',
 							msg : data.message
 						});
-						$('#dgformDiv').dialog('close');
-						
-						$("#dg").datagrid('reload');
+						window.location.href='<%=basePath%>ssdwAction/getAllBa';
 					}else{
 						alert(data.message);
 					}
@@ -267,7 +261,7 @@ function updateSaveData(){
 
 
 
-//同步
+//同步 
 function changeRowData(){
 	var selected = $('#dg').datagrid('getSelections');
 	var array = [];
@@ -351,28 +345,31 @@ function exportRowData(){
 <body class="easyui-layout">
 
 	<div>
-		<table id="dg" style="width:90%;">
-
-			<div id="tb" class="searchdiv">
+		<div id="tb" class="searchdiv">
 				<span>申报时间</span>
-				<input id="dd" type="text" class="easyui-datebox" ></input>   至：  
-				<input id="dtend" type="text" class="easyui-datebox"></input>				
-				<span>电机号</span> <input id="djh"
-					style="line-height:26px;border:1px solid #ccc"><br/>
+				<input id="dd" type="text" class="easyui-datebox" style="height: 30px;"></input>   至：  
+				<input id="dtend" type="text" class="easyui-datebox"style="height: 30px;"></input>				
+				<span>电机号</span> <input id="djh" class="easyui-validatebox"><br/>
 				<span>审批状态</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="zt">
-					<option value="">审批中</option>
+					<option value="">所有</option>
+					<option value="-1">审批中</option>
 					<option value="0">已同意</option>
 					<option value="1">已拒绝</option>
-					<option value="ALL">所有</option>
+					
 				</select>
 				<span>行驶区域</span>	
 				<input id="xsqy1" style="height:30px;" >
+				<span>驾驶人1</span>	
+				<input id="jsrxm1" style="height:30px;" >
 				 <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
+				<div class="searchspan">	
 				<span>剩余配额:${ddcHyxhSsdw.dwpe }</span>		
 				<span>总配额:${ddcHyxhSsdw.totalPe }</span>
+				</div>	
 			</div>
+		<table id="dg" style="width:90%;">
 		</table>
 	</div>
 	<!-- 点新增，编辑时弹出的表单 -->
@@ -389,8 +386,11 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>车身照片</td>
-					<td colspan="3"><input  type="file"
+					<td><input  type="file"
 						name="ebike_img" /><br /></td>
+					<td>购车发票</td>
+					<td><input  type="file"
+						name="ebike_invoice_img" /><br /></td>
 				</tr>
 				<tr>
 					<td>品牌型号</td>
@@ -398,7 +398,7 @@ function exportRowData(){
 						data-options="required:true" name="ppxh"
 						style="height: 32px;"></input></td>
 					<td>车身颜色</td>
-					<td><input id="cysy" name="cysy" style="height:30px;"></td>
+					<td><input id="cysy" name="cysy" data-options="required:true" style="height:30px;"></td>
 				</tr>
 				<tr>
 					<td>电机号：</td>
@@ -423,14 +423,14 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>驾驶人性别1</td>
-					<td><select id="xb1" class="easyui-combobox" name="xb1" required="true"  
+					<td><select id="xb1" class="easyui-combobox" name="xb1" data-options="required:true" 
 						style="height:32px;width: 100px;">
 						    <option value="-1">--请选择--</option>
 							<option value="0">男</option>
 							<option value="1">女</option>
 					</select></td>
 					<td>驾驶人性别2</td>
-					<td><select id="xb2" class="easyui-combobox" name="xb2" required="false"  
+					<td><select id="xb2" class="easyui-combobox" name="xb2" data-options="required:false" 
 						style="height:32px;width: 100px;">
 						    <option value="-1">--请选择--</option>
 							<option value="0">男</option>
@@ -476,15 +476,15 @@ function exportRowData(){
 				</tr>
 					<tr>
 					<td>驾驶人1身份证反面</td>
-					<td><input  type="file" id="file_upload2" onchange="CheckFileSize(this);"
+					<td><input  type="file"  onchange="CheckFileSize(this);"
 						name="card2img_jsr1" /><br /></td>
 					<td>驾驶人2身份证反面</td>
-					<td><input  type="file" id="file_upload2" onchange="CheckFileSize(this);"
+					<td><input  type="file"  onchange="CheckFileSize(this);"
 						name="card2img_jsr2" /><br /></td>
 				</tr>
 				<tr>
 					<td>行驶区域</td>
-					<td><input id="xsqy" name="xsqy" style="height:30px;" required="true"  ></td>
+					<td><input id="xsqy" name="xsqy"  data-options="required:true"  style="height:30px;"></td>
 					<td>备注</td>
 					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
 				</tr>

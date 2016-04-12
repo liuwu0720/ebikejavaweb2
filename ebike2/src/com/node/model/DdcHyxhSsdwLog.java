@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * @version: 2016年3月12日 下午5:42:10
  */
 @Entity
-@Table(name = "DDC_HYXH_SSDW_LOG", schema = "EBIKEOUT")
+@Table(name = "DDC_HYXH_SSDW_LOG")
 public class DdcHyxhSsdwLog implements java.io.Serializable {
 
 	// Fields

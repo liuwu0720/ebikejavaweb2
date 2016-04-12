@@ -11,11 +11,10 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>电动车档案查询</title>
+<title>My JSP 'companyInfos.jsp' starting page</title>
 
 <%@include file="../common/common.jsp"%>
-<script type="text/javascript"
-	src="<%=basePath%>static/js/export.js"></script>
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -26,17 +25,18 @@ $(document).ready(function(){
 	var size = getPageSize(h);
 	var w = getWidth(400);
 	var randomNu = (new Date().getTime()) ^ Math.random();
-	grid = $("#dg").datagrid({
+	$("#dg").datagrid({
 
-		url : "<%=basePath%>ebikeQueryAction/queryAll?time=" + randomNu,
-		title :  "电动车档案查询管理",
-		iconCls : 'icon-search',
+		url : "<%=basePath%>ssdwChangeAction/queryAll?time=" + randomNu,
+		title :  "电动车变更管理",
+		iconCls : 'icon-danweixinxi',
 		striped : true,
 		fitColumns:true,   //数据列太少 未自适应
 		pagination : true,
 		rownumbers : true,
 		pageSize:size,
 		singleSelect : true,//只选中单行
+		striped:true,  //striped  是否显示斑马线效果。
 		height:h,
 		width:w,
 		loadMsg:'正在加载,请稍等...',
@@ -47,15 +47,14 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
-			field : 'DWMC',
-			title : '单位名称',
-			align:'center',
-			width : 220
-		},{
 			field : 'DABH',
 			title : '档案编号',
 			align:'center',
-			width : 120
+			width : 120,
+			formatter:function(value,row,index){
+				var query = "<a  href='javascript:void(0)'  onclick='queryDetaiList(\""+row.DABH+"\")'>"+value+"</a>";
+				return query;
+			}
 		},{
 			field : 'CPHM',
 			title : '车牌号',
@@ -68,12 +67,12 @@ $(document).ready(function(){
 			width : 120
 		},{
 			field : 'JSRXM1',
-			title : '驾驶人',
+			title : '驾驶人1',
 			align:'center',
 			width : 120
 		},{
-			field : 'SFZMHM1',
-			title : '身份证号码',
+			field : 'CSYSNAME',
+			title : '车身颜色',
 			align:'center',
 			width : 120
 		},{
@@ -82,28 +81,31 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
-			field : 'GDYJ',
-			title : '归档意见',
+			field : 'YWLXNAME',
+			title : '类型',
 			align:'center',
-			width : 120,
-			formatter:function(value,index){
-				if(value == 0){
-					return '办结';
-				}else{
-					return '退办'
-				}
-			}
+			width : 120
 		},{
-			field : 'ZT',
-			title : '车辆状态',
+			field : 'SYRQ',
+			title : '审验日期',
 			align:'center',
 			width : 120,
 			formatter:function(value,index){
-				if(value == '注销'){
-					
-					return "<p style='color:red'>注销</p>";
-				}else{
-					return value;
+				var unixTimestamp = new Date(value);   
+				return unixTimestamp.toLocaleDateString();
+			}   
+		},{
+			field : 'SLYJ',
+			title : '审批状态',
+			align:'center',
+			width : 120,
+			formatter:function(value,row,index){
+				if(value == null){
+				   return "等待协会审批";
+				}else if(value == 0){
+					return "已审核(同意) ";
+				}else if(value == 1){
+					return "已审核(拒绝) ";
 				}
 			}
 		},{
@@ -112,33 +114,40 @@ $(document).ready(function(){
 			align:'center',
 			width : 120,
 			formatter:function(value,row,index){
-				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;";
-				var print = "<a  href='javascript:void(0)'  onclick='detailRow("+row.ID+")'>打印</a>";
-				return query;	
 				
+				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; ";
+				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>变更</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;";
+				var del = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.ID+")'>注销</a>";
+				if(row.YWLX == 'D'){
+					return query;	
+				}else{
+					return query+update+del;	
+				}
+							
+			
 			}
 		}
 
 		] ],
-		/* toolbar : [ {
-			id : 'btn1',
+		toolbar : [{
+			id : 'btn3',
 			text : '导出',
 			iconCls : 'icon-redo',
 			handler : function() {
-				expt(grid);
+				exportRowData();
 			}
-		}], */
+		}],
 		onLoadSuccess:function(){  
             $('#dg').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题  
         }
 	});
 	
-	//加载下拉框
-	$('#ssdw').combobox({    
-	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
-	    valueField:'id',    
-	    textField:'dwmc'   
-	}); 
+	//行驶区域
+	$('#xsqy1').combobox({
+		 url:'<%=basePath%>applyAction/getAllAreaAjax',    
+		    valueField:'dmz',    
+		    textField:'dmms1'
+	})
 });
 //注销
 function deleteRow(id){
@@ -156,7 +165,7 @@ function zhuxiaoSure(){
 				text:"正在处理，请稍候..."
 			});
 			$('#dgform3').form('submit', {
-						url : "<%=basePath%>ebikeChangeAction/zhuxiao",
+						url : "<%=basePath%>ssdwChangeAction/zhuxiao",
 						onSubmit : function() {
 							
 							var isValid = $("#dgform").form('enableValidation').form(
@@ -217,24 +226,34 @@ function doSearch(){
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
 		jsrxm1:$("#jsrxm1").val(),
-		ssdw:$("#ssdw").val()
+		ywlx:$("#ywlx").combobox('getValue'),
+		slyj:$("#slyj").combobox('getValue'),
+		xsqy:$("#xsqy1").combobox('getValue')
 	}); 
 }
 
 
 //查看
 function queryRow(id){
-	window.location.href="<%=basePath%>ebikeChangeAction/queryDetailById?id="+id
+	window.location.href="<%=basePath%>ebikeChangeAction/queryDetailById?id="+id;
 }
 
 //修改
 function updateRow(id){
-	window.location.href="<%=basePath%>ebikeChangeAction/changeInfo?id="+id
+	window.location.href="<%=basePath%>ssdwChangeAction/changeInfo?id="+id
+}
+//导出EXCEL
+function exportRowData(){
+	var content = $('.datagrid-view').html();
+	window.open('data:application/vnd.ms-excel,' + encodeURIComponent(content));
+
+}
+//查看该档案的流水记录
+function queryDetaiList(obj){
+	window.location.href="<%=basePath%>ssdwAction/getFlowList?dabh="+obj
 }
 
-function detailRow(id){
-	window.location.href="<%=basePath%>ebikeChangeAction/queryDetailById?id="+id
-}
+
 
 
 var AllowExt=".jpg|.jpeg|.gif|.bmp|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
@@ -250,29 +269,44 @@ function CheckFileSize(obj){
 	 }     
 }
 
-
-
 </script>
 </head>
-<body  class="easyui-layout">
+<body class="easyui-layout">
 
 	<div>
 		<div id="tb" style="padding: 5px; background: #E8F1FF;">
-				<span>档案编号：</span>
+				<span>档案编号</span>
 				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
-				<span>电机号:</span> <input id="djh" 
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
-				<span>姓名:</span> <input id="jsrxm1" 
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
-				<span>公司名称:</span>
-				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;
+				<span>电机号</span> <input id="djh" name="djh"
+					class="easyui-validatebox" type="text" >
+				<span>车牌号</span> <input id="cphm" name="cphm"
+					class="easyui-validatebox" type="text" >
+				</select> <br>
+				<span>驾驶人1</span> <input id="jsrxm1" name="cphm"
+				class="easyui-validatebox" type="text" >
+				<span>行驶区域</span>	
+				<input id="xsqy1" style="height:30px;" >
+				<span>类型</span>
+				<select class="easyui-combobox" style="width:100px;height:32px; " id="ywlx">
+					<option value="">所有</option>
+					<option value="A">正常</option>
+					<option value="B">变更</option>
+					<option value="C">转移</option>
+					<option value="D">注销</option>
+				</select>
+				<span>审批状态</span>
+				<select class="easyui-combobox" style="width:100px;height:32px; " id="slyj">
+					<option value="">所有</option>
+					<option value="-1">审批中</option>
+					<option value="0">已同意</option>
+					<option value="1">已拒绝</option>
+				</select>
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
 		<table id="dg" style="width:90%;">
 		</table>
 	</div>
-	
 	
 	
 	<!--注销  -->
@@ -307,7 +341,5 @@ function CheckFileSize(obj){
 		</div>
 		</form>
 	</div>
-	<div id="dialog2"></div>
-	
 </body>
 </html>

@@ -77,10 +77,12 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 	private String vcUser1CardImg2;// 驾驶人1身份证照片反面
 	private String vcUser2CardImg1;// 驾驶人2身份证照片正面
 	private String vcUser2CardImg2;// 驾驶人2身份证照片反面
+	private String vcEbikeInvoiceImg;// 购车发票
 	private String vcUser1CardImg1Show;
 	private String vcUser1CardImg2Show;// 驾驶人1身份证照片反面
 	private String vcUser2CardImg1Show;// 驾驶人2身份证照片正面
 	private String vcUser2CardImg2Show;// 驾驶人2身份证照片反面
+	private String vcEbikeInvoiceImgShow;
 	private Integer nEnable;
 	private String note;
 
@@ -125,7 +127,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.hyxhzh = hyxhzh;
 	}
 
-	@Column(name = "SSDW_ID", length = 200)
+	@Column(name = "SSDWID", length = 200)
 	public String getSsdwId() {
 		return this.ssdwId;
 	}
@@ -685,6 +687,32 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 	 */
 	public void setnEnable(Integer nEnable) {
 		this.nEnable = nEnable;
+	}
+
+	@Column(name = "VC_EBIKE_INVOICE", length = 100)
+	public String getVcEbikeInvoiceImg() {
+		return vcEbikeInvoiceImg;
+	}
+
+	/**
+	 * @param vcEbikeInvoiceImg
+	 *            : set the property vcEbikeInvoiceImg.
+	 */
+	public void setVcEbikeInvoiceImg(String vcEbikeInvoiceImg) {
+		this.vcEbikeInvoiceImg = vcEbikeInvoiceImg;
+	}
+
+	@Transient
+	public String getVcEbikeInvoiceImgShow() {
+		return vcEbikeInvoiceImgShow;
+	}
+
+	/**
+	 * @param vcEbikeInvoiceImgShow
+	 *            : set the property vcEbikeInvoiceImgShow.
+	 */
+	public void setVcEbikeInvoiceImgShow(String vcEbikeInvoiceImgShow) {
+		this.vcEbikeInvoiceImgShow = vcEbikeInvoiceImgShow;
 	}
 
 }

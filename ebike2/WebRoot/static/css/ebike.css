@@ -232,10 +232,6 @@ td {
 	vertical-align: middle;
 }
 
-table {
-	background-color: transparent;
-}
-
 caption {
 	padding-top: 8px;
 	padding-bottom: 8px;
@@ -260,7 +256,7 @@ th {
 	border-top: 1px solid #ddd;
 }
 
-.table>thead>tr>th,.table>tbody>tr>th,.table>tfoot>tr>th,.table>thead>tr>td,.table>tbody>tr>td,.table>tfoot>tr>td
+.table>thead>tr>th,.table>tbody>tr>th,.table>tfoot>tr>th,.table>thead>tr>td,.table>tbody>tr>td,.table>tr>td
 	{
 	padding: 8px;
 	line-height: 1.42857143;
@@ -286,7 +282,7 @@ th {
 	background-color: #fff;
 }
 
-.table-condensed>thead>tr>th,.table-condensed>tbody>tr>th,.table-condensed>tfoot>tr>th,.table-condensed>thead>tr>td,.table-condensed>tbody>tr>td,.table-condensed>tfoot>tr>td
+.table-condensed>thead>tr>th,.table-condensed>tbody>tr>th,.table-condensed>tfoot>tr>th,.table-condensed>thead>tr>td,.table-condensed>tbody>tr>td,.table-condensed>tr>td
 	{
 	padding: 5px;
 }
@@ -460,6 +456,11 @@ table td[class*="col-"],table th[class*="col-"] {
     /* margin: 5px; */
     text-align: left;
 }
+.searchspan{
+	text-align: center;
+	color: red;
+}
+
 .carddiv{
 	background-color: #E4E4FB;
 	vertical-align: middle;

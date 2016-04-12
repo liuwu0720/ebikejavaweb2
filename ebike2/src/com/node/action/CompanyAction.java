@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -385,10 +386,22 @@ public class CompanyAction {
 	@ResponseBody
 	public List<DdcHyxhSsdw> getAllCompanyAjax(HttpServletRequest request,
 			HttpServletResponse response) {
-		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
-		List<DdcHyxhSsdw> ddcHyxhSsdws = iCompanyService
-				.getAllCompany(ddcHyxhBase.getHyxhzh());
+		Object object = request.getSession().getAttribute(
+				SystemConstants.SESSION_USER);
+		List<DdcHyxhSsdw> ddcHyxhSsdws = new ArrayList<>();
+		if (object.getClass().getSimpleName()
+				.equals(SystemConstants.CLASS_NAME_DDC_HYXHSSDW)) {
+			DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
+			ddcHyxhSsdws.add(ddcHyxhSsdw);
+
+		} else {
+			DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
+			ddcHyxhSsdws = iCompanyService.getAllCompany(ddcHyxhBase
+					.getHyxhzh());
+		}
+
 		return ddcHyxhSsdws;
 	}
 

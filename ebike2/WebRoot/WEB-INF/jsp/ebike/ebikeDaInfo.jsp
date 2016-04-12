@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'ebikeDaInfo.jsp' starting page</title>
+    <title>档案详情</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 
 $(document).ready(function(){
-	if('${ddcDaxxb.vcShowEbikeImg}'==''){
+	<%-- if('${ddcDaxxb.vcShowEbikeImg}'==''){
 		 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
 	}else{
 		$("#img_0").attr("src",'${ddcDaxxb.vcShowEbikeImg}');
@@ -34,7 +34,7 @@ $(document).ready(function(){
 		 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
 	}else{
 		$("#img1_1").attr("src",'${ddcDaxxb.vcShowUser1Img}');
-	} 
+	}  --%>
 })
 
 function exportPage() {
@@ -53,26 +53,28 @@ function exportPage() {
   <body>
    	 <div  class="maindiv">
     <!--startprint-->
+    	
     	<table id="table1" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
+    		<h2>已备案车辆详情</h2>
 				<tr>
 					<th>申报单位</th>
-					<td>${ddcDaxxb.zzjgdmzhName }</td>					
+					<td>${ddcDaxxb.ssdwName }</td>					
 					<th>档案编号：</th>
 					<td>${ddcDaxxb.dabh }</td>
-					
+					<th>申请备注</th>
+					<td>${ddcDaxxb.bz }</td>
+					<th>归档备注</th>
+					<td>${ddcDaxxb.gdbz }</td
 				</tr>
 				<tr>
 					<th>业务类型</th>
 					<td>${ddcDaxxb.ywlxName }</td>					
 					<th>车辆状态</th>
 					<td>${ddcDaxxb.ztName }</td>
-				</tr>
-				<tr>
 					<th>品牌型号</th>
 					<td>${ddcDaxxb.ppxh }</td>
 					<th>车身颜色</th>
 					<td>${ddcDaxxb.cysyName }</td>
-					
 				</tr>
 				<tr>
 					<th>电机号</th>
@@ -84,11 +86,14 @@ function exportPage() {
 					<c:if test="${ddcDaxxb.jtzz == 1 }">
 					<td>无</td>
 					</c:if>
+					<th>行驶区域</th>
+					<td>${ddcDaxxb.xsqyName }</td>
+					<th>车身颜色</th>
+    				<td>${ddcDaxxb.cysyName }</td>
 				</tr>
 				<tr>
 					<th>驾驶人姓名1</th>
 					<td>${ddcDaxxb.jsrxm1 }</td>	
-					
 					<th>驾驶人性别1</th>
 					<c:if test="${ddcDaxxb.xb1 == 0 }">
 					<td>男</td>
@@ -96,9 +101,6 @@ function exportPage() {
 					<c:if test="${ddcDaxxb.xb1 == 1 }">
 					<td>女</td>
 					</c:if>
-					
-				</tr>
-				<tr>
 					<th>身份证号码1</th>
 					<td>${ddcDaxxb.sfzmhm1 }</td>
 					<th>联系电话1</th>
@@ -112,59 +114,96 @@ function exportPage() {
 					<c:if test="${ddcDaxxb.xb2 == 0 }">男</c:if>
 					<c:if test="${ddcDaxxb.xb2 == 1 }">女</c:if>
 					</td>
-					
-				</tr>
-				<tr>
-				<th>身份证号码2</th>
+					<th>身份证号码2</th>
 					<td>${ddcDaxxb.sfzmhm2 }</td>
 					<th>联系电话2</th>
 					<td>${ddcDaxxb.lxdh2 }</td>
 				</tr>
 				<tr>
-					<th>行驶区域</th>
-					<td>${ddcDaxxb.xsqyName }</td>
-					<th>申报备注</th>
-					<td>${ddcDaxxb.bz }</td>
-				</tr>
-				<tr>
-					<th>审检日期</th>
+					
+					<th>归档日期</th>
+					<td><fmt:formatDate value="${ddcDaxxb.gdrq }" pattern="yyyy-MM-dd"/></td>
+    				<th>审检日期</th>
 					<td><fmt:formatDate value="${ddcDaxxb.syrq }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-					<th>受理日期</th>
-					<td><fmt:formatDate value="${ddcDaxxb.slrq }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-				
+					<th>归档意见</th>
+					<td>
+						<c:if test="${ddcDaxxb.gdyj==null }">
+							审批中
+						</c:if>
+						<c:if test="${ddcDaxxb.gdyj==0 }">
+							办结
+						</c:if>
+						<c:if test="${ddcDaxxb.gdyj==1 }">
+							退办
+						</c:if>
+					</td>
 				</tr>
-				
 				<tr>
-					<th>受理意见</th>
-					<c:if test="${ddcDaxxb.slyj == 0 }">
-					<td>同意</td>
-					</c:if>
-					<c:if test="${ddcDaxxb.slyj == 1 }">
-					<td>不同意</td>
-					</c:if>	
-					<th>受理备注</th>
-					<td>${ddcDaxxb.slbz }</td>
-				</tr>
+    				<th>受理资料</th>
+    				<td colspan="7">
+    				<c:forEach items="${selectSlzls }" var="tb">
+    					<p>${tb.dmms1 }</p>
+    				</c:forEach>
+    				</td>
+    				</tr>
 				<tr>
 					<td colspan="2">
 					<div class="imgdiv"> 
 					<p>驾驶人1照片</p>
-					<img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"/></div>
+					<a href="${ddcDaxxb.vcShowUser1Img }" target="_blank">
+					<img src="${ddcDaxxb.vcShowUser1Img }"/>
+					</a></div>
 					</td>
 					<td colspan="2">
 					<div  class="imgdiv">
 					<p>驾驶人2照片</p>
-					<img id="img2_2"  src="<%=basePath%>static/images/iconfont-wu.png"/>
-					</div><br /></td>
-					
-				</tr>
-				<tr>
-					<td colspan="4">
+					<a href="${ddcDaxxb.vcShowUser2Img }" target="_blank">
+					<img src="${ddcDaxxb.vcShowUser2Img }"/>
+					</a>
+					</div</td>
+					<td colspan="2">
+					<a href="${ddcDaxxb.vcShowEbikeImg }" target="_blank">
 					<div  class="imgdiv">
 					<p>车身照片</p>
-					<img id="img_0"  />
-					</div><br /></td>
+					<img   src="${ddcDaxxb.vcShowEbikeImg }"/>
+					</div></a></td>
+					<td colspan="2">
+					<a href="${ddcDaxxb.vcEbikeInvoiceImgShow }" target="_blank">
+					<div  class="imgdiv">
+					<p>购车发票</p>
+					<img   src="${ddcDaxxb.vcEbikeInvoiceImgShow }"/>
+					</div></a></td>
 				</tr>
+			<tr>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人1身份证正面</p>
+					<a href="${ddcDaxxb.vcUser1CardImg1Show }" target="_blank">
+					<img   src="${ddcDaxxb.vcUser1CardImg1Show }"/>
+					</a></div>
+				</td>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人1身份证反面</p>
+					<a href="${ddcDaxxb.vcUser1CardImg2Show }" target="_blank">
+					<img  src="${ddcDaxxb.vcUser1CardImg2Show }"/>
+					</a></div>
+				</td>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2身份证正面</p>
+					<a href="${ddcDaxxb.vcUser2CardImg1Show }" target="_blank">
+					<img   src="${ddcDaxxb.vcUser2CardImg1Show }"/>
+					</a></div>
+				</td>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2身份证反面</p>
+					<a href="${ddcDaxxb.vcUser2CardImg2Show }" target="_blank">
+					<img  src="${ddcDaxxb.vcUser2CardImg2Show }"/>
+					</a></div>
+				</td>
+			</tr>	
 			</table>
 		<!--endprint-->		
 			<div class="btndiv">
