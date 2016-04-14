@@ -457,7 +457,23 @@ table td[class*="col-"],table th[class*="col-"] {
 	background-color: #A9A9F7;
 	text-align: center;
 }
+.btn_primary {
+	width: 100px;
+	height: 32px;
+	color: white;
+	background: #428bca;;
+    border-color: #357ebd;
+	text-align: center;
+	cursor: pointer;
+}
 
+.btn_default {
+	width: 100px;
+	height: 32px;
+	background-color: #a4cbe8;
+	text-align: center;
+	cursor: pointer;
+}
 .btndiv {
 	text-align: center;
 }
@@ -469,3 +485,54 @@ table td[class*="col-"],table th[class*="col-"] {
 .tbdiv p {
 	font-weight: bolder;
 }
+
+.photo {
+	width: 150px;
+	height: 180px;
+	background: #bbb;
+}
+
+.photo img{
+	width: 150px;
+	height: 180px;
+}
+
+.qrcode {
+	width: 150px;
+	height: 180px;
+	margin-top: 15px;
+}
+.qrcode span{
+	text-align: center;
+}
+#ebikeQRCode .contentRight li {
+	padding: 6px;
+	color: #24748f;
+	font-size: 14px;
+}
+
+ #ebikeQRCode .warm {
+ 	color: #24748f;
+ 	margin: 7px;
+ }
+ 
+ #ebikeQRCode .content {
+ 	height: 400;
+ }
+ 
+ #ebikeQRCode .content .contentLeft{
+ 	float:left; margin-left: 5%;height:400px
+ }
+ 
+ #ebikeQRCode .content .contentRight {
+ float:left;margin-left: 20px;
+ }
+
+#ebikeQRCode .contentRight li label{  
+	color: black;
+	font-size: 14px;
+}
+ .btndiv_print {
+	position: fixed; bottom: 10px;right:43%
+}
+

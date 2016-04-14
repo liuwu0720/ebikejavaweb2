@@ -39,6 +39,7 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String ywyy;// 业务原因
 	private String ywyyName;
 	private String hyxhzh;//
+	private String hyxhzhName;
 	private String ssdwId;// 单位ID
 	private String cphm;
 	private String ppxh;
@@ -780,6 +781,19 @@ public class DdcDaxxb implements java.io.Serializable {
 	 */
 	public void setVcUser2CardImg2Show(String vcUser2CardImg2Show) {
 		this.vcUser2CardImg2Show = vcUser2CardImg2Show;
+	}
+
+	@Transient
+	public String getHyxhzhName() {
+		return hyxhzhName;
+	}
+
+	/**
+	 * @param hyxhzhName
+	 *            : set the property hyxhzhName.
+	 */
+	public void setHyxhzhName(String hyxhzhName) {
+		this.hyxhzhName = hyxhzhName;
 	}
 
 }

@@ -10,6 +10,7 @@ package com.node.service;
 import java.util.List;
 import java.util.Map;
 
+import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwLog;
 import com.node.model.PicPath;
@@ -142,5 +143,16 @@ public interface ICompanyService {
 	 * @version: 2016年4月9日 下午5:02:35
 	 */
 	Map<String, Object> getBySpringSql(String sql, Page page);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param hyxhzh
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月14日 下午2:12:58
+	 */
+	DdcHyxhBase getHyxhZhByCode(String hyxhzh);
 
 }

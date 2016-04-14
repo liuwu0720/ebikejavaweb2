@@ -109,8 +109,8 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;";
-				var print = "<a  href='javascript:void(0)'  onclick='detailRow("+row.ID+")'>打印</a>";
-				return query;	
+				var print = "<a  href='javascript:void(0)'  onclick='queryQRCode("+row.ID+")'>打印</a>";
+				return query+print;	
 				
 			}
 		}
@@ -239,6 +239,11 @@ function detailRow(id){
 	window.location.href="<%=basePath%>ebikeChangeAction/queryDetailById?id="+id
 }
 
+
+//查看基本信息以及二维码
+function queryQRCode(id){
+	window.location.href="<%=basePath%>ebikeQueryAction/queryQRCodeById?id="+id
+}
 
 var AllowExt=".jpg|.jpeg|.gif|.bmp|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
 function CheckFileSize(obj){

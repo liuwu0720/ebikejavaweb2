@@ -89,7 +89,7 @@ $(document).ready(function(){
 			}
 		},{
 			field : 'SLRQ',
-			title : '归档时间',
+			title : '申请时间',
 			align:'center',
 			width : 120,
 			formatter:function(value,index){

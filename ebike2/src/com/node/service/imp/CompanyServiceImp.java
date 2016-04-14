@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDcHyxhSsdwLogDao;
+import com.node.dao.IDdcHyxhBaseDao;
 import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IPicPathDao;
+import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwLog;
 import com.node.model.PicPath;
@@ -40,6 +42,9 @@ public class CompanyServiceImp implements ICompanyService {
 
 	@Autowired
 	IDcHyxhSsdwLogDao iDcHyxhSsdwLogDao;
+
+	@Autowired
+	IDdcHyxhBaseDao iDdcHyxhBaseDao;
 
 	/*
 	 * (non-Javadoc)
@@ -184,6 +189,23 @@ public class CompanyServiceImp implements ICompanyService {
 	public Map<String, Object> getBySpringSql(String sql, Page page) {
 		// TODO Auto-generated method stub
 		return iDdcHyxhSsdwDao.getSpringSQL(sql, page);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.ICompanyService#getHyxhZhByCode(java.lang.String)
+	 */
+	@Override
+	public DdcHyxhBase getHyxhZhByCode(String hyxhzh) {
+		List<DdcHyxhBase> ddcHyxhBases = iDdcHyxhBaseDao.findByProperty(
+				"hyxhzh", hyxhzh);
+		if (ddcHyxhBases != null && ddcHyxhBases.size() > 0) {
+			return ddcHyxhBases.get(0);
+		} else {
+			return null;
+		}
+
 	}
 
 }

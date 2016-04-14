@@ -18,7 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.node.model.DdcDaxxb;
 import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhSsdw;
+import com.node.model.PicPath;
+import com.node.service.IApplyService;
+import com.node.service.ICompanyService;
 import com.node.service.IEbikeService;
 import com.node.util.Page;
 import com.node.util.ServiceUtil;
@@ -37,6 +42,12 @@ public class EbikeQueryAction {
 
 	@Autowired
 	IEbikeService iEbikeService;
+
+	@Autowired
+	IApplyService iApplyService;
+
+	@Autowired
+	ICompanyService iCompanyService;
 
 	/**
 	 * 
@@ -107,4 +118,66 @@ public class EbikeQueryAction {
 
 	}
 
+	/**
+	 * 
+	 * 方法描述：生成二维码
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月14日 下午2:05:36
+	 */
+	@RequestMapping("/queryQRCodeById")
+	public String queryQRCodeById(HttpServletRequest request, String id) {
+		long sbId = Long.parseLong(id);
+		DdcDaxxb ddcDaxxb = iEbikeService.getById(sbId);
+		String cysyName = iApplyService.findByProPerties("CSYS",
+				ddcDaxxb.getCysy());
+
+		ddcDaxxb.setCysyName(cysyName);// 车身颜色
+		String xsqyName = iApplyService.findByProPerties("SSQY",
+				ddcDaxxb.getXsqy());
+		ddcDaxxb.setXsqyName(xsqyName);// 所属区域
+
+		String ztName = iApplyService
+				.findByProPerties("CLZT", ddcDaxxb.getZt());
+		ddcDaxxb.setZtName(ztName);
+		// 申报单位
+		if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
+			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
+					.parseLong(ddcDaxxb.getSsdwId()));
+			if (ddcHyxhSsdw != null) {
+				ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
+			} else {
+				ddcDaxxb.setSsdwName(null);
+			}
+		}
+		DdcHyxhBase ddcHyxhBase = iCompanyService.getHyxhZhByCode(ddcDaxxb
+				.getHyxhzh());
+		ddcDaxxb.setHyxhzhName(ddcHyxhBase.getHyxhmc());
+		String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
+		String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
+
+		ddcDaxxb.setVcShowUser1Img(showUser1Img);
+		ddcDaxxb.setVcShowUser2Img(showUser2Img);
+		request.setAttribute("ddcDaxxb", ddcDaxxb);
+		return "ebike/ebikeQRCode";
+	}
+
+	private String parseUrl(String vcPicPath) {
+		if (StringUtils.isNotBlank(vcPicPath)) {
+			PicPath picPath = iCompanyService
+					.getPathById(SystemConstants.PIC_IMG);
+			String subPath = picPath.getVcParsePath();
+			if (!subPath.endsWith("/")) {
+				subPath += "/";
+			}
+			return subPath + vcPicPath;
+		} else {
+			return null;
+		}
+
+	}
 }
