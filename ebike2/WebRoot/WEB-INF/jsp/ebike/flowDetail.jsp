@@ -47,24 +47,62 @@ function exportPage() {
 	window.print(); 
 	window.document.body.innerHTML=bdhtml;//还原界面 
 }
+
+function sureState(state){
+	$("#state").attr("value",state);
+	 $('#dgformDiv2').dialog('open').dialog('setTitle', '填写审批意见');	
+	 
+		
+}
+
+function change(){
+	$.messager.progress({
+		text:"正在处理，请稍候..."
+	});
+	$('#dgform2').form('submit', {
+		url : "<%=basePath%>ebikeChangeAction/sureState",
+		onSubmit : function() {
+			var isValid = $("#dgform2").form('enableValidation').form(
+					'validate');
+
+			if (!isValid) {
+				$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
+			}
+			return isValid; // 返回false终止表单提交
+		},
+		success : function(data) {
+			var data = eval('(' + data + ')'); // change the JSON
+			if (data.isSuccess) {
+				$.messager.show({ // show error message
+					title : '提示',
+					msg : data.message
+				});
+				history.go(-1);
+			}else{
+				alert(data.message);
+			}
+			$.messager.progress('close'); // 如果提交成功则隐藏进度条
+
+		}
+
+	});
+}
 </script>
   </head>
   
   <body>
    	 <div  class="maindiv">
     <!--startprint-->
-    	
-    	<table id="table1" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
-    		<h2>${ddcFlow.ywlxName }详情</h2>
+    	<h2>${ddcFlow.ywlxName }详情</h2>
+    	<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
+    		
 				<tr>
 					<th>申报单位</th>
 					<td>${ddcFlow.ssdwName }</td>					
 					<th>档案编号：</th>
 					<td>${ddcFlow.dabh }</td>
-					<th>申请备注</th>
-					<td>${ddcFlow.bz }</td>
-					<th>归档备注</th>
-					<td>${ddcFlow.gdbz }</td
+					<th>业务原因</th>
+					<td colspan="3">${ddcFlow.ywyyName }</td>
 				</tr>
 				<tr>
 					<th>业务类型</th>
@@ -73,8 +111,8 @@ function exportPage() {
 					<td>${ddcFlow.cphm }</td>
 					<th>品牌型号</th>
 					<td>${ddcFlow.ppxh }</td>
-					<th>车身颜色</th>
-					<td>${ddcFlow.cysyName }</td>
+					<th>所属单位</th>
+					<td>${ddcFlow.ssdwName }</td>
 				</tr>
 				<tr>
 					<th>电机号</th>
@@ -145,6 +183,15 @@ function exportPage() {
     					<p>${sl.dmms1 }</p>
     				</c:forEach>
     				</td>
+    			</tr>
+    			<tr>
+    				<th>申请备注</th>
+					<td colspan="7">${ddcFlow.bz }</td>
+					
+    			</tr>
+    			<tr>
+    				<th>归档备注</th>
+					<td  colspan="7">${ddcFlow.gdbz }</td
     			</tr>
     			<c:if test="${tbyyDdcSjzds!=null }">
     			<tr>
@@ -217,9 +264,39 @@ function exportPage() {
 			</table>
 		<!--endprint-->		
 			<div class="btndiv">
-		<button type="button" onclick="exportPage()" class="btn">打印</button>
-		<button type="button" class="btn" onclick="history.back()">返回</button>
+			<c:if test="${type==1 }">
+				<button type="button" onclick="sureState(0)" class="btn">同意</button>
+				<button type="button" onclick="sureState(1)" class="btn">拒绝</button>
+			</c:if>
+			<button type="button" onclick="exportPage()" class="btn">打印</button>
+			<button type="button" class="btn" onclick="history.back()">返回</button>
 		</div>
     </div>		
+    
+    <!-- 弹出的表单 -->
+	<div id="dgformDiv2" class="easyui-dialog"
+		style="width:550px;height:300px;padding:10px 20px 20px 10px;top:500px;"
+		closed="true" buttons="#dlg-buttons">
+
+		<div class="tbdiv">
+			<form id="dgform2">
+			<input type="hidden" name="id" value="${ddcFlow.id }">
+			<input type="hidden" name="state" id="state">  
+			<ul>
+				<li><p>备注:</p></li>
+				<li><textarea rows="10" cols="65" name="note"></textarea></li>
+			</ul>
+			</form>	
+		</div>
+
+		<div id="dlg-buttons" style="text-align: center;">
+			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
+				iconCls="icon-ok" onclick="change()" style="width:90px">确定</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel"
+				onclick="javascript:$('#dgformDiv2').dialog('close')"
+				style="width:90px">取消</a>
+		</div>
+	</div>
   </body>
 </html>

@@ -12,6 +12,7 @@ import java.util.Map;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcFlow;
+import com.node.model.DdcHyxhSsdw;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
 
@@ -120,5 +121,25 @@ public interface IEbikeService {
 	 * @version: 2016年3月18日 下午6:27:07
 	 */
 	DdcFlow getFlowById(long flowId);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcFlow
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月13日 下午8:03:41
+	 */
+	void updateDdcFlow(DdcFlow ddcFlow);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcHyxhSsdw
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月13日 下午8:04:05
+	 */
+	void updateDdcHyxhSsdw(DdcHyxhSsdw ddcHyxhSsdw);
 
 }

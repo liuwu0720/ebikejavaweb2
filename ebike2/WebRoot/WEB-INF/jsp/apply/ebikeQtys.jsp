@@ -36,8 +36,9 @@ $(document).ready(function(){
 		rownumbers : true,
 		pageSize:size,
 		singleSelect : true,//只选中单行
-		height:h,
+		//autoRowHeight:true,
 		width:w,
+		height:h, 
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
 			field : 'id',
@@ -177,9 +178,7 @@ function updateSaveData(){
   
   <body  class="easyui-layout">
     <div>
-		<table id="dg" style="width:90%;">
-
-			<div id="tb" style="padding: 5px; background: #E8F1FF;">
+    	<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>申报时间：</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>				
@@ -187,13 +186,15 @@ function updateSaveData(){
 					iconCls="icon-search">查询 </a>
 					<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 			</div>
+		<table id="dg" style="width:90%;">
+			
 		</table>
 	</div>
 	
 	<!-- 点新增，编辑时弹出的表单 -->
-	<div id="dgformDiv" class="easyui-dialog" closed="true"
+	<div id="dgformDiv" class="easyui-dialog" closed="true" style="width: 400px;height: 300px;"
 		buttons="#dlg-buttons2">
-		<form id="dgform" class="easyui-form" method="post" style="width: 400px;height: 300px;" >
+		<form id="dgform" class="easyui-form" method="post"  >
 			<table class="table">
 				<tr>
 					<td>申请配额:</td>

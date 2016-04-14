@@ -84,7 +84,11 @@ $(document).ready(function(){
 			field : 'SSDWNAME',
 			title : '申报单位名称',
 			align:'center',
-			width : 120
+			width : 120,
+			formatter:function(value,row,index){
+				var query = "<a  href='javascript:void(0)'  onclick='queryHyxhDwDetail(\""+row.SSDWID+"\")'>"+value+"</a>";
+				return query;	
+			}
 		},{
 			field : 'SQRQ',
 			title : '申请时间',
@@ -377,6 +381,27 @@ function queryDwInfo(id){
  		  }
 	})
 }
+
+
+//查看单位详情
+function queryHyxhDwDetail(obj){
+	$.ajax({
+		type: "GET",
+	    url: "<%=basePath%>ssdwAction/querySsdwInfoById",
+	   data:{
+		id:obj
+	   }, 
+	   dataType: "json",
+	   success:function(data){
+			  if(data){
+				 $('#dwinfoDiv').dialog('open').dialog('setTitle', '详情信息');
+				 $('#dwform').form('load', data);
+				 $("#dwimg_a").attr("href",data.vcShowPath);
+				 $("#dwimg").attr("src",data.vcShowPath);
+			  }
+		  }
+	})
+}
 </script>
 </head>
 <body class="easyui-layout">
@@ -387,14 +412,14 @@ function queryDwInfo(id){
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>				
 				<span>电机号:</span> <input id="djh"
-					style="line-height:26px;border:1px solid #ccc"><br/>
+					style="line-height:26px;border:1px solid #ccc">
 				<span>审批状态:</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="zt">
 					<option value="">所有</option>
 					<option value="-1">审批中</option>
 					<option value="0">已同意</option>
 					<option value="1">已拒绝</option>
-				</select>
+				</select><br/>
 				<span>行驶区域</span>	
 				<input id="xsqy1" style="height:30px;" >
 				<span>驾驶人1</span>	

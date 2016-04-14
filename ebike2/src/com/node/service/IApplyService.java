@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.node.model.DdcApproveUser;
+import com.node.model.DdcDaxxb;
+import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
@@ -216,5 +218,27 @@ public interface IApplyService {
 	 * @version: 2016年4月10日 上午11:44:27
 	 */
 	void saveDdcApproveUser(DdcApproveUser ddcApproveUser);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param parseLong
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月13日 下午7:38:37
+	 */
+	DdcFlow getDdcFlowById(long parseLong);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param dabh
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月13日 下午7:47:43
+	 */
+	DdcDaxxb getDdcDaxxbByDabh(String dabh);
 
 }

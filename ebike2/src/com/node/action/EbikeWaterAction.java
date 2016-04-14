@@ -132,7 +132,7 @@ public class EbikeWaterAction {
 	 */
 	@RequestMapping("/queryInfoById")
 	public String queryInfoById(HttpServletRequest request, String id,
-			HttpServletResponse response) {
+			String type, HttpServletResponse response) {
 		long flowId = Long.parseLong(id);
 		DdcFlow ddcFlow = iEbikeService.getFlowById(flowId);
 		String cysyName = iApplyService.findByProPerties("CSYS",
@@ -156,10 +156,18 @@ public class EbikeWaterAction {
 		String ywlxName = iApplyService.findByProPerties("YWLX",
 				ddcFlow.getYwlx());
 		ddcFlow.setYwlxName(ywlxName);
-		// 业务原因
-		String ywyyName = iApplyService.findByProPerties("YWYY_A",
-				ddcFlow.getYwyy());
-		ddcFlow.setYwyyName(ywyyName);
+		// 注销的业务原因
+		if (ddcFlow.getYwlx().equalsIgnoreCase("D")) {
+			String[] ywyyStrings = ddcFlow.getYwyy().split(",");
+			String ywyyNameList = "";
+			for (String ywyy : ywyyStrings) {
+				String ywyyName = iApplyService
+						.findByProPerties("YWYY_D", ywyy);
+				ywyyNameList += ywyyName + ",";
+			}
+			ddcFlow.setYwyyName(ywyyNameList);
+		}
+
 		// 受理资料
 		List<DdcSjzd> slzlDdcSjzds = new ArrayList<>();
 		// 退办原因
@@ -199,6 +207,7 @@ public class EbikeWaterAction {
 		request.setAttribute("ddcFlow", ddcFlow);
 		request.setAttribute("slzlDdcSjzds", slzlDdcSjzds);
 		request.setAttribute("tbyyDdcSjzds", tbyyDdcSjzds);
+		request.setAttribute("type", type);
 		return "ebike/flowDetail";
 
 	}

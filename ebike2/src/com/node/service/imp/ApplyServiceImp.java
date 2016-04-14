@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcApprovalUserDao;
+import com.node.dao.IDdcDaxxbDao;
+import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHmdDao;
 import com.node.dao.IDdcHyxhBasbDao;
 import com.node.dao.IDdcHyxhSsdwDao;
@@ -23,6 +25,8 @@ import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IDdcHyxhSsdwclsbLogDao;
 import com.node.dao.IDdcSjzdDao;
 import com.node.model.DdcApproveUser;
+import com.node.model.DdcDaxxb;
+import com.node.model.DdcFlow;
 import com.node.model.DdcHmd;
 import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhSsdw;
@@ -65,6 +69,12 @@ public class ApplyServiceImp implements IApplyService {
 
 	@Autowired
 	ICompanyService iCompanyService;
+
+	@Autowired
+	IDdcFlowDao iDdcFlowDao;
+
+	@Autowired
+	IDdcDaxxbDao iDdcDaxxbDao;
 
 	/*
 	 * (non-Javadoc)
@@ -328,5 +338,32 @@ public class ApplyServiceImp implements IApplyService {
 	public void saveDdcApproveUser(DdcApproveUser ddcApproveUser) {
 		// TODO Auto-generated method stub
 		iDdcApprovalUserDao.save(ddcApproveUser);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#getDdcFlowById(long)
+	 */
+	@Override
+	public DdcFlow getDdcFlowById(long id) {
+		// TODO Auto-generated method stub
+		return iDdcFlowDao.get(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#getDdcDaxxbByDabh(java.lang.String)
+	 */
+	@Override
+	public DdcDaxxb getDdcDaxxbByDabh(String dabh) {
+		List<DdcDaxxb> daxxbs = iDdcDaxxbDao.findByProperty("dabh", dabh);
+		if (daxxbs != null && daxxbs.size() > 0) {
+			return daxxbs.get(0);
+		} else {
+			return null;
+		}
+
 	}
 }

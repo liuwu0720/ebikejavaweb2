@@ -151,4 +151,29 @@ public class EbikeServiceImp implements IEbikeService {
 
 		return iDdcFlowDao.get(flowId);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#updateDdcFlow(com.node.model.DdcFlow)
+	 */
+	@Override
+	public void updateDdcFlow(DdcFlow ddcFlow) {
+		// TODO Auto-generated method stub
+		iDdcFlowDao.update(ddcFlow);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#updateDdcHyxhSsdw(com.node.model.DdcHyxhSsdw
+	 * )
+	 */
+	@Override
+	public void updateDdcHyxhSsdw(DdcHyxhSsdw ddcHyxhSsdw) {
+		// TODO Auto-generated method stub
+		iDdcHyxhSsdwDao.update(ddcHyxhSsdw);
+	}
+
 }

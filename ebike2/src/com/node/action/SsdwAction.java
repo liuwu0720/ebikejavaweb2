@@ -205,55 +205,71 @@ public class SsdwAction {
 		ddcHyxhSsdwclsb.setSqr(ddcHyxhSsdw.getUserCode());
 		try {
 
-			String ebike_jpgPath = uploadImg(request, ebike_img);// 上传车身照片
+			String ebike_jpgPath = uploadImg(request, ebike_img,
+					SystemConstants.IMG_EBIKE_WITH,
+					SystemConstants.IMG_EBIKE_HEIGHT);// 上传车身照片
 			if (StringUtils.isNotBlank(ebike_jpgPath)) {
 				ddcHyxhSsdwclsb.setVcEbikeImg(ebike_jpgPath);
 			} else {
 				ddcHyxhSsdwclsb.setVcEbikeImg(ddcHyxhSsdwclsb.getVcEbikeImg());
 			}
 
-			String vcUser1_img = uploadImg(request, headimg_jsr1);// 上传驾驶人1照片
+			String vcUser1_img = uploadImg(request, headimg_jsr1,
+					SystemConstants.IMG_HEAD_WITH,
+					SystemConstants.IMG_HEAD_HEIGHT);// 上传驾驶人1照片
 			if (StringUtils.isNotBlank(vcUser1_img)) {
 				ddcHyxhSsdwclsb.setVcUser1Img(vcUser1_img);
 			} else {
 				ddcHyxhSsdwclsb.setVcUser1Img(ddcHyxhSsdwclsb.getVcUser1Img());
 			}
 
-			String vcUser2_img = uploadImg(request, headimg_jsr2);// 上传驾驶人2照片
+			String vcUser2_img = uploadImg(request, headimg_jsr2,
+					SystemConstants.IMG_HEAD_WITH,
+					SystemConstants.IMG_HEAD_HEIGHT);// 上传驾驶人2照片
 			if (StringUtils.isNotBlank(vcUser2_img)) {
 				ddcHyxhSsdwclsb.setVcUser2Img(vcUser2_img);
 			} else {
 				ddcHyxhSsdwclsb.setVcUser2Img(ddcHyxhSsdwclsb.getVcUser2Img());
 			}
-			String vcUser1CardImg1 = uploadImg(request, card1img_jsr1);// 上传驾驶人1身份证正面
+			String vcUser1CardImg1 = uploadImg(request, card1img_jsr1,
+					SystemConstants.IMG_IDCARD_WIDTH,
+					SystemConstants.IMG_IDCARD_HEIGHT);// 上传驾驶人1身份证正面
 			if (StringUtils.isNotBlank(vcUser1CardImg1)) {
 				ddcHyxhSsdwclsb.setVcUser1CardImg1(vcUser1CardImg1);
 			} else {
 				ddcHyxhSsdwclsb.setVcUser1CardImg1(ddcHyxhSsdwclsb
 						.getVcUser1CardImg1());
 			}
-			String vcUser1CardImg2 = uploadImg(request, card2img_jsr1);// 上传驾驶人1身份证反面
+			String vcUser1CardImg2 = uploadImg(request, card2img_jsr1,
+					SystemConstants.IMG_IDCARD_WIDTH,
+					SystemConstants.IMG_IDCARD_HEIGHT);// 上传驾驶人1身份证反面
 			if (StringUtils.isNotBlank(vcUser1CardImg2)) {
 				ddcHyxhSsdwclsb.setVcUser1CardImg2(vcUser1CardImg2);
 			} else {
 				ddcHyxhSsdwclsb.setVcUser1CardImg2(ddcHyxhSsdwclsb
 						.getVcUser1CardImg2());
 			}
-			String vcUser2CardImg1 = uploadImg(request, card1img_jsr2);// 驾驶人2身份证正面
+			String vcUser2CardImg1 = uploadImg(request, card1img_jsr2,
+					SystemConstants.IMG_IDCARD_WIDTH,
+					SystemConstants.IMG_IDCARD_HEIGHT);// 驾驶人2身份证正面
 			if (StringUtils.isNotBlank(vcUser2CardImg1)) {
 				ddcHyxhSsdwclsb.setVcUser2CardImg1(vcUser2CardImg1);
 			} else {
 				ddcHyxhSsdwclsb.setVcUser2CardImg1(ddcHyxhSsdwclsb
 						.getVcUser2CardImg1());
 			}
-			String vcUser2CardImg2 = uploadImg(request, card2img_jsr2);// 驾驶人2身份证反面
+			String vcUser2CardImg2 = uploadImg(request, card2img_jsr2,
+					SystemConstants.IMG_IDCARD_WIDTH,
+					SystemConstants.IMG_IDCARD_HEIGHT);// 驾驶人2身份证反面
 			if (StringUtils.isNotBlank(vcUser2CardImg2)) {
 				ddcHyxhSsdwclsb.setVcUser2CardImg2(vcUser2CardImg2);
 			} else {
 				ddcHyxhSsdwclsb.setVcUser2CardImg2(ddcHyxhSsdwclsb
 						.getVcUser2CardImg2());
 			}
-			String vcEbikeInvoiceImg = uploadImg(request, ebike_invoice_img);// 购车发票
+			String vcEbikeInvoiceImg = uploadImg(request, ebike_invoice_img,
+					SystemConstants.IMG_INVOICE_WIDTH,
+					SystemConstants.IMG_INVOICE_HEIGHT);// 购车发票
 			if (StringUtils.isNotBlank(vcEbikeInvoiceImg)) {
 				ddcHyxhSsdwclsb.setVcEbikeInvoiceImg(vcEbikeInvoiceImg);
 			} else {
@@ -325,8 +341,9 @@ public class SsdwAction {
 	 * @author: liuwu
 	 * @version: 2016年3月15日 下午3:15:24
 	 */
-	private String uploadImg(HttpServletRequest request, MultipartFile file)
-			throws FileNotFoundException, IOException {
+	private String uploadImg(HttpServletRequest request, MultipartFile file,
+			int limitWidth, int limitHeight) throws FileNotFoundException,
+			IOException {
 		if (file != null && !file.isEmpty()) {
 			PicPath imgPath = iCompanyService
 					.getPathById(SystemConstants.PIC_IMG);
@@ -367,7 +384,7 @@ public class SsdwAction {
 			ScaleImage scaleImage = ScaleImage.getInstance();
 			int yw = srcBufferImage.getWidth();
 			int yh = srcBufferImage.getHeight();
-			int w = 800, h = 600;
+			int w = limitWidth, h = limitHeight;
 			if (w > yw && h > yh) {
 				File image2 = new File(getImagePath, fileNewName);
 				file.transferTo(image2);
@@ -459,7 +476,7 @@ public class SsdwAction {
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
 		if (state.equals("1")) {
-			// 如果行业协会拒绝，则审批流程结束，不提交至内网审批
+			// 如果行业协会拒绝，则审批流程结束，不提交至内网审批,且申请单位的配额回收
 			ddcHyxhSsdwclsb.setSlr(ddcHyxhBase.getHyxhmc());
 			ddcHyxhSsdwclsb.setSlyj(SystemConstants.NOTAGREE);
 			ddcHyxhSsdwclsb.setSlbz(note);
@@ -468,6 +485,9 @@ public class SsdwAction {
 			if (StringUtils.isNotBlank(tbyy)) {
 				ddcHyxhSsdwclsb.setTbyy(tbyy);
 			}
+			DdcHyxhSsdw ddcHyxhSsdw = iApplyService
+					.getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
+			ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
 
 			// 审批人
 			DdcApproveUser ddcApproveUser = new DdcApproveUser();
@@ -481,6 +501,7 @@ public class SsdwAction {
 			ddcApproveUser.setApproveTime(new Date());
 			ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
 			try {
+				iCompanyService.update(ddcHyxhSsdw);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 				iApplyService.saveDdcApproveUser(ddcApproveUser);
 				AjaxUtil.rendJson(response, true, "审批成功!");
@@ -546,13 +567,30 @@ public class SsdwAction {
 			String dabh, String ssdw, String ywlx, String djh, String cphm,
 			String dtstart, String dtend) {
 		Page p = ServiceUtil.getcurrPage(request);
-		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
+		Object object = request.getSession().getAttribute(
+				SystemConstants.SESSION_USER);
+		String hyxhzh = null;
+		DdcHyxhSsdw ddcHyxhSsdw = null;
+		if (object.getClass().getSimpleName()
+				.equals(SystemConstants.CLASS_NAME_DDC_HYXHSSDW)) {
+			ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession().getAttribute(
+					SystemConstants.SESSION_USER);
+			hyxhzh = ddcHyxhSsdw.getHyxhzh();
+		} else {
+			DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
+			hyxhzh = ddcHyxhBase.getHyxhzh();
+		}
+
 		String sql = "select A.DABH, A.ID,A.LSH,A.CPHM,A.DJH,A.SLRQ,a.SLYJ,(SELECT distinct S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.SSDWID and rownum=1) AS DWMC,"
 				+ " (select distinct D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='YWLX' and rownum=1) as YWLX ,"
 				+ "  (select distinct D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.XSQY AND D.DMLB='SSQY' and rownum=1 ) as SSQY ,"
-				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='CLZT')AS ZT from DDC_FLOW A WHERE A.SSDWID='"
-				+ ddcHyxhSsdw.getId() + "'  ";
+				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.YWLX AND D.DMLB='CLZT')AS ZT from DDC_FLOW A WHERE A.HYXHZH='"
+				+ hyxhzh + "'  ";
+		if (ddcHyxhSsdw != null) {
+			sql += " and a.SSDWID = " + ddcHyxhSsdw.getId();
+		}
+
 		if (StringUtils.isNotBlank(ywlx)) {
 			sql += " AND A.YWLX = '" + ywlx + "'";
 		}
@@ -579,5 +617,40 @@ public class SsdwAction {
 		Map<String, Object> resultMap = iEbikeService.queryBySpringSql(sql, p);
 
 		return resultMap;
+	}
+
+	/**
+	 * 
+	 * 方法描述：查询单位信息
+	 * 
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月13日 下午5:40:06
+	 */
+	@RequestMapping("/querySsdwInfoById")
+	@ResponseBody
+	public DdcHyxhSsdw querySsdwInfoById(String id) {
+		long dId = Long.parseLong(id);
+		DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(dId);
+		String vcShowLicenceImg = parseUrl(ddcHyxhSsdw.getVcPicPath());
+		ddcHyxhSsdw.setVcShowPath(vcShowLicenceImg);
+		return ddcHyxhSsdw;
+	}
+
+	private String parseUrl(String vcPicPath) {
+		if (StringUtils.isNotBlank(vcPicPath)) {
+			PicPath picPath = iCompanyService
+					.getPathById(SystemConstants.PIC_IMG);
+			String subPath = picPath.getVcParsePath();
+			if (!subPath.endsWith("/")) {
+				subPath += "/";
+			}
+			return subPath + vcPicPath;
+		} else {
+			return null;
+		}
+
 	}
 }

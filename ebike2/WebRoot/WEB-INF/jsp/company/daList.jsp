@@ -27,8 +27,8 @@ $(document).ready(function(){
 	var randomNu = (new Date().getTime()) ^ Math.random();
 	$("#dg").datagrid({
 
-		url : "<%=basePath%>ssdwChangeAction/queryAll?time=" + randomNu,
-		title :  "电动车变更管理",
+		url : "<%=basePath%>ssdwQueryAction/queryAll?time=" + randomNu,
+		title :  "电动车档案列表",
 		iconCls : 'icon-danweixinxi',
 		striped : true,
 		fitColumns:true,   //数据列太少 未自适应
@@ -81,11 +81,6 @@ $(document).ready(function(){
 			align:'center',
 			width : 50
 		},{
-			field : 'YWLXNAME',
-			title : '类型',
-			align:'center',
-			width : 50
-		},{
 			field : 'SYRQ',
 			title : '审验日期',
 			align:'center',
@@ -95,35 +90,13 @@ $(document).ready(function(){
 				return unixTimestamp.toLocaleDateString();
 			}   
 		},{
-			field : 'SLYJ',
-			title : '审批状态',
-			align:'center',
-			width : 80,
-			formatter:function(value,row,index){
-				if(value == null){
-				   return "等待协会审批";
-				}else if(value == 0){
-					return "已审核(同意) ";
-				}else if(value == 1){
-					return "已审核(拒绝) ";
-				}
-			}
-		},{
 			field : 'null',
 			title:'操作',
 			align:'center',
 			width : 120,
 			formatter:function(value,row,index){
-				
-				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; ";
-				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>变更</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;";
-				var del = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.ID+")'>注销</a>";
-				if(row.SLYJ == null){
-					return query;	
-				}else{
-					return query+update+del;	
-				}
-							
+				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>";
+				return query;	
 			
 			}
 		}
@@ -226,8 +199,6 @@ function doSearch(){
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
 		jsrxm1:$("#jsrxm1").val(),
-		ywlx:$("#ywlx").combobox('getValue'),
-		slyj:$("#slyj").combobox('getValue'),
 		xsqy:$("#xsqy1").combobox('getValue')
 	}); 
 }
@@ -238,10 +209,7 @@ function queryRow(id){
 	window.location.href="<%=basePath%>ebikeChangeAction/queryDetailById?id="+id;
 }
 
-//修改
-function updateRow(id){
-	window.location.href="<%=basePath%>ssdwChangeAction/changeInfo?id="+id
-}
+
 //导出EXCEL
 function exportRowData(){
 	var content = $('.datagrid-view').html();
@@ -254,38 +222,25 @@ function queryDetaiList(obj){
 }
 
 
+
 </script>
 </head>
 <body class="easyui-layout">
 
 	<div>
-		<div id="tb" class="searchdiv">
+		<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>档案编号</span>
 				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
 				<span>电机号</span> <input id="djh" name="djh"
 					class="easyui-validatebox" type="text" >
 				<span>车牌号</span> <input id="cphm" name="cphm"
 					class="easyui-validatebox" type="text" >
-				</select> <br>
+				</select> 
 				<span>驾驶人1</span> <input id="jsrxm1" name="cphm"
 				class="easyui-validatebox" type="text" >
 				<span>行驶区域</span>	
-				<input id="xsqy1" style="height:30px;" >
-				<span>类型</span>
-				<select class="easyui-combobox" style="width:100px;height:32px; " id="ywlx">
-					<option value="">所有</option>
-					<option value="A">正常</option>
-					<option value="B">变更</option>
-					<option value="C">转移</option>
-					<option value="D">注销</option>
-				</select>
-				<span>审批状态</span>
-				<select class="easyui-combobox" style="width:100px;height:32px; " id="slyj">
-					<option value="">所有</option>
-					<option value="-1">审批中</option>
-					<option value="0">已同意</option>
-					<option value="1">已拒绝</option>
-				</select>
+				<input id="xsqy1" style="height:30px;width: 80px;" >
+				
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
@@ -293,38 +248,6 @@ function queryDetaiList(obj){
 		</table>
 	</div>
 	
-	
-	<!--注销  -->
-	<div id="dgformDiv3" class="easyui-dialog"
-		style="width:550px;height:400px;padding:10px 20px 20px 20px;"
-		closed="true" >
-		<div>
-		<form id="dgform3" class="easyui-form" enctype="multipart/form-data"
-			method="post">
-			<input type="hidden" name="id" id="daId'>
-			<input type="text"  name="slzllist" id="slzllist">
-		<ul>
-			<li>业务原因：
-				<c:forEach items="${ywyys }" var="yw">
-				<input type="checkbox" id="ywyys" name="ywyys" value="${yw.dmz}" />${yw.dmms1 }</c:forEach>
-			</li>
-			<li>受理资料：
-				<c:forEach items="${slzls }" var="zl">
-					<p style="margin-left:55px;"><input type="checkbox" id="slzls" name="slzls" value="${zl.dmz}" />${zl.dmms1}</p>
-				</c:forEach>
-			</li>
-			<li>受理备注：<textarea name="slbz" cols="63" rows="5"></textarea></li>
-		</ul>
-		</div>
-		<div style="text-align: center;padding-top:25px;">
-			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
-				iconCls="icon-ok" onclick="zhuxiaoSure()" style="width:90px">保存</a>
-			<a href="javascript:void(0)" class="easyui-linkbutton"
-				iconCls="icon-cancel"
-				onclick="javascript:$('#dgformDiv3').dialog('close')"
-				style="width:90px">取消</a>
-		</div>
-		</form>
-	</div>
+
 </body>
 </html>

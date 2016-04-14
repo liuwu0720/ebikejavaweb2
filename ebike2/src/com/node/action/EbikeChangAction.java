@@ -273,28 +273,45 @@ public class EbikeChangAction {
 	 */
 	@RequestMapping("/queryAll")
 	@ResponseBody
-	public Map<String, Object> queryAll(HttpServletResponse response,
-			String djh, String dabh, String cphm, HttpServletRequest request) {
+	public Map<String, Object> queryAll(HttpServletRequest request, String djh,
+			String cphm, String jsrxm1, String dabh, String ywlx, String slyj,
+			String xsqy, HttpServletResponse response) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
-		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.SLRQ,(SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.SSDWID ) AS DWMC, "
-				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.ZT AND D.DMLB='CLZT')AS ZT from DDC_DAXXB A WHERE A.HYXHZH='"
+		String sql = "select t.id, t.ywlx, t.lsh,t.dabh,t.cphm,t.ppxh,"
+				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz = t.YWLX and d.dmlb='YWLX' and rownum=1)as YWLXNAME,"
+				+ "t.djh,t.jsrxm1,t.xsqy,(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=t.xsqy AND D.DMLB='SSQY') as XSQYNAME,t.slyj,"
+				+ "t.SSDWID, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=t.SSDWID)as ssdwname ,t.slrq from DDC_FLOW t where t.ywlx !='A' and t.hyxhzh ='"
 				+ ddcHyxhBase.getHyxhzh() + "'  ";
 		// 电机号
 		if (StringUtils.isNotBlank(djh)) {
-			sql += " and a.djh like '%" + djh + "%'";
+			sql += " and t.djh like '%" + djh + "%'";
 		}
 		// 档案编号
 		if (StringUtils.isNotBlank(dabh)) {
-			sql += " and a.dabh like '%" + dabh + "%'";
+			sql += " and t.dabh like '%" + dabh + "%'";
 		}
 		// 车牌号
 		if (StringUtils.isNotBlank(cphm)) {
-			sql += " and a.cphm like '%" + cphm + "%'";
+			sql += " and t.sfzhm1 like '%" + cphm + "%'";
 		}
-		sql += "  order by A.ID DESC";
+		// 驾驶人
+		if (StringUtils.isNotBlank(jsrxm1)) {
+			sql += " and t.JSRXM1 like '%" + jsrxm1 + "%'";
+		}
+		if (StringUtils.isNotBlank(ywlx)) {
+			sql += " and t.YWLX = '" + ywlx + "'";
+		}
+		if (StringUtils.isNotBlank(slyj)) {
+			sql += " and t.SLYJ = '" + slyj + "'";
+		}
+		if (StringUtils.isNotBlank(xsqy)) {
+			sql += " and t.XSQY = '" + xsqy + "'";
+		}
+
+		sql += "  order by t.slrq DESC";
 
 		Map<String, Object> resultMap = iEbikeService.queryBySpringSql(sql, p);
 
@@ -612,4 +629,73 @@ public class EbikeChangAction {
 
 	}
 
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param request
+	 * @param response
+	 * @param id
+	 * @param note
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月13日 下午7:37:45
+	 */
+	@RequestMapping("/sureState")
+	public void sureState(HttpServletRequest request,
+			HttpServletResponse response, String id, String note, String state) {
+		DdcFlow ddcFlow = iApplyService.getDdcFlowById(Long.parseLong(id));
+		ddcFlow.setGdrq(new Date());
+		ddcFlow.setGdyj(state);
+		ddcFlow.setGdbz(note);
+		ddcFlow.setSlyj(state);
+		if (state.equals("0")) {
+
+			// 同意---注销 所属单位回收配额，档案表受理意见改为同意
+			DdcDaxxb daxxb = iApplyService.getDdcDaxxbByDabh(ddcFlow.getDabh());
+			if (daxxb != null) {
+				daxxb.setSlyj(state);
+				DdcHyxhSsdw ddcHyxhSsdw = iApplyService
+						.getDdcHyxhSsdwById(daxxb.getSsdwId());
+				if (ddcFlow.getYwlx().equalsIgnoreCase("D")) {
+					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
+				}
+
+				try {
+					iEbikeService.update(daxxb);
+					iEbikeService.updateDdcFlow(ddcFlow);
+					iEbikeService.updateDdcHyxhSsdw(ddcHyxhSsdw);
+					AjaxUtil.rendJson(response, true, "操作成功");
+				} catch (Exception e) {
+					e.printStackTrace();
+					AjaxUtil.rendJson(response, false, "系统错误！");
+				}
+
+			} else {
+				AjaxUtil.rendJson(response, false, "档案编号【" + ddcFlow.getDabh()
+						+ "】的档案信息被删除");
+			}
+
+		} else {
+			// 拒绝
+			DdcDaxxb daxxb = iApplyService.getDdcDaxxbByDabh(ddcFlow.getDabh());
+			if (daxxb != null) {
+				daxxb.setSlyj(state);
+				try {
+					iEbikeService.update(daxxb);
+					iEbikeService.updateDdcFlow(ddcFlow);
+					AjaxUtil.rendJson(response, true, "操作成功");
+				} catch (Exception e) {
+					e.printStackTrace();
+					AjaxUtil.rendJson(response, false, "系统错误！");
+				}
+
+			} else {
+				AjaxUtil.rendJson(response, false, "档案编号【" + ddcFlow.getDabh()
+						+ "】的档案信息被删除");
+			}
+
+		}
+
+	}
 }

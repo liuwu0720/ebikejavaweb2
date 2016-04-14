@@ -383,7 +383,7 @@ public class DdcFlow implements java.io.Serializable {
 		this.slr = slr;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "SLRQ", length = 7)
 	public Date getSlrq() {
 		return this.slrq;
@@ -438,7 +438,7 @@ public class DdcFlow implements java.io.Serializable {
 		this.gdr = gdr;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "GDRQ", length = 7)
 	public Date getGdrq() {
 		return this.gdrq;

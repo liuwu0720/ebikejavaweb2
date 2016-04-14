@@ -323,7 +323,7 @@ public class UserAction {
 			ScaleImage scaleImage = ScaleImage.getInstance();
 			int yw = srcBufferImage.getWidth();
 			int yh = srcBufferImage.getHeight();
-			int w = SystemConstants.LICENCE_IMG_WITH, h = SystemConstants.LICENCE_IMG_HEIGHT;
+			int w = SystemConstants.IMG_LICENCE_WITH, h = SystemConstants.IMG_LICENCE_HEIGHT;
 			if (w > yw && h > yh) {
 				File image2 = new File(getImagePath, fileNewName);
 				file.transferTo(image2);

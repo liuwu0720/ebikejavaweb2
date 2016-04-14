@@ -20,6 +20,62 @@ ul li {
 	border: 0;
 }
 
+#main {
+	border-collapse: collapse;
+}
+
+#main,#main tr,#main th,#main td {
+	border: 1px solid #C4E1FF;
+}
+
+#main tr {
+	height: 30px;
+	background-color: #EEF2FB;
+	line-height: 30px;
+}
+
+#main th {
+	text-align: right;
+	font-weight: bold;
+	width: 10%;
+}
+
+#main td {
+	width: 15%;
+	text-align: left;
+	padding-left: 5px;
+}
+
+.maindiv {
+	background-color: #E4E4FB;
+	vertical-align: middle;
+}
+ h2{
+	text-align: center;
+}
+.maindiv input {
+	vertical-align: middle;
+	padding: 0;
+}
+.searchdiv{
+	padding: 5px 0 5px 10px;
+    background: #E8F1FF;
+    /* margin: 5px; */
+    text-align: left;
+}
+.searchdiv input{
+	height:30px;width: 80px;
+}
+
+.searchspan{
+	text-align: center;
+	color: red;
+}
+
+.carddiv{
+	background-color: #E4E4FB;
+	vertical-align: middle;
+}
 /* 左侧导航栏 */
 .menu {
 	background: #fff;
@@ -412,56 +468,4 @@ table td[class*="col-"],table th[class*="col-"] {
 
 .tbdiv p {
 	font-weight: bolder;
-}
-
-#main {
-	border-collapse: collapse;
-}
-
-#main,#main tr,#main th,#main td {
-	border: 1px solid #C4E1FF;
-}
-
-#main tr {
-	height: 30px;
-	background-color: #EEF2FB;
-	line-height: 30px;
-}
-
-#main th {
-	text-align: right;
-	font-weight: bold;
-	width: 10%;
-}
-
-#main td {
-	width: 15%;
-	text-align: left;
-	padding-left: 5px;
-}
-
-.maindiv {
-	background-color: #E4E4FB;
-	vertical-align: middle;
-}
-.maindiv h2{
-	text-align: center;
-}
-.maindiv input {
-	vertical-align: middle;
-}
-.searchdiv{
-	padding: 5px 0 5px 10px;
-    background: #E8F1FF;
-    /* margin: 5px; */
-    text-align: left;
-}
-.searchspan{
-	text-align: center;
-	color: red;
-}
-
-.carddiv{
-	background-color: #E4E4FB;
-	vertical-align: middle;
 }

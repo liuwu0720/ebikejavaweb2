@@ -132,7 +132,7 @@ function doSearch(){
 		cphm:$("#cphm").val(),
 		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值)
 		dtend:$('#dtend').datebox('getValue'),
-		ssdw:$("#ssdw").val()
+		ssdw:$("#ssdw").combobox('getValue')
 	}); 
 }
 
@@ -150,8 +150,7 @@ function queryRow(id){
 <body class="easyui-layout">
 
 	<div>
-		<table id="dg" style="width:90%;">
-
+		
 			<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>业务类型</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="ywlx">
@@ -162,16 +161,18 @@ function queryRow(id){
 				</select>	
 				<span>受理时间</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
-				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>		
+				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input><br>		
 				<span>车牌号:</span> <input id="cphm" name="cphm"
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
+					class="easyui-validatebox" type="text" >
 				<span>电机号:</span> <input id="djh" name="djh"
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;	
+					class="easyui-validatebox" type="text" >
 				<span>公司名称:</span>
-				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;	
+				 <input id="ssdw" style="height: 32px;">
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
+		<table id="dg" style="width:90%;">
+
 		</table>
 	</div>
 

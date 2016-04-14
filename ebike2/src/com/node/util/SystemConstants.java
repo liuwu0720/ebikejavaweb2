@@ -87,15 +87,47 @@ public class SystemConstants {
 	/**
 	 * 营业执照最大宽度
 	 */
-	public static final int LICENCE_IMG_WITH = 800;
+	public static final int IMG_LICENCE_WITH = 800;
 	/**
 	 * 营业执照最大高度
 	 */
-	public static final int LICENCE_IMG_HEIGHT = 600;
+	public static final int IMG_LICENCE_HEIGHT = 600;
 
 	public static final String CLASS_NAME_DDC_HYXHBASE = "DdcHyxhBase";
 
 	public static final String CLASS_NAME_DDC_HYXHSSDW = "DdcHyxhSsdw";
+	/**
+	 * 车身照片最大宽度
+	 */
+	public static final int IMG_EBIKE_WITH = 400;
+	/**
+	 * 车身照片最大高度
+	 */
+	public static final int IMG_EBIKE_HEIGHT = 300;
+	/**
+	 * 人员头像最大宽度
+	 */
+	public static final int IMG_HEAD_WITH = 300;
+	/**
+	 * 人员头像最大高度
+	 */
+	public static final int IMG_HEAD_HEIGHT = 400;
+	/**
+	 * 身份证最大宽度
+	 */
+	public static final int IMG_IDCARD_WIDTH = 500;
+	/**
+	 * 身份证最大高度
+	 */
+	public static final int IMG_IDCARD_HEIGHT = 350;
+	/**
+	 * 发票最大宽度
+	 */
+	public static final int IMG_INVOICE_WIDTH = 600;
+	/**
+	 * 发票最大高度
+	 */
+	public static final int IMG_INVOICE_HEIGHT = 400;
 
 	public static void main(String[] args) {
 		String codeString = "13366665555";

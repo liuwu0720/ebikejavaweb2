@@ -55,7 +55,11 @@ public class CompanyQtyAction {
 	 * @version: 2016年3月16日 下午2:37:03
 	 */
 	@RequestMapping("/getAll")
-	public String getAll() {
+	public String getAll(HttpServletRequest request) {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER);
+		DdcHyxhBase ddcHyxhBase2 = iUserService.getById(ddcHyxhBase.getId());// 重新查一次，因为数量有变化在session中体现不了
+		request.setAttribute("ddcHyxhBase", ddcHyxhBase2);
 		return "company/companyQtys";
 	}
 
@@ -89,8 +93,7 @@ public class CompanyQtyAction {
 		hql.setQueryPage(p);
 		hql.addOrderBy("dwmc", "asc");
 		Map<String, Object> resultMap = iCompanyService.queryByHql(hql);
-		DdcHyxhBase ddcHyxhBase2 = iUserService.getById(ddcHyxhBase.getId());// 重新查一次，因为数量有变化在session中体现不了
-		request.setAttribute("ddcHyxhBase", ddcHyxhBase2);
+
 		return resultMap;
 	}
 

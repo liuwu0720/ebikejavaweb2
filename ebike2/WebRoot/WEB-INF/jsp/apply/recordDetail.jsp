@@ -140,6 +140,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			return true;
 		}
 	}
+	
+	function exportPage() {
+		$("#table1").css('width', '650px');
+		var bdhtml=window.document.body.innerHTML;
+		var startStr="<!--startprint-->";//设置打印开始区域 
+		var endStr="<!--endprint-->";//设置打印结束区域 
+		var printHtml=bdhtml.substring(bdhtml.indexOf(startStr)+startStr.length,bdhtml.indexOf(endStr));//从标记里获取需要打印的页面 
+		window.document.body.innerHTML=printHtml;//需要打印的页面 
+		window.print(); 
+		window.document.body.innerHTML=bdhtml;//还原界面 
+	}
 		
 	</script>
 	
@@ -148,9 +159,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   <div  class="maindiv">
     <form action="">
+    	<h2>车辆备案申报详情</h2>
     <!--startprint-->
     	<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
-    		<h2>已备案车辆详情</h2>
+    		
     		<tr>
     			<th>流水号</th>
     			<td>${ddcHyxhSsdwclsb.lsh }</td>

@@ -244,7 +244,7 @@ function checkVarible(){
   
   <body>
    <div class="maindiv">
-   		<form id="dgform" class="easyui-form" enctype="multipart/form-data"
+   		<form id="dgform"  enctype="multipart/form-data"
 			method="post">
 			<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
 				<tr style="display: none">

@@ -53,28 +53,38 @@ function exportPage() {
   <body>
    	 <div  class="maindiv">
     <!--startprint-->
-    	
-    	<table id="table1" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
-    		<h2>已备案车辆详情</h2>
+    	<h2>备案车辆详情</h2>
+    	<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
+    		
 				<tr>
-					<th>申报单位</th>
+					<th>所属单位</th>
 					<td>${ddcDaxxb.ssdwName }</td>					
-					<th>档案编号：</th>
+					<th>档案编号</th>
 					<td>${ddcDaxxb.dabh }</td>
-					<th>申请备注</th>
-					<td>${ddcDaxxb.bz }</td>
-					<th>归档备注</th>
-					<td>${ddcDaxxb.gdbz }</td
-				</tr>
-				<tr>
 					<th>业务类型</th>
 					<td>${ddcDaxxb.ywlxName }</td>					
 					<th>车辆状态</th>
 					<td>${ddcDaxxb.ztName }</td>
+				</tr>
+				<tr>
+					<th>归档日期</th>
+					<td><fmt:formatDate value="${ddcDaxxb.gdrq }" pattern="yyyy-MM-dd"/></td>
+    				<th>审检日期</th>
+					<td><fmt:formatDate value="${ddcDaxxb.syrq }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
+					<th>归档意见</th>
+					<td>
+						<c:if test="${ddcDaxxb.gdyj==null }">
+							审批中
+						</c:if>
+						<c:if test="${ddcDaxxb.gdyj==0 }">
+							办结
+						</c:if>
+						<c:if test="${ddcDaxxb.gdyj==1 }">
+							退办
+						</c:if>
+					</td>
 					<th>品牌型号</th>
 					<td>${ddcDaxxb.ppxh }</td>
-					<th>车身颜色</th>
-					<td>${ddcDaxxb.cysyName }</td>
 				</tr>
 				<tr>
 					<th>电机号</th>
@@ -119,25 +129,7 @@ function exportPage() {
 					<th>联系电话2</th>
 					<td>${ddcDaxxb.lxdh2 }</td>
 				</tr>
-				<tr>
-					
-					<th>归档日期</th>
-					<td><fmt:formatDate value="${ddcDaxxb.gdrq }" pattern="yyyy-MM-dd"/></td>
-    				<th>审检日期</th>
-					<td><fmt:formatDate value="${ddcDaxxb.syrq }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-					<th>归档意见</th>
-					<td>
-						<c:if test="${ddcDaxxb.gdyj==null }">
-							审批中
-						</c:if>
-						<c:if test="${ddcDaxxb.gdyj==0 }">
-							办结
-						</c:if>
-						<c:if test="${ddcDaxxb.gdyj==1 }">
-							退办
-						</c:if>
-					</td>
-				</tr>
+				
 				<tr>
     				<th>受理资料</th>
     				<td colspan="7">
@@ -145,7 +137,16 @@ function exportPage() {
     					<p>${tb.dmms1 }</p>
     				</c:forEach>
     				</td>
-    				</tr>
+    			</tr>
+    			<tr>
+    				<th>申请备注</th>
+					<td colspan="7">${ddcDaxxb.bz }</td>
+					
+    			</tr>
+    			<tr>
+    				<th>归档备注</th>
+					<td  colspan="7">${ddcDaxxb.gdbz }</td
+    			</tr>
 				<tr>
 					<td colspan="2">
 					<div class="imgdiv"> 

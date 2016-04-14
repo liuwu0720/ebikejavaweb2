@@ -35,10 +35,11 @@ $(document).ready(function(){
 		fitColumns:true,   //数据列太少 未自适应
 		pagination : true,
 		rownumbers : true,
-		pageSize:size,
+		pageSize:20,
 		singleSelect : true,//只选中单行
-		height:h,
-		width:w,
+		 autoRowHeight:true,
+		 width:w,
+		 height:h, 
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
 			field : 'ID',
@@ -69,11 +70,6 @@ $(document).ready(function(){
 		},{
 			field : 'JSRXM1',
 			title : '驾驶人',
-			align:'center',
-			width : 120
-		},{
-			field : 'SFZMHM1',
-			title : '身份证号码',
 			align:'center',
 			width : 120
 		},{
@@ -139,6 +135,12 @@ $(document).ready(function(){
 	    valueField:'id',    
 	    textField:'dwmc'   
 	}); 
+	//行驶区域
+	$('#xsqy1').combobox({
+		 url:'<%=basePath%>applyAction/getAllAreaAjax',    
+		    valueField:'dmz',    
+		    textField:'dmms1'
+	})
 });
 //注销
 function deleteRow(id){
@@ -217,7 +219,8 @@ function doSearch(){
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
 		jsrxm1:$("#jsrxm1").val(),
-		ssdw:$("#ssdw").val()
+		xsqy:$("#xsqy1").combobox('getValue'),
+		ssdw:$("#ssdw").combobox('getValue')
 	}); 
 }
 
@@ -257,13 +260,17 @@ function CheckFileSize(obj){
 <body  class="easyui-layout">
 
 	<div>
-		<div id="tb" style="padding: 5px; background: #E8F1FF;">
-				<span>档案编号：</span>
-				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
+		<div id="tb" class="searchdiv">
+				<span>档案编号</span>
+				<input id="dabh" type="text" class="easyui-validatebox" name="dabh"style="height:30px;width: 80px;" ></input>
 				<span>电机号:</span> <input id="djh" 
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
+					class="easyui-validatebox" type="text" style="height:30px;width: 80px;">
 				<span>姓名:</span> <input id="jsrxm1" 
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;
+					class="easyui-validatebox" type="text"style="height:30px;width: 80px;" > <br>
+				<span>车牌号</span> <input id="cphm" name="cphm"
+					class="easyui-validatebox" type="text" style="height:30px;width: 80px;">	
+				<span>行驶区域</span>	
+				<input id="xsqy1" style="height:30px;width: 80px;" >	
 				<span>公司名称:</span>
 				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"

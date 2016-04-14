@@ -111,6 +111,7 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;"
+				
 				var cancel = "<a  href='javascript:void(0)'  onclick='cancelSb("+row.ID+")'>退回</a>"
 				if(row.SL_INDEX == 0){
 					return query+cancel;
@@ -223,6 +224,9 @@ function queryRow(id){
 	});
 	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id;
 }
+
+
+
 
 //保存操作
 function updateSaveData(){

@@ -24,10 +24,9 @@ $(document).ready(function(){
 	var h = getHeight('dg');
 	var size = getPageSize(h);
 	var w = getWidth(400);
-	var dabh = '${dabh}'
 	$("#dg").datagrid({
 
-		url : "<%=basePath%>ssdwAction/queryFlowList?dabh=" + dabh,
+		url : "<%=basePath%>ssdwAction/queryFlowList" ,
 		title :  "业务流水查询",
 		iconCls : 'icon-search',
 		striped : true,
@@ -122,12 +121,7 @@ $(document).ready(function(){
         }
 	});
 	
-	//加载下拉框
-	$('#ssdw').combobox({    
-	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
-	    valueField:'id',    
-	    textField:'dwmc'   
-	}); 
+
 });
 
 
@@ -139,7 +133,7 @@ function doSearch(){
 		cphm:$("#cphm").val(),
 		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值)
 		dtend:$('#dtend').datebox('getValue'),
-		ssdw:$("#ssdw").val()
+		ssdw:$("#ssdw").combobox('getValue')
 	}); 
 }
 
@@ -167,13 +161,12 @@ function queryRow(id){
 				</select>	
 				<span>受理时间</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
-				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>		
+				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>	<br>	
 				<span>车牌号:</span> <input id="cphm" name="cphm"
-					class="easyui-validatebox" type="text" > <br>
+					class="easyui-validatebox" type="text" > 
 				<span>电机号:</span> <input id="djh" name="djh"
 					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;	
-				<span>公司名称:</span>
-				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;	
+				
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>

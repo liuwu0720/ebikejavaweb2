@@ -178,8 +178,6 @@ $(document).ready(function(){
 <body class="easyui-layout">
 
 	<div>
-		<table id="dg" style="width:90%;">
-
 			<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>单位名称:</span> <input id="itemid"
 					style="line-height:26px;border:1px solid #ccc"> <span>
@@ -187,21 +185,20 @@ $(document).ready(function(){
 					style="line-height:26px;border:1px solid #ccc"> <a
 					class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
-				<div style="text-align: center;background-color:#E8F1FF; ">
-					<p style="color: red">剩余配额：${ddcHyxhBase.hyxhsjzpe }</p>
-				</div>
+				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">实际配额：${ddcHyxhBase.totalPe }   剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 			</div>
+		<table id="dg" style="width:90%;">
 		</table>
 	</div>
 	<!-- 点新增，编辑时弹出的表单 -->
-	<div id="dgformDiv" class="easyui-dialog" closed="true"
+	<div id="dgformDiv" class="easyui-dialog" closed="true" style="width:350px;padding:10px 20px 20px 20px;"
 		buttons="#dlg-buttons2">
 		<form id="dgform" class="easyui-form" method="post"  >
 			<table class="table">
 				<tr>
 					<td>申请配额:</td>
 					<td><input id="ss" class="easyui-numberspinner" name="dwpe"
-						data-options="increment:1,editable:false,required:true,validType:'number'"  min="0"
+						data-options="increment:1,required:true,validType:'number'"  min="0"
 						style="width:120px;height:30px;"></input></td>
 				</tr>
 			</table>
