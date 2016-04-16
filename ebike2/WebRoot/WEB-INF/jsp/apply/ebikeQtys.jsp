@@ -41,12 +41,6 @@ $(document).ready(function(){
 		height:h, 
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
-			field : 'id',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'lsh',
 			title : '流水号',
 			align:'center',

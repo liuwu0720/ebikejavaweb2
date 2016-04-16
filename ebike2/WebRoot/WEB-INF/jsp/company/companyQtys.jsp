@@ -40,14 +40,8 @@ $(document).ready(function(){
 		width:w,
 		loadMsg : '正在加载,请稍等...',
 		columns : [ [
-					{
-					field : 'id',
-					title : 'ID',
-					checkbox : true,
-					align : 'center',
-					width : 120
-					},
-					{
+	
+													{
 														field : 'dwmc',
 														title : '单位名称',
 														align : 'center',
@@ -177,7 +171,7 @@ $(document).ready(function(){
 </head>
 <body class="easyui-layout">
 
-	<div>
+	<div  class="searchdiv">
 			<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>单位名称:</span> <input id="itemid"
 					style="line-height:26px;border:1px solid #ccc"> <span>

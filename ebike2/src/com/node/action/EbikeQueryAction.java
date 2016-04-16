@@ -7,12 +7,19 @@
  */
 package com.node.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +32,7 @@ import com.node.model.PicPath;
 import com.node.service.IApplyService;
 import com.node.service.ICompanyService;
 import com.node.service.IEbikeService;
+import com.node.util.ExcelUtil;
 import com.node.util.Page;
 import com.node.util.ServiceUtil;
 import com.node.util.SystemConstants;
@@ -179,5 +187,49 @@ public class EbikeQueryAction {
 			return null;
 		}
 
+	}
+
+	/**
+	 * 
+	 * 方法描述：导出excel
+	 * 
+	 * @param titleArr
+	 *            标头中文列名
+	 * @param keysArr
+	 *            列名的英文(对应表中的字段)
+	 * @param content
+	 *            需要导出的数据内容
+	 * @version: 1.0
+	 * @author: Daniel Zou
+	 * @version: 2016年4月14日 下午2:00:31
+	 */
+	@RequestMapping("/exportExcel")
+	public String exportExcel(String content, String[] titleArr,
+			String[] keysArr, String fileName, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		JSONArray jsonArray = JSONArray.fromObject(content);
+		// 创建一个webbook，对应一个Excel文件
+		HSSFWorkbook wb = ExcelUtil.getWorkBook(titleArr, keysArr, jsonArray,
+				fileName);
+		response.setContentType("application/vnd.ms-excel;");
+		fileName = fileName + ".xls";
+		fileName = new String(fileName.getBytes(), "iso8859-1");
+		response.setHeader("content-disposition", "attachment; filename="
+				+ fileName); // 设定输出文件头
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		wb.write(baos);
+		ServletOutputStream out = response.getOutputStream();
+		byte[] b = new byte[1024];
+		int length;
+		InputStream is = new ByteArrayInputStream(baos.toByteArray());
+		while ((length = is.read(b)) > 0) {
+			out.write(b, 0, length);
+		}
+		try {
+			out.flush();
+		} finally {
+			out.close();
+		}
+		return null;
 	}
 }

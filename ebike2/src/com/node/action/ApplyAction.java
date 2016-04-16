@@ -687,12 +687,12 @@ public class ApplyAction {
 				+ request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath() + "/";
 		String filepath = filename + ".xls";
-		String filepath2 = filename + ".xls";
-		String cpath = basePath2 + "/static/downexcel/" + filepath2;
+		// String filepath2 = filename + ".xls";
+		String cpath = basePath2 + "static/downexcel/" + filepath;
 		try {
 			// 写入excel
 			String path = basePath + "/" + filepath;
-			// String path = "C://sblslist.xls";
+			System.out.println("path = " + path);
 			File fileWrite = new File(path);
 			WritableWorkbook wwb = null;
 			fileWrite.createNewFile();

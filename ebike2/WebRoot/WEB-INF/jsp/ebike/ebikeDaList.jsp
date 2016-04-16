@@ -42,12 +42,6 @@ $(document).ready(function(){
 		 height:h, 
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
-			field : 'ID',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'DWMC',
 			title : '单位名称',
 			align:'center',
@@ -78,18 +72,6 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
-			field : 'GDYJ',
-			title : '归档意见',
-			align:'center',
-			width : 120,
-			formatter:function(value,index){
-				if(value == 0){
-					return '办结';
-				}else{
-					return '退办'
-				}
-			}
-		},{
 			field : 'ZT',
 			title : '车辆状态',
 			align:'center',
@@ -116,14 +98,14 @@ $(document).ready(function(){
 		}
 
 		] ],
-		/* toolbar : [ {
+		toolbar : [ {
 			id : 'btn1',
 			text : '导出',
-			iconCls : 'icon-redo',
+			iconCls : 'icon-print',
 			handler : function() {
-				expt(grid);
+				excelExport();
 			}
-		}], */
+		}],
 		onLoadSuccess:function(){  
             $('#dg').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题  
         }
@@ -259,7 +241,18 @@ function CheckFileSize(obj){
 }
 
 
+function excelExport(){
+	var titleArr = ["单位名称","档案编号","车牌号","电机号","驾驶人1","行驶区域","车辆状态"]; 
+	var keysArr =["DWMC","DABH","CPHM","DJH","JSRXM1","XSQY","ZT"];
+	var rows = $('#dg').datagrid('getData').rows;
+	
+	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
+	var fileName="电动车档案信息";
+	var content = JSON.stringify(rows);
+	commonExcelExport(titleArr,keysArr,content,actionUrl,fileName); 
+	
 
+}
 </script>
 </head>
 <body  class="easyui-layout">

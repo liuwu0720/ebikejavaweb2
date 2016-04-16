@@ -76,6 +76,8 @@ public class SystemConstants {
 	 */
 	public static final String ROLE_SSDW = "2";
 
+	public static final String ROLE_ADMIN = "3";
+
 	/**
 	 * 0 禁用 1 启用
 	 */
@@ -128,6 +130,10 @@ public class SystemConstants {
 	 * 发票最大高度
 	 */
 	public static final int IMG_INVOICE_HEIGHT = 400;
+	/**
+	 * 测试帐号
+	 */
+	public static final String TEST_USER = "cs";
 
 	public static void main(String[] args) {
 		String codeString = "13366665555";

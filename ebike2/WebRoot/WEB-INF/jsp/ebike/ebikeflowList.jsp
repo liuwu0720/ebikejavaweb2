@@ -39,13 +39,15 @@ $(document).ready(function(){
 		height:h,
 		width:w,
 		loadMsg:'正在加载,请稍等...',
+		toolbar : [ {
+			id : 'btn1',
+			text : '导出',
+			iconCls : 'icon-print',
+			handler : function() {
+				excelExport();
+			}
+		}],
 		columns : [ [{
-			field : 'ID',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'DWMC',
 			title : '单位名称',
 			align:'center',
@@ -143,15 +145,33 @@ function queryRow(id){
 	
 }
 
+function excelExport(){
+	var titleArr = ["单位名称","流水号","车牌号","电机号","业务类型","行驶区域","意见","申请时间"]; 
+	var keysArr =["DWMC","LSH","CPHM","DJH","YWLX","SSQY","SLYJ","SLRQ"];
+	var rows = $('#dg').datagrid('getData').rows;
+	for(var i in rows) {
+		if(rows[i]['SLYJ'] == 0){
+			rows[i]['SLYJ'] = "办结";
+		}else{
+			rows[i]['SLYJ'] = "退办";
+		}
+		rows[i]['SLRQ'] = getLocalTime(rows[i]['SLRQ']);
+	}
+	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
+	var fileName="业务流水信息";
+	var content = JSON.stringify(rows);
+	commonExcelExport(titleArr,keysArr,content,actionUrl,fileName); 
+	
 
+}
 
 </script>
 </head>
 <body class="easyui-layout">
 
-	<div>
+			<div class="searchdiv"> 
 		
-			<div id="tb" style="padding: 5px; background: #E8F1FF;">
+			<div id="tb" >
 				<span>业务类型</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="ywlx">
 					<option value="">--请选择--</option>

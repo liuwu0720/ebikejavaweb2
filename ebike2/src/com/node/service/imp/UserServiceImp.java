@@ -9,6 +9,7 @@ package com.node.service.imp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.node.dao.IDdcHyxhBaseDao;
 import com.node.dao.IDdcHyxhSsdwDao;
+import com.node.dao.IFileRecordDao;
 import com.node.dao.IHyxhMenuDao;
 import com.node.dao.IRoleMenuDao;
 import com.node.model.DdcHyxhBase;
@@ -25,6 +27,7 @@ import com.node.model.DdcHyxhSsdw;
 import com.node.model.HyxhMenu;
 import com.node.model.RoleMenu;
 import com.node.service.IUserService;
+import com.node.util.HqlHelper;
 import com.node.util.SystemConstants;
 
 /**
@@ -47,6 +50,9 @@ public class UserServiceImp implements IUserService {
 
 	@Autowired
 	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
+
+	@Autowired
+	IFileRecordDao iFileRecordDao;
 
 	/*
 	 * (non-Javadoc)
@@ -79,9 +85,26 @@ public class UserServiceImp implements IUserService {
 			DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 					.getAttribute(SystemConstants.SESSION_USER);
 
-			if (ddcHyxhBase != null) {
+			if (ddcHyxhBase != null
+					&& !ddcHyxhBase.getHyxhzh().equals(
+							SystemConstants.TEST_USER)) {
 				RoleMenu roleMenu = iRoleMenuDao.findByProperty("role",
 						Integer.parseInt(SystemConstants.ROLE_HYXH)).get(0);
+				String[] roleArray = roleMenu.getMenu().split(",");
+				List<HyxhMenu> hyxhMenus = new ArrayList<HyxhMenu>();
+				for (String role : roleArray) {
+					HyxhMenu hyxhMenu = iHyxhMenuDao
+							.get(Integer.parseInt(role));
+					if (hyxhMenu != null) {
+						hyxhMenus.add(hyxhMenu);
+					}
+
+				}
+
+				return hyxhMenus;
+			} else {
+				RoleMenu roleMenu = iRoleMenuDao.findByProperty("role",
+						Integer.parseInt(SystemConstants.ROLE_ADMIN)).get(0);
 				String[] roleArray = roleMenu.getMenu().split(",");
 				List<HyxhMenu> hyxhMenus = new ArrayList<HyxhMenu>();
 				for (String role : roleArray) {
@@ -109,7 +132,6 @@ public class UserServiceImp implements IUserService {
 
 			return hyxhMenus;
 		}
-		return null;
 
 	}
 
@@ -160,5 +182,18 @@ public class UserServiceImp implements IUserService {
 		} else {
 			return ddcHyxhSsdws.get(0);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IUserService#queryFileRecordByHql(com.node.util.HqlHelper
+	 * )
+	 */
+	@Override
+	public Map<String, Object> queryFileRecordByHql(HqlHelper hql) {
+		// TODO Auto-generated method stub
+		return iFileRecordDao.findAllByHqlHelp(hql);
 	}
 }

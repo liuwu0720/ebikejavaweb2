@@ -1,12 +1,14 @@
 package com.node.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.HyxhMenu;
+import com.node.util.HqlHelper;
 
 public interface IUserService {
 
@@ -72,5 +74,16 @@ public interface IUserService {
 	 * @version: 2016年4月8日 下午2:24:06
 	 */
 	DdcHyxhSsdw getSsdwByUserCode(String cuser);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param hql
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月14日 下午4:57:34
+	 */
+	Map<String, Object> queryFileRecordByHql(HqlHelper hql);
 
 }

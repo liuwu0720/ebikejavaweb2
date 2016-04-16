@@ -120,7 +120,6 @@ html,body {
 														<select id="role">
 															<option value="1">行业协会</option>
 															<option value="2">所属单位</option>
-															<option value="3">管理员</option>
 														</select>
 													</td>
 												</tr>

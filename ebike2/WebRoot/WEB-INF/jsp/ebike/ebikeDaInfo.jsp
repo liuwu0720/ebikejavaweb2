@@ -38,7 +38,7 @@ $(document).ready(function(){
 })
 
 function exportPage() {
-	$("#table1").css('width', '650px');
+	$("#main").css('width', '650px');
 	var bdhtml=window.document.body.innerHTML;
 	var startStr="<!--startprint-->";//设置打印开始区域 
 	var endStr="<!--endprint-->";//设置打印结束区域 

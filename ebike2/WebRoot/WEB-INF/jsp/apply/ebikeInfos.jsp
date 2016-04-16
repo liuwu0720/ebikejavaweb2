@@ -36,8 +36,8 @@ $(document).ready(function(){
 		rownumbers : true,
 		pageSize:size,
 		//singleSelect : true,//只选中单行
-		height:h,
-		width:w,
+		 width:w,
+		 height:h,
 		loadMsg:'正在加载,请稍等...',
 		rowStyler: function(index,row){
 			if (row.SLYJ ==1){
@@ -48,8 +48,7 @@ $(document).ready(function(){
 			field : 'ID',
 			title : 'ID',
 			checkbox : true,
-			align:'center',
-			width : 120
+			width : 50
 		},{
 			field : 'LSH',
 			title : '流水号',
@@ -146,9 +145,9 @@ $(document).ready(function(){
 		},{
 			id : 'btn3',
 			text : '导出',
-			iconCls : 'icon-redo',
+			iconCls : 'icon-print',
 			handler : function() {
-				exportRowData();
+				excelExport();
 			}
 		}],
 		onLoadSuccess:function(){  
@@ -286,7 +285,7 @@ function changeRowData(){
 	var selected = $('#dg').datagrid('getSelections');
 	var array = [];
 	for(var i in selected){
-		array.push(selected[i].id);
+		array.push(selected[i].ID);
 	}
 	if(selected.length == 0){
 		alert("请至少选择一条数据");
@@ -329,35 +328,30 @@ function CheckFileSize(obj){
          }
 	 }     
 }
-
-function exportRowData(){
-	var selected = $('#dg').datagrid('getSelections');
-	var array = [];
-	for(var i in selected){
-		array.push(selected[i].id);
+function excelExport(){
+	var titleArr = ["流水号","品牌型号","车身颜色","电机号","驾驶人1","行驶区域","申报单位","申请时间","审批状态"]; 
+	var keysArr =["LSH","PPXH","CSYSNAME","DJH","JSRXM1","XSQYNAME","SSDWNAME","SQRQ","SLYJ"];
+	var rows = $('#dg').datagrid('getData').rows;
+	for(var i in rows) {
+		if(rows[i]['SLYJ'] == null){
+			if(rows[i]['SL_INDEX']  == 0){
+				rows[i]['SLYJ']= "等待协会审批";
+			}else{
+				rows[i]['SLYJ']=  "等待交警审批";
+			}
+		}else if(rows[i]['SLYJ'] == 0){
+			rows[i]['SLYJ']=  "已审核(同意) ";
+		}else if(rows[i]['SLYJ'] == 1){
+			rows[i]['SLYJ']=  "已审核(拒绝) ";
+		}
+		rows[i]['SQRQ'] = getLocalTime(rows[i]['SQRQ']);
 	}
-	if(selected.length == 0){
-		alert("请至少选择一条数据");
-	}else{
-		$.ajax({
-			type:'post',							
-			url: "<%=basePath%>applyAction/exportExcel",
-			dataType: 'html',
-			data:{"array[]":array}, 
-			success:function(data){																	
-				if(data=='2'){
-					alert('下载失败!');
-				}else{
-					//var path = ""+data;
-					//var path = data;
-					//alert(data);
-					//$("#downhelpid").attr("href",path);
-					window.location = data;
-				}
-			}						
-		});
+	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
+	var fileName="电动车备案申报列表";
+	var content = JSON.stringify(rows);
+	commonExcelExport(titleArr,keysArr,content,actionUrl,fileName); 
 	
-	}
+
 }
 
 
@@ -406,8 +400,8 @@ function queryHyxhDwDetail(obj){
 </head>
 <body class="easyui-layout">
 
-	<div>
-		<div id="tb" style="padding: 5px; background: #E8F1FF;">
+	<div  >
+		<div id="tb" class="searchdiv">
 				<span>申报时间：</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>				
@@ -425,254 +419,20 @@ function queryHyxhDwDetail(obj){
 				<span>驾驶人1</span>	
 				<input id="jsrxm1" style="height:30px;" >	
 				<span>公司名称:</span>
-				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;	
+				 <input id="ssdw" style="height: 32px;">
 				 <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>
 		<table id="dg" style="width:90%;">
 		</table>
 	</div>
-	<!-- 点新增，编辑时弹出的表单 -->
-	<div id="dgformDiv" class="easyui-dialog"
-		style="width:850px;height:550px;padding:10px 20px 20px 20px;"
-		closed="true">
-		<form id="dgform" class="easyui-form" enctype="multipart/form-data"
-			method="post">
-			<table class="table">
-				<tr style="display: none">
-					<td>id</td>
-					<td><input class="easyui-validatebox" type="text" name="id"></input>
-					</td>
-				</tr>
-				<tr>
-					<td>申报单位：</td>
-					<td><input id="dw" name="ssdwId" style="height:30px;width: 200px;"><span id="pe" style="color: red;display: none"></span></td>
-					<td>车身照片</td>
-					<td><input  type="file" id="file_upload"
-						name="file_upload" /><br /></td>
-				</tr>
-				<tr>
-					<td>品牌型号</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="ppxh"
-						style="height: 32px;"></input></td>
-					<td>车身颜色</td>
-					<td><input id="cysy" name="cysy"data-options="required:true" style="height:30px;"></td>
-				</tr>
-				<tr>
-					<td>电机号：</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="djh" style="height: 32px"></input>
-					</td>
-					<td>脚踏装置:</td>
-					<td><select id="jtzz" class="easyui-combobox" name="jtzz"
-						style="height:32px;width: 50px;">
-							<option value="0">有</option>
-							<option value="1">无</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>驾驶人姓名1</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="jsrxm1" style="height: 32px"></td>
-
-					<td>驾驶人姓名2</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:false" name="jsrxm2" style="height: 32px"></td>
-				</tr>
-				<tr>
-					<td>驾驶人性别1</td>
-					<td><select id="xb1" class="easyui-combobox" name="xb1" required="true"  
-						style="height:32px;width: 100px;">
-						    <option value="-1">--请选择--</option>
-							<option value="0">男</option>
-							<option value="1">女</option>
-					</select></td>
-					<td>驾驶人性别2</td>
-					<td><select id="xb2" class="easyui-combobox" name="xb2" required="false"  
-						style="height:32px;width: 100px;">
-						    <option value="-1">--请选择--</option>
-							<option value="0">男</option>
-							<option value="1">女</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>身份证号码1</td>
-					<td><input class="easyui-validatebox" type="text" id="sfzmhm1"
-						data-options="required:true,validType:'idcard'" name="sfzmhm1" style="height: 32px">
-					</td>
-					<td>身份证号码2</td>
-					<td><input class="easyui-validatebox" type="text"  validType="notequals['#sfzmhm1']" 
-					  name="sfzmhm2" style="height: 32px">
-					</td>
-				</tr>
-				<tr>
-					<td>联系电话1</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true,validType:'phoneNum'" name="lxdh1" style="height: 32px">
-					</td>
-					<td>联系电话2</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:false,validType:'phoneNum'" name="lxdh2" style="height: 32px">
-					</td>
-				</tr>
-				<tr>
-					<td>驾驶人照片1</td>
-					<td><input  type="file" 
-						name="file_upload1" onchange="CheckFileSize(this);" /><br /></td>
-					<td>驾驶人照片2</td>
-					<td><input  type="file" id="file_upload2"
-						name="file_upload2" /><br /></td>
-				</tr>
-				<tr>
-					<td>行驶区域</td>
-					<td><input id="xsqy" name="xsqy" style="height:30px;" required="true"  ></td>
-					<td>备注</td>
-					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
-				</tr>
-				<tr id="file_tr1">
-					<td colspan="2"><div  class="imgdiv"><p>驾驶人1</p><img id="img1" /></div></td>
-					<td colspan="2"><div  class="imgdiv"><p>驾驶人2</p><img id="img2"/></div></td>
-
-				</tr>
-				<tr id="file_tr2">
-					<td>车身照片</td>
-					<td colspan="3"><div  class="imgdiv"><img id="img"  /></div></td>
-				</tr>
-			</table>
-			<input class="easyui-validatebox" type="hidden" name="vcEbikeImg"
-				style="height: 32px">
-				<input class="easyui-validatebox" type="hidden" name="vcUser1Img"
-				style="height: 32px">
-				<input class="easyui-validatebox" type="hidden" name="vcUser2Img"
-				style="height: 32px">
-			<input class="easyui-validatebox" type="hidden" name="lsh"
-				style="height: 32px">
-		</form>
-		<div class="table-btndiv">
-			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
-				iconCls="icon-ok" onclick="updateSaveData()" style="width:90px">保存</a>
-			<a href="javascript:void(0)" class="easyui-linkbutton"
-				iconCls="icon-cancel"
-				onclick="javascript:$('#dgformDiv').dialog('close')"
-				style="width:90px">取消</a>
-		</div>
-	</div>
-
-	<!-- 点查看时弹出的表单 -->
-	<div id="dgformDiv2" class="easyui-dialog"
-		style="width:850px;height:550px;padding:10px 20px 20px 20px;"
-		closed="true" buttons="#dlg-buttons2">
-		<form id="dgform2" class="easyui-form" enctype="multipart/form-data"
-			method="post">
-			<table class="table">
-				<tr style="display: none">
-					<td>id</td>
-					<td><input class="easyui-validatebox" type="text" name="id"></input>
-					</td>
-				</tr>
-				<tr>
-					<td>申报单位：</td>
-					<td colspan="3"><input  name="ssdwName" class="easyui-validatebox" type="text" style="height:30px;" readonly="readonly"></td>					
-				</tr>
-				<tr>
-					<td>品牌型号</td>
-					<td><input class="easyui-validatebox" type="text" readonly="readonly"
-						data-options="required:true" name="ppxh"
-						style="height: 32px;"></input></td>
-					<td>车身颜色</td>
-					<td><input  name="cysyName" type="text" style="height:30px;" readonly="readonly"></td>
-				</tr>
-				<tr>
-					<td>电机号：</td>
-					<td><input class="easyui-validatebox" type="text"
-						 name="djh" style="height: 32px" readonly="readonly"></input>
-					</td>
-					<td>脚踏装置:</td>
-					<td><select class="easyui-combobox" name="jtzz"  readonly="readonly"
-						style="height:32px;width: 50px;">
-							<option value="0">有</option>
-							<option value="1">无</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>驾驶人姓名1</td>
-					<td><input class="easyui-validatebox" type="text"  readonly="readonly"
-					       name="jsrxm1" style="height: 32px"></td>
-
-					<td>驾驶人姓名2</td>
-					<td><input class="easyui-validatebox" type="text"  readonly="readonly"
-						 name="jsrxm2" style="height: 32px"></td>
-				</tr>
-				<tr>
-					<td>驾驶人性别1</td>
-					<td><select  class="easyui-combobox" name="xb1"   readonly="readonly"
-						style="height:32px;width: 100px;">
-							 <option value="-1">--请选择--</option>
-							<option value="0">男</option>
-							<option value="1">女</option>
-					</select></td>
-
-					<td>驾驶人性别2</td>
-					<td><select id="xb2" class="easyui-combobox" name="xb2"    readonly="readonly"
-						style="height:32px;width: 100px;">
-						 <option value="-1">--请选择--</option>
-							<option value="0">男</option>
-							<option value="1">女</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>身份证号码1</td>
-					<td><input class="easyui-validatebox" type="text" id="sfzmhm1"  readonly="readonly"
-						 name="sfzmhm1" style="height: 32px">
-					</td>
-					<td>身份证号码2</td>
-					<td><input class="easyui-validatebox" type="text"  readonly="readonly" 
-					  name="sfzmhm2" style="height: 32px">
-					</td>
-				</tr>
-				<tr>
-					<td>联系电话1</td>
-					<td><input class="easyui-validatebox" type="text"  readonly="readonly"
-						 name="lxdh1" style="height: 32px">
-					</td>
-					<td>联系电话2</td>
-					<td><input class="easyui-validatebox" type="text"  readonly="readonly"
-						 name="lxdh2" style="height: 32px">
-					</td>
-				</tr>
-				<tr>
-					<td>行驶区域</td>
-					<td><input id="xsqy" name="xsqyName" style="height:30px;"  readonly="readonly" ></td>
-					<td>备注</td>
-					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-					<div  class="imgdiv">
-					<p>驾驶人1</p><img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"
-						/></div>
-					</td>
-					<td colspan="2">
-					<div  class="imgdiv">
-					<p>驾驶人2</p><img id="img2_2" src="<%=basePath%>static/images/iconfont-wu.png" /></div></td>
-
-				</tr>
-				<tr>
-					<td>车身照片</td>
-					<td colspan="3"><div  class="imgdiv">
-					<img id="img_0"  src="<%=basePath%>static/images/iconfont-wu.png" /></div></td>
-				</tr>
-			</table>
-		</form>
-	
-	</div>
+		
 	
 	<!-- 单位信息详情的表单 -->
 	<div id="dwinfoDiv" class="easyui-dialog"
-		style="width:550px;height:450px;padding:10px 20px 20px 20px;" closed="true" >
+		style="width:500px;height:400px;padding:10px 20px 20px 20px;" closed="true" >
 		<form id="dwform" class="easyui-form" method="post">
-			<table class="table input_border0">
+			<table class="dialogtable">
 				
 				<tr>
 					<td>单位名称：</td>

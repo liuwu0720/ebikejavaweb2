@@ -39,12 +39,6 @@ $(document).ready(function(){
 		width:w,
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
-			field : 'ID',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'DWMC',
 			title : '单位名称',
 			align:'center',

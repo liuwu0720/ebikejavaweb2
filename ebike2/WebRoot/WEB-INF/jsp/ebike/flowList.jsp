@@ -40,12 +40,6 @@ $(document).ready(function(){
 		width:w,
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
-			field : 'ID',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'DWMC',
 			title : '单位名称',
 			align:'center',
@@ -156,8 +150,8 @@ function queryRow(id){
 </head>
 <body class="easyui-layout">
 
-	<div>
-		<div id="tb" style="padding: 5px; background: #E8F1FF;">
+	<div class="searchdiv">
+		<div>
 				<span>业务类型</span>
 				<select class="easyui-combobox" style="width:100px;height:32px; " id="ywlx">
 					<option value="">--请选择--</option>

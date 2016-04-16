@@ -7,7 +7,11 @@
  */
 package com.node.service;
 
+import java.util.List;
 import java.util.Map;
+
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableSheet;
 
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
@@ -141,5 +145,44 @@ public interface IEbikeService {
 	 * @version: 2016年4月13日 下午8:04:05
 	 */
 	void updateDdcHyxhSsdw(DdcHyxhSsdw ddcHyxhSsdw);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param string
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月14日 下午5:30:53
+	 */
+	List<DdcDaxxb> findDdcDaxxbsByFlag(String flag);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param wcfFC
+	 * @param wcfFC2
+	 * @param ws
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月14日 下午7:13:28
+	 * @throws Exception
+	 */
+	void createDaxxbExcel(WritableCellFormat wcfFC, WritableCellFormat wcfFC2,
+			WritableSheet ws) throws Exception;
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param wcfFC
+	 * @param wcfFC2
+	 * @param ws2
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月14日 下午7:23:08
+	 * @throws Exception
+	 */
+	void createApproveUsers(WritableCellFormat wcfFC,
+			WritableCellFormat wcfFC2, WritableSheet ws2) throws Exception;
 
 }

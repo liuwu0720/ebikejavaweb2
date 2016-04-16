@@ -95,7 +95,7 @@ function updateSaveData(){
   <body>
     <div  class="maindiv">
     
-    	<table id="table1" class="table table-condensed">
+    	<table id="main" class="table table-condensed">
 				<tr style="display: none">
 					<td>id</td>
 					<td><input class="easyui-validatebox" type="text" name="id"></input>

@@ -39,6 +39,14 @@ $(document).ready(function(){
 		height:h,
 		width:w,
 		loadMsg:'正在加载,请稍等...',
+		toolbar : [ {
+			id : 'btn1',
+			text : '导出',
+			iconCls : 'icon-print',
+			handler : function() {
+				excelExport();
+			}
+		}],
 		columns : [ [{
 			field : 'SSDWNAME',
 			title : '单位名称',
@@ -108,7 +116,7 @@ $(document).ready(function(){
 			width : 80,
 			formatter:function(value,index){
 				var unixTimestamp = new Date(value);   
-				return unixTimestamp.toLocaleDateString();
+				return unixTimestamp.toLocaleString();
 			}   
 		},{
 			field : 'null',
@@ -150,7 +158,27 @@ $(document).ready(function(){
 	})
 });
 
+function excelExport(){
+	var titleArr = ["单位名称","档案编号","车牌号","电机号","品牌型号","驾驶人1","行驶区域","审批状态","业务类型","申请日期"]; 
+	var keysArr =["SSDWNAME","DABH","CPHM","DJH","PPXH","JSRXM1","XSQYNAME","SLYJ","YWLXNAME","SLRQ"];
+	var rows = $('#dg').datagrid('getData').rows;
+	for(var i in rows) {
+		if(rows[i]['SLYJ'] == null){
+			rows[i]['SLYJ']=  "等待协会审批";
+		}else if(rows[i]['SLYJ'] == 0){
+			rows[i]['SLYJ']=  "已审核(同意) ";
+		}else if(rows[i]['SLYJ'] == 1){
+			rows[i]['SLYJ']=  "已审核(拒绝) ";
+		}
+		rows[i]['SLRQ'] = getLocalTime(rows[i]['SLRQ']);
+	}
+	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
+	var fileName="电动车变更信息";
+	var content = JSON.stringify(rows);
+	commonExcelExport(titleArr,keysArr,content,actionUrl,fileName); 
+	
 
+}
 //查询功能
 function doSearch(){
 	 $('#dg').datagrid('load',{
@@ -184,38 +212,6 @@ function queryRow(id){
 	});
 	window.location.href="<%=basePath%>ebikeWaterAction/queryInfoById?id="+id
 	
-	<%-- $.ajax({
-		type: "GET",
-   	    url: "<%=basePath%>ebikeChangeAction/queryInfoById",
-   	   data:{
-		  id:id
-	   }, 
-	   dataType: "json",
-	   success:function(data){
- 			 
- 			  if(data){
- 				 $('#dgformDiv2').dialog('open').dialog('setTitle', '详情信息');
- 				$('#dgform2').form('clear');
- 				 $('#dgform2').form('load', data);
- 				
- 				if(data.vcShowEbikeImg == null){
-					 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-				}else{
-					$("#img_0").attr("src",data.vcShowEbikeImg);
-				}
-				if(data.vcShowUser2Img == null){
-					 $("#img2_2").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-				}else{
-					$("#img2_2").attr("src",data.vcShowUser2Img);
-				}
-				if(data.vcShowUser1Img == null){
-					 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
-				}else{
-					$("#img1_1").attr("src",data.vcShowUser1Img);
-				}
- 			  }
- 		  }
-	}) --%>
 }
 
 //查看单位详情
@@ -244,7 +240,7 @@ function queryHyxhDwDetail(obj){
 
 	<div class="searchdiv">
 		
-			<div id="tb" style="padding: 5px; background: #E8F1FF;">
+			<div id="tb" >
 				<span>档案编号</span>
 				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
 				<span>电机号</span> <input id="djh" name="djh"
@@ -279,9 +275,9 @@ function queryHyxhDwDetail(obj){
 	
 	 <!-- 单位信息详情 -->
 	<div id="dwformDiv" class="easyui-dialog"
-		style="width:650px;height:450px;padding:10px 20px 20px 20px;" closed="true">
+		style="width:500px;height:400px;padding:10px 20px 20px 20px;" closed="true">
 		<form id="dwform" class="easyui-form">
-			<table class="table input_border0" id="table2">
+			<table class="dialogtable" id="table2">
 				<tr>
 					<th>单位名称</th>
 					<td><input  name=dwmc type="text" class="easyui-validatebox" style="height: 32px;width:100%;" readonly="readonly"></td>

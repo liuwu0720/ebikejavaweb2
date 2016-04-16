@@ -85,7 +85,8 @@ public class UserAction {
 		 * if (!code.equalsIgnoreCase(ccode)) { AjaxUtil.rendJson(response,
 		 * false, "验证码不正确"); return; }
 		 */
-		if (role.equals(SystemConstants.ROLE_HYXH)) {
+		if (role.equals(SystemConstants.ROLE_HYXH)
+				|| role.equals(SystemConstants.ROLE_ADMIN)) {
 			DdcHyxhBase ddcHyxhBase = iUserService.getByUserAccount(cuser);
 			if (ddcHyxhBase == null
 					|| !ddcHyxhBase.getHyxhmm().equals(cpassword)) {

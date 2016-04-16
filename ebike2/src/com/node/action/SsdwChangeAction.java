@@ -474,7 +474,7 @@ public class SsdwChangeAction {
 		Object object = iApplyService.getDateBySQL(sql);
 		String seq = object.toString();
 		String md = new SimpleDateFormat("yyMMdd").format(new Date());
-		String lsh = ywlxType + md + seq;// 生成流水表流水号
+		String lsh = ywlxType + md + seq + "_1";// 生成流水表流水号
 		ddcFlow.setLsh(lsh);
 		ddcFlow.setYwlx(ywlxType);// A-备案 B-变更 C-转移 D-注销 E-检查
 		ddcFlow.setSlrq(new Date());
