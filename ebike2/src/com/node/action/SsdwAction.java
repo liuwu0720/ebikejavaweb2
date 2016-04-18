@@ -290,6 +290,8 @@ public class SsdwAction {
 				saveLog(ddcHyxhSsdwclsb, "修改", request);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
+			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+			ddcHyxhSsdw.setTranDate(new Date());
 			iCompanyService.update(ddcHyxhSsdw);
 			AjaxUtil.rendJson(response, true, "操作成功");
 		} catch (Exception e) {
@@ -499,7 +501,7 @@ public class SsdwAction {
 			ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
 			ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
 			ddcApproveUser.setApproveTime(new Date());
-			ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+			// ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
 			try {
 				iCompanyService.update(ddcHyxhSsdw);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
@@ -510,10 +512,18 @@ public class SsdwAction {
 				AjaxUtil.rendJson(response, false, "审批失败!系统错误");
 			}
 		} else if (state.equals("0")) {
-			// 同意，审批顺序改变
+			// 同意，审批顺序改变,同步至内网
 			ddcHyxhSsdwclsb.setSlIndex(1);
+			ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+			ddcHyxhSsdwclsb.setTranDate(new Date());
 			// 审批人
 			DdcApproveUser ddcApproveUser = new DdcApproveUser();
+			String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
+			Object object = iApplyService.getDateBySQL(sql);
+			String seq = object.toString();
+			String md = new SimpleDateFormat("yyMMdd").format(new Date());
+			String approveNo = "W" + md + seq;// 生成审批号
+			ddcApproveUser.setApproveNo(approveNo);
 			ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
 			ddcApproveUser.setUserRoleName("行业协会");
 			ddcApproveUser.setApproveIndex(1);

@@ -211,11 +211,14 @@ public class CompanyAction {
 			if (message.equals("success")) {
 				try {
 					ddcHyxhSsdw.setTotalPe(ddcHyxhSsdw.getDwpe());
+					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+					ddcHyxhSsdw.setTranDate(new Date());
 					iCompanyService.save(ddcHyxhSsdw);
 					// 保存操作日志
 					saveLog(ddcHyxhSsdw, "新增", request);
-
-					iUserService.save(ddcHyxhBase);
+					ddcHyxhBase.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+					ddcHyxhBase.setTranDate(new Date());
+					iUserService.update(ddcHyxhBase);
 					AjaxUtil.rendJson(response, true, "操作成功");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -238,7 +241,11 @@ public class CompanyAction {
 							- beforeDdcHyxhSsdw.getDwpe();
 					ddcHyxhBase
 							.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe() - minus);
+					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+					ddcHyxhSsdw.setTranDate(new Date());
 					iCompanyService.update(ddcHyxhSsdw);
+					ddcHyxhBase.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+					ddcHyxhBase.setTranDate(new Date());
 					iUserService.update(ddcHyxhBase);
 					// 保存操作日志
 					saveLog(ddcHyxhSsdw, "修改", request);
@@ -338,7 +345,7 @@ public class CompanyAction {
 
 	/**
 	 * 
-	 * 方法描述：同步
+	 * 方法描述：批量审核
 	 * 
 	 * @param list
 	 * @param request
@@ -360,6 +367,7 @@ public class CompanyAction {
 					ddcHyxhSsdw.setShFlag(Integer
 							.parseInt(SystemConstants.ENABLE_ZT));
 					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);// 同步标志
+					ddcHyxhSsdw.setTranDate(new Date());
 				}
 				iCompanyService.update(ddcHyxhSsdw);
 			}
@@ -458,7 +466,7 @@ public class CompanyAction {
 			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(dId);
 			ddcHyxhSsdw.setPassWord("123456");
 			ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
-			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+			// ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 			iCompanyService.update(ddcHyxhSsdw);
 			AjaxUtil.rendJson(response, true, "密码重置成功！");
 		} catch (Exception e) {

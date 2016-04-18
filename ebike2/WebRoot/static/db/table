@@ -1,0 +1,2342 @@
+-- Create table
+drop table DDC_APPROVE_USER;
+create table DDC_APPROVE_USER
+(
+  id              NUMBER not null,
+  user_name       VARCHAR2(50),
+  user_orgname    VARCHAR2(50),
+  user_role_name  VARCHAR2(200),
+  approve_index   NUMBER,
+  approve_note    VARCHAR2(500),
+  approve_table   VARCHAR2(100),
+  approve_tableid NUMBER,
+  approve_time    DATE,
+  approve_state   NUMBER,
+  lsh             VARCHAR2(100),
+  syn_flag        VARCHAR2(10),
+  tran_date       DATE,
+  approve_no      VARCHAR2(100)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_APPROVE_USER
+  is '审批人意见表';
+-- Add comments to the columns 
+comment on column DDC_APPROVE_USER.id
+  is '主键';
+comment on column DDC_APPROVE_USER.user_name
+  is '用户姓名';
+comment on column DDC_APPROVE_USER.user_orgname
+  is '用户部门';
+comment on column DDC_APPROVE_USER.user_role_name
+  is '用户角色';
+comment on column DDC_APPROVE_USER.approve_index
+  is '用户审批顺序';
+comment on column DDC_APPROVE_USER.approve_note
+  is '用户审批备注';
+comment on column DDC_APPROVE_USER.approve_table
+  is '审批表名';
+comment on column DDC_APPROVE_USER.approve_tableid
+  is '审批表名ID';
+comment on column DDC_APPROVE_USER.approve_time
+  is '审批时间';
+comment on column DDC_APPROVE_USER.approve_state
+  is '审批意见 0-同意 1-拒绝';
+comment on column DDC_APPROVE_USER.lsh
+  is '流水号';
+comment on column DDC_APPROVE_USER.syn_flag
+  is '同步标志';
+comment on column DDC_APPROVE_USER.tran_date
+  is '传送时间';
+comment on column DDC_APPROVE_USER.approve_no
+  is '审批编号(唯一)';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_APPROVE_USER
+  add constraint PK_DDC_APPROVE_USER primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create table
+drop table DDC_DAXXB;
+create table DDC_DAXXB
+(
+  id                NUMBER not null,
+  dabh              VARCHAR2(50) not null,
+  ywlx              VARCHAR2(20),
+  ywyy              VARCHAR2(20),
+  hyxhzh            VARCHAR2(20),
+  ssdwid            VARCHAR2(500),
+  cphm              VARCHAR2(50),
+  ppxh              VARCHAR2(50),
+  cysy              VARCHAR2(20),
+  djh               VARCHAR2(50),
+  jtzz              VARCHAR2(20),
+  jsrxm1            VARCHAR2(20),
+  xb1               VARCHAR2(20),
+  sfzmhm1           VARCHAR2(20),
+  lxdh1             VARCHAR2(20),
+  jsrxm2            VARCHAR2(20),
+  xb2               VARCHAR2(20),
+  sfzmhm2           VARCHAR2(20),
+  lxdh2             VARCHAR2(20),
+  jsrxm3            VARCHAR2(20),
+  xb3               VARCHAR2(20),
+  sfzmhm3           VARCHAR2(20),
+  lxdh3             VARCHAR2(20),
+  xsqy              VARCHAR2(20),
+  bz                VARCHAR2(200),
+  zt                VARCHAR2(10),
+  syrq              DATE,
+  slzl              VARCHAR2(100),
+  slyj              VARCHAR2(20),
+  slbz              VARCHAR2(100),
+  slr               VARCHAR2(20),
+  slrq              DATE,
+  slbm              VARCHAR2(20),
+  gdyj              VARCHAR2(20),
+  tbyy              CHAR(10),
+  gdbz              VARCHAR2(100),
+  gdr               VARCHAR2(20),
+  gdrq              DATE,
+  gdbm              VARCHAR2(20),
+  syn_flag          VARCHAR2(10),
+  tran_flag         VARCHAR2(10),
+  tran_date         DATE,
+  vc_user1img       VARCHAR2(100),
+  vc_user2img       VARCHAR2(100),
+  vc_ebike_img      VARCHAR2(100),
+  vc_user1_cardimg1 VARCHAR2(100),
+  vc_user1_cardimg2 VARCHAR2(100),
+  vc_user2_cardimg1 VARCHAR2(100),
+  vc_user2_cardimg2 VARCHAR2(100),
+  vc_ebike_invoice  VARCHAR2(100)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_DAXXB
+  is '电动车档案信息表';
+-- Add comments to the columns 
+comment on column DDC_DAXXB.dabh
+  is '新进入的数据，自动生成档案编号4403 00000001；老数据去更新';
+comment on column DDC_DAXXB.ywlx
+  is '业务类型';
+comment on column DDC_DAXXB.ywyy
+  is '业务原因';
+comment on column DDC_DAXXB.hyxhzh
+  is '行业协会账户';
+comment on column DDC_DAXXB.ssdwid
+  is '所属单位ID(对应表DDC_HYXH_SSDW的ID)';
+comment on column DDC_DAXXB.cphm
+  is '车牌号码，办结后，以流水转入本表的车牌号码数据填充本表';
+comment on column DDC_DAXXB.ppxh
+  is '品牌型号';
+comment on column DDC_DAXXB.cysy
+  is '车身验色';
+comment on column DDC_DAXXB.djh
+  is '电机号';
+comment on column DDC_DAXXB.jtzz
+  is '脚踏装置（有、无）';
+comment on column DDC_DAXXB.jsrxm1
+  is '驾驶人姓名1';
+comment on column DDC_DAXXB.xb1
+  is '性别1';
+comment on column DDC_DAXXB.sfzmhm1
+  is '身份证号码1';
+comment on column DDC_DAXXB.lxdh1
+  is '联系电话1';
+comment on column DDC_DAXXB.jsrxm2
+  is '驾驶人姓名2';
+comment on column DDC_DAXXB.xb2
+  is '性别2';
+comment on column DDC_DAXXB.sfzmhm2
+  is '身份证号码2';
+comment on column DDC_DAXXB.lxdh2
+  is '联系电话2';
+comment on column DDC_DAXXB.jsrxm3
+  is '驾驶人姓名3';
+comment on column DDC_DAXXB.xb3
+  is '性别3';
+comment on column DDC_DAXXB.sfzmhm3
+  is '身份证号码3';
+comment on column DDC_DAXXB.lxdh3
+  is '联系电话3';
+comment on column DDC_DAXXB.xsqy
+  is '行驶区域(福田区、罗湖区.....)';
+comment on column DDC_DAXXB.bz
+  is '备注';
+comment on column DDC_DAXXB.zt
+  is '车辆状态 填字典';
+comment on column DDC_DAXXB.syrq
+  is '审验日期：新车归档日期+2年或年审验车合格后的归档日期+2年';
+comment on column DDC_DAXXB.slzl
+  is '受理资料，分割 字典表';
+comment on column DDC_DAXXB.slyj
+  is '受理意见 0 同意 1 不同意 特别注意 档案更正是要填写本表记录';
+comment on column DDC_DAXXB.slbz
+  is '受理备注';
+comment on column DDC_DAXXB.slr
+  is '受理人';
+comment on column DDC_DAXXB.slrq
+  is '受理日期';
+comment on column DDC_DAXXB.slbm
+  is '受理部门';
+comment on column DDC_DAXXB.gdyj
+  is '归档意见 0 办结 1 退办 成功办结的信息才会进入本表';
+comment on column DDC_DAXXB.tbyy
+  is '退办原因';
+comment on column DDC_DAXXB.gdbz
+  is '归档备注';
+comment on column DDC_DAXXB.gdr
+  is '归档人';
+comment on column DDC_DAXXB.gdrq
+  is '归档日期';
+comment on column DDC_DAXXB.gdbm
+  is '归档部门';
+comment on column DDC_DAXXB.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_DAXXB.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_DAXXB.tran_date
+  is '传送时间';
+comment on column DDC_DAXXB.vc_user1img
+  is '驾驶人照片1';
+comment on column DDC_DAXXB.vc_user2img
+  is '驾驶人照片2';
+comment on column DDC_DAXXB.vc_ebike_img
+  is '车辆照片';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_DAXXB
+  add primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+alter table DDC_DAXXB
+  add constraint UNI_DDC_DAXXB unique (DABH)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+  drop table DDC_DAXXB_LOG;
+create table DDC_DAXXB_LOG
+(
+  id                NUMBER not null,
+  dabh              VARCHAR2(50) not null,
+  ywlx              VARCHAR2(20),
+  ywyy              VARCHAR2(20),
+  hyxhzh            VARCHAR2(20),
+  ssdwid            VARCHAR2(500),
+  cphm              VARCHAR2(50),
+  ppxh              VARCHAR2(50),
+  cysy              VARCHAR2(20),
+  djh               VARCHAR2(50),
+  jtzz              VARCHAR2(20),
+  jsrxm1            VARCHAR2(20),
+  xb1               VARCHAR2(20),
+  sfzmhm1           VARCHAR2(20),
+  lxdh1             VARCHAR2(20),
+  jsrxm2            VARCHAR2(20),
+  xb2               VARCHAR2(20),
+  sfzmhm2           VARCHAR2(20),
+  lxdh2             VARCHAR2(20),
+  jsrxm3            VARCHAR2(20),
+  xb3               VARCHAR2(20),
+  sfzmhm3           VARCHAR2(20),
+  lxdh3             VARCHAR2(20),
+  xsqy              VARCHAR2(20),
+  bz                VARCHAR2(200),
+  zt                VARCHAR2(10),
+  syrq              DATE,
+  slzl              VARCHAR2(100),
+  slyj              VARCHAR2(20),
+  slbz              VARCHAR2(100),
+  slr               VARCHAR2(20),
+  slrq              DATE,
+  slbm              VARCHAR2(20),
+  gdyj              VARCHAR2(20),
+  tbyy              CHAR(10),
+  gdbz              VARCHAR2(100),
+  gdr               VARCHAR2(20),
+  gdrq              DATE,
+  gdbm              VARCHAR2(20),
+  syn_flag          VARCHAR2(10),
+  tran_flag         VARCHAR2(10),
+  tran_date         DATE,
+  czr               VARCHAR2(20),
+  czbm              VARCHAR2(100),
+  czrq              DATE,
+  cznr              VARCHAR2(100),
+  vc_ebike_img      VARCHAR2(100),
+  vc_user1img       VARCHAR2(100),
+  vc_user2img       VARCHAR2(100),
+  vc_user1_cardimg1 VARCHAR2(100),
+  vc_user1_cardimg2 VARCHAR2(100),
+  vc_user2_cardimg1 VARCHAR2(100),
+  vc_user2_cardimg2 VARCHAR2(100),
+  vc_ebike_invoice  VARCHAR2(100)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_DAXXB_LOG
+  is '电动车档案信息表';
+-- Add comments to the columns 
+comment on column DDC_DAXXB_LOG.dabh
+  is '档案编号';
+comment on column DDC_DAXXB_LOG.ywlx
+  is '业务类型';
+comment on column DDC_DAXXB_LOG.ywyy
+  is '业务原因';
+comment on column DDC_DAXXB_LOG.hyxhzh
+  is '行业协会账户';
+comment on column DDC_DAXXB_LOG.ssdwid
+  is '所属单位ID(对应表DDC_HYXH_SSDW的ID)';
+comment on column DDC_DAXXB_LOG.cphm
+  is '车牌号码，办结后，以流水转入本表的车牌号码数据填充本表';
+comment on column DDC_DAXXB_LOG.ppxh
+  is '品牌型号';
+comment on column DDC_DAXXB_LOG.cysy
+  is '车身验色';
+comment on column DDC_DAXXB_LOG.djh
+  is '电机号';
+comment on column DDC_DAXXB_LOG.jtzz
+  is '脚踏装置（有、无）';
+comment on column DDC_DAXXB_LOG.jsrxm1
+  is '驾驶人姓名1';
+comment on column DDC_DAXXB_LOG.xb1
+  is '性别1';
+comment on column DDC_DAXXB_LOG.sfzmhm1
+  is '身份证号码1';
+comment on column DDC_DAXXB_LOG.lxdh1
+  is '联系电话1';
+comment on column DDC_DAXXB_LOG.jsrxm2
+  is '驾驶人姓名2';
+comment on column DDC_DAXXB_LOG.xb2
+  is '性别2';
+comment on column DDC_DAXXB_LOG.sfzmhm2
+  is '身份证号码2';
+comment on column DDC_DAXXB_LOG.lxdh2
+  is '联系电话2';
+comment on column DDC_DAXXB_LOG.jsrxm3
+  is '驾驶人姓名3';
+comment on column DDC_DAXXB_LOG.xb3
+  is '性别3';
+comment on column DDC_DAXXB_LOG.sfzmhm3
+  is '身份证号码3';
+comment on column DDC_DAXXB_LOG.lxdh3
+  is '联系电话3';
+comment on column DDC_DAXXB_LOG.xsqy
+  is '行驶区域(福田区、罗湖区.....)';
+comment on column DDC_DAXXB_LOG.bz
+  is '备注';
+comment on column DDC_DAXXB_LOG.zt
+  is '车辆状态 填字典';
+comment on column DDC_DAXXB_LOG.syrq
+  is '审验日期：新车归档日期+2年或年审验车合格后的归档日期+2年';
+comment on column DDC_DAXXB_LOG.slzl
+  is '受理资料，分割 字典表';
+comment on column DDC_DAXXB_LOG.slyj
+  is '受理意见 0 同意 1 不同意 特别注意 档案更正是要填写本表记录';
+comment on column DDC_DAXXB_LOG.slbz
+  is '受理备注';
+comment on column DDC_DAXXB_LOG.slr
+  is '受理人';
+comment on column DDC_DAXXB_LOG.slrq
+  is '受理日期';
+comment on column DDC_DAXXB_LOG.slbm
+  is '受理部门';
+comment on column DDC_DAXXB_LOG.gdyj
+  is '归档意见 0 办结 1 退办 成功办结的信息才会进入本表';
+comment on column DDC_DAXXB_LOG.tbyy
+  is '退办原因';
+comment on column DDC_DAXXB_LOG.gdbz
+  is '归档备注';
+comment on column DDC_DAXXB_LOG.gdr
+  is '归档人';
+comment on column DDC_DAXXB_LOG.gdrq
+  is '归档日期';
+comment on column DDC_DAXXB_LOG.gdbm
+  is '归档部门';
+comment on column DDC_DAXXB_LOG.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_DAXXB_LOG.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_DAXXB_LOG.tran_date
+  is '传送时间';
+comment on column DDC_DAXXB_LOG.czr
+  is '操作人';
+comment on column DDC_DAXXB_LOG.czbm
+  is '操作部门';
+comment on column DDC_DAXXB_LOG.czrq
+  is '操作日期';
+comment on column DDC_DAXXB_LOG.cznr
+  is '操作内容';
+comment on column DDC_DAXXB_LOG.vc_ebike_img
+  is '车辆图片';
+comment on column DDC_DAXXB_LOG.vc_user1img
+  is '驾驶人1图片';
+comment on column DDC_DAXXB_LOG.vc_user2img
+  is '驾驶人2图片';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_DAXXB_LOG
+  add constraint PK_DDC_DAXXB_LOG primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+    drop table DDC_FLOW;
+create table DDC_FLOW
+(
+  id                NUMBER not null,
+  lsh               VARCHAR2(20) not null,
+  ywlx              VARCHAR2(20),
+  ywyy              VARCHAR2(20),
+  hyxhzh            VARCHAR2(20),
+  dabh              VARCHAR2(20),
+  cphm              VARCHAR2(20),
+  ppxh              VARCHAR2(20),
+  cysy              VARCHAR2(20),
+  djh               VARCHAR2(30),
+  jtzz              VARCHAR2(20),
+  jsrxm1            VARCHAR2(20),
+  xb1               VARCHAR2(20),
+  sfzmhm1           VARCHAR2(20),
+  lxdh1             VARCHAR2(20),
+  jsrxm2            VARCHAR2(20),
+  xb2               VARCHAR2(20),
+  sfzmhm2           VARCHAR2(20),
+  lxdh2             VARCHAR2(20),
+  jsrxm3            VARCHAR2(20),
+  xb3               VARCHAR2(20),
+  sfzmhm3           VARCHAR2(20),
+  lxdh3             VARCHAR2(20),
+  xsqy              VARCHAR2(20),
+  bz                VARCHAR2(500),
+  slzl              VARCHAR2(100),
+  slyj              VARCHAR2(20),
+  slbz              VARCHAR2(100),
+  slr               VARCHAR2(20),
+  slrq              DATE,
+  slbm              VARCHAR2(20),
+  gdyj              VARCHAR2(20),
+  tbyy              VARCHAR2(100),
+  gdbz              VARCHAR2(100),
+  gdr               VARCHAR2(20),
+  gdrq              DATE,
+  gdbm              VARCHAR2(20),
+  syn_flag          VARCHAR2(10),
+  tran_flag         VARCHAR2(10),
+  tran_date         DATE,
+  yclb              VARCHAR2(20),
+  vc_user1img       VARCHAR2(100),
+  vc_user2img       VARCHAR2(100),
+  vc_ebike_img      VARCHAR2(100),
+  vc_user1_cardimg1 VARCHAR2(100),
+  vc_user1_cardimg2 VARCHAR2(100),
+  vc_user2_cardimg1 VARCHAR2(100),
+  vc_user2_cardimg2 VARCHAR2(100),
+  vc_ebike_invoice  VARCHAR2(100),
+  ssdwid            VARCHAR2(200),
+  tablename         VARCHAR2(20),
+  tableid           NUMBER
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_FLOW
+  is '电动车业务流水表';
+-- Add comments to the columns 
+comment on column DDC_FLOW.lsh
+  is '业务流水号';
+comment on column DDC_FLOW.ywlx
+  is '业务类型';
+comment on column DDC_FLOW.ywyy
+  is '业务原因';
+comment on column DDC_FLOW.hyxhzh
+  is '行业协会账户';
+comment on column DDC_FLOW.dabh
+  is '新备案申请的不用填，老业务要填';
+comment on column DDC_FLOW.cphm
+  is '车牌号码，办结后，取个车牌序号，五位 00001开始编；新备案申请
+
+的不用填，老业务要填';
+comment on column DDC_FLOW.ppxh
+  is '品牌型号';
+comment on column DDC_FLOW.cysy
+  is '车身验色';
+comment on column DDC_FLOW.djh
+  is '电机号';
+comment on column DDC_FLOW.jtzz
+  is '脚踏装置（有、无）';
+comment on column DDC_FLOW.jsrxm1
+  is '驾驶人姓名1';
+comment on column DDC_FLOW.xb1
+  is '性别1';
+comment on column DDC_FLOW.sfzmhm1
+  is '身份证号码1';
+comment on column DDC_FLOW.lxdh1
+  is '联系电话1';
+comment on column DDC_FLOW.jsrxm2
+  is '驾驶人姓名2';
+comment on column DDC_FLOW.xb2
+  is '性别2';
+comment on column DDC_FLOW.sfzmhm2
+  is '身份证号码2';
+comment on column DDC_FLOW.lxdh2
+  is '联系电话2';
+comment on column DDC_FLOW.jsrxm3
+  is '驾驶人姓名3';
+comment on column DDC_FLOW.xb3
+  is '性别3';
+comment on column DDC_FLOW.sfzmhm3
+  is '身份证号码3';
+comment on column DDC_FLOW.lxdh3
+  is '联系电话3';
+comment on column DDC_FLOW.xsqy
+  is '行驶区域(福田区、罗湖区.....)';
+comment on column DDC_FLOW.bz
+  is '备注';
+comment on column DDC_FLOW.slzl
+  is '受理资料，分割 字典表';
+comment on column DDC_FLOW.slyj
+  is '受理意见 0 同意 1 不同意 特别注意 档案更正是要填写本表记录';
+comment on column DDC_FLOW.slbz
+  is '受理备注';
+comment on column DDC_FLOW.slr
+  is '受理人';
+comment on column DDC_FLOW.slrq
+  is '受理日期';
+comment on column DDC_FLOW.slbm
+  is '受理部门';
+comment on column DDC_FLOW.gdyj
+  is '归档意见 0 办结 1 退办 ，成功办结后用本表信息更新，同时更新车
+
+牌号和电动车档案表';
+comment on column DDC_FLOW.tbyy
+  is '退办原因';
+comment on column DDC_FLOW.gdbz
+  is '归档备注';
+comment on column DDC_FLOW.gdr
+  is '归档人';
+comment on column DDC_FLOW.gdrq
+  is '归档日期';
+comment on column DDC_FLOW.gdbm
+  is '归档部门';
+comment on column DDC_FLOW.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_FLOW.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_FLOW.tran_date
+  is '传送时间';
+comment on column DDC_FLOW.yclb
+  is '验车类别';
+comment on column DDC_FLOW.vc_user1img
+  is '驾驶人照片1';
+comment on column DDC_FLOW.vc_user2img
+  is '驾驶人照片2';
+comment on column DDC_FLOW.vc_ebike_img
+  is '车辆照片';
+comment on column DDC_FLOW.ssdwid
+  is '所属单位ID(对应表DDC_HYXH_SSDW的ID)';
+comment on column DDC_FLOW.tablename
+  is '业务表名';
+comment on column DDC_FLOW.tableid
+  is '业务表ID';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_FLOW
+  add primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+      drop table DDC_FLOW_LOG;
+create table DDC_FLOW_LOG
+(
+  id        NUMBER not null,
+  lsh       VARCHAR2(20) not null,
+  ywlx      VARCHAR2(20),
+  ywyy      VARCHAR2(20),
+  hyxhzh    VARCHAR2(20),
+  dabh      VARCHAR2(20),
+  zzjgdmzh  VARCHAR2(200),
+  cphm      VARCHAR2(20),
+  ppxh      VARCHAR2(20),
+  cysy      VARCHAR2(20),
+  djh       VARCHAR2(30),
+  jtzz      VARCHAR2(20),
+  jsrxm1    VARCHAR2(20),
+  xb1       VARCHAR2(20),
+  sfzmhm1   VARCHAR2(20),
+  lxdh1     VARCHAR2(20),
+  jsrxm2    VARCHAR2(20),
+  xb2       VARCHAR2(20),
+  sfzmhm2   VARCHAR2(20),
+  lxdh2     VARCHAR2(20),
+  jsrxm3    VARCHAR2(20),
+  xb3       VARCHAR2(20),
+  sfzmhm3   VARCHAR2(20),
+  lxdh3     VARCHAR2(20),
+  xsqy      VARCHAR2(20),
+  bz        VARCHAR2(200),
+  slzl      VARCHAR2(100),
+  slyj      VARCHAR2(20),
+  slbz      VARCHAR2(100),
+  slr       VARCHAR2(20),
+  slrq      DATE,
+  slbm      VARCHAR2(20),
+  gdyj      VARCHAR2(20),
+  tbyy      VARCHAR2(100),
+  gdbz      VARCHAR2(100),
+  gdr       VARCHAR2(20),
+  gdrq      DATE,
+  gdbm      VARCHAR2(20),
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE,
+  czr       VARCHAR2(20),
+  czbm      VARCHAR2(20),
+  czrq      DATE,
+  cznr      VARCHAR2(20)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_FLOW_LOG
+  is '电动车业务流水表';
+-- Add comments to the columns 
+comment on column DDC_FLOW_LOG.lsh
+  is '业务流水号';
+comment on column DDC_FLOW_LOG.ywlx
+  is '业务类型';
+comment on column DDC_FLOW_LOG.ywyy
+  is '业务原因';
+comment on column DDC_FLOW_LOG.hyxhzh
+  is '行业协会账户';
+comment on column DDC_FLOW_LOG.dabh
+  is '新备案申请的不用填，老业务要填';
+comment on column DDC_FLOW_LOG.zzjgdmzh
+  is '组织机构代码证号';
+comment on column DDC_FLOW_LOG.cphm
+  is '车牌号码，办结后，取个车牌序号，五位 00001开始编；新备案申请
+
+的不用填，老业务要填';
+comment on column DDC_FLOW_LOG.ppxh
+  is '品牌型号';
+comment on column DDC_FLOW_LOG.cysy
+  is '车身验色';
+comment on column DDC_FLOW_LOG.djh
+  is '电机号';
+comment on column DDC_FLOW_LOG.jtzz
+  is '脚踏装置（有、无）';
+comment on column DDC_FLOW_LOG.jsrxm1
+  is '驾驶人姓名1';
+comment on column DDC_FLOW_LOG.xb1
+  is '性别1';
+comment on column DDC_FLOW_LOG.sfzmhm1
+  is '身份证号码1';
+comment on column DDC_FLOW_LOG.lxdh1
+  is '联系电话1';
+comment on column DDC_FLOW_LOG.jsrxm2
+  is '驾驶人姓名2';
+comment on column DDC_FLOW_LOG.xb2
+  is '性别2';
+comment on column DDC_FLOW_LOG.sfzmhm2
+  is '身份证号码2';
+comment on column DDC_FLOW_LOG.lxdh2
+  is '联系电话2';
+comment on column DDC_FLOW_LOG.jsrxm3
+  is '驾驶人姓名3';
+comment on column DDC_FLOW_LOG.xb3
+  is '性别3';
+comment on column DDC_FLOW_LOG.sfzmhm3
+  is '身份证号码3';
+comment on column DDC_FLOW_LOG.lxdh3
+  is '联系电话3';
+comment on column DDC_FLOW_LOG.xsqy
+  is '行驶区域(福田区、罗湖区.....)';
+comment on column DDC_FLOW_LOG.bz
+  is '备注';
+comment on column DDC_FLOW_LOG.slzl
+  is '受理资料，分割 字典表';
+comment on column DDC_FLOW_LOG.slyj
+  is '受理意见 0 同意 1 不同意 特别注意 档案更正是要填写本表记录';
+comment on column DDC_FLOW_LOG.slbz
+  is '受理备注';
+comment on column DDC_FLOW_LOG.slr
+  is '受理人';
+comment on column DDC_FLOW_LOG.slrq
+  is '受理日期';
+comment on column DDC_FLOW_LOG.slbm
+  is '受理部门';
+comment on column DDC_FLOW_LOG.gdyj
+  is '归档意见 0 办结 1 退办 ，成功办结后用本表信息更新，同时更新车
+
+牌号和电动车档案表';
+comment on column DDC_FLOW_LOG.tbyy
+  is '退办原因';
+comment on column DDC_FLOW_LOG.gdbz
+  is '归档备注';
+comment on column DDC_FLOW_LOG.gdr
+  is '归档人';
+comment on column DDC_FLOW_LOG.gdrq
+  is '归档日期';
+comment on column DDC_FLOW_LOG.gdbm
+  is '归档部门';
+comment on column DDC_FLOW_LOG.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_FLOW_LOG.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_FLOW_LOG.tran_date
+  is '传送时间';
+comment on column DDC_FLOW_LOG.czr
+  is '操作人';
+comment on column DDC_FLOW_LOG.czbm
+  is '操作部门';
+comment on column DDC_FLOW_LOG.czrq
+  is '操作日期';
+comment on column DDC_FLOW_LOG.cznr
+  is '操作内容';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_FLOW_LOG
+  add constraint PK_DDC_FLOW_LOG primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+ drop table  DDC_HMD;
+create table DDC_HMD
+(
+  id        NUMBER(11) not null,
+  jsrxm     VARCHAR2(20),
+  sfzhm     VARCHAR2(20),
+  xb        VARCHAR2(10),
+  lxdh      VARCHAR2(20),
+  bz        VARCHAR2(200),
+  cjr       VARCHAR2(20),
+  cjbm      VARCHAR2(20),
+  cjrq      DATE,
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HMD
+  is '黑名单信息管理';
+-- Add comments to the columns 
+comment on column DDC_HMD.id
+  is '编号';
+comment on column DDC_HMD.jsrxm
+  is '驾驶人姓名';
+comment on column DDC_HMD.sfzhm
+  is '身份证号码';
+comment on column DDC_HMD.xb
+  is '性别【0=男，1=女】';
+comment on column DDC_HMD.lxdh
+  is '联系电话';
+comment on column DDC_HMD.bz
+  is '备注';
+comment on column DDC_HMD.cjr
+  is '操作人';
+comment on column DDC_HMD.cjbm
+  is '操作部门';
+comment on column DDC_HMD.cjrq
+  is '操作日期';
+comment on column DDC_HMD.syn_flag
+  is '同步标志【UW=添加、修改，DW=删除】';
+comment on column DDC_HMD.tran_flag
+  is '传送标志';
+comment on column DDC_HMD.tran_date
+  is '传送日期';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HMD
+  add primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+  drop table  DDC_HYXH_BASB; 
+create table DDC_HYXH_BASB
+(
+  id         NUMBER not null,
+  lsh        VARCHAR2(50) not null,
+  hyxhzh     VARCHAR2(20),
+  hyxhsqpe   NUMBER,
+  bz         VARCHAR2(200),
+  sqr        VARCHAR2(50),
+  sqrq       DATE,
+  hyxhbcsjpe NUMBER,
+  bjjg       VARCHAR2(20),
+  bjbz       VARCHAR2(100),
+  bzjr       VARCHAR2(10),
+  bjbm       VARCHAR2(50),
+  bjrq       DATE,
+  syn_flag   VARCHAR2(10),
+  tran_flag  VARCHAR2(10),
+  tran_date  DATE,
+  sl_index   NUMBER default 1,
+  hyxhmc     VARCHAR2(50)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_BASB
+  is '行业协会备案申报表';
+-- Add comments to the columns 
+comment on column DDC_HYXH_BASB.id
+  is '序列';
+comment on column DDC_HYXH_BASB.lsh
+  is '流水号';
+comment on column DDC_HYXH_BASB.hyxhzh
+  is '行业协会账户';
+comment on column DDC_HYXH_BASB.hyxhsqpe
+  is '行业协会申请配额';
+comment on column DDC_HYXH_BASB.bz
+  is '备注信息';
+comment on column DDC_HYXH_BASB.sqr
+  is '申请人';
+comment on column DDC_HYXH_BASB.sqrq
+  is '申请日期';
+comment on column DDC_HYXH_BASB.hyxhbcsjpe
+  is '行业协会本次实际批准配额';
+comment on column DDC_HYXH_BASB.bjjg
+  is '办结结果 0同意 1不同意 为空表示在审批中';
+comment on column DDC_HYXH_BASB.bjbz
+  is '办结备注';
+comment on column DDC_HYXH_BASB.bzjr
+  is '办结人';
+comment on column DDC_HYXH_BASB.bjbm
+  is '办结部门';
+comment on column DDC_HYXH_BASB.bjrq
+  is '办结日期';
+comment on column DDC_HYXH_BASB.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_HYXH_BASB.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_HYXH_BASB.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_BASB.sl_index
+  is '当前审批角色顺序 1-受理民警 2-领导 数字大等级高';
+comment on column DDC_HYXH_BASB.hyxhmc
+  is '行业协会名称';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_BASB
+  add constraint PK_DDC_HYXH_BASB primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+alter table DDC_HYXH_BASB
+  add constraint NK_DDC_HYXH_BASB_XH unique (LSH)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+  drop table  DDC_HYXH_BASB_LOG;  
+create table DDC_HYXH_BASB_LOG
+(
+  id         NUMBER not null,
+  lsh        VARCHAR2(20) not null,
+  hyxhzh     VARCHAR2(20),
+  hyxhsqpe   NUMBER,
+  bz         VARCHAR2(200),
+  sqr        VARCHAR2(50),
+  sqrq       DATE,
+  slpejy     NUMBER,
+  slyj       VARCHAR2(10),
+  slbz       VARCHAR2(100),
+  slr        VARCHAR2(20),
+  slbm       VARCHAR2(20),
+  slrq       DATE,
+  kldpejy    NUMBER,
+  slyj2      VARCHAR2(10),
+  kldbz      VARCHAR2(100),
+  kld        VARCHAR2(20),
+  kldsprq    DATE,
+  kldbm      VARCHAR2(20),
+  cldpejy    NUMBER,
+  slyj3      VARCHAR2(10),
+  cldbz      VARCHAR2(100),
+  kld2       VARCHAR2(20),
+  cldsprq    DATE,
+  cldbm      VARCHAR2(20),
+  zdldpejy   NUMBER,
+  slyj4      VARCHAR2(10),
+  zdldbz     VARCHAR2(100),
+  kld3       VARCHAR2(20),
+  zdldsprq   DATE,
+  zdldbm     VARCHAR2(20),
+  hyxhbcsjpe NUMBER,
+  bjjg       VARCHAR2(20),
+  bjbz       VARCHAR2(100),
+  bzjr       VARCHAR2(10),
+  bjbm       VARCHAR2(50),
+  bjrq       DATE,
+  syn_flag   VARCHAR2(10),
+  tran_flag  VARCHAR2(10),
+  tran_date  DATE,
+  czr        VARCHAR2(10),
+  czbm       VARCHAR2(20),
+  czrq       DATE,
+  cznr       VARCHAR2(20)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_BASB_LOG
+  is '行业协会备案申报表';
+-- Add comments to the columns 
+comment on column DDC_HYXH_BASB_LOG.lsh
+  is '申报配额流水号';
+comment on column DDC_HYXH_BASB_LOG.hyxhzh
+  is '行业协会账户';
+comment on column DDC_HYXH_BASB_LOG.hyxhsqpe
+  is '行业协会申请配额';
+comment on column DDC_HYXH_BASB_LOG.bz
+  is '备注信息';
+comment on column DDC_HYXH_BASB_LOG.sqr
+  is '申请人';
+comment on column DDC_HYXH_BASB_LOG.sqrq
+  is '申请日期';
+comment on column DDC_HYXH_BASB_LOG.slpejy
+  is '受理配额建议';
+comment on column DDC_HYXH_BASB_LOG.slyj
+  is '受理意见 0同意 1不同意';
+comment on column DDC_HYXH_BASB_LOG.slbz
+  is '受理备注';
+comment on column DDC_HYXH_BASB_LOG.slr
+  is '受理人';
+comment on column DDC_HYXH_BASB_LOG.slbm
+  is '受理部门';
+comment on column DDC_HYXH_BASB_LOG.slrq
+  is '受理日期';
+comment on column DDC_HYXH_BASB_LOG.kldpejy
+  is '科领导配额建议*';
+comment on column DDC_HYXH_BASB_LOG.slyj2
+  is '科领导意见 0同意 1不同意';
+comment on column DDC_HYXH_BASB_LOG.kldbz
+  is '科领导审批备注';
+comment on column DDC_HYXH_BASB_LOG.kld
+  is '科领导审批人';
+comment on column DDC_HYXH_BASB_LOG.kldsprq
+  is '科领导审批日期';
+comment on column DDC_HYXH_BASB_LOG.kldbm
+  is '科领导部门';
+comment on column DDC_HYXH_BASB_LOG.cldpejy
+  is '处领导配额建议*';
+comment on column DDC_HYXH_BASB_LOG.slyj3
+  is '处领导意见 0同意 1不同意';
+comment on column DDC_HYXH_BASB_LOG.cldbz
+  is '处领导审批备注';
+comment on column DDC_HYXH_BASB_LOG.kld2
+  is '处领导审批人';
+comment on column DDC_HYXH_BASB_LOG.cldsprq
+  is '处领导审批日期';
+comment on column DDC_HYXH_BASB_LOG.cldbm
+  is '处领导部门';
+comment on column DDC_HYXH_BASB_LOG.zdldpejy
+  is '支队领导配额意见*';
+comment on column DDC_HYXH_BASB_LOG.slyj4
+  is '支队领导意见 0同意 1不同意';
+comment on column DDC_HYXH_BASB_LOG.zdldbz
+  is '支队领导审批备注';
+comment on column DDC_HYXH_BASB_LOG.kld3
+  is '支队领导审批人';
+comment on column DDC_HYXH_BASB_LOG.zdldsprq
+  is '支队领导审批日期';
+comment on column DDC_HYXH_BASB_LOG.zdldbm
+  is '支队领导部门';
+comment on column DDC_HYXH_BASB_LOG.hyxhbcsjpe
+  is '行业协会本次实际批准配额';
+comment on column DDC_HYXH_BASB_LOG.bjjg
+  is '办结结果 0同意 1不同意';
+comment on column DDC_HYXH_BASB_LOG.bjbz
+  is '办结备注';
+comment on column DDC_HYXH_BASB_LOG.bzjr
+  is '办结人';
+comment on column DDC_HYXH_BASB_LOG.bjbm
+  is '办结部门';
+comment on column DDC_HYXH_BASB_LOG.bjrq
+  is '办结日期';
+comment on column DDC_HYXH_BASB_LOG.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_HYXH_BASB_LOG.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_HYXH_BASB_LOG.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_BASB_LOG.czr
+  is '操作人';
+comment on column DDC_HYXH_BASB_LOG.czbm
+  is '操作部门代码';
+comment on column DDC_HYXH_BASB_LOG.czrq
+  is '操作日期';
+comment on column DDC_HYXH_BASB_LOG.cznr
+  is '操作内容';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_BASB_LOG
+  add constraint PK_DDCBASB_LOG primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+ drop table  DDC_HYXH_BASE;   
+create table DDC_HYXH_BASE
+(
+  id        NUMBER not null,
+  hyxhzh    VARCHAR2(20) not null,
+  hyxhmm    VARCHAR2(20),
+  hyxhmc    VARCHAR2(100),
+  hyxhdz    VARCHAR2(200),
+  hyxhfzr   VARCHAR2(50),
+  hyxhfzrdh VARCHAR2(50),
+  hyxhsjzpe NUMBER,
+  bz        VARCHAR2(200),
+  cjr       VARCHAR2(20),
+  cjrq      DATE,
+  cjbm      VARCHAR2(20),
+  hyxhlb    VARCHAR2(10),
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE,
+  totalpe   NUMBER
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_BASE
+  is '行业协会信息基本信息表';
+-- Add comments to the columns 
+comment on column DDC_HYXH_BASE.hyxhzh
+  is '行业协会账户';
+comment on column DDC_HYXH_BASE.hyxhmm
+  is '行业协会密码';
+comment on column DDC_HYXH_BASE.hyxhmc
+  is '行业协会名称';
+comment on column DDC_HYXH_BASE.hyxhdz
+  is '行业协会地址';
+comment on column DDC_HYXH_BASE.hyxhfzr
+  is '行业协会负责人';
+comment on column DDC_HYXH_BASE.hyxhfzrdh
+  is '行业协会负责人电话';
+comment on column DDC_HYXH_BASE.hyxhsjzpe
+  is '行业协会实际剩余配额';
+comment on column DDC_HYXH_BASE.bz
+  is '备注信息';
+comment on column DDC_HYXH_BASE.cjr
+  is '创建人';
+comment on column DDC_HYXH_BASE.cjrq
+  is '创建日期';
+comment on column DDC_HYXH_BASE.cjbm
+  is '创建部门';
+comment on column DDC_HYXH_BASE.hyxhlb
+  is '行业协会类别';
+comment on column DDC_HYXH_BASE.syn_flag
+  is '同步标志';
+comment on column DDC_HYXH_BASE.tran_flag
+  is '传送标志';
+comment on column DDC_HYXH_BASE.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_BASE.totalpe
+  is '总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数）';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_BASE
+  add primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+  drop table  DDC_HYXH_SSDW;    
+create table DDC_HYXH_SSDW
+(
+  id         NUMBER not null,
+  hyxhzh     VARCHAR2(20) not null,
+  dwmc       VARCHAR2(100),
+  zzjgdmzh   VARCHAR2(200),
+  zsdz       VARCHAR2(100),
+  lxr        VARCHAR2(50),
+  lxdh       VARCHAR2(50),
+  bz         VARCHAR2(200),
+  sqr        VARCHAR2(50),
+  sqrq       DATE,
+  zt         VARCHAR2(1) default 1,
+  shr        VARCHAR2(20),
+  shrq       DATE,
+  shbm       VARCHAR2(20),
+  syn_flag   VARCHAR2(10),
+  tran_flag  VARCHAR2(10),
+  tran_date  DATE,
+  dwpe       NUMBER,
+  vc_picpath VARCHAR2(500),
+  usercode   VARCHAR2(50),
+  password   VARCHAR2(50),
+  shflag     NUMBER default 0,
+  totalpe    NUMBER
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_SSDW
+  is '行业协会信息所属单位';
+-- Add comments to the columns 
+comment on column DDC_HYXH_SSDW.id
+  is '记录ID';
+comment on column DDC_HYXH_SSDW.hyxhzh
+  is '行业协会帐号';
+comment on column DDC_HYXH_SSDW.dwmc
+  is '单位名称';
+comment on column DDC_HYXH_SSDW.zzjgdmzh
+  is '组织机构代码证号';
+comment on column DDC_HYXH_SSDW.zsdz
+  is '住所地址（深圳市福田区）';
+comment on column DDC_HYXH_SSDW.lxr
+  is '联系人';
+comment on column DDC_HYXH_SSDW.lxdh
+  is '联系电话';
+comment on column DDC_HYXH_SSDW.bz
+  is '备注信息';
+comment on column DDC_HYXH_SSDW.sqr
+  is '申请人';
+comment on column DDC_HYXH_SSDW.sqrq
+  is '申请日期';
+comment on column DDC_HYXH_SSDW.zt
+  is '0 禁用 1 启用';
+comment on column DDC_HYXH_SSDW.shr
+  is '审核人';
+comment on column DDC_HYXH_SSDW.shrq
+  is '审核日期';
+comment on column DDC_HYXH_SSDW.shbm
+  is '审核部门';
+comment on column DDC_HYXH_SSDW.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_HYXH_SSDW.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_HYXH_SSDW.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_SSDW.dwpe
+  is '单位配额(剩余配额)';
+comment on column DDC_HYXH_SSDW.vc_picpath
+  is '营业执照图片';
+comment on column DDC_HYXH_SSDW.usercode
+  is '用户名';
+comment on column DDC_HYXH_SSDW.password
+  is '密码';
+comment on column DDC_HYXH_SSDW.shflag
+  is '审核标志 0-未审核等待提交资料  1-已审核';
+comment on column DDC_HYXH_SSDW.totalpe
+  is '单位总配额';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_SSDW
+  add constraint PK_DDC_HYXH_SSDW primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+alter table DDC_HYXH_SSDW
+  add constraint UNK_DDC_HYXH_SSDW unique (DWMC)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+   drop table  DDC_HYXH_SSDWCLSB;    
+create table DDC_HYXH_SSDWCLSB
+(
+  id                NUMBER not null,
+  lsh               VARCHAR2(50) not null,
+  hyxhzh            VARCHAR2(50),
+  ssdwid            VARCHAR2(200),
+  cphm              VARCHAR2(50),
+  ppxh              VARCHAR2(50),
+  cysy              VARCHAR2(50),
+  djh               VARCHAR2(50),
+  jtzz              VARCHAR2(50),
+  jsrxm1            VARCHAR2(50),
+  xb1               VARCHAR2(50),
+  sfzmhm1           VARCHAR2(50),
+  lxdh1             VARCHAR2(50),
+  jsrxm2            VARCHAR2(50),
+  xb2               VARCHAR2(50),
+  sfzmhm2           VARCHAR2(50),
+  lxdh2             VARCHAR2(50),
+  jsrxm3            VARCHAR2(50),
+  xb3               VARCHAR2(50),
+  sfzmhm3           VARCHAR2(50),
+  lxdh3             VARCHAR2(50),
+  xsqy              VARCHAR2(50),
+  bz                VARCHAR2(500),
+  sqr               VARCHAR2(50),
+  sqrq              DATE,
+  slzl              VARCHAR2(100),
+  slyj              VARCHAR2(10),
+  slbz              VARCHAR2(100),
+  slr               VARCHAR2(110),
+  slrq              DATE,
+  slbm              VARCHAR2(20),
+  syn_flag          VARCHAR2(10),
+  tran_flag         VARCHAR2(10),
+  tran_date         DATE,
+  sqip              VARCHAR2(50),
+  vc_user1img       VARCHAR2(100),
+  vc_user2img       VARCHAR2(100),
+  vc_ebike_img      VARCHAR2(100),
+  tbyy              VARCHAR2(100),
+  sl_index          NUMBER default 0,
+  vc_user1_cardimg1 VARCHAR2(100),
+  vc_user1_cardimg2 VARCHAR2(100),
+  vc_user2_cardimg1 VARCHAR2(100),
+  vc_user2_cardimg2 VARCHAR2(100),
+  enable            NUMBER default 1,
+  vc_ebike_invoice  VARCHAR2(100)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_SSDWCLSB
+  is '行业协会信息所属单位车辆申报表';
+-- Add comments to the columns 
+comment on column DDC_HYXH_SSDWCLSB.id
+  is '序列';
+comment on column DDC_HYXH_SSDWCLSB.lsh
+  is '流水号';
+comment on column DDC_HYXH_SSDWCLSB.hyxhzh
+  is '行业协会账户';
+comment on column DDC_HYXH_SSDWCLSB.ssdwid
+  is '所属单位ID,对应 DDC_HYXH_SSDW的记录ID';
+comment on column DDC_HYXH_SSDWCLSB.cphm
+  is '车牌号码，第一次申报是空的，不用显示';
+comment on column DDC_HYXH_SSDWCLSB.ppxh
+  is '品牌型号';
+comment on column DDC_HYXH_SSDWCLSB.cysy
+  is '车身验色';
+comment on column DDC_HYXH_SSDWCLSB.djh
+  is '电机号';
+comment on column DDC_HYXH_SSDWCLSB.jtzz
+  is '脚踏装置（有、无）';
+comment on column DDC_HYXH_SSDWCLSB.jsrxm1
+  is '驾驶人姓名1';
+comment on column DDC_HYXH_SSDWCLSB.xb1
+  is '性别1';
+comment on column DDC_HYXH_SSDWCLSB.sfzmhm1
+  is '身份证号码1';
+comment on column DDC_HYXH_SSDWCLSB.lxdh1
+  is '联系电话1';
+comment on column DDC_HYXH_SSDWCLSB.jsrxm2
+  is '驾驶人姓名2';
+comment on column DDC_HYXH_SSDWCLSB.xb2
+  is '性别2';
+comment on column DDC_HYXH_SSDWCLSB.sfzmhm2
+  is '身份证号码2';
+comment on column DDC_HYXH_SSDWCLSB.lxdh2
+  is '联系电话2';
+comment on column DDC_HYXH_SSDWCLSB.jsrxm3
+  is '驾驶人姓名3';
+comment on column DDC_HYXH_SSDWCLSB.xb3
+  is '性别3';
+comment on column DDC_HYXH_SSDWCLSB.sfzmhm3
+  is '身份证号码3';
+comment on column DDC_HYXH_SSDWCLSB.lxdh3
+  is '联系电话3';
+comment on column DDC_HYXH_SSDWCLSB.xsqy
+  is '行驶区域(福田区、罗湖区.....)';
+comment on column DDC_HYXH_SSDWCLSB.bz
+  is '备注';
+comment on column DDC_HYXH_SSDWCLSB.sqr
+  is '申请人';
+comment on column DDC_HYXH_SSDWCLSB.sqrq
+  is '申请日期';
+comment on column DDC_HYXH_SSDWCLSB.slzl
+  is '受理资料，分割 字典表';
+comment on column DDC_HYXH_SSDWCLSB.slyj
+  is '受理意见 0同意 1不同意';
+comment on column DDC_HYXH_SSDWCLSB.slbz
+  is '受理备注';
+comment on column DDC_HYXH_SSDWCLSB.slr
+  is '受理人';
+comment on column DDC_HYXH_SSDWCLSB.slrq
+  is '受理日期';
+comment on column DDC_HYXH_SSDWCLSB.slbm
+  is '受理部门';
+comment on column DDC_HYXH_SSDWCLSB.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_HYXH_SSDWCLSB.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_HYXH_SSDWCLSB.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_SSDWCLSB.sqip
+  is '申请IP地址';
+comment on column DDC_HYXH_SSDWCLSB.vc_user1img
+  is '驾驶人1照片';
+comment on column DDC_HYXH_SSDWCLSB.vc_user2img
+  is '驾驶人2照片';
+comment on column DDC_HYXH_SSDWCLSB.vc_ebike_img
+  is '车辆照片';
+comment on column DDC_HYXH_SSDWCLSB.tbyy
+  is '退办原因';
+comment on column DDC_HYXH_SSDWCLSB.sl_index
+  is '受理审批顺序';
+comment on column DDC_HYXH_SSDWCLSB.vc_user1_cardimg1
+  is '驾驶人1身份证照片正面';
+comment on column DDC_HYXH_SSDWCLSB.vc_user1_cardimg2
+  is '驾驶人1身份证照片反面';
+comment on column DDC_HYXH_SSDWCLSB.vc_user2_cardimg1
+  is '驾驶人2身份证照片正面';
+comment on column DDC_HYXH_SSDWCLSB.vc_user2_cardimg2
+  is '驾驶人2身份证照片反面面';
+comment on column DDC_HYXH_SSDWCLSB.enable
+  is '1-有效 0无效';
+comment on column DDC_HYXH_SSDWCLSB.vc_ebike_invoice
+  is '车辆购车发票';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_SSDWCLSB
+  add constraint PK_DDC_HYXH_SSDWCLSB primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+alter table DDC_HYXH_SSDWCLSB
+  add constraint UNK_DDC_HYXH_SSDWCLSB unique (LSH)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+    drop table  DDC_HYXH_SSDWCLSB_LOG;  
+create table DDC_HYXH_SSDWCLSB_LOG
+(
+  id        NUMBER,
+  lsh       VARCHAR2(20),
+  hyxhzh    VARCHAR2(20),
+  ssdwid    VARCHAR2(200),
+  cphm      VARCHAR2(20),
+  ppxh      VARCHAR2(20),
+  cysy      VARCHAR2(20),
+  djh       VARCHAR2(50),
+  jtzz      VARCHAR2(20),
+  jsrxm1    VARCHAR2(20),
+  xb1       VARCHAR2(20),
+  sfzmhm1   VARCHAR2(20),
+  lxdh1     VARCHAR2(20),
+  jsrxm2    VARCHAR2(20),
+  xb2       VARCHAR2(20),
+  sfzmhm2   VARCHAR2(20),
+  lxdh2     VARCHAR2(20),
+  jsrxm3    VARCHAR2(20),
+  xb3       VARCHAR2(20),
+  sfzmhm3   VARCHAR2(20),
+  lxdh3     VARCHAR2(20),
+  xsqy      VARCHAR2(20),
+  bz        VARCHAR2(200),
+  sqr       VARCHAR2(50),
+  sqrq      DATE,
+  slzl      VARCHAR2(100),
+  slyj      VARCHAR2(10),
+  slbz      VARCHAR2(100),
+  slr       VARCHAR2(20),
+  slrq      DATE,
+  slbm      VARCHAR2(20),
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE,
+  czr       VARCHAR2(10),
+  czbm      VARCHAR2(20),
+  czrq      DATE,
+  cznr      VARCHAR2(20),
+  sqip      VARCHAR2(50)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_SSDWCLSB_LOG
+  is '行业协会信息所属单位车辆申报表';
+-- Add comments to the columns 
+comment on column DDC_HYXH_SSDWCLSB_LOG.id
+  is '序列';
+comment on column DDC_HYXH_SSDWCLSB_LOG.lsh
+  is '流水号';
+comment on column DDC_HYXH_SSDWCLSB_LOG.hyxhzh
+  is '行业协会账户';
+comment on column DDC_HYXH_SSDWCLSB_LOG.ssdwid
+  is '所属单位ID,对应 DDC_HYXH_SSDW的记录ID';
+comment on column DDC_HYXH_SSDWCLSB_LOG.cphm
+  is '车牌号码，第一次申报是空的，不用显示';
+comment on column DDC_HYXH_SSDWCLSB_LOG.ppxh
+  is '品牌型号';
+comment on column DDC_HYXH_SSDWCLSB_LOG.cysy
+  is '车身验色';
+comment on column DDC_HYXH_SSDWCLSB_LOG.djh
+  is '电机号';
+comment on column DDC_HYXH_SSDWCLSB_LOG.jtzz
+  is '脚踏装置（有、无）';
+comment on column DDC_HYXH_SSDWCLSB_LOG.jsrxm1
+  is '驾驶人姓名1';
+comment on column DDC_HYXH_SSDWCLSB_LOG.xb1
+  is '性别1';
+comment on column DDC_HYXH_SSDWCLSB_LOG.sfzmhm1
+  is '身份证号码1';
+comment on column DDC_HYXH_SSDWCLSB_LOG.lxdh1
+  is '联系电话1';
+comment on column DDC_HYXH_SSDWCLSB_LOG.jsrxm2
+  is '驾驶人姓名2';
+comment on column DDC_HYXH_SSDWCLSB_LOG.xb2
+  is '性别2';
+comment on column DDC_HYXH_SSDWCLSB_LOG.sfzmhm2
+  is '身份证号码2';
+comment on column DDC_HYXH_SSDWCLSB_LOG.lxdh2
+  is '联系电话2';
+comment on column DDC_HYXH_SSDWCLSB_LOG.jsrxm3
+  is '驾驶人姓名3';
+comment on column DDC_HYXH_SSDWCLSB_LOG.xb3
+  is '性别3';
+comment on column DDC_HYXH_SSDWCLSB_LOG.sfzmhm3
+  is '身份证号码3';
+comment on column DDC_HYXH_SSDWCLSB_LOG.lxdh3
+  is '联系电话3';
+comment on column DDC_HYXH_SSDWCLSB_LOG.xsqy
+  is '行驶区域(福田区、罗湖区.....)';
+comment on column DDC_HYXH_SSDWCLSB_LOG.bz
+  is '备注';
+comment on column DDC_HYXH_SSDWCLSB_LOG.sqr
+  is '申请人';
+comment on column DDC_HYXH_SSDWCLSB_LOG.sqrq
+  is '申请日期';
+comment on column DDC_HYXH_SSDWCLSB_LOG.slzl
+  is '受理资料，分割 字典表';
+comment on column DDC_HYXH_SSDWCLSB_LOG.slyj
+  is '受理意见 0同意 1不同意';
+comment on column DDC_HYXH_SSDWCLSB_LOG.slbz
+  is '受理备注';
+comment on column DDC_HYXH_SSDWCLSB_LOG.slr
+  is '受理人';
+comment on column DDC_HYXH_SSDWCLSB_LOG.slrq
+  is '受理日期';
+comment on column DDC_HYXH_SSDWCLSB_LOG.slbm
+  is '受理部门';
+comment on column DDC_HYXH_SSDWCLSB_LOG.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_HYXH_SSDWCLSB_LOG.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_HYXH_SSDWCLSB_LOG.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_SSDWCLSB_LOG.czr
+  is '操作人';
+comment on column DDC_HYXH_SSDWCLSB_LOG.czbm
+  is '操作部门代码';
+comment on column DDC_HYXH_SSDWCLSB_LOG.czrq
+  is '操作日期';
+comment on column DDC_HYXH_SSDWCLSB_LOG.cznr
+  is '操作内容';
+comment on column DDC_HYXH_SSDWCLSB_LOG.sqip
+  is '申请IP地址';
+-- Create/Recreate indexes 
+create unique index BIN$ziQDSQCNR3OyrMwC8vwa9g==$0 on DDC_HYXH_SSDWCLSB_LOG (ID)
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_SSDWCLSB_LOG
+  add constraint BIN$0HbyJaQKT3WCW0XgHOqdeQ==$0 primary key (ID);
+-- Create/Recreate check constraints 
+alter table DDC_HYXH_SSDWCLSB_LOG
+  add constraint BIN$0gQFJ7UjT6GcubERuPsy4g==$0
+  check ("ID" IS NOT NULL);
+alter table DDC_HYXH_SSDWCLSB_LOG
+  add constraint BIN$R2HXzr3JQaCpltNEb1tIMQ==$0
+  check ("LSH" IS NOT NULL);
+  -- Create table
+   drop table  DDC_HYXH_SSDW_LOG;  
+create table DDC_HYXH_SSDW_LOG
+(
+  id        NUMBER not null,
+  hyxhzh    VARCHAR2(20) not null,
+  dwmc      VARCHAR2(100),
+  zzjgdmzh  VARCHAR2(200),
+  zsdz      VARCHAR2(100),
+  lxr       VARCHAR2(50),
+  lxdh      VARCHAR2(50),
+  bz        VARCHAR2(200),
+  sqr       VARCHAR2(50),
+  sqrq      DATE,
+  zt        VARCHAR2(1),
+  shr       VARCHAR2(20),
+  shrq      DATE,
+  shbm      VARCHAR2(20),
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE,
+  czr       VARCHAR2(100),
+  czbm      VARCHAR2(200),
+  czrq      DATE,
+  cznr      VARCHAR2(200),
+  dwpe      NUMBER
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_SSDW_LOG
+  is '行业协会信息所属单位';
+-- Add comments to the columns 
+comment on column DDC_HYXH_SSDW_LOG.id
+  is '记录ID';
+comment on column DDC_HYXH_SSDW_LOG.hyxhzh
+  is '行业协会帐号';
+comment on column DDC_HYXH_SSDW_LOG.dwmc
+  is '单位名称';
+comment on column DDC_HYXH_SSDW_LOG.zzjgdmzh
+  is '组织机构代码证号';
+comment on column DDC_HYXH_SSDW_LOG.zsdz
+  is '住所地址（深圳市福田区）';
+comment on column DDC_HYXH_SSDW_LOG.lxr
+  is '联系人';
+comment on column DDC_HYXH_SSDW_LOG.lxdh
+  is '联系电话';
+comment on column DDC_HYXH_SSDW_LOG.bz
+  is '备注信息';
+comment on column DDC_HYXH_SSDW_LOG.sqr
+  is '申请人';
+comment on column DDC_HYXH_SSDW_LOG.sqrq
+  is '申请日期';
+comment on column DDC_HYXH_SSDW_LOG.zt
+  is '0 禁用 1 启用';
+comment on column DDC_HYXH_SSDW_LOG.shr
+  is '审核人';
+comment on column DDC_HYXH_SSDW_LOG.shrq
+  is '审核日期';
+comment on column DDC_HYXH_SSDW_LOG.shbm
+  is '审核部门';
+comment on column DDC_HYXH_SSDW_LOG.syn_flag
+  is '同步标志,填写规则详看其他文档';
+comment on column DDC_HYXH_SSDW_LOG.tran_flag
+  is '传送标志(该字段必须有索引)';
+comment on column DDC_HYXH_SSDW_LOG.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_SSDW_LOG.czr
+  is '操作人';
+comment on column DDC_HYXH_SSDW_LOG.czbm
+  is '操作部门代码';
+comment on column DDC_HYXH_SSDW_LOG.czrq
+  is '操作日期';
+comment on column DDC_HYXH_SSDW_LOG.cznr
+  is '操作内容';
+comment on column DDC_HYXH_SSDW_LOG.dwpe
+  is '单位配额';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_SSDW_LOG
+  add constraint PK_DDC_HYXH_SSDW_LOG primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+     drop table  DDC_SJZD;  
+create table DDC_SJZD
+(
+  id        VARCHAR2(20) not null,
+  dmz       VARCHAR2(20),
+  dmms1     VARCHAR2(200),
+  dmms2     VARCHAR2(200),
+  dmlb      VARCHAR2(20),
+  bz        VARCHAR2(50),
+  cjr       VARCHAR2(20),
+  cjrq      DATE,
+  cjbm      VARCHAR2(20),
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_SJZD
+  is '电动车业务数据字典表';
+-- Add comments to the columns 
+comment on column DDC_SJZD.id
+  is '记录ID';
+comment on column DDC_SJZD.dmz
+  is '代码值';
+comment on column DDC_SJZD.dmms1
+  is '代码描述1';
+comment on column DDC_SJZD.dmms2
+  is '代码描述2';
+comment on column DDC_SJZD.dmlb
+  is '代码类别';
+comment on column DDC_SJZD.bz
+  is '备注';
+comment on column DDC_SJZD.cjr
+  is '创建人';
+comment on column DDC_SJZD.cjrq
+  is '创建日期';
+comment on column DDC_SJZD.cjbm
+  is '创建部门';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_SJZD
+  add constraint PK_DDC_SJZD primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+      drop table  FILERECORD;   
+create table FILERECORD
+(
+  id        NUMBER,
+  filename  VARCHAR2(50),
+  datetiime DATE default sysdate,
+  flag      NUMBER,
+  filepath  VARCHAR2(100)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column FILERECORD.flag
+  is '0-导入 1-导出';
+  -- Create table
+create table HYXH_MENU
+(
+  id      NUMBER not null,
+  vc_menu VARCHAR2(50),
+  vc_icon VARCHAR2(50),
+  vc_url  VARCHAR2(100),
+  i_pid   NUMBER,
+  n_index NUMBER
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table HYXH_MENU
+  is '行业协会操作菜单';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table HYXH_MENU
+  add constraint PK_HYXH_MENU primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+   drop table  PIC_PATH;    
+create table PIC_PATH
+(
+  id            NUMBER not null,
+  vc_addpath    VARCHAR2(100),
+  dt_add        DATE default SYSDATE,
+  i_type        NUMBER,
+  vc_type       VARCHAR2(100),
+  vc_parse_path VARCHAR2(100)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table PIC_PATH
+  is '图片路径配置表';
+-- Add comments to the columns 
+comment on column PIC_PATH.id
+  is '主键';
+comment on column PIC_PATH.vc_addpath
+  is '保存路径';
+comment on column PIC_PATH.dt_add
+  is '添加时间';
+comment on column PIC_PATH.i_type
+  is '图片类型ID';
+comment on column PIC_PATH.vc_type
+  is '图片类型名称';
+comment on column PIC_PATH.vc_parse_path
+  is '图片解析路径';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table PIC_PATH
+  add constraint PK_PICPATH primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  -- Create table
+    drop table  ROLE_MENU;   
+create table ROLE_MENU
+(
+  id   NUMBER not null,
+  role NUMBER,
+  menu VARCHAR2(50)
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table ROLE_MENU
+  is '角色---菜单关联';
+-- Add comments to the columns 
+comment on column ROLE_MENU.id
+  is '主键';
+comment on column ROLE_MENU.role
+  is '角色 1-行业协会 2-单位  3-管理员';
+comment on column ROLE_MENU.menu
+  is '角色';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ROLE_MENU
+  add constraint PK_ROLE_MENU primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+  =========================================================================================
+  insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (83, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 34, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (61, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 40, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (84, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, -1099, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (1, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 2211, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (81, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 28, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (82, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 24, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (85, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1378, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (86, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1365, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (89, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 566, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (241, 'szsyzglj', '123456', '深圳市邮政管理局', null, '冯以新', '13312919852', 4318, null, '052067', to_date('04-03-2014 11:33:02', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'C', 'UP', '1', to_date('15-04-2014 16:27:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (261, 'jjkjc', '123456', '系统测试账户', null, null, null, 65, null, '052067', to_date('06-05-2014 11:06:20', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('06-05-2014 14:44:09', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (202, 'szqbs', '123456', '深圳侨报社', null, '刘伟煌', '13502826775', 70, null, '065928', to_date('25-10-2012 16:57:41', 'dd-mm-yyyy hh24:mi:ss'), '30199', 'H', 'UP', '1', to_date('11-12-2012 14:04:05', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (201, 'szcswl', '123456', '中国电信深圳传送网络运营中心', null, '张宗雄', '13302990151', 60, null, '065928', to_date('25-10-2012 16:55:12', 'dd-mm-yyyy hh24:mi:ss'), '30199', 'M', 'UP', '1', to_date('25-10-2012 20:39:02', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (221, 'skxxb', '123456', '深圳市蛇口消息报', '南山区党校大厦11、12、13楼', '唐前华', '13902923543', 28, null, '065922', to_date('22-04-2013 10:24:40', 'dd-mm-yyyy hh24:mi:ss'), '30465', 'H', 'UP', '1', to_date('22-04-2013 10:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (136, 'cs', '123456', '测试', null, null, null, 1, null, 'test', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'O', 'UP', '1', to_date('11-01-2016 18:01:17', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (121, 'szspxh', '123456', '市食品行业协会饮用水委员会', null, null, null, 9108, null, 'admin', to_date('04-04-2012 17:20:52', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'A', 'UP', '1', to_date('28-04-2013 15:57:37', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (134, 'gzrb', '123456', '广州日报', null, null, null, 12, null, 'admin', to_date('04-04-2012 17:28:58', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('23-07-2013 10:04:36', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (122, 'szrqxh', '123456', '市燃气行业协会', null, null, null, 3331, null, 'admin', to_date('04-04-2012 17:21:20', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'B', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (123, 'szwlxh', '123456', '市物流与供应链管理协会', null, null, null, 8474, null, 'admin', to_date('04-04-2012 17:21:39', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'C', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (124, 'sznyxh', '123456', '奶业行业协会', null, null, null, 1169, null, 'admin', to_date('04-04-2012 17:21:55', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'D', 'UP', '1', to_date('06-12-2013 21:03:37', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (125, 'szfwxh', '123456', '市服务行业协会维修业', null, null, null, 2918, null, 'admin', to_date('04-04-2012 17:22:21', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'E', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (126, 'sztzxh', '123456', '市特种设备行业协会电梯维修', null, null, null, 1430, null, 'admin', to_date('04-04-2012 17:22:40', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'F', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (127, 'szswgs', '123456', '市水务(集团)有限公司', null, null, null, 324, null, 'admin', to_date('04-04-2012 17:22:59', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'G', 'UP', '1', to_date('06-12-2013 21:03:37', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (128, 'szbygs', '123456', '市报业集团发行物流有限公司', null, null, null, 1048, null, 'admin', to_date('04-04-2012 17:23:18', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (129, 'nfdsbgs', '123456', '南方都市报经营有限公司深圳分公司', null, null, null, 557, null, 'admin', to_date('04-04-2012 17:24:50', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (130, 'nfbyjt', '123456', '南方报业传媒集团深圳记者站', null, null, null, 78, null, 'admin', to_date('04-04-2012 17:25:12', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-04-2012 18:35:40', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (131, 'sztwsx', '123456', '市天威视讯股份有限公司', null, null, null, 539, null, 'admin', to_date('04-04-2012 17:25:38', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'L', 'UP', '1', to_date('23-07-2013 10:04:36', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (132, 'zgdxgs', '123456', '中国电信公司深圳分公司', null, null, null, 2325, null, 'admin', to_date('04-04-2012 17:26:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (133, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1401, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (141, 'szttgs', '123456', '中国铁通集团有限公司深圳分公司', null, null, null, 120, null, 'admin', to_date('10-04-2012 17:29:48', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('10-04-2012 18:35:40', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (142, 'szltgs', '123456', '中国联合网络通信有限公司深圳分公司', null, null, null, 485, null, 'admin', to_date('10-04-2012 17:30:07', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('10-04-2012 18:35:40', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (143, 'szycbs', '123456', '羊城晚报社驻深圳办事处', null, null, null, 42, null, 'admin', to_date('10-04-2012 17:30:31', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (161, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 38, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (162, 'zggjgs', '123456', '中国国际图书贸易集团有限公司深圳分公司', null, null, null, 10, null, '052067', to_date('10-05-2012 17:18:57', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (163, 'szwxgs', '123456', '深圳市万象通报刊投递有限公司', null, null, null, 39, null, '052067', to_date('10-05-2012 17:19:38', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (164, 'szhwgs', '123456', '深圳市华文图书有限公司', null, null, null, 44, null, '052067', to_date('10-05-2012 17:20:14', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('06-12-2013 21:03:37', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (181, 'skdst', '123456', '蛇口电视台', null, '刘青青', '13902923543', 23, null, '052067', to_date('19-06-2012 11:01:09', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'L', 'UP', '1', to_date('19-06-2012 12:50:16', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (281, 'szjrzx', '123456', '深圳市技安科技有限公司', '深圳市罗湖区人民南路2069号国际商业大厦东座8楼', '冯立敏', '15013890900', 35, null, '052067', to_date('15-04-2015 09:49:59', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('17-04-2015 18:22:22', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (21, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 34, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (41, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 36, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (87, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1032, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
+values (88, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 699, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+commit;
+prompt 42 records loaded
+prompt Loading DDC_HYXH_SSDW...
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (222, 'gzrb', 'fjdferer4', null, null, null, null, null, '广州日报', to_date('11-04-2016 17:01:19', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 1, null, 'abcd123', '123456', 0, 5);
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (462, 'szwlxh', 'SZWLDW', 'dfdfessf', 'ddddddddddd', 'ddddddddddddddddd', '13322222222', null, null, to_date('12-04-2016 11:34:47', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 21, '160412/201604121134475824.jpg', 'asdf123', '123456', 1, 22);
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (262, 'szwlxh', 'dffd', null, null, null, null, null, '市物流与供应链管理协会', to_date('14-04-2016 10:01:05', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 33, null, 'ddddddddg', '123456', 0, 33);
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (261, 'szwlxh', 'gtrtrt', null, null, null, null, null, '市物流与供应链管理协会', to_date('14-04-2016 09:51:38', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 22, null, 'fgfgfgfg', '123456', 0, 22);
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (221, 'gzrb', '广州日子砝码', null, null, null, null, null, '广州日报', to_date('11-04-2016 15:24:56', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'UP', null, null, 10, null, 'abcd1111', '123456', 0, 11);
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (202, 'nfdsbgs', 'dfeeredfdf', 'ddgdf', '深圳大厦大厦大厦大厦在', '磊', '13322222020', null, null, to_date('10-04-2016 11:03:06', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'UP', null, null, 6, '160410/201604101103062775.jpg', 'ssdw123456', '123456', 1, 9);
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (263, 'szwlxh', 'fffffffff', null, null, null, null, null, '市物流与供应链管理协会', to_date('14-04-2016 10:01:18', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 33, null, 'e333333333', '123456', 0, 33);
+commit;
+prompt 7 records loaded
+prompt Loading DDC_SJZD...
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('92', '2099-01-01 00:00:00', '行业协会停止录入时间', null, 'HYXHTZLRSJ', '行业协会停止录入时间', '数据库添加', to_date('28-04-2012', 'dd-mm-yyyy'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('112', '440318', '坪山新区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('113', '440317', '光明新区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('69', 'B', '市燃气行业协会', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('70', 'C', '市物流与供应链管理协会', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('81', '440303', '罗湖区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('82', '440304', '福田区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('84', '440305', '南山区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('85', '440306', '宝安区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('86', '440308', '盐田区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('87', '440307', '龙岗区', null, 'SSQY', '所属区域', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('52', '10', '法律、法规、规章或省、市人民政府规定的其他情形的。', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('53', '1', '车辆使用单位有效的身份证明及其复印件；', null, 'BASQZL', '备案申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('54', '2', '车辆驾驶人有效的身份证明及其复印件，所属车辆使用单位人事证明；', null, 'BASQZL', '备案申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('55', '3', '购车发票或其他车辆合法来历证明及其复印件；', null, 'BASQZL', '备案申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('1', '11', '电机号不符', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('2', '12', '车身颜色不符', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('56', '4', '车辆整车出厂合格证明及其复印件；', null, 'BASQZL', '备案申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('57', '5', '车辆照片一张。', null, 'BGSQZL', '变更申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('58', '1', '车辆使用单位身份证明和复印件；', null, 'BGSQZL', '变更申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('59', '2', '属于更换车架或整车的，还应当提交车辆制造厂或经销商出具的车架或整车的来历凭证和复印件；', null, 'BGSQZL', '变更申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('60', '3', '属于变更行驶区域的，还应当提交车辆使用单位的证明；', null, 'BGSQZL', '变更申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('61', '4', '属于变更车辆驾驶人的，还应当提交车辆驾驶人有效的身份证明及其复印件，所属车辆使用单位人事证明。', null, 'BGSQZL', '变更申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('62', '1', '现车辆使用单位和原车辆使用单位的身份证明及复印件；', null, 'ZYSQZL', '转移申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('63', '2', '转移的证明、凭证。', null, 'ZYSQZL', '转移申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('64', '1', '车辆使用单位的身份证明和复印件；', null, 'ZXSQZL', '注销申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('65', '2', '属于车辆灭失、丢失、被盗或损毁的，还应当提交车辆灭失、丢失、被盗或损毁的证明；', null, 'ZXSQZL', '注销申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('66', '3', '属于因质量的问题退车的，还应当提交车辆制造厂或者经销商出具的退车证明；', null, 'ZXSQZL', '注销申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('67', '4', '属于车辆驾驶人退出车辆使用单位的，还应当提交车辆使用单位的证明。', null, 'ZXSQZL', '注销申请资料', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('71', 'D', '奶业协会行业', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('72', 'E', '市服务行业协会维修业', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('73', 'F', '市特种设备行业协会协会电梯维修', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('74', 'G', '市水务(集团)有限公司', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('75', 'H', '市报业集团发行有限公司', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('76', 'H', '南方都市报经营有限公司深圳分公司', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('77', 'H', '南方报业传媒集团深圳记者站', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('78', 'L', '市天威视讯股份有限公司', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('79', 'M', '中国电信公司深圳分公司', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('80', 'N', '市邮政局', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('3', 'A', '正常', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('4', 'B', '迁出', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('5', 'C', '被盗抢', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('6', 'D', '停驶', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('7', 'E', '注销', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('8', 'G', '违法未处理', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('9', 'H', '海关监管', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('10', 'I', '事故未处理', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('11', 'J', '嫌疑车', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('12', 'K', '查封', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('13', 'L', '暂扣', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('14', 'M', '强制注销', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('15', 'N', '事故逃逸', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('16', 'O', '锁定', null, 'CLZT', '车辆状态', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('17', 'A', '车辆备案', null, 'YWLX', '业务类型', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('18', 'B', '车辆变更', null, 'YWLX', '业务类型', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('19', 'C', '车辆转移', null, 'YWLX', '业务类型', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('20', 'D', '车辆注销', null, 'YWLX', '业务类型', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('21', 'E', '车辆检验', '2年', 'YWLX', '业务类型', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('22', 'F', '档案更正', null, 'YWLX', '业务类型', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('23', 'A', '正常', null, 'YWYY_A', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('24', 'A', '车架', null, 'YWYY_B', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('25', 'B', '换车', null, 'YWYY_B', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('26', 'C', '住所', null, 'YWYY_B', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('27', 'D', '行驶区域', null, 'YWYY_B', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('28', 'E', '驾驶人', null, 'YWYY_B', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('29', 'A', '行驶区域', null, 'YWYY_C', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('30', 'A', '灭失', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('31', 'B', '丢失', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('32', 'C', '被盗', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('33', 'D', '损毁', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('34', 'E', '报废', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('35', 'F', '退车', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('36', 'G', '退出', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('37', 'H', '迁出', null, 'YWYY_D', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('38', 'A', '正常', null, 'YWYY_E', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('39', 'A', '正常', null, 'YWYY_F', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('40', '1', '深黄色', null, 'CSYS', '车身颜色', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('41', '2', '深绿色', null, 'CSYS', '车身颜色', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('42', '3', '天蓝色', null, 'CSYS', '车身颜色', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('43', '1', '提交的证明、凭证不真实或无效的；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('44', '2', '车辆来历证明记载的车辆所有人与身份证明不符的；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('45', '3', '提交的证明、凭证与车辆不符的；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('46', '4', '车辆驾驶人年龄不满16周岁的；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('47', '5', '车辆无脚踏装置的；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('48', '6', '车辆电动机号不清晰或者无法辨识的；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('49', '7', '车辆属于改装、拼装的电动自行车；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('50', '8', '车辆被人民法院、人民检察院、行政执法部门依法查封、扣押的；', null, 'TBYY', '退办原因', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('51', '9', '超出配额数量的。', null, 'TBYY', '退办原因', 'admin', to_date('12-04-2012 10:59:59', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('68', 'A', '市食品行业协会饮用水委员会', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('199', 'H', '广州日报', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('89', 'M', '中国铁通集团有限公司深圳分公司', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('90', 'H', '羊城晚报社驻深圳办事处', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('91', 'B', '所属单位', null, 'YWYY_C', '业务原因', '数据库添加', to_date('13-03-2012 11:28:17', 'dd-mm-yyyy hh24:mi:ss'), '程序开发', 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('88', 'M', '中国联合网络通信有限公司深圳分公司', null, 'HYXHSSLB', '行业协会所属类别', null, null, null, 'UW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('111', '440319', '龙华新区', null, 'SSQY', '所属区域', null, null, null, 'IW', null, null);
+insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
+values ('93', 'F', '行驶区域', null, 'YWYY_B', '业务原因', '数据库添加', to_date('25-05-2012', 'dd-mm-yyyy'), '程序开发', 'UW', null, null);
+commit;
+prompt 96 records loaded
+prompt Loading HYXH_MENU...
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (1, '单位信息管理', '&#xe61a;', 'companyAction/getAll', 8, 1);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (2, '备案审批', '&#xe61b;', 'applyAction/getAll', 8, 2);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (3, '单位配额管理', '&#xe60f;', 'companyQtyAction/getAll', 8, 3);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (4, '变更审批', '&#xe612;', 'ebikeChangeAction/getAll', 8, 4);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (6, '档案查询', '&#xe615;', 'ebikeQueryAction/getAll', 8, 6);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (7, '业务流水统计', '&#xe616;', 'ebikeWaterAction/getAll', 8, 8);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (8, '信息管理列表', '&#xe61c;', null, 0, 1);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (9, '配额申报', '&#xe60e;', 'applyAction/applyQtys', 8, 7);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (14, '接口测试', '&#xe60a;', 'appAction/interface', 8, 13);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (15, '数据同步', '&#xe612;', 'dataAction/export', 8, 14);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (10, '备案申报', '&#xe61b;', 'ssdwAction/getAllBa', 8, 9);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (11, '变更申报', '&#xe612;', 'ssdwChangeAction/getAllBg', 8, 10);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (12, '档案查询', '&#xe615;', 'ssdwQueryAction/getDaList', 8, 11);
+insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
+values (13, '业务统计', '&#xe616;', 'ssdwStaticAction/getYwList', 8, 12);
+commit;
+prompt 14 records loaded
+prompt Loading PIC_PATH...
+insert into PIC_PATH (id, vc_addpath, dt_add, i_type, vc_type, vc_parse_path)
+values (2, 'D:/apache-tomcat-6.0.45/webapps/ROOT/excel/', to_date('14-04-2016 17:23:30', 'dd-mm-yyyy hh24:mi:ss'), 2, 'EXCEL', 'http://192.168.76.1:8089/excel/');
+insert into PIC_PATH (id, vc_addpath, dt_add, i_type, vc_type, vc_parse_path)
+values (1, 'D:/apache-tomcat-6.0.45/webapps/ROOT/images/', to_date('12-03-2016 12:40:03', 'dd-mm-yyyy hh24:mi:ss'), 1, '营业执照', 'http://192.168.76.1:8089/mages/');
+commit;
+prompt 2 records loaded
+prompt Loading ROLE_MENU...
+insert into ROLE_MENU (id, role, menu)
+values (1, 1, '1,2,3,4,5,6,7,8,9,14,15');
+insert into ROLE_MENU (id, role, menu)
+values (2, 2, '8,10,11,12,13');
+insert into ROLE_MENU (id, role, menu)
+values (3, 3, '1,2,3,4,5,6,7,8,9,14,15');
+commit;
+prompt 3 records loaded
+prompt Enabling triggers for DDC_HYXH_BASE...
+alter table DDC_HYXH_BASE enable all triggers;
+prompt Enabling triggers for DDC_HYXH_SSDW...
+alter table DDC_HYXH_SSDW enable all triggers;
+prompt Enabling triggers for DDC_SJZD...
+alter table DDC_SJZD enable all triggers;
+prompt Enabling triggers for HYXH_MENU...
+alter table HYXH_MENU enable all triggers;
+prompt Enabling triggers for PIC_PATH...
+alter table PIC_PATH enable all triggers;
+prompt Enabling triggers for ROLE_MENU...
+alter table ROLE_MENU enable all triggers;
+set feedback on
+set define on
+prompt Done.
+  
+  

@@ -82,7 +82,7 @@ public class ApplyAction {
 
 	/**
 	 * 
-	 * 方法描述：页面跳转
+	 * 方法描述：页面跳转 3
 	 * 
 	 * @return
 	 * @version: 1.0
@@ -177,6 +177,8 @@ public class ApplyAction {
 		ddcHyxhBasb.setHyxhsqpe(Integer.parseInt(hyxhsqpe));
 		ddcHyxhBasb.setHyxhzh(ddcHyxhBase.getHyxhzh());
 		ddcHyxhBasb.setHyxhmc(ddcHyxhBase.getHyxhmc());
+		ddcHyxhBasb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+		ddcHyxhBasb.setTranDate(new Date());
 		try {
 
 			iApplyService.saveDdcHyxhBasb(ddcHyxhBasb);
@@ -634,11 +636,19 @@ public class ApplyAction {
 				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 						.getDdcHyxhSsdwclsbById(id);
 				if (StringUtils.isBlank(ddcHyxhSsdwclsb.getSynFlag())) {
-					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+					ddcHyxhSsdwclsb.setTranDate(new Date());
 				}
+
 				ddcHyxhSsdwclsb.setSlIndex(1);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 				DdcApproveUser ddcApproveUser = new DdcApproveUser();
+				String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
+				Object object = iApplyService.getDateBySQL(sql);
+				String seq = object.toString();
+				String md = new SimpleDateFormat("yyMMdd").format(new Date());
+				String approveNo = "W" + md + seq;// 生成审批号
+				ddcApproveUser.setApproveNo(approveNo);
 				ddcApproveUser.setApproveIndex(1);
 				ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
 				ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());

@@ -40,16 +40,13 @@ $(document).ready(function(){
 		 height:h, 
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
-			field : 'ID',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'fileName',
 			title : '文件名称',
 			align:'center',
-			width : 220
+			width : 220,
+			formatter:function(value,row){
+				return "<a href='"+row.filePath+"'>"+value+"</a>"
+			}
 		},{
 			field : 'dateTime',
 			title : '操作时间',
@@ -58,6 +55,19 @@ $(document).ready(function(){
 			formatter:function(value){
 				var timevalue = new Date(value);
 				return timevalue.toLocaleString();
+			}
+		},{
+			field : 'flag',
+			title : '操作类型',
+			align:'center',
+			width : 120,
+			formatter:function(value){
+				if(value == 0){
+					return "导入";
+				}else{
+					return "导出";
+				}
+					
 			}
 		}
 		] ],
@@ -89,7 +99,7 @@ function exportRowData(){
 				//var path = ""+data;
 				//var path = data;
 				//alert(data);
-				//$("#downhelpid").attr("href",path);
+				$("#dg").datagrid("reload");
 				window.location = data;
 			}
 		}						
@@ -105,8 +115,7 @@ function exportRowData(){
 			
 			<form action="" method="post"  enctype="multipart/form-data">
 				<span>导入内网文件</span><input id="card2img_jsr2" type="file"
-						name="fileinput" 
-						disabled="disabled" />
+						name="fileinput"  />
 			</form>		
 		</div>
 		<table id="dg" style="width:90%;">

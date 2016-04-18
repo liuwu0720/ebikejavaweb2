@@ -274,6 +274,8 @@ public class UserAction {
 			} else {
 				ddcHyxhSsdw.setVcPicPath(ddcHyxhSsdw.getVcPicPath());
 			}
+			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+			ddcHyxhSsdw.setTranDate(new Date());
 			iCompanyService.update(ddcHyxhSsdw);
 			AjaxUtil.rendJson(response, true, "成功");
 		} catch (Exception e) {

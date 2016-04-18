@@ -378,7 +378,7 @@ function exportRowData(){
 	</div>
 	<!-- 点新增，编辑时弹出的表单 -->
 	<div id="dgformDiv" class="easyui-dialog"
-		style="width:850px;height:550px;padding:10px 20px 20px 20px;"
+		style="width:750px;height:400px;padding:10px 20px 20px 20px;"
 		closed="true">
 		<form id="dgform" class="easyui-form" enctype="multipart/form-data"
 			method="post">

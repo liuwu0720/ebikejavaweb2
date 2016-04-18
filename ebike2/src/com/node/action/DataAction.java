@@ -122,15 +122,45 @@ public class DataAction {
 			/**
 			 * 档案信息表
 			 */
-			WritableSheet ws = wwb.createSheet("档案信息表", 0);
+			WritableSheet ws = wwb.createSheet("DAXXB", 0);
 			iEbikeService.createDaxxbExcel(wcfFC, wcfFC2, ws);
 
 			/**
 			 * 审批信息表
 			 */
-			WritableSheet ws2 = wwb.createSheet("审批信息表", 1);
+			WritableSheet ws2 = wwb.createSheet("ddc_approve_user", 1);
 			iEbikeService.createApproveUsers(wcfFC, wcfFC2, ws2);
-
+			/**
+			 * 流水表DDCFLOW 只新增
+			 */
+			WritableSheet ws3 = wwb.createSheet("ddcflow", 2);
+			iEbikeService.createDdcflows(wcfFC, wcfFC2, ws3);
+			/**
+			 * 配额申报 ddc_hyxh_basb 只新增
+			 */
+			WritableSheet ws4 = wwb.createSheet("ddc_hyxh_basb", 3);
+			iEbikeService.createDdcHyxhBasb(wcfFC, wcfFC2, ws4);
+			/**
+			 * 行业协会 ddc_hyxh_base:外网只会更新信息，不会新增
+			 */
+			WritableSheet ws5 = wwb.createSheet("ddc_hyxh_base", 4);
+			iEbikeService.createDdcHyxhBase(wcfFC, wcfFC2, ws5);
+			/**
+			 * ddc_hyxh_ssdw:外网新增或修改数据
+			 */
+			WritableSheet ws6 = wwb.createSheet("ddc_hyxh_ssdw", 5);
+			iEbikeService.createDdcHyxhSsdw(wcfFC, wcfFC2, ws6);
+			/**
+			 * ddc_hyxh_ssdwclsb:外网只新增数据
+			 */
+			WritableSheet ws7 = wwb.createSheet("ddc_hyxh_ssdwclsb", 6);
+			iEbikeService.createDdcHyxhSsdwClSb(wcfFC, wcfFC2, ws7);
+			FileRecord fileRecord = new FileRecord();
+			fileRecord.setFilePath(outPath);
+			fileRecord.setFileName(fileName);
+			fileRecord.setFlag(1);// 0-导入 1-导出
+			fileRecord.setDateTime(new Date());
+			iEbikeService.saveFileRecord(fileRecord);
 			wwb.write();
 			wwb.close();
 
@@ -155,6 +185,6 @@ public class DataAction {
 		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		String formatDate = format.format(new Date());
 
-		return formatDate + "_N";
+		return formatDate + "_W";
 	}
 }

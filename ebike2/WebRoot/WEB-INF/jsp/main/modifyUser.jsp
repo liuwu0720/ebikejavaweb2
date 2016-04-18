@@ -89,7 +89,7 @@
 </head>
 
 <body>
-	<div class="maindiv">
+	<div id="main" class="maindiv">
 	<p style="color: red">${message }</p>
 	<c:if test="${ddcHyxhBase!=null }">
 		<form id="dgform" class="easyui-form" enctype="multipart/form-data"

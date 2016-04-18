@@ -117,7 +117,7 @@ function updateSaveData(){
 				</tr>
 				<tr>
 					<th>申请备注</th>
-					<td colspan="3">
+					<td>
 					${ddcHyxhBasb.bz }
 					</td>	
 					
@@ -136,8 +136,7 @@ function updateSaveData(){
 					<span>审批中</span>
 					</c:if>
 					</td>
-					<td></td>
-					<td></td>
+					
 				</tr>
 				<tr>
 					<th>办结日期</th>
@@ -150,7 +149,7 @@ function updateSaveData(){
 				</tr>
 				<tr>
 					<th>办结意见</th>
-					<td colspan="3">
+					<td>
 					${ddcHyxhBasb.bjbz }
 					
 					</td>	

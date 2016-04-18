@@ -35,6 +35,7 @@ public class FileRecord implements java.io.Serializable {
 	private static final long serialVersionUID = 6014968187060044491L;
 	private Long id;
 	private String fileName;
+	private String filePath;
 	private Date dateTime;
 	private Integer flag;// 0-导入 1-导出
 
@@ -92,6 +93,19 @@ public class FileRecord implements java.io.Serializable {
 	 */
 	public void setFlag(Integer flag) {
 		this.flag = flag;
+	}
+
+	@Column(name = "FILEPATH", length = 100)
+	public String getFilePath() {
+		return filePath;
+	}
+
+	/**
+	 * @param filePath
+	 *            : set the property filePath.
+	 */
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 }
