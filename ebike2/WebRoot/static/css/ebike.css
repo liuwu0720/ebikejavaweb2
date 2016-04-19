@@ -216,11 +216,7 @@ ul li {
 	width: 400px;
 	padding: 1px;
 	margin-left: 87px;
-	background-image: url(../../static/images/header.png) !important;
-	/* FF IE7 */
-	background-repeat: no-repeat;
-	background-position: 50% 0%;
-
+	
 	/* filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../static/images/header.png'); IE6
 	background-image: none; IE6    background-color: #24748f; #c4e1ff*/
 }
@@ -501,13 +497,13 @@ table td[class*="col-"],table th[class*="col-"] {
 .table-btndiv button{
 	width: 100px;
 	height: 32px;
-	background-color: #A9A9F7;
+	background-color: #B2E2F6;
 	text-align: center;
 }
 .btn {
 	width: 100px;
 	height: 32px;
-	background-color: #A9A9F7;
+	background-color: #B2E2F6;
 	text-align: center;
 }
 .btn_primary {

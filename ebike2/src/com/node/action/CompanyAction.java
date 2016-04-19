@@ -366,6 +366,7 @@ public class CompanyAction {
 				if (ddcHyxhSsdw.getZt().equals(SystemConstants.ENABLE_ZT)) {
 					ddcHyxhSsdw.setShFlag(Integer
 							.parseInt(SystemConstants.ENABLE_ZT));
+					ddcHyxhSsdw.setShrq(new Date());
 					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);// 同步标志
 					ddcHyxhSsdw.setTranDate(new Date());
 				}

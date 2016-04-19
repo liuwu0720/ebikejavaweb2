@@ -41,12 +41,6 @@ $(document).ready(function(){
 		width:w,
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
-			field : 'ID',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 10
-		},{
 			field : 'DABH',
 			title : '档案编号',
 			align:'center',
@@ -92,7 +86,7 @@ $(document).ready(function(){
 			width : 50,
 			formatter:function(value,index){
 				var unixTimestamp = new Date(value);   
-				return unixTimestamp.toLocaleDateString();
+				return unixTimestamp.toLocaleString();
 			}   
 		},{
 			field : 'SLYJ',
@@ -132,7 +126,7 @@ $(document).ready(function(){
 		toolbar : [{
 			id : 'btn3',
 			text : '导出',
-			iconCls : 'icon-redo',
+			iconCls : 'icon-print',
 			handler : function() {
 				exportRowData();
 			}
@@ -244,8 +238,23 @@ function updateRow(id){
 }
 //导出EXCEL
 function exportRowData(){
-	var content = $('.datagrid-view').html();
-	window.open('data:application/vnd.ms-excel,' + encodeURIComponent(content));
+	var titleArr = ["档案编号","车牌号","电机号","驾驶人1","车身颜色","行驶区域","类型","审检日期","审批状态"]; 
+	var keysArr =["DABH","CPHM","DJH","JSRXM1","CSYSNAME","XSQY","YWLXNAME","SYRQ","SLYJ"];
+	var rows = $('#dg').datagrid('getData').rows;
+	for(var i in rows) {
+		if(rows[i]['SLYJ'] == null){
+			  rows[i]['SLYJ'] = "等待协会审批";
+			}else if(rows[i]['SLYJ'] == 0){
+				 rows[i]['SLYJ'] ="已审核(同意) ";
+			}else if(rows[i]['SLYJ'] == 1){
+				 rows[i]['SLYJ'] = "已审核(拒绝) ";
+			}
+		rows[i]['SYRQ'] = getLocalTime(rows[i]['SYRQ']);
+	}
+	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
+	var fileName="电动车变更信息";
+	var content = JSON.stringify(rows);
+	commonExcelExport(titleArr,keysArr,content,actionUrl,fileName); 
 
 }
 //查看该档案的流水记录

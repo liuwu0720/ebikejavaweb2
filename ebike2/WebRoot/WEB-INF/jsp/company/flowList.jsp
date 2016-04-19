@@ -94,7 +94,7 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,index){
 				var unixTimestamp = new Date(value);   
-				return unixTimestamp.toLocaleDateString();
+				return unixTimestamp.toLocaleString();
 			}   
 		},{
 			field : 'null',

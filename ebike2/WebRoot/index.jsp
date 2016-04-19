@@ -96,22 +96,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="form-item">
                     <label>用户名</label>
                     <div class="form-input">
-                        <i class="iconfont">&#xe602;</i>
+                      
                         <input type="text" id="username" placeholder="填写用户名" maxlength="20">
                     </div>
                 </div>
                 <div class="form-item">
                     <label>密　码</label>
                     <div class="form-input">
-                        <i class="iconfont">&#xe603;</i>
+                      
                         <input type="password" id="password" placeholder="填写用户密码" maxlength="20">
                     </div>
                 </div>
                  <div class="form-item">
                     <label>角 色</label>
                     <div class="form-select">
-                        <i class="iconfont">&#xe60b;</i>
-                        <select name="role" id="role">
+                     
+                        <select name="role" id="role" style="height: 32px;">
                         	<option value="1">行业协会</option>
                         	<option value="2">所属单位</option>
                         </select>

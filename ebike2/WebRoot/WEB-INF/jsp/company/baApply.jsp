@@ -130,13 +130,7 @@ $(document).ready(function(){
 			handler : function() {
 				addRowData();
 			}
-		},{
-			id : 'btn3',
-			text : '导出',
-			iconCls : 'icon-redo',
-			handler : function() {
-				exportRowData();
-			}
+		}
 		}],
 		onLoadSuccess:function(){  
             $('#dg').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题  

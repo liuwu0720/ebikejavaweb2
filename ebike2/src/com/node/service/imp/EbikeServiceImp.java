@@ -277,7 +277,7 @@ public class EbikeServiceImp implements IEbikeService {
 		ws.addCell(new Label(j0 += 1, 2, "VC_EBIKE_INVOICE", wcfFC2));
 		List<DdcDaxxb> daxxbs = iDdcDaxxbDao.findByProperty("synFlag", "UP");
 		int i = 3;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcDaxxb daxxb : daxxbs) {
 			int j = 0;
 			ws.addCell(new Label(j, i, String.valueOf(daxxb.getId())));
@@ -364,7 +364,7 @@ public class EbikeServiceImp implements IEbikeService {
 				.findByProperty("sysFlag", "ADD");
 		int i = 3;
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcApproveUser ddcApproveUser : ddcApproveUsers) {
 			int j = 0;
 			ws.addCell(new Label(j, i, ddcApproveUser.getUserName()));
@@ -450,7 +450,7 @@ public class EbikeServiceImp implements IEbikeService {
 		List<DdcFlow> ddcFlows = iDdcFlowDao.findByProperty("synFlag", "ADD");
 		int i = 3;
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcFlow ddcFlow : ddcFlows) {
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, ddcFlow.getLsh()));
@@ -538,7 +538,7 @@ public class EbikeServiceImp implements IEbikeService {
 		List<DdcHyxhBasb> ddcHyxhBasbs = iDdcHyxhBasbDao.findByProperty(
 				"synFlag", SystemConstants.SYSNFLAG_ADD);
 		int i = 3;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcHyxhBasb ddcHyxhBasb : ddcHyxhBasbs) {
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, ddcHyxhBasb.getLsh()));
@@ -605,7 +605,7 @@ public class EbikeServiceImp implements IEbikeService {
 		List<DdcHyxhBase> ddcHyxhBases = iDdcHyxhBaseDao.findByProperty(
 				"synFlag", SystemConstants.SYSNFLAG_UPDATE);
 		int i = 3;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcHyxhBase ddcHyxhBase : ddcHyxhBases) {
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, String.valueOf(ddcHyxhBase.getId())));
@@ -681,7 +681,7 @@ public class EbikeServiceImp implements IEbikeService {
 		ws.addCell(new Label(j += 1, 2, "SHFLAG", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "TOTALPE", wcfFC2));
 		int i = 3;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcHyxhSsdw ddcHyxhSsdw : ddcHyxhSsdws) {
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, String.valueOf(ddcHyxhSsdw.getId())));
@@ -771,7 +771,7 @@ public class EbikeServiceImp implements IEbikeService {
 		ws.addCell(new Label(j += 1, 2, "ENABLE", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "VC_EBIKE_INVOICE", wcfFC2));
 		int i = 3;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcHyxhSsdwclsb ddcHyxhSsdwclsb : ddcHyxhSsdwclsbs) {
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, ddcHyxhSsdwclsb.getLsh()));

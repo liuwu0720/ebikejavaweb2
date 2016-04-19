@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 .btn{
 	width: 100px;
 	height: 32px;
-	background-color: #A9A9F7;
+	background-color: #B2E2F6;
 	text-align: center;
 }
 .btndiv{

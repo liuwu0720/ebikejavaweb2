@@ -330,9 +330,9 @@ public class SsdwChangeAction {
 			String type = "B";// 变更
 			newDaxxb.setYwlx(type);
 			newDaxxb.setSlyj(null);// 审批中
-			newDaxxb.setGdyj(null);
+			// newDaxxb.setGdyj(null);
 			newDaxxb.setSlrq(null);
-			newDaxxb.setGdrq(null);
+			// newDaxxb.setGdrq(null);
 			saveDdcFlow(type, newDaxxb, slzls, null, note);
 
 			// 保存日志
@@ -440,7 +440,7 @@ public class SsdwChangeAction {
 			String type = "D";// 注销
 			daxxb.setYwlx(type);
 			daxxb.setSlyj(null);// 审批中
-			daxxb.setGdyj(null);
+			// daxxb.setGdyj(null);
 			saveDdcFlow(type, daxxb, newSlzl, newYwyy, slbz);
 			saveDaxxblog(daxxb, request);
 			iEbikeService.update(daxxb);
