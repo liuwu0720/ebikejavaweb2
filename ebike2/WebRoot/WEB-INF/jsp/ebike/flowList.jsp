@@ -85,7 +85,12 @@ $(document).ready(function(){
 				}else if(value == 1){
 					return "不同意";
 				}else{
-					return "审批中 ";
+					if(row.SL_INDEX==0){
+						return "等待协会审批 ";
+					}else{
+						return "等待交警审批 ";
+					}
+					
 				}
 			}
 		},{

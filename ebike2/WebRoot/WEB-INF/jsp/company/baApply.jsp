@@ -130,7 +130,6 @@ $(document).ready(function(){
 			handler : function() {
 				addRowData();
 			}
-		}
 		}],
 		onLoadSuccess:function(){  
             $('#dg').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题  
@@ -396,7 +395,7 @@ function exportRowData(){
 						data-options="required:true" name="ppxh"
 						style="height: 32px;"></input></td>
 					<td>车身颜色</td>
-					<td><input id="cysy" name="cysy" data-options="required:true" style="height:30px;"></td>
+					<td><input id="cysy" name="cysy"  style="height:30px;"></td>
 				</tr>
 				<tr>
 					<td>电机号：</td>
@@ -482,7 +481,7 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>行驶区域</td>
-					<td><input id="xsqy" name="xsqy"  data-options="required:true"  style="height:30px;"></td>
+					<td><input id="xsqy" name="xsqy"    style="height:30px;"></td>
 					<td>备注</td>
 					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
 				</tr>

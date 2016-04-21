@@ -93,6 +93,7 @@ public class DdcFlow implements java.io.Serializable {
 	private String vcEbikeInvoiceImgShow;
 	private String vcTableName;
 	private Long iTableId;
+	private Integer slIndex;
 
 	// Constructors
 
@@ -804,6 +805,19 @@ public class DdcFlow implements java.io.Serializable {
 	 */
 	public void setiTableId(Long iTableId) {
 		this.iTableId = iTableId;
+	}
+
+	@Column(name = "SL_INDEX")
+	public Integer getSlIndex() {
+		return slIndex;
+	}
+
+	/**
+	 * @param slIndex
+	 *            : set the property slIndex.
+	 */
+	public void setSlIndex(Integer slIndex) {
+		this.slIndex = slIndex;
 	}
 
 }

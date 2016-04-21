@@ -134,6 +134,7 @@ public class SystemConstants {
 	 * 测试帐号
 	 */
 	public static final String TEST_USER = "cs";
+	public static final Integer EXCEL_PATH = 2;
 
 	public static void main(String[] args) {
 		String codeString = "13366665555";

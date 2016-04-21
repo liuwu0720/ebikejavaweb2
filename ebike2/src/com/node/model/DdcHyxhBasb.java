@@ -120,7 +120,7 @@ public class DdcHyxhBasb implements java.io.Serializable {
 		this.sqr = sqr;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "SQRQ", length = 7)
 	public Date getSqrq() {
 		return this.sqrq;
@@ -175,7 +175,7 @@ public class DdcHyxhBasb implements java.io.Serializable {
 		this.bjbm = bjbm;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "BJRQ", length = 7)
 	public Date getBjrq() {
 		return this.bjrq;
@@ -203,7 +203,7 @@ public class DdcHyxhBasb implements java.io.Serializable {
 		this.tranFlag = tranFlag;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TRAN_DATE", length = 7)
 	public Date getTranDate() {
 		return this.tranDate;

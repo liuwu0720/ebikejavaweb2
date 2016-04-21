@@ -331,7 +331,7 @@ public class SsdwChangeAction {
 			newDaxxb.setYwlx(type);
 			newDaxxb.setSlyj(null);// 审批中
 			// newDaxxb.setGdyj(null);
-			newDaxxb.setSlrq(null);
+			// newDaxxb.setSlrq(null);
 			// newDaxxb.setGdrq(null);
 			saveDdcFlow(type, newDaxxb, slzls, null, note);
 
@@ -477,6 +477,7 @@ public class SsdwChangeAction {
 		String lsh = ywlxType + md + seq + "";// 生成流水表流水号
 		ddcFlow.setLsh(lsh);
 		ddcFlow.setYwlx(ywlxType);// A-备案 B-变更 C-转移 D-注销 E-检查
+		ddcFlow.setSlyj(null);
 		ddcFlow.setSlrq(new Date());
 		ddcFlow.setId(null);
 		ddcFlow.setYwyy(newYwyy);
@@ -485,7 +486,12 @@ public class SsdwChangeAction {
 		ddcFlow.setVcTableName(newDaxxb.getClass().getSimpleName());
 		ddcFlow.setiTableId(newDaxxb.getId());
 		ddcFlow.setGdrq(null);
-		ddcFlow.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+		ddcFlow.setSlIndex(0);
+		if (ddcFlow.getYwlx().equals("D")) {
+			ddcFlow.setSynFlag(null);
+		} else {
+			ddcFlow.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+		}
 
 		iEbikeService.saveDdcFlow(ddcFlow);
 	}

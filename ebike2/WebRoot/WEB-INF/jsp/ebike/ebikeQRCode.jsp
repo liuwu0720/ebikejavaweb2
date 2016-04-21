@@ -105,7 +105,7 @@ function exportPage() {
    	<div class="content">
 	<div class="contentLeft">
 	<div  class="photo">
-	<img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"/>
+	<img id="img2_2"  src="<%=basePath%>static/images/iconfont-wu.png"/>
 	</div>
 	<div  class="qrcode">
 	<div id="qrcode2">

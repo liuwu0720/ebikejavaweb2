@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,15 +33,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.node.model.FileRecord;
 import com.node.model.PicPath;
 import com.node.service.ICompanyService;
+import com.node.service.IDataService;
 import com.node.service.IEbikeService;
 import com.node.service.IUserService;
+import com.node.util.AjaxUtil;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
 import com.node.util.ServiceUtil;
+import com.node.util.SystemConstants;
 
 /**
  * 类描述：数据导出
@@ -61,6 +68,9 @@ public class DataAction {
 
 	@Autowired
 	IEbikeService iEbikeService;
+
+	@Autowired
+	IDataService iDataService;
 
 	@RequestMapping("/export")
 	public String export() {
@@ -94,7 +104,8 @@ public class DataAction {
 	public String exportExcel(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, WriteException {
 		try {
-			PicPath imgPath = iCompanyService.getPathById(2);
+			PicPath imgPath = iCompanyService
+					.getPathById(SystemConstants.EXCEL_PATH);
 			String path = imgPath.getVcAddpath();
 			String fileName = createFileName() + ".xls";
 			String filePath = path + "/" + fileName;// 写入
@@ -123,44 +134,44 @@ public class DataAction {
 			 * 档案信息表
 			 */
 			WritableSheet ws = wwb.createSheet("DAXXB", 0);
-			iEbikeService.createDaxxbExcel(wcfFC, wcfFC2, ws);
+			iDataService.createDaxxbExcel(wcfFC, wcfFC2, ws);
 
 			/**
 			 * 审批信息表
 			 */
 			WritableSheet ws2 = wwb.createSheet("ddc_approve_user", 1);
-			iEbikeService.createApproveUsers(wcfFC, wcfFC2, ws2);
+			iDataService.createApproveUsers(wcfFC, wcfFC2, ws2);
 			/**
 			 * 流水表DDCFLOW 只新增
 			 */
 			WritableSheet ws3 = wwb.createSheet("ddcflow", 2);
-			iEbikeService.createDdcflows(wcfFC, wcfFC2, ws3);
+			iDataService.createDdcflows(wcfFC, wcfFC2, ws3);
 			/**
 			 * 配额申报 ddc_hyxh_basb 只新增
 			 */
 			WritableSheet ws4 = wwb.createSheet("ddc_hyxh_basb", 3);
-			iEbikeService.createDdcHyxhBasb(wcfFC, wcfFC2, ws4);
+			iDataService.createDdcHyxhBasb(wcfFC, wcfFC2, ws4);
 			/**
 			 * 行业协会 ddc_hyxh_base:外网只会更新信息，不会新增
 			 */
 			WritableSheet ws5 = wwb.createSheet("ddc_hyxh_base", 4);
-			iEbikeService.createDdcHyxhBase(wcfFC, wcfFC2, ws5);
+			iDataService.createDdcHyxhBase(wcfFC, wcfFC2, ws5);
 			/**
 			 * ddc_hyxh_ssdw:外网新增或修改数据
 			 */
 			WritableSheet ws6 = wwb.createSheet("ddc_hyxh_ssdw", 5);
-			iEbikeService.createDdcHyxhSsdw(wcfFC, wcfFC2, ws6);
+			iDataService.createDdcHyxhSsdw(wcfFC, wcfFC2, ws6);
 			/**
 			 * ddc_hyxh_ssdwclsb:外网只新增数据
 			 */
 			WritableSheet ws7 = wwb.createSheet("ddc_hyxh_ssdwclsb", 6);
-			iEbikeService.createDdcHyxhSsdwClSb(wcfFC, wcfFC2, ws7);
+			iDataService.createDdcHyxhSsdwClSb(wcfFC, wcfFC2, ws7);
 			FileRecord fileRecord = new FileRecord();
 			fileRecord.setFilePath(outPath);
 			fileRecord.setFileName(fileName);
 			fileRecord.setFlag(1);// 0-导入 1-导出
 			fileRecord.setDateTime(new Date());
-			iEbikeService.saveFileRecord(fileRecord);
+			iDataService.saveFileRecord(fileRecord);
 			wwb.write();
 			wwb.close();
 
@@ -186,5 +197,61 @@ public class DataAction {
 		String formatDate = format.format(new Date());
 
 		return formatDate + "_W";
+	}
+
+	/**
+	 * 
+	 * 方法描述：数据同步：excel导入
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月21日 下午4:44:45
+	 */
+	@RequestMapping("/importExcel")
+	public void importExcel(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		// 判断 request 是否有文件上传,即多部分请求...
+		if (multipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				String message = "success";
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file.isEmpty()) {
+					AjaxUtil.rendJson(response, false, "上传的文件为空");
+					return;
+				}
+				message = iDataService.updateReadExcel(file.getInputStream());
+				if (message.equalsIgnoreCase("success")) {
+					try {
+						PicPath picPath = iCompanyService
+								.getPathById(SystemConstants.EXCEL_PATH);
+						String getImagePath = picPath.getVcAddpath();// 保存路径
+						String fileName = file.getOriginalFilename();
+						File image2 = new File(getImagePath, fileName);
+						file.transferTo(image2);
+						FileRecord fileRecord = new FileRecord();
+						fileRecord.setDateTime(new Date());
+						fileRecord.setFileName(fileName);
+						fileRecord.setFilePath(picPath.getVcParsePath() + "/"
+								+ fileName);
+						fileRecord.setFlag(0);// 0-导入 1-导出
+						iDataService.saveFileRecord(fileRecord);
+						AjaxUtil.rendJson(response, true, "成功");
+					} catch (Exception e) {
+						e.printStackTrace();
+						AjaxUtil.rendJson(response, false, "失败!系统错误");
+					}
+				} else {
+					AjaxUtil.rendJson(response, false, "操作失败，原因:" + message);
+				}
+
+			}
+		}
 	}
 }

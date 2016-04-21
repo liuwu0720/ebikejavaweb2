@@ -175,8 +175,10 @@ public class UserServiceImp implements IUserService {
 	 */
 	@Override
 	public DdcHyxhSsdw getSsdwByUserCode(String cuser) {
-		List<DdcHyxhSsdw> ddcHyxhSsdws = iDdcHyxhSsdwDao.findByProperty(
-				"userCode", cuser);
+		String[] propertieStrings = { "userCode", "zt" };
+		String[] valueStrings = { cuser, SystemConstants.ENABLE_ZT };
+		List<DdcHyxhSsdw> ddcHyxhSsdws = iDdcHyxhSsdwDao.findByPropertys(
+				propertieStrings, valueStrings);
 		if (CollectionUtils.isEmpty(ddcHyxhSsdws)) {
 			return null;
 		} else {

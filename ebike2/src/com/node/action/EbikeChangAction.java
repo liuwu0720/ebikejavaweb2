@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.node.model.DdcApproveUser;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcFlow;
@@ -644,27 +645,51 @@ public class EbikeChangAction {
 	@RequestMapping("/sureState")
 	public void sureState(HttpServletRequest request,
 			HttpServletResponse response, String id, String note, String state) {
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER);
 		DdcFlow ddcFlow = iApplyService.getDdcFlowById(Long.parseLong(id));
-		ddcFlow.setGdrq(new Date());
-		ddcFlow.setGdyj(state);
-		ddcFlow.setGdbz(note);
-		ddcFlow.setSlyj(state);
+
+		if (!ddcFlow.getYwlx().equals("D")) {
+			ddcFlow.setSlyj(state);
+			ddcFlow.setGdrq(new Date());
+			ddcFlow.setGdbz(note);
+			ddcFlow.setGdyj(state);
+		}
+		DdcApproveUser ddcApproveUser = new DdcApproveUser();
+		ddcApproveUser.setApproveIndex(1);
+		String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
+		Object object = iApplyService.getDateBySQL(sql);
+		String seq = object.toString();
+		String md = new SimpleDateFormat("yyMMdd").format(new Date());
+		String approveNo = "W" + md + seq;// 生成审批号
+		ddcApproveUser.setApproveNo(approveNo);
+		ddcApproveUser.setApproveNote(note);
+		ddcApproveUser.setApproveState(Integer.parseInt(state));
+		ddcApproveUser.setApproveTable(ddcFlow.getClass().getSimpleName());
+		ddcApproveUser.setApproveTableid(ddcFlow.getId());
+		ddcApproveUser.setApproveTime(new Date());
+		ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+		ddcApproveUser.setTranDate(new Date());
+		ddcApproveUser.setUserRoleName("行业协会");
+		ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
 		if (state.equals("0")) {
 
-			// 同意---注销 所属单位回收配额，档案表受理意见改为同意
+			// 同意---注销 ，档案表受理意见改为同意
 			DdcDaxxb daxxb = iApplyService.getDdcDaxxbByDabh(ddcFlow.getDabh());
 			if (daxxb != null) {
 				daxxb.setSlyj(state);
 				DdcHyxhSsdw ddcHyxhSsdw = iApplyService
 						.getDdcHyxhSsdwById(daxxb.getSsdwId());
 				if (ddcFlow.getYwlx().equalsIgnoreCase("D")) {
-					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
+					ddcFlow.setSlIndex(1);// 内网审批
+					ddcFlow.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 				}
 
 				try {
+					iApplyService.saveDdcApproveUser(ddcApproveUser);
 					iEbikeService.update(daxxb);
 					iEbikeService.updateDdcFlow(ddcFlow);
-					iEbikeService.updateDdcHyxhSsdw(ddcHyxhSsdw);
+
 					AjaxUtil.rendJson(response, true, "操作成功");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -683,7 +708,9 @@ public class EbikeChangAction {
 				daxxb.setSlyj(state);
 				try {
 					iEbikeService.update(daxxb);
+					ddcFlow.setSlyj(state);
 					iEbikeService.updateDdcFlow(ddcFlow);
+					iApplyService.saveDdcApproveUser(ddcApproveUser);
 					AjaxUtil.rendJson(response, true, "操作成功");
 				} catch (Exception e) {
 					e.printStackTrace();

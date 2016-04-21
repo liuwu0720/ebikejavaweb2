@@ -95,7 +95,7 @@ $(document).ready(function(){
 			width : 80,
 			formatter:function(value,row,index){
 				if(value == null){
-				   return "等待协会审批";
+				   return "等待审批";
 				}else if(value == 0){
 					return "已审核(同意) ";
 				}else if(value == 1){
@@ -115,7 +115,13 @@ $(document).ready(function(){
 				if(row.SLYJ == null){
 					return query;	
 				}else{
-					return query+update+del;	
+					if(row.YWLX == 'D'){
+						return query;	
+					}else{
+						return query+update+del;
+					}
+					
+				
 				}
 							
 			
