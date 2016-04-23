@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.FileRecord;
 import com.node.model.PicPath;
 import com.node.service.ICompanyService;
@@ -58,6 +59,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/dataAction")
+@ApiIgnore
 public class DataAction {
 
 	@Autowired

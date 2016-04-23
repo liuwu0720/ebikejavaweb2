@@ -2,13 +2,14 @@
 	margin: 0;
 	padding: 0;
 }
+
 a {
-cursor: pointer;
-    color: blue;	
+	cursor: pointer;
+	color: blue;
 }
+
 a:visited {
 	text-decoration: none;
-	
 }
 
 a:link {
@@ -20,13 +21,12 @@ ul li {
 	list-style-type: none;
 }
 
-.input_border0 input{
+.input_border0 input {
 	border: 0;
 }
 
 #main {
 	border-collapse: collapse;
-	
 	width: 100%;
 }
 
@@ -51,10 +51,12 @@ ul li {
 	text-align: left;
 	padding-left: 5px;
 }
-.dialogtable{
+
+.dialogtable {
 	border-collapse: collapse;
 	width: 100%;
 }
+
 .dialogtable tr,.dialogtable th,.dialogtable td {
 	border: 1px solid #C4E1FF;
 }
@@ -73,48 +75,51 @@ ul li {
 
 .dialogtable td {
 	text-align: left;
-	vertical-align:middle;
+	vertical-align: middle;
 	width: 60%;
 }
-.dialogtable input{
+
+.dialogtable input {
 	border: 0;
 	margin-top: 5px;
 }
-.borderinput input{
+
+.borderinput input {
 	border: 1px solid red;
 }
-
-
 
 .maindiv {
 	background-color: #CCC5FD;
 	vertical-align: middle;
 	width: 100%;
 }
- h2{
+
+h2 {
 	text-align: center;
 }
+
 .maindiv input {
 	vertical-align: middle;
 	padding: 0;
 }
 
-.searchdiv{
+.searchdiv {
 	padding: 5px 0 5px 10px;
-    background: #E8F1FF;
-    /* margin: 5px; */
-    text-align: left;
-}
-.searchdiv input{
-	height:30px;
+	background: #E8F1FF;
+	/* margin: 5px; */
+	text-align: left;
 }
 
-.searchspan{
+.searchdiv input {
+	height: 30px;
+}
+
+.searchspan {
 	text-align: center;
 	color: red;
 }
 
-.carddiv{
+.carddiv {
 	background-color: #E4E4FB;
 	vertical-align: middle;
 }
@@ -126,8 +131,8 @@ ul li {
     background: -o-linear-gradient(#eaf2ff, #efefef); Opera 11.1 - 12.0
     background: -moz-linear-gradient(#eaf2ff, #efefef); Firefox 3.6 - 15
     background: linear-gradient(#eaf2ff, #efefef); 标准的语法（必须放在最后） */
-    background: url(../../static/images/leftmenu.png) no-repeat ;
-    background-color: #B2E2F6;
+	background: url(../../static/images/leftmenu.png) no-repeat;
+	background-color: #B2E2F6;
 	color: #C84AFC;
 	position: fixed;
 	top: 0;
@@ -135,7 +140,7 @@ ul li {
 	height: 680px;
 	z-index: 12;
 	overflow: hidden;
-	width:220px;
+	width: 220px;
 	padding: 15px 10px 0 20px;
 }
 
@@ -162,7 +167,7 @@ ul li {
 
 .menu-ul li {
 	margin: 5px 0;
-/* 	border-top: 1px solid #fff; */
+	/* 	border-top: 1px solid #fff; */
 	position: relative;
 	display: block;
 }
@@ -192,12 +197,15 @@ ul li {
 	font-size: 16px;
 	color: #7777de;
 }
-.menu-li ul{
+
+.menu-li ul {
 	display: none;
 }
-.open ul{
-	display: block!important;
+
+.open ul {
+	display: block !important;
 }
+
 .menu-title {
 	padding: 10px;
 	height: 60px;
@@ -222,38 +230,34 @@ ul li {
 	width: 400px;
 	padding: 1px;
 	margin-left: 87px;
-	
-	
 
 	/* filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../static/images/header.png'); IE6
 	background-image: none; IE6    background-color: #24748f; #c4e1ff*/
 }
 
-.headerdiv{
+.headerdiv {
 	background-image: url(../../static/images/headbackground.png);
 	width: 100%;
-    height: 200px;
-    position: absolute; 
-    padding-top: 13px;
-    /* background：#24748f;
+	height: 200px;
+	position: absolute;
+	padding-top: 13px;
+	/* background：#24748f;
     background: -webkit-linear-gradient(#24748f, #c4e1ff);  
     background: -o-linear-gradient(#24748f, #c4e1ff);  
     background: -moz-linear-gradient(#24748f, #c4e1ff);  
     background: linear-gradient(#24748f, #c4e1ff);    */
-    
 }
 
 .setting-header {
 	margin-top: -5px;
 }
 
-.headerdiv i{
-	color:#95e79f;
+.headerdiv i {
+	color: #95e79f;
 }
 
 .header-icon {
 	font-size: 54px;
-	
 	position: relative;
 	left: -77px;
 	top: 10px;
@@ -308,29 +312,28 @@ ul li {
 	color: blue;
 }
 
-
 /**************************** 欢迎页面 ***********************/
-.main_welcome{
+.main_welcome {
 	background-color: #E8F1FF;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-}
-.main_welcome_icon{
+	height: 100%;
 	width: 100%;
-    height: 200px;
-    margin: 0 auto;
-    padding-top: 10%;
-    text-align: center;
-    font-size: 25px;
-    color: #5720AF;
+	position: absolute;
 }
-.main_welcome i{
-	font-size: 90px;
+
+.main_welcome_icon {
+	width: 100%;
+	height: 200px;
+	margin: 0 auto;
+	padding-top: 10%;
+	text-align: center;
+	font-size: 25px;
 	color: #5720AF;
 }
 
-
+.main_welcome i {
+	font-size: 90px;
+	color: #5720AF;
+}
 
 input {
 	height: 30px;
@@ -490,34 +493,39 @@ table td[class*="col-"],table th[class*="col-"] {
 	background-color: #E4E4FB;
 	vertical-align: middle;
 }
-.tablediv p{
+
+.tablediv p {
 	text-align: center;
 }
 
 .tablediv input {
 	vertical-align: middle;
 }
-.table-btndiv{
+
+.table-btndiv {
 	text-align: center;
 }
-.table-btndiv button{
+
+.table-btndiv button {
 	width: 100px;
 	height: 32px;
 	background-color: #B2E2F6;
 	text-align: center;
 }
+
 .btn {
 	width: 100px;
 	height: 32px;
 	background-color: #B2E2F6;
 	text-align: center;
 }
+
 .btn_primary {
 	width: 100px;
 	height: 32px;
 	color: white;
 	background: #428bca;;
-    border-color: #357ebd;
+	border-color: #357ebd;
 	text-align: center;
 	cursor: pointer;
 }
@@ -529,6 +537,7 @@ table td[class*="col-"],table th[class*="col-"] {
 	text-align: center;
 	cursor: pointer;
 }
+
 .btndiv {
 	text-align: center;
 }
@@ -547,7 +556,7 @@ table td[class*="col-"],table th[class*="col-"] {
 	background: #bbb;
 }
 
-.photo img{
+.photo img {
 	width: 150px;
 	height: 180px;
 }
@@ -557,37 +566,47 @@ table td[class*="col-"],table th[class*="col-"] {
 	height: 180px;
 	margin-top: 15px;
 }
-.qrcode span{
+
+.qrcode span {
 	text-align: center;
 }
+
 #ebikeQRCode .contentRight li {
 	padding: 6px;
 	color: #24748f;
 	font-size: 14px;
 }
 
- #ebikeQRCode .warm {
- 	color: #24748f;
- 	margin: 7px;
- }
- 
- #ebikeQRCode .content {
- 	height: 400;
- }
- 
- #ebikeQRCode .content .contentLeft{
- 	float:left; margin-left: 5%;height:400px
- }
- 
- #ebikeQRCode .content .contentRight {
- float:left;margin-left: 20px;
- }
+#ebikeQRCode .warm {
+	color: #24748f;
+	margin: 7px;
+}
 
-#ebikeQRCode .contentRight li label{  
+#ebikeQRCode .content {
+	margin: 1px auto;
+    height: 375px;
+    width: 528px;
+    border: 1px solid red;
+    padding-top: 10px;
+}
+
+#ebikeQRCode .content .contentLeft {
+	float: left;
+	margin-left: 5%;
+}
+
+#ebikeQRCode .content .contentRight {
+	float: left;
+	margin-left: 20px;
+}
+
+#ebikeQRCode .contentRight li label {
 	color: black;
 	font-size: 14px;
 }
- .btndiv_print {
-	position: fixed; bottom: 10px;right:43%
-}
 
+.btndiv_print {
+	position: fixed;
+	bottom: 10px;
+	right: 43%
+}

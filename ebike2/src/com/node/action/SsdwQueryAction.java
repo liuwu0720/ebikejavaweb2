@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcHyxhSsdw;
 import com.node.service.IEbikeService;
 import com.node.util.Page;
@@ -33,6 +34,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/ssdwQueryAction")
+@ApiIgnore
 public class SsdwQueryAction {
 	@Autowired
 	IEbikeService iEbikeService;

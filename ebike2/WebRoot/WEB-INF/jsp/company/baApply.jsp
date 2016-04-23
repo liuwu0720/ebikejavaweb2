@@ -32,7 +32,7 @@ $(document).ready(function(){
 		pagination : true,
 		rownumbers : true,
 		pageSize:size,
-		//singleSelect : true,//只选中单行
+		singleSelect : true,//只选中单行
 		height:h,
 		width:w,
 		loadMsg:'正在加载,请稍等...',
@@ -42,12 +42,6 @@ $(document).ready(function(){
 			}
 		},
 		columns : [ [{
-			field : 'ID',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'LSH',
 			title : '流水号',
 			align:'center',
@@ -111,10 +105,10 @@ $(document).ready(function(){
 			width : 120,
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;"
-				
+				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>修改</a>&nbsp;&nbsp;&nbsp;"
 				var cancel = "<a  href='javascript:void(0)'  onclick='cancelSb("+row.ID+")'>退回</a>"
 				if(row.SL_INDEX == 0){
-					return query+cancel;
+					return query+update+cancel;
 				}else{
 					return query;
 				}
@@ -217,7 +211,31 @@ function queryRow(id){
 	});
 	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id;
 }
+//修改申报详情
+function updateRow(id){
+	$.messager.progress({
+		text:"正在处理，请稍候..."
+	});
+	$.post("<%=basePath%>ssdwAction/cancelSb", 
+			{id:id},    
+			   function (data, textStatus)
+			   {     
+					
+				if (data.isSuccess) {
+					$.messager.show({ // show error message
+						title : '提示',
+						msg : data.message
+					});
+					$("#dg").datagrid('reload');
+					window.location.href="<%=basePath%>applyAction/updateRecordApprovalInfoById?id="+id;
+				}else{
+					alert(data.message);
+				}
+				$.messager.progress('close'); // 如果提交成功则隐藏进度条
+			   }
+		  ,"json");
 
+}
 
 
 

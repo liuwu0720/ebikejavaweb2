@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcFlow;
@@ -57,6 +58,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/ssdwChangeAction")
+@ApiIgnore
 public class SsdwChangeAction {
 
 	@Autowired
@@ -478,7 +480,7 @@ public class SsdwChangeAction {
 		ddcFlow.setLsh(lsh);
 		ddcFlow.setYwlx(ywlxType);// A-备案 B-变更 C-转移 D-注销 E-检查
 		ddcFlow.setSlyj(null);
-		ddcFlow.setSlrq(new Date());
+		ddcFlow.setSlrq(new Date());// 申请日期
 		ddcFlow.setId(null);
 		ddcFlow.setYwyy(newYwyy);
 		ddcFlow.setSlzl(slzls);

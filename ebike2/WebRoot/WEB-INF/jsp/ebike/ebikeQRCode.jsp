@@ -70,7 +70,7 @@ function exportPage() {
     	
   <div id="ebikeQRCode">		
   <div class="content"  >
-	  <div class="contentLeft" style="">
+	  <div class="contentLeft" >
 		    <div  class="photo">
 		    <img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"/>
 		    </div>
@@ -126,7 +126,6 @@ function exportPage() {
 	<li><label>车身颜色&nbsp;:&nbsp;</label> ${ddcDaxxb.cysyName }</li>
 	<li><label>行驶区域&nbsp;:&nbsp;</label> ${ddcDaxxb.xsqyName }</li>
 	<li><label>车辆状态&nbsp;:&nbsp;</label>${ddcDaxxb.ztName }</li>
-	<li><label>业务类型&nbsp;:&nbsp;</label>${ddcDaxxb.ywlxName }</li>
 	<li><label>档案编号&nbsp;:&nbsp;</label>${ddcDaxxb.dabh}</li>
 	</ul>
 	</div>
@@ -134,10 +133,11 @@ function exportPage() {
 	</div>
 	</c:if>
 	<!--endprint-->	
-</div>  
-	   <div class="btndiv">
+	   <div  style="margin: 0 auto;">
 				<button type="button" onclick="exportPage()" class="btn_primary">打印</button>
 				<button type="button" class="btn_default" onclick="history.back()">返回</button>
 	   </div>
+</div>  
+	   
   </body>
 </html>

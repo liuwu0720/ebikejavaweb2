@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcApproveUser;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
@@ -53,6 +54,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/ebikeChangeAction")
+@ApiIgnore
 public class EbikeChangAction {
 
 	@Autowired
@@ -632,7 +634,7 @@ public class EbikeChangAction {
 
 	/**
 	 * 
-	 * 方法描述：
+	 * 方法描述：协会审批 注销、转移、变更
 	 * 
 	 * @param request
 	 * @param response
@@ -678,8 +680,7 @@ public class EbikeChangAction {
 			DdcDaxxb daxxb = iApplyService.getDdcDaxxbByDabh(ddcFlow.getDabh());
 			if (daxxb != null) {
 				daxxb.setSlyj(state);
-				DdcHyxhSsdw ddcHyxhSsdw = iApplyService
-						.getDdcHyxhSsdwById(daxxb.getSsdwId());
+
 				if (ddcFlow.getYwlx().equalsIgnoreCase("D")) {
 					ddcFlow.setSlIndex(1);// 内网审批
 					ddcFlow.setSynFlag(SystemConstants.SYSNFLAG_ADD);
@@ -704,7 +705,7 @@ public class EbikeChangAction {
 		} else {
 			// 拒绝
 			DdcDaxxb daxxb = iApplyService.getDdcDaxxbByDabh(ddcFlow.getDabh());
-			if (daxxb != null) {
+			if (daxxb != null && !daxxb.getYwlx().equals("D")) {
 				daxxb.setSlyj(state);
 				try {
 					iEbikeService.update(daxxb);

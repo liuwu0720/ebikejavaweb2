@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcApproveUser;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
@@ -56,6 +57,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/ssdwAction")
+@ApiIgnore
 public class SsdwAction {
 
 	@Autowired
@@ -203,6 +205,8 @@ public class SsdwAction {
 		ddcHyxhSsdwclsb.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
 		ddcHyxhSsdwclsb.setSqrq(new Date());
 		ddcHyxhSsdwclsb.setSqr(ddcHyxhSsdw.getUserCode());
+		ddcHyxhSsdwclsb.setnEnable(Integer.parseInt(SystemConstants.ENABLE_ZT));
+		ddcHyxhSsdwclsb.setSlIndex(0);
 		try {
 
 			String ebike_jpgPath = uploadImg(request, ebike_img,
@@ -284,9 +288,13 @@ public class SsdwAction {
 				String seq = object.toString();
 				String md = new SimpleDateFormat("yyMMdd").format(new Date());
 				ddcHyxhSsdwclsb.setLsh("B" + md + seq);
+				ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+				ddcHyxhSsdwclsb.setTranDate(new Date());
 				saveLog(ddcHyxhSsdwclsb, "新增", request);
 				iApplyService.saveDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			} else {
+				ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+				ddcHyxhSsdwclsb.setTranDate(new Date());
 				saveLog(ddcHyxhSsdwclsb, "修改", request);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
@@ -448,7 +456,7 @@ public class SsdwAction {
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 				AjaxUtil.rendJson(response, true, "已取消申报");
 			} else {
-				AjaxUtil.rendJson(response, false, "该申报申请正在审批中，无法取消");
+				AjaxUtil.rendJson(response, false, "该申报申请正在审批中，无法修改或取消取消");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

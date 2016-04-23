@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwLog;
@@ -51,6 +52,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/companyAction")
+@ApiIgnore
 public class CompanyAction {
 
 	@Autowired
@@ -178,6 +180,7 @@ public class CompanyAction {
 		ddcHyxhSsdw.setHyxhzh(ddcHyxhBase.getHyxhzh());
 		ddcHyxhSsdw.setSqrq(new Date());
 		ddcHyxhSsdw.setSqr(ddcHyxhBase.getHyxhmc());
+		ddcHyxhSsdw.setShFlag(1);
 		if (ddcHyxhSsdw.getId() == null) {
 			ddcHyxhSsdw.setPassWord("123456");
 		}
@@ -189,7 +192,7 @@ public class CompanyAction {
 		if (ddcHyxhSsdw.getId() == null) {
 			// 剩余配额减少
 			ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
-					- ddcHyxhSsdw.getDwpe());
+					- ddcHyxhSsdw.getTotalPe());
 			if (ddcHyxhBase.getHyxhsjzpe() <= 0) {
 				AjaxUtil.rendJson(response, false, "配额不足不能再分配");
 				return;
@@ -207,10 +210,11 @@ public class CompanyAction {
 		 */
 
 		if (ddcHyxhSsdw.getId() == null) {
+			// 帐号重复验证
 			String message = iCompanyService.queryIsSame(ddcHyxhSsdw);
 			if (message.equals("success")) {
 				try {
-					ddcHyxhSsdw.setTotalPe(ddcHyxhSsdw.getDwpe());
+					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe());
 					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 					ddcHyxhSsdw.setTranDate(new Date());
 					iCompanyService.save(ddcHyxhSsdw);
@@ -237,8 +241,8 @@ public class CompanyAction {
 				}
 				if (message.equals("success")) {
 					// 行业协会总配额
-					int minus = ddcHyxhSsdw.getDwpe()
-							- beforeDdcHyxhSsdw.getDwpe();
+					int minus = ddcHyxhSsdw.getTotalPe()
+							- beforeDdcHyxhSsdw.getTotalPe();
 					ddcHyxhBase
 							.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe() - minus);
 					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);

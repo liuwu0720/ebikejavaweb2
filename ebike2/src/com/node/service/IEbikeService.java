@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
+import com.node.model.DdcDriver;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhSsdw;
 import com.node.util.HqlHelper;
@@ -153,5 +154,17 @@ public interface IEbikeService {
 	 * @version: 2016年4月14日 下午5:30:53
 	 */
 	List<DdcDaxxb> findDdcDaxxbsByFlag(String flag);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param userCode
+	 * @param passWord
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月23日 上午9:05:05
+	 */
+	List<DdcDriver> findDriverByUserInfo(String userCode, String passWord);
 
 }

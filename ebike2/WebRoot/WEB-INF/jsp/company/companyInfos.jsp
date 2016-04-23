@@ -34,9 +34,8 @@ $(document).ready(function(){
 		fitColumns:true,   //数据列太少 未自适应
 		pagination : true,
 		rownumbers : true,
-		//singleSelect : true,//只选中单行
 		pageSize:size,
-		//singleSelect : true,//只选中单行
+		singleSelect : true,//只选中单行
 		height:h,
 		width:w,
 		loadMsg:'正在加载,请稍等...',
@@ -144,13 +143,6 @@ $(document).ready(function(){
 			}
 		}, {
 			id : 'btn2',
-			text : '批量审核',
-			iconCls : 'icon-reload',
-			handler : function() {
-				changeRowData();
-			}
-		}, {
-			id : 'btn2',
 			text : '修改',
 			iconCls : 'icon-edit',
 			handler : function() {
@@ -206,10 +198,16 @@ function queryRow(id){
 }
 
 //修改
-function updateRow(id){
+function updateRowData(id){
 	$('#dgform').form('clear');
-	
-	$.ajax({
+	var data = $('#dg').datagrid('getSelected');   
+	if(data){
+		 $('#dgformDiv').dialog('open').dialog('setTitle', '详情信息');
+		$('#dgform').form('load', data);
+	}else{
+		alert("请选择要修改的行");
+	}
+<%-- 	$.ajax({
 		type: "GET",
    	    url: "<%=basePath%>companyAction/queryInfoById",
    	   data:{
@@ -226,7 +224,7 @@ function updateRow(id){
  				 
  			  }
  		  }
-	})
+	}) --%>
 }
 
 //保存操作
@@ -376,7 +374,7 @@ function resetPassword(id){
 </div>
 	<!-- 点新增，编辑时弹出的表单 -->
 	<div id="dgformDiv" class="easyui-dialog"
-		style="width:550px;height:350px;padding:10px 20px 20px 20px;"
+		style="width:500px;height:450px;padding:10px 20px 20px 20px;"
 		closed="true" buttons="#dlg-buttons2">
 		<form id="dgform" class="easyui-form" enctype="multipart/form-data"  method="post">
 			<table class="table">
@@ -389,19 +387,41 @@ function resetPassword(id){
 						data-options="required:true" name="dwmc"  style="height: 32px;"></input></td>
 				</tr>
 				<tr>
+					<th> 组织机构代码证号：</th>
+					<td><input class="easyui-validatebox" type="text" 	name="zzjgdmzh" style="height: 32px"></input>
+					</td>
+				</tr>
+				<tr>
 					<th>单位帐号：</th>
 					<td><input class="easyui-validatebox" type="text"
 						data-options="required:true,validType:'username'" name="userCode"  style="height: 32px;"></input></td>
 				</tr>
 				
 				<tr>
-					<th>单位配额</th>
-					<td><input id="ss" class="easyui-numberspinner" name="dwpe" data-options="increment:1,required:true,validType:'number'" value="0" min="0" style="width:120px;height:30px;"></input>
+					<th>单位总配额</th>
+					<td><input  class="easyui-numberspinner" name="totalPe" data-options="increment:1,required:true,validType:'number'" value="0" min="0" style="width:120px;height:30px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<th>住所地址</th>
+					<td><input class="easyui-validatebox"  readonly="readonly"   name="zsdz" type="text"  style="height: 32px;width:200px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<th>联系人：</th>
+					<td><input class="easyui-validatebox" type="text"  name="lxr" style="height: 32px"></input>
+					</td>
+				</tr>
+				<tr >
+					<th>联系电话:</th>
+					<td><input class="easyui-validatebox"    type="text" name="lxdh" style="height: 32px"></input>
 					</td>
 				</tr>
 				
 			</table>
-			<div >
+			<div>
+				 <input type="hidden"   name="dwpe" >
+			    <input type="hidden"   name="passWord" >
 				<input type="hidden"   name="vcPicPath" >
 				<input  type="hidden"  name="id">
 			</div>

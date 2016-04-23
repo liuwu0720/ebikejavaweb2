@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.HyxhMenu;
 import com.node.service.IUserService;
@@ -31,6 +32,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/mainAction")
+@ApiIgnore
 public class MainAction {
 
 	@Autowired

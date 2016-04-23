@@ -93,9 +93,9 @@ $(document).ready(function(){
 			field : 'null',
 			title:'操作',
 			align:'center',
-			width : 120,
+			width : 80,
 			formatter:function(value,row,index){
-				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>";
+				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;";
 				var print = "<a  href='javascript:void(0)'  onclick='queryQRCode("+row.ID+")'>打印</a>";
 				return query+print;	
 			

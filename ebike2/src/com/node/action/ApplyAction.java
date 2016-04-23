@@ -48,6 +48,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcApproveUser;
 import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhBase;
@@ -74,6 +75,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/applyAction")
+@ApiIgnore
 public class ApplyAction {
 	@Autowired
 	IApplyService iApplyService;
@@ -872,6 +874,87 @@ public class ApplyAction {
 			request.setAttribute("type", type);
 		}
 		return "apply/recordDetail";
+	}
+
+	/**
+	 * 
+	 * 方法描述：修改备案申报详情
+	 * 
+	 * @param request
+	 * @param type
+	 * @param response
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月23日 上午10:13:20
+	 */
+	@RequestMapping("/updateRecordApprovalInfoById")
+	public String updateRecordApprovalInfoById(HttpServletRequest request,
+			String type, HttpServletResponse response, String id) {
+		long dId = Long.parseLong(id);
+		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
+				.getDdcHyxhSsdwclsbById(dId);
+
+		String cysyName = iApplyService.findByProPerties("CSYS",
+				ddcHyxhSsdwclsb.getCysy());
+
+		ddcHyxhSsdwclsb.setCysyName(cysyName);// 车身颜色
+		String xsqyName = iApplyService.findByProPerties("SSQY",
+				ddcHyxhSsdwclsb.getXsqy());
+		ddcHyxhSsdwclsb.setXsqyName(xsqyName);// 行驶区域
+
+		// 申报单位
+		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getSsdwId())) {
+			DdcHyxhSsdw ddcHyxhSsdw = iApplyService
+					.getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
+			if (ddcHyxhSsdw != null) {
+				ddcHyxhSsdwclsb.setSsdwName(ddcHyxhSsdw.getDwmc());
+			} else {
+				ddcHyxhSsdwclsb.setSsdwName(null);
+			}
+		}
+		String showEbikeImg = parseUrl(ddcHyxhSsdwclsb.getVcEbikeImg());
+		String showUser1Img = parseUrl(ddcHyxhSsdwclsb.getVcUser1Img());
+		String showUser2Img = parseUrl(ddcHyxhSsdwclsb.getVcUser2Img());
+		String vcUser1CardImg1Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser1CardImg1());
+		String vcUser1CardImg2Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser1CardImg2());
+		String vcUser2CardImg1Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser2CardImg1());
+		String vcUser2CardImg2Show = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser2CardImg2());
+		String vcEbikeInvoiceImgShow = parseUrl(ddcHyxhSsdwclsb
+				.getVcEbikeInvoiceImg());
+		ddcHyxhSsdwclsb.setVcShowEbikeImg(showEbikeImg);
+		ddcHyxhSsdwclsb.setVcShowUser1Img(showUser1Img);
+		ddcHyxhSsdwclsb.setVcShowUser2Img(showUser2Img);
+		ddcHyxhSsdwclsb.setVcUser1CardImg1Show(vcUser1CardImg1Show);
+		ddcHyxhSsdwclsb.setVcUser1CardImg2Show(vcUser1CardImg2Show);
+		ddcHyxhSsdwclsb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
+		ddcHyxhSsdwclsb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
+		ddcHyxhSsdwclsb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
+		String approveTableName = SystemConstants.RECORDSBTABLE;
+		List<DdcApproveUser> approveUsers = iApplyService
+				.findApproveUsersByProperties(approveTableName,
+						ddcHyxhSsdwclsb.getId());
+		List<DdcSjzd> selectlTbyy = iApplyService.getDbyyList(
+				ddcHyxhSsdwclsb.getTbyy(), "TBYY");// 选中的退办原因
+		List<DdcSjzd> selectSlzls = iApplyService.getDbyyList(
+				ddcHyxhSsdwclsb.getSlzl(), "BASQZL");
+		List<DdcSjzd> dbyyDdcSjzds = iApplyService.getSjzdByDmlb("TBYY");// 数据字典中所有的退办原因
+		List<DdcSjzd> slzList = iApplyService.getSjzdByDmlb("BASQZL");// 数据字典中所有的受理资料
+		request.setAttribute("selectSlzls", selectSlzls);
+		request.setAttribute("selectlTbyy", selectlTbyy);
+		request.setAttribute("approveUsers", approveUsers);
+		request.setAttribute("ddcHyxhSsdwclsb", ddcHyxhSsdwclsb);
+		request.setAttribute("dbyyDdcSjzds", dbyyDdcSjzds);
+		request.setAttribute("slzList", slzList);
+		if (StringUtils.isNotBlank(type)) {
+			request.setAttribute("type", type);
+		}
+		return "apply/recordUpdate";
 	}
 
 	/**

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.node.dao.IDdcApprovalUserDao;
 import com.node.dao.IDdcDaxxbDao;
 import com.node.dao.IDdcDaxxbLogDao;
+import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHyxhBasbDao;
 import com.node.dao.IDdcHyxhBaseDao;
@@ -24,6 +25,7 @@ import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IFileRecordDao;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
+import com.node.model.DdcDriver;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhSsdw;
 import com.node.service.IEbikeService;
@@ -63,6 +65,9 @@ public class EbikeServiceImp implements IEbikeService {
 	IDdcHyxhSsdwclsbDao iDdcHyxhSsdwclsbDao;
 	@Autowired
 	IFileRecordDao iFileRecordDao;
+
+	@Autowired
+	IDdcDriverDao iDdcDriverDao;
 
 	/*
 	 * (non-Javadoc)
@@ -203,6 +208,20 @@ public class EbikeServiceImp implements IEbikeService {
 	public List<DdcDaxxb> findDdcDaxxbsByFlag(String flag) {
 		// TODO Auto-generated method stub
 		return iDdcDaxxbDao.findByProperty("synFlag", flag);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#findDriverByUserInfo(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public List<DdcDriver> findDriverByUserInfo(String userCode, String passWord) {
+		String[] propertyNames = { "userCode", "userPassword" };
+		Object[] values = { userCode, passWord };
+		return iDdcDriverDao.findByPropertys(propertyNames, values);
 	}
 
 	/*

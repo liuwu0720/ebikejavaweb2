@@ -116,7 +116,12 @@ $(document).ready(function(){
 					return query;	
 				}else{
 					if(row.YWLX == 'D'){
-						return query;	
+						if(row.SLYJ ==0){
+							return query;	
+						}else{
+							return query+update+del;
+						}
+						
 					}else{
 						return query+update+del;
 					}

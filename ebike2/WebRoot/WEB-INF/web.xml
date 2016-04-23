@@ -25,7 +25,7 @@
   <filter-class>com.node.filter.SysFilter</filter-class>
   <init-param>
    <param-name>exclude</param-name>
-   <param-value>/|/index.jsp|*.css|*.js|*.gif|*.png|*.jpg|/makeCodePic.jsp|/userAction/checkUser</param-value>
+   <param-value>/|/index.jsp|*.css|*.js|*.gif|*.png|*.jpg|/makeCodePic.jsp|/userAction/checkUser|/appAction/*</param-value>
   </init-param>
  </filter>
  <filter-mapping>

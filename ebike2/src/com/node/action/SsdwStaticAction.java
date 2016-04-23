@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
+
 /**
  * 类描述：
  * 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/ssdwStaticAction")
+@ApiIgnore
 public class SsdwStaticAction {
 
 	@RequestMapping("/getYwList")

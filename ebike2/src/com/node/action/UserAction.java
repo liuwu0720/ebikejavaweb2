@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.PicPath;
@@ -48,6 +49,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/userAction")
+@ApiIgnore
 public class UserAction {
 
 	@Autowired
