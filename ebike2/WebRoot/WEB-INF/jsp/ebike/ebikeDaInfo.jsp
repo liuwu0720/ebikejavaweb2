@@ -71,15 +71,15 @@ function exportPage() {
 					<td><fmt:formatDate value="${ddcDaxxb.gdrq }" pattern="yyyy-MM-dd"/></td>
     				<th>审检日期</th>
 					<td><fmt:formatDate value="${ddcDaxxb.syrq }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-					<th>归档意见</th>
+					<th>审批状态</th>
 					<td>
-						<c:if test="${ddcDaxxb.gdyj==null }">
+						<c:if test="${ddcDaxxb.slyj==null }">
 							审批中
 						</c:if>
-						<c:if test="${ddcDaxxb.gdyj==0 }">
+						<c:if test="${ddcDaxxb.slyj==0 }">
 							办结
 						</c:if>
-						<c:if test="${ddcDaxxb.gdyj==1 }">
+						<c:if test="${ddcDaxxb.slyj==1 }">
 							退办
 						</c:if>
 					</td>

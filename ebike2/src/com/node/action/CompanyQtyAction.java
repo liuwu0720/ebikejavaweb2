@@ -7,6 +7,7 @@
  */
 package com.node.action;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,9 +112,9 @@ public class CompanyQtyAction {
 	 */
 	@RequestMapping("/updateQty")
 	public void updateQty(HttpServletRequest request,
-			HttpServletResponse response, String id, String dwpe) {
+			HttpServletResponse response, String id, String totalPe) {
 		long ssdwId = Long.parseLong(id);
-		int ssdwDwpe = Integer.parseInt(dwpe);
+		int ssdwDwpe = Integer.parseInt(totalPe);
 		DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(ssdwId);
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
@@ -136,9 +137,13 @@ public class CompanyQtyAction {
 				} else {
 					ddcHyxhSsdw.setTotalPe(ssdwDwpe);
 					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe() - hasNum);
+					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+					ddcHyxhSsdw.setTranDate(new Date());
 					iCompanyService.update(ddcHyxhSsdw);
 					ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
 							- minusNum);
+					ddcHyxhBase.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+					ddcHyxhBase.setTranDate(new Date());
 					iUserService.update(ddcHyxhBase);
 					AjaxUtil.rendJson(response, true, "修改成功！");
 				}

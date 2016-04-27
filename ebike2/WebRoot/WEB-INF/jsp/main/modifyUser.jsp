@@ -116,12 +116,16 @@
 					<td>${ddcHyxhBase.hyxhfzrdh }</td>
 				</tr>
 				<tr>
-					<th>总配额</th>
+					<th>剩余配额</th>
 					<td>${ddcHyxhBase.hyxhsjzpe }</td>
 				</tr>
 				<tr>
+					<th>总配额</th>
+					<td>${ddcHyxhBase.totalPe }</td>
+				</tr>
+				<tr>
 					<th>用户密码</th>
-					<td><input class="easyui-validatebox" type="text"
+					<td><input class="easyui-validatebox" type="password"
 						data-options="required:true" name="userPassword"
 						value="${ddcHyxhBase.hyxhmm }"></input></td>
 				</tr>

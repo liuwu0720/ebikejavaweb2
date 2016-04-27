@@ -102,7 +102,9 @@ function change(){
 					<th>档案编号：</th>
 					<td>${ddcFlow.dabh }</td>
 					<th>业务原因</th>
-					<td colspan="3">${ddcFlow.ywyyName }</td>
+					<td>${ddcFlow.ywyyName }</td>
+					<th>流水号</th>
+					<td>${ddcFlow.lsh }</td>
 				</tr>
 				<tr>
 					<th>业务类型</th>
@@ -163,18 +165,20 @@ function change(){
 					<td><fmt:formatDate value="${ddcFlow.slrq }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
     				<th>办结日期</th>
 					<td><fmt:formatDate value="${ddcFlow.gdrq }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-					<th>办结意见</th>
+					<th>审批状态</th>
 					<td>
-						<c:if test="${ddcFlow.gdyj==null }">
+						<c:if test="${ddcFlow.slyj==null }">
 							审批中
 						</c:if>
-						<c:if test="${ddcFlow.gdyj==0 }">
-							办结
+						<c:if test="${ddcFlow.slyj==0 }">
+							已同意
 						</c:if>
-						<c:if test="${ddcFlow.gdyj==1 }">
-							退办
+						<c:if test="${ddcFlow.slyj==1 }">
+							已拒绝
 						</c:if>
 					</td>
+					<th></th>
+					<td></td>
 				</tr>
 				<tr>
     				<th>受理资料</th>
@@ -190,7 +194,7 @@ function change(){
 					
     			</tr>
     			<tr>
-    				<th>归档备注</th>
+    				<th>审批备注</th>
 					<td  colspan="7">${ddcFlow.gdbz }</td
     			</tr>
     			<c:if test="${tbyyDdcSjzds!=null }">
@@ -263,6 +267,35 @@ function change(){
 			</tr>	
 			</table>
 		<!--endprint-->		
+		<c:if test="${ddcApproveUsers!=null }">
+		<table class="table table-condensed">
+				<caption style="text-align: center">审批人及审批意见</caption>
+				<tr>
+					<td>审批人</td>
+					<td>审批人角色</td>
+					<td>审批部门</td>
+					<td>审批日期</td>
+					<td>审批意见</td>
+					<td>审批备注</td>
+				</tr>
+				<c:forEach items="${ddcApproveUsers }" var="approve">
+				<tr>
+					<td>${approve.userName }</td>
+					<td>${approve.userRoleName }</td>
+					<td>${approve.userOrgname }</td>
+					<td><fmt:formatDate value="${approve.approveTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<c:if test="${approve.approveState==0 }">
+					<td>同意</td>
+					</c:if>
+					<c:if test="${approve.approveState==1 }">
+					<td>拒绝</td>
+					</c:if>
+					<td>${approve.approveNote }</td>
+				</tr>		
+				</c:forEach>
+			</table>		
+	</c:if>		
+		
 			<div class="btndiv">
 			<c:if test="${type==1 }">
 				<button type="button" onclick="sureState(0)" class="btn">同意</button>

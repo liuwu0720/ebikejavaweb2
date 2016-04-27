@@ -228,8 +228,24 @@ public class EbikeServiceImp implements IEbikeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.node.service.IEbikeService#createDaxxbExcel(jxl.write.WritableCellFormat
-	 * , jxl.write.WritableCellFormat, jxl.write.WritableSheet)
+	 * com.node.service.IEbikeService#findDriverByUserCode(java.lang.String)
 	 */
+	@Override
+	public List<DdcDriver> findDriverByUserCode(String userCode) {
+		// TODO Auto-generated method stub
+		return iDdcDriverDao.findByProperty("userCode", userCode);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#updateDdcDriver(com.node.model.DdcDriver)
+	 */
+	@Override
+	public void updateDdcDriver(DdcDriver ddcDriver) {
+		// TODO Auto-generated method stub
+		iDdcDriverDao.updateCleanBefore(ddcDriver);
+	}
 
 }

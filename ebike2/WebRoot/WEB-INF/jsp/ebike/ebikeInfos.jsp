@@ -97,7 +97,11 @@ $(document).ready(function(){
 			width : 80,
 			formatter:function(value,row,index){
 				if(value == null){
-				   return "<p style='color:red'>等待协会审批</p>";
+					if(row.SL_INDEX == 0){
+						return "等待协会审批";
+					}else{
+						return "等待交警审批";
+					}
 				}else if(value == 0){
 					return "已审核(同意) ";
 				}else if(value == 1){
@@ -127,10 +131,10 @@ $(document).ready(function(){
 				
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; ";
 				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>审批</a>&nbsp;&nbsp;&nbsp;";
-				if(row.SLYJ == null){
-					return query+update;	
+				if(row.SL_INDEX == 0){
+					return query+update;
 				}else{
-					return query;	
+					return query;
 				}
 							
 			

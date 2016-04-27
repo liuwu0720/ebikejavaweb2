@@ -294,7 +294,8 @@ public class ApplyServiceImp implements IApplyService {
 		String[] propertyNames = { "approveTable", "approveTableid" };
 		Object[] values = { approveTableName, id };
 		List<DdcApproveUser> ddcApproveUsers = iDdcApprovalUserDao
-				.findByPropertysOrderBy(propertyNames, values, "id", "asc");
+				.findByPropertysOrderBy(propertyNames, values, "approveTime",
+						"asc");
 		if (ddcApproveUsers != null && ddcApproveUsers.size() > 0) {
 			return ddcApproveUsers;
 		} else {
@@ -365,5 +366,18 @@ public class ApplyServiceImp implements IApplyService {
 			return null;
 		}
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IApplyService#findApproveUsersByLsh(java.lang.String)
+	 */
+	@Override
+	public List<DdcApproveUser> findApproveUsersByLsh(String lsh) {
+		// TODO Auto-generated method stub
+		return iDdcApprovalUserDao.findByPropertyOrderBy("lsh", lsh,
+				"approveTime");
 	}
 }

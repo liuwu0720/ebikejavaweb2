@@ -1,14 +1,10 @@
 package com.node.model;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -34,6 +30,7 @@ public class DdcHmd implements java.io.Serializable {
 	private String synFlag;
 	private String tranFlag;
 	private Date tranDate;
+	private Integer nEnable;
 
 	// Constructors
 
@@ -59,9 +56,7 @@ public class DdcHmd implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@SequenceGenerator(name = "DDC_HMD", sequenceName = "SEQ_DDC_HMD", allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_HMD")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
@@ -168,6 +163,19 @@ public class DdcHmd implements java.io.Serializable {
 
 	public void setTranDate(Date tranDate) {
 		this.tranDate = tranDate;
+	}
+
+	@Column(name = "NENABLE")
+	public Integer getnEnable() {
+		return nEnable;
+	}
+
+	/**
+	 * @param nEnable
+	 *            : set the property nEnable.
+	 */
+	public void setnEnable(Integer nEnable) {
+		this.nEnable = nEnable;
 	}
 
 }

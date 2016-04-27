@@ -384,17 +384,17 @@ function checkVarible(){
 				<td>${ddcDaxxb.slrq }</td>
 			</tr>
 			<tr>
-				<th>归档资料：</th>
+				<th>审批资料：</th>
 				<td colspan="3">
 					<c:forEach items="${gdDataSjzds }" var="gd">
 						${gd.dmms1 }<br/>
 					</c:forEach>
 				</td>
-				<th>归档意见：</th>
+				<th>审批意见：</th>
 				<td colspan="3">${ddcDaxxb.gdyj=='0'?'同意':'不同意' }</td>
 			</tr>
 			<tr>
-				<th>归档备注：</th>
+				<th>审批备注：</th>
 				<td colspan="7">${ddcDaxxb.gdbz }</td>
 			</tr>
 			<tr>

@@ -82,11 +82,17 @@ $(document).ready(function(){
 			title : '受理意见',
 			align:'center',
 			width : 120,
-			formatter:function(value,index){
-				if(value == 0){
-					return "同意";
-				}else{
-					return "不同意";
+			formatter:function(value,row,index){
+				if(value == null){
+					if(row.SL_INDEX == 0){
+						return "等待协会审批";
+					}else{
+						return "等待交警审批";
+					}
+				}else if(value == 0){
+					return "已审核(同意) ";
+				}else if(value == 1){
+					return "已审核(拒绝) ";
 				}
 			}
 		},{
@@ -179,7 +185,7 @@ function excelExport(){
 						<option value="${lx.dmz }">${lx.dmms1 }</option>
 					</c:forEach>
 				</select>	
-				<span>受理时间</span>
+				<span>申请时间</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input><br>		
 				<span>车牌号:</span> <input id="cphm" name="cphm"

@@ -241,4 +241,15 @@ public interface IApplyService {
 	 */
 	DdcDaxxb getDdcDaxxbByDabh(String dabh);
 
+	/**
+	 * 方法描述：
+	 * 
+	 * @param lsh
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月26日 上午10:54:16
+	 */
+	List<DdcApproveUser> findApproveUsersByLsh(String lsh);
+
 }

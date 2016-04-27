@@ -7,6 +7,7 @@
  */
 package com.node.action;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class AppAction {
 	 */
 	@ApiOperation(value = "根据档案编号查询出车辆信息", notes = "二维码扫描档案编号返回的数据<br/>"
 			+ "	private String dabh;// 档案编号4403 00000001<br/>"
-			+ " private String cysyName;//车身颜色<br/>	"
+			+ " private String cysyName;//车身颜色<br/>private String cphm;// 车牌号码<br/>	"
 			+ "private String djh;// 电机号<br/>	private String jtzz;// 脚踏装置（有、无）<br/>"
 			+ "private String jsrxm1;// 驾驶人姓名1<br/>	 private String xb1;// 性别1<br/>"
 			+ "private String sfzmhm1;// 身份证号码1<br/>private String lxdh1;// 联系电话1<br/>	"
@@ -84,6 +85,7 @@ public class AppAction {
 			+ "private String xsqyName;//行驶区域<br/>private String ztName;//车辆状态<br/>"
 			+ "private String hyxhzhName;//协会名称<br/>private String ssdwName;//单位名称<br/>	"
 			+ "private String vcShowEbikeImg;//车辆图片地址<br/>private String vcShowUser1Img;//驾驶人1图片地址<br/>"
+			+ "private String ppxh;//品牌型号<br/>"
 			+ "private String vcShowUser2Img;//驾驶人2图片地址", position = 5)
 	@RequestMapping(value = "/getEbikeInfoByDabh", method = RequestMethod.GET)
 	@ResponseBody
@@ -140,7 +142,8 @@ public class AppAction {
 	 * @author: liuwu
 	 * @version: 2016年4月23日 上午9:15:22
 	 */
-	@ApiOperation(value = "司机登录接口", notes = "司机关注公众号后，进行电动自行车证件的领用<br/>", position = 5)
+	@ApiOperation(value = "司机登录接口", notes = "司机关注公众号后，进行电动自行车证件的领用，第一次进行登录验证，以后直接登录;<br/>"
+			+ "司机测试帐号：13322224433<br/>司机测试密码：123456", position = 5)
 	@RequestMapping(value = "/loginByDriver", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> loginByDriver(
@@ -150,11 +153,118 @@ public class AppAction {
 		List<DdcDriver> ddcDrivers = iEbikeService.findDriverByUserInfo(
 				userCode, passWord);
 		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
-			return AjaxUtil.getMapByNotException(true, ddcDrivers.get(0));
+			DdcDriver ddcDriver = ddcDrivers.get(0);
+			ddcDriver.setVcShowUserImg(parseUrl(ddcDriver.getVcUserImg()));
+			return AjaxUtil.getMapByNotException(true, ddcDriver);
 		} else {
 			return AjaxUtil.getMapByNotException(false, null);
 		}
 
+	}
+
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param userCode
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月25日 上午10:33:30
+	 */
+	@ApiOperation(value = "根据司机帐号查询出该司机名下所有的车辆详细信息的接口", notes = "司机关注公众号后，进行电动自行车证件的领用，"
+			+ "登录成功返回该司机所绑定的车辆，可能为多辆<br/>"
+			+ " private String cysyName;//车身颜色<br/>"
+			+ "private String djh;// 电机号<br/>"
+			+ "private String cphm;// 车牌号码<br/>"
+			+ "private String jtzz;// 脚踏装置（有、无）<br/>"
+			+ "private String ppxh;//品牌型号<br/>"
+			+ "private String xsqyName;//行驶区域<br/>"
+			+ "private String ztName;//车辆状态<br/>"
+			+ "private String vcShowEbikeImg;//车辆图片地址<br/>"
+			+ "private String hyxhzhName;//协会名称<br/>private String ssdwName;//单位名称<br/>", position = 5)
+	@RequestMapping(value = "/getDaxxInfoByDriver", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getDaxxInfoByDriver(
+			@ApiParam(value = "司机帐号", required = true) @RequestParam("userCode") String userCode) {
+		List<DdcDriver> ddcDrivers = iEbikeService
+				.findDriverByUserCode(userCode);
+		List<DdcDaxxb> daxxbs = new ArrayList<>();
+		if (CollectionUtils.isEmpty(ddcDrivers)) {
+			return AjaxUtil.getMapByNotException(false, null);
+		} else {
+			for (DdcDriver ddcDriver : ddcDrivers) {
+				DdcDaxxb ddcDaxxb = iEbikeService.getById(ddcDriver.getDaid());
+				String cysyName = iApplyService.findByProPerties("CSYS",
+						ddcDaxxb.getCysy());
+
+				ddcDaxxb.setCysyName(cysyName);// 车身颜色
+				String xsqyName = iApplyService.findByProPerties("SSQY",
+						ddcDaxxb.getXsqy());
+				ddcDaxxb.setXsqyName(xsqyName);// 所属区域
+
+				String ztName = iApplyService.findByProPerties("CLZT",
+						ddcDaxxb.getZt());
+				ddcDaxxb.setZtName(ztName);
+				// 申报单位
+				if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
+					DdcHyxhSsdw ddcHyxhSsdw = iCompanyService
+							.queryInfoById(Long.parseLong(ddcDaxxb.getSsdwId()));
+					if (ddcHyxhSsdw != null) {
+						ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
+					} else {
+						ddcDaxxb.setSsdwName(null);
+					}
+				}
+				DdcHyxhBase ddcHyxhBase = iCompanyService
+						.getHyxhZhByCode(ddcDaxxb.getHyxhzh());
+				ddcDaxxb.setHyxhzhName(ddcHyxhBase.getHyxhmc());
+				String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
+				String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
+
+				ddcDaxxb.setVcShowUser1Img(showUser1Img);
+				ddcDaxxb.setVcShowUser2Img(showUser2Img);
+				daxxbs.add(ddcDaxxb);
+			}
+			return AjaxUtil.getMapByNotException(true, daxxbs);
+		}
+
+	}
+
+	/**
+	 * 
+	 * 方法描述：
+	 * 
+	 * @param userCode
+	 * @param userPassword
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月25日 下午12:29:30
+	 */
+	@ApiOperation(value = "修改司机密码接口", notes = "修改密码接口", position = 5)
+	@RequestMapping(value = "/updateDriverInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateDriverInfo(
+			@ApiParam(value = "司机帐号", required = true) @RequestParam("userCode") String userCode,
+			@ApiParam(value = "修改的司机密码", required = true) @RequestParam("userPassword") String userPassword) {
+		List<DdcDriver> ddcDrivers = iEbikeService
+				.findDriverByUserCode(userCode);
+		if (CollectionUtils.isEmpty(ddcDrivers)) {
+			return AjaxUtil.getMap(false, "失败！没有查到该司机帐号");
+		} else {
+			try {
+				for (DdcDriver ddcDriver : ddcDrivers) {
+					ddcDriver.setUserPassword(userPassword);
+					iEbikeService.updateDdcDriver(ddcDriver);
+				}
+				return AjaxUtil.getMap(true, "修改成功！");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return AjaxUtil.getMap(false, "系统错误，原因:" + e.getMessage());
+			}
+
+		}
 	}
 
 	private String parseUrl(String vcPicPath) {

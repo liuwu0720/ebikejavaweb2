@@ -167,4 +167,25 @@ public interface IEbikeService {
 	 */
 	List<DdcDriver> findDriverByUserInfo(String userCode, String passWord);
 
+	/**
+	 * 方法描述：
+	 * 
+	 * @param userCode
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月25日 上午10:31:18
+	 */
+	List<DdcDriver> findDriverByUserCode(String userCode);
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param ddcDriver
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月25日 下午12:02:10
+	 */
+	void updateDdcDriver(DdcDriver ddcDriver);
+
 }

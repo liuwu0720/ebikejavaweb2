@@ -479,7 +479,7 @@ public class ApplyAction {
 				Object object = iApplyService.getDateBySQL(sql);
 				String seq = object.toString();
 				String md = new SimpleDateFormat("yyMMdd").format(new Date());
-				ddcHyxhSsdwclsb.setLsh("B" + md + seq);
+				ddcHyxhSsdwclsb.setLsh("A" + md + seq);
 				saveLog(ddcHyxhSsdwclsb, "新增", request);
 				iApplyService.saveDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			} else {

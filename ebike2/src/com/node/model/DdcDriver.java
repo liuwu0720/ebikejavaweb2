@@ -1,22 +1,18 @@
 package com.node.model;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * DdcDriver entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "DDC_DRIVER")
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class DdcDriver implements java.io.Serializable {
 
 	// Fields
@@ -33,6 +29,9 @@ public class DdcDriver implements java.io.Serializable {
 	private Date tranDate;
 	private String userCode;
 	private String userPassword;
+	private String sfzhm;
+	private String vcUserImg;// 驾驶人1图片
+	private String vcShowUserImg;
 
 	// Constructors
 
@@ -41,9 +40,7 @@ public class DdcDriver implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@SequenceGenerator(name = "DDC_DRIVER", sequenceName = "SEQ_DDC_DRIVER", allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_DRIVER")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
@@ -132,6 +129,45 @@ public class DdcDriver implements java.io.Serializable {
 
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
+	}
+
+	@Column(name = "SFZHM", length = 50)
+	public String getSfzhm() {
+		return sfzhm;
+	}
+
+	/**
+	 * @param sfzhm
+	 *            : set the property sfzhm.
+	 */
+	public void setSfzhm(String sfzhm) {
+		this.sfzhm = sfzhm;
+	}
+
+	@Column(name = "VCUSER_IMG", length = 100)
+	public String getVcUserImg() {
+		return vcUserImg;
+	}
+
+	/**
+	 * @param vcUserImg
+	 *            : set the property vcUserImg.
+	 */
+	public void setVcUserImg(String vcUserImg) {
+		this.vcUserImg = vcUserImg;
+	}
+
+	@Transient
+	public String getVcShowUserImg() {
+		return vcShowUserImg;
+	}
+
+	/**
+	 * @param vcShowUserImg
+	 *            : set the property vcShowUserImg.
+	 */
+	public void setVcShowUserImg(String vcShowUserImg) {
+		this.vcShowUserImg = vcShowUserImg;
 	}
 
 }

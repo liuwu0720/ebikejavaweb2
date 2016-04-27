@@ -1,4 +1,91 @@
 -- Create table
+create table DDC_HYXH_BASE
+(
+  id        NUMBER not null,
+  hyxhzh    VARCHAR2(20) not null,
+  hyxhmm    VARCHAR2(20),
+  hyxhmc    VARCHAR2(100),
+  hyxhdz    VARCHAR2(200),
+  hyxhfzr   VARCHAR2(50),
+  hyxhfzrdh VARCHAR2(50),
+  hyxhsjzpe NUMBER default 0,
+  bz        VARCHAR2(200),
+  cjr       VARCHAR2(20),
+  cjrq      DATE,
+  cjbm      VARCHAR2(20),
+  hyxhlb    VARCHAR2(10),
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE,
+  totalpe   NUMBER,
+  nenable   NUMBER default 1
+)
+tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_HYXH_BASE
+  is '行业协会信息基本信息表';
+-- Add comments to the columns 
+comment on column DDC_HYXH_BASE.hyxhzh
+  is '行业协会账户';
+comment on column DDC_HYXH_BASE.hyxhmm
+  is '行业协会密码';
+comment on column DDC_HYXH_BASE.hyxhmc
+  is '行业协会名称';
+comment on column DDC_HYXH_BASE.hyxhdz
+  is '行业协会地址';
+comment on column DDC_HYXH_BASE.hyxhfzr
+  is '行业协会负责人';
+comment on column DDC_HYXH_BASE.hyxhfzrdh
+  is '行业协会负责人电话';
+comment on column DDC_HYXH_BASE.hyxhsjzpe
+  is '行业协会剩余配额';
+comment on column DDC_HYXH_BASE.bz
+  is '备注信息';
+comment on column DDC_HYXH_BASE.cjr
+  is '创建人';
+comment on column DDC_HYXH_BASE.cjrq
+  is '创建日期';
+comment on column DDC_HYXH_BASE.cjbm
+  is '创建部门';
+comment on column DDC_HYXH_BASE.hyxhlb
+  is '行业协会类别';
+comment on column DDC_HYXH_BASE.syn_flag
+  is '同步标志';
+comment on column DDC_HYXH_BASE.tran_flag
+  is '传送标志';
+comment on column DDC_HYXH_BASE.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_BASE.totalpe
+  is '总配额';
+comment on column DDC_HYXH_BASE.nenable
+  is '1 禁用 0 启用';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_HYXH_BASE
+  add primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+
+
+
+-- Create table
 drop table DDC_APPROVE_USER;
 create table DDC_APPROVE_USER
 (
@@ -442,6 +529,7 @@ alter table DDC_DAXXB_LOG
   );
   -- Create table
     drop table DDC_FLOW;
+-- Create table
 create table DDC_FLOW
 (
   id                NUMBER not null,
@@ -495,7 +583,8 @@ create table DDC_FLOW
   vc_ebike_invoice  VARCHAR2(100),
   ssdwid            VARCHAR2(200),
   tablename         VARCHAR2(20),
-  tableid           NUMBER
+  tableid           NUMBER,
+  sl_index          NUMBER
 )
 tablespace EBIKEOUT_DATA
   pctfree 10
@@ -607,6 +696,8 @@ comment on column DDC_FLOW.tablename
   is '业务表名';
 comment on column DDC_FLOW.tableid
   is '业务表ID';
+comment on column DDC_FLOW.sl_index
+  is '受理顺序--针对注销业务';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_FLOW
   add primary key (ID)
@@ -621,6 +712,7 @@ alter table DDC_FLOW
     minextents 1
     maxextents unlimited
   );
+
   -- Create table
       drop table DDC_FLOW_LOG;
 create table DDC_FLOW_LOG
@@ -1125,6 +1217,7 @@ alter table DDC_HYXH_BASB_LOG
   );
   -- Create table
  drop table  DDC_HYXH_BASE;   
+-- Create table
 create table DDC_HYXH_BASE
 (
   id        NUMBER not null,
@@ -1134,7 +1227,7 @@ create table DDC_HYXH_BASE
   hyxhdz    VARCHAR2(200),
   hyxhfzr   VARCHAR2(50),
   hyxhfzrdh VARCHAR2(50),
-  hyxhsjzpe NUMBER,
+  hyxhsjzpe NUMBER default 0,
   bz        VARCHAR2(200),
   cjr       VARCHAR2(20),
   cjrq      DATE,
@@ -1143,9 +1236,10 @@ create table DDC_HYXH_BASE
   syn_flag  VARCHAR2(10),
   tran_flag VARCHAR2(10),
   tran_date DATE,
-  totalpe   NUMBER
+  totalpe   NUMBER,
+  nenable   NUMBER default 1
 )
-tablespace EBIKEOUT_DATA
+tablespace EBIKEIN_DATA
   pctfree 10
   initrans 1
   maxtrans 255
@@ -1172,7 +1266,7 @@ comment on column DDC_HYXH_BASE.hyxhfzr
 comment on column DDC_HYXH_BASE.hyxhfzrdh
   is '行业协会负责人电话';
 comment on column DDC_HYXH_BASE.hyxhsjzpe
-  is '行业协会实际剩余配额';
+  is '行业协会剩余配额';
 comment on column DDC_HYXH_BASE.bz
   is '备注信息';
 comment on column DDC_HYXH_BASE.cjr
@@ -1190,12 +1284,14 @@ comment on column DDC_HYXH_BASE.tran_flag
 comment on column DDC_HYXH_BASE.tran_date
   is '传送时间';
 comment on column DDC_HYXH_BASE.totalpe
-  is '总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数）';
+  is '总配额';
+comment on column DDC_HYXH_BASE.nenable
+  is '1 禁用 0启用';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_HYXH_BASE
   add primary key (ID)
   using index 
-  tablespace EBIKEOUT_DATA
+  tablespace EBIKEIN_DATA
   pctfree 10
   initrans 2
   maxtrans 255
@@ -1205,6 +1301,7 @@ alter table DDC_HYXH_BASE
     minextents 1
     maxextents unlimited
   );
+
   -- Create table
   drop table  DDC_HYXH_SSDW;    
 create table DDC_HYXH_SSDW
@@ -1977,6 +2074,75 @@ alter table ROLE_MENU
     minextents 1
     maxextents unlimited
   );
+  
+  
+-- Create table
+-- Create table
+create table DDC_DRIVER
+(
+  id            NUMBER not null,
+  dabh          VARCHAR2(50),
+  daid          NUMBER,
+  jsrxm         VARCHAR2(50),
+  xb            VARCHAR2(50),
+  lxdh          VARCHAR2(50),
+  syn_flag      VARCHAR2(50),
+  tran_date     DATE default sysdate,
+  user_code     VARCHAR2(50),
+  user_password VARCHAR2(50),
+  sfzhm         VARCHAR2(50),
+  vcuser_img    VARCHAR2(100)
+)
+tablespace EBIKEIN_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table DDC_DRIVER
+  is '司机表';
+-- Add comments to the columns 
+comment on column DDC_DRIVER.id
+  is '主键';
+comment on column DDC_DRIVER.dabh
+  is '档案编号';
+comment on column DDC_DRIVER.daid
+  is '档案表ID';
+comment on column DDC_DRIVER.jsrxm
+  is '姓名';
+comment on column DDC_DRIVER.xb
+  is '姓名';
+comment on column DDC_DRIVER.lxdh
+  is '联系电话';
+comment on column DDC_DRIVER.syn_flag
+  is '传送标志';
+comment on column DDC_DRIVER.tran_date
+  is '传送时间';
+comment on column DDC_DRIVER.user_code
+  is '用户名';
+comment on column DDC_DRIVER.user_password
+  is '用户密码';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_DRIVER
+  add constraint PK_DDC_DRIVER primary key (ID)
+  using index 
+  tablespace EBIKEIN_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+
+  
   =========================================================================================
   insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
 values (83, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 34, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);

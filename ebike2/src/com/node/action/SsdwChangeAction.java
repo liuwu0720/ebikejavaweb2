@@ -270,6 +270,7 @@ public class SsdwChangeAction {
 		newDaxxb.setSfzmhm1(daxxb.getSfzmhm1());
 		newDaxxb.setSfzmhm2(daxxb.getSfzmhm2());
 		newDaxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+		newDaxxb.setTranDate(new Date());
 		// newDaxxb.setBz(note);
 		String ebike_jpgPath = uploadImg(request, ebike_img,
 				SystemConstants.IMG_EBIKE_WITH,
@@ -338,7 +339,7 @@ public class SsdwChangeAction {
 			saveDdcFlow(type, newDaxxb, slzls, null, note);
 
 			// 保存日志
-			saveDaxxblog(newDaxxb, request);
+			// saveDaxxblog(newDaxxb, request);
 
 			iEbikeService.update(newDaxxb);
 			AjaxUtil.rendJson(response, true, "操作成功");
@@ -376,6 +377,7 @@ public class SsdwChangeAction {
 		DdcDaxxb newDaxxb = iEbikeService.getById(daId);
 		newDaxxb.setXsqy(newXsqy);
 		newDaxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+		newDaxxb.setTranDate(new Date());
 		newDaxxb.setTranFlag(null);
 		newDaxxb.setTranDate(null);
 
@@ -386,7 +388,7 @@ public class SsdwChangeAction {
 			saveDdcFlow(type, newDaxxb, slzls, null, note);
 
 			// 保存日志
-			saveDaxxblog(newDaxxb, request);
+			// saveDaxxblog(newDaxxb, request);
 
 			iEbikeService.update(newDaxxb);
 			AjaxUtil.rendJson(response, true, "操作成功");
@@ -434,8 +436,7 @@ public class SsdwChangeAction {
 		DdcDaxxb daxxb = iEbikeService.getById(daId);
 
 		daxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
-		daxxb.setTranFlag(null);
-		daxxb.setTranDate(null);
+		daxxb.setTranDate(new Date());
 
 		try {
 
@@ -444,7 +445,7 @@ public class SsdwChangeAction {
 			daxxb.setSlyj(null);// 审批中
 			// daxxb.setGdyj(null);
 			saveDdcFlow(type, daxxb, newSlzl, newYwyy, slbz);
-			saveDaxxblog(daxxb, request);
+			// saveDaxxblog(daxxb, request);
 			iEbikeService.update(daxxb);
 			AjaxUtil.rendJson(response, true, "操作成功！");
 		} catch (Exception e) {
@@ -472,7 +473,7 @@ public class SsdwChangeAction {
 		DdcFlow ddcFlow = new DdcFlow();
 		BeanUtils.copyProperties(ddcFlow, newDaxxb);
 		// 生成流水号
-		String sql = "select seq_ddl_flow.nextval from dual";
+		String sql = "select SEQ_DDL_FLOW.nextval from dual";
 		Object object = iApplyService.getDateBySQL(sql);
 		String seq = object.toString();
 		String md = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -485,16 +486,10 @@ public class SsdwChangeAction {
 		ddcFlow.setYwyy(newYwyy);
 		ddcFlow.setSlzl(slzls);
 		ddcFlow.setBz(note);
-		ddcFlow.setVcTableName(newDaxxb.getClass().getSimpleName());
+		ddcFlow.setVcTableName(SystemConstants.DAXXB_TABLE);
 		ddcFlow.setiTableId(newDaxxb.getId());
 		ddcFlow.setGdrq(null);
 		ddcFlow.setSlIndex(0);
-		if (ddcFlow.getYwlx().equals("D")) {
-			ddcFlow.setSynFlag(null);
-		} else {
-			ddcFlow.setSynFlag(SystemConstants.SYSNFLAG_ADD);
-		}
-
 		iEbikeService.saveDdcFlow(ddcFlow);
 	}
 

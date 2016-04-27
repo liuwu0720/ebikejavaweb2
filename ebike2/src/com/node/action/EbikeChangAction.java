@@ -24,7 +24,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +45,7 @@ import com.node.util.ServiceUtil;
 import com.node.util.SystemConstants;
 
 /**
- * 类描述：电动车变更管理
+ * 类描述：电动车变更审批
  * 
  * @version: 1.0
  * @author: liuwu
@@ -283,7 +282,7 @@ public class EbikeChangAction {
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
-		String sql = "select t.id, t.ywlx, t.lsh,t.dabh,t.cphm,t.ppxh,"
+		String sql = "select t.id, t.ywlx, t.lsh,t.dabh,t.cphm,t.ppxh,t.SL_INDEX ,"
 				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz = t.YWLX and d.dmlb='YWLX' and rownum=1)as YWLXNAME,"
 				+ "t.djh,t.jsrxm1,t.xsqy,(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=t.xsqy AND D.DMLB='SSQY') as XSQYNAME,t.slyj,"
 				+ "t.SSDWID, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=t.SSDWID)as ssdwname ,t.slrq from DDC_FLOW t where t.ywlx !='A' and t.hyxhzh ='"
@@ -341,87 +340,6 @@ public class EbikeChangAction {
 			return subPath + vcPicPath;
 		} else {
 			return null;
-		}
-
-	}
-
-	/**
-	 * 
-	 * 方法描述：资料变更
-	 * 
-	 * @param daxxb
-	 * @param request
-	 * @param response
-	 * @version: 1.0
-	 * @author: liuwu
-	 * @version: 2016年3月17日 下午5:59:43
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 */
-	@RequestMapping("/changeData")
-	public void changeData(
-			DdcDaxxb daxxb,
-			HttpServletRequest request,
-			@RequestParam(value = "file_upload", required = false) MultipartFile fileupload,
-			@RequestParam(value = "file_upload1", required = false) MultipartFile file_upload1,
-			@RequestParam(value = "file_upload2", required = false) MultipartFile file_upload2,
-			HttpServletResponse response) throws FileNotFoundException,
-			IOException {
-
-		/**
-		 * 检查黑名单
-		 */
-		String message = iApplyService.findHmd(daxxb.getJsrxm1(),
-				daxxb.getJsrxm2());
-		if (!message.equals("success")) {
-			AjaxUtil.rendJson(response, false, message);
-			return;
-		}
-
-		String slzls = request.getParameter("slzllist");// 重组变更资料字符串
-		long daId = daxxb.getId();
-		DdcDaxxb newDaxxb = iEbikeService.getById(daId);
-		newDaxxb.setSlzl(slzls);
-		newDaxxb.setJsrxm1(daxxb.getJsrxm1());
-		newDaxxb.setJsrxm2(daxxb.getJsrxm2());
-		newDaxxb.setXb1(daxxb.getXb1());
-		newDaxxb.setXb2(daxxb.getXb2());
-		newDaxxb.setLxdh1(daxxb.getLxdh1());
-		newDaxxb.setLxdh2(daxxb.getLxdh2());
-		newDaxxb.setSfzmhm1(daxxb.getSfzmhm1());
-		newDaxxb.setSfzmhm2(daxxb.getSfzmhm2());
-		newDaxxb.setSynFlag("UC");
-		String ebike_jpgPath = uploadImg(request, fileupload);// 上传车身照片
-		if (StringUtils.isNotBlank(ebike_jpgPath)) {
-			newDaxxb.setVcEbikeImg(ebike_jpgPath);
-		} else {
-			newDaxxb.setVcEbikeImg(daxxb.getVcEbikeImg());
-		}
-
-		String vcUser1_img = uploadImg(request, file_upload1);// 上传驾驶人1照片
-		if (StringUtils.isNotBlank(vcUser1_img)) {
-			newDaxxb.setVcUser1Img(vcUser1_img);
-		} else {
-			newDaxxb.setVcUser1Img(daxxb.getVcUser1Img());
-		}
-
-		String vcUser2_img = uploadImg(request, file_upload2);// 上传驾驶人2照片
-		if (StringUtils.isNotBlank(vcUser2_img)) {
-			newDaxxb.setVcUser2Img(vcUser2_img);
-		} else {
-			newDaxxb.setVcUser2Img(daxxb.getVcUser2Img());
-		}
-		try {
-			String type = "B";// 变更
-			saveDdcFlow(type, newDaxxb, slzls, null);
-
-			// 保存日志
-			saveDaxxblog(newDaxxb, request);
-
-			iEbikeService.update(newDaxxb);
-			AjaxUtil.rendJson(response, true, "操作成功");
-		} catch (Exception e) {
-			AjaxUtil.rendJson(response, false, "操作失败！系统错误");
 		}
 
 	}
@@ -536,104 +454,6 @@ public class EbikeChangAction {
 
 	/**
 	 * 
-	 * 方法描述：转移
-	 * 
-	 * @param daxxb
-	 * @param request
-	 * @param fileupload
-	 * @param file_upload1
-	 * @param file_upload2
-	 * @param response
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 * @version: 1.0
-	 * @author: liuwu
-	 * @version: 2016年3月18日 上午11:17:59
-	 */
-	@RequestMapping("/zhuanyi")
-	public void zhuanyi(DdcDaxxb daxxb, HttpServletRequest request,
-			String newXsqy, HttpServletResponse response)
-			throws FileNotFoundException, IOException {
-
-		String slzls = request.getParameter("slzllist");// 重组变更资料字符串
-
-		long daId = daxxb.getId();
-		DdcDaxxb newDaxxb = iEbikeService.getById(daId);
-		newDaxxb.setXsqy(newXsqy);
-		newDaxxb.setSynFlag("UC");
-		newDaxxb.setTranFlag(null);
-		newDaxxb.setTranDate(null);
-
-		try {
-			String type = "C";
-			saveDdcFlow(type, newDaxxb, slzls, null);
-
-			// 保存日志
-			saveDaxxblog(newDaxxb, request);
-
-			iEbikeService.update(newDaxxb);
-			AjaxUtil.rendJson(response, true, "操作成功");
-		} catch (Exception e) {
-			AjaxUtil.rendJson(response, false, "操作失败！系统错误");
-		}
-
-	}
-
-	/**
-	 * 
-	 * 方法描述：注销
-	 * 
-	 * @param request
-	 * @param response
-	 * @version: 1.0
-	 * @author: liuwu
-	 * @version: 2016年3月18日 下午2:33:19
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 */
-	@RequestMapping("/zhuxiao")
-	public void zhuxiao(HttpServletRequest request,
-			HttpServletResponse response, String id, String slbz)
-			throws IllegalAccessException, InvocationTargetException {
-		long daId = Long.parseLong(id);
-		String[] ywyys = request.getParameterValues("ywyys");
-		String[] slzllist = request.getParameterValues("slzls");
-
-		String newYwyy = "";// 重组业务原因字符串
-		if (ywyys.length != 0) {
-			for (String tbyy : ywyys) {
-				newYwyy = newYwyy + tbyy + ",";
-			}
-			newYwyy = newYwyy.substring(0, newYwyy.length() - 1);
-		}
-
-		String newSlzl = "";// 重组受理资料字符串
-		if (slzllist.length != 0) {
-			for (String slzl : slzllist) {
-				newSlzl = newSlzl + slzl + ",";
-			}
-			newSlzl = newSlzl.substring(0, newSlzl.length() - 1);
-		}
-		DdcDaxxb daxxb = iEbikeService.getById(daId);
-		daxxb.setZt("E");
-		daxxb.setSynFlag("UC");
-		daxxb.setTranFlag(null);
-		daxxb.setTranDate(null);
-		daxxb.setSlbz(slbz);
-		try {
-			saveDaxxblog(daxxb, request);
-			String type = "D";
-			saveDdcFlow(type, daxxb, newSlzl, newYwyy);
-			iEbikeService.update(daxxb);
-			AjaxUtil.rendJson(response, true, "操作成功！");
-		} catch (Exception e) {
-			AjaxUtil.rendJson(response, false, "操作失败！系统错误");
-		}
-
-	}
-
-	/**
-	 * 
 	 * 方法描述：协会审批 注销、转移、变更
 	 * 
 	 * @param request
@@ -667,23 +487,27 @@ public class EbikeChangAction {
 		ddcApproveUser.setApproveNo(approveNo);
 		ddcApproveUser.setApproveNote(note);
 		ddcApproveUser.setApproveState(Integer.parseInt(state));
-		ddcApproveUser.setApproveTable(ddcFlow.getClass().getSimpleName());
+		ddcApproveUser.setApproveTable(SystemConstants.DDCFLOW_TABLE);
 		ddcApproveUser.setApproveTableid(ddcFlow.getId());
 		ddcApproveUser.setApproveTime(new Date());
+
 		ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
 		ddcApproveUser.setTranDate(new Date());
 		ddcApproveUser.setUserRoleName("行业协会");
 		ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
+		ddcApproveUser.setLsh(ddcFlow.getLsh());
 		if (state.equals("0")) {
 
-			// 同意---注销 ，档案表受理意见改为同意
+			// 同意---注销 ，档案表受理意见改为受理中
 			DdcDaxxb daxxb = iApplyService.getDdcDaxxbByDabh(ddcFlow.getDabh());
 			if (daxxb != null) {
 				daxxb.setSlyj(state);
-
+				ddcFlow.setSlIndex(1);
+				ddcFlow.setSynFlag(SystemConstants.SYSNFLAG_ADD);// 协会审批后才同步至内网
+				ddcFlow.setTranDate(new Date());
 				if (ddcFlow.getYwlx().equalsIgnoreCase("D")) {
-					ddcFlow.setSlIndex(1);// 内网审批
-					ddcFlow.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+					// 注销需要内网审批
+					daxxb.setSlyj(null);
 				}
 
 				try {
@@ -703,12 +527,13 @@ public class EbikeChangAction {
 			}
 
 		} else {
-			// 拒绝
+			// 拒绝--不需要提交至内网
 			DdcDaxxb daxxb = iApplyService.getDdcDaxxbByDabh(ddcFlow.getDabh());
-			if (daxxb != null && !daxxb.getYwlx().equals("D")) {
+			if (daxxb != null) {
 				daxxb.setSlyj(state);
 				try {
 					iEbikeService.update(daxxb);
+					ddcFlow.setSlIndex(1);
 					ddcFlow.setSlyj(state);
 					iEbikeService.updateDdcFlow(ddcFlow);
 					iApplyService.saveDdcApproveUser(ddcApproveUser);

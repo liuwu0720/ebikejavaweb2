@@ -9,6 +9,7 @@ package com.node.service.imp;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +32,9 @@ import org.springframework.stereotype.Service;
 import com.node.dao.IDdcApprovalUserDao;
 import com.node.dao.IDdcDaxxbDao;
 import com.node.dao.IDdcDaxxbLogDao;
+import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcFlowDao;
+import com.node.dao.IDdcHmdDao;
 import com.node.dao.IDdcHyxhBasbDao;
 import com.node.dao.IDdcHyxhBaseDao;
 import com.node.dao.IDdcHyxhSsdwDao;
@@ -39,7 +42,9 @@ import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IFileRecordDao;
 import com.node.model.DdcApproveUser;
 import com.node.model.DdcDaxxb;
+import com.node.model.DdcDriver;
 import com.node.model.DdcFlow;
+import com.node.model.DdcHmd;
 import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
@@ -81,6 +86,11 @@ public class DataServiceImp implements IDataService {
 	IDdcHyxhSsdwclsbDao iDdcHyxhSsdwclsbDao;
 	@Autowired
 	IFileRecordDao iFileRecordDao;
+
+	@Autowired
+	IDdcDriverDao iDdcDriverDao;
+	@Autowired
+	IDdcHmdDao iDdcHmdDao;
 
 	@Override
 	public void createDaxxbExcel(WritableCellFormat wcfFC,
@@ -193,7 +203,8 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j += 1, i, daxxb.getVcUser2CardImg2()));
 			ws.addCell(new Label(j += 1, i, daxxb.getVcEbikeInvoiceImg()));
 			i++;
-
+			daxxb.setSynFlag(null);
+			iDdcDaxxbDao.updateCleanBefore(daxxb);
 		}
 
 	}
@@ -242,6 +253,8 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j += 1, i, ddcApproveUser.getSysFlag() + ""));
 			ws.addCell(new Label(j += 1, i, ddcApproveUser.getApproveNo() + ""));
 			i++;
+			ddcApproveUser.setSysFlag(null);
+			iDdcApprovalUserDao.updateCleanBefore(ddcApproveUser);
 
 		}
 	}
@@ -305,6 +318,7 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(new Label(j += 1, 2, "SSDWID", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "TABLENAME", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "TABLEID", wcfFC2));
+		ws.addCell(new Label(j += 1, 2, "SL_INDEX", wcfFC2));
 		List<DdcFlow> ddcFlows = iDdcFlowDao.findByProperty("synFlag", "ADD");
 		int i = 3;
 
@@ -360,7 +374,15 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcFlow.getSsdwId()));
 			ws.addCell(new Label(j1 += 1, i, ddcFlow.getVcTableName()));
 			ws.addCell(new Label(j1 += 1, i, ddcFlow.getiTableId() + ""));
+			String slindexString = ddcFlow.getSlIndex() + "";
+			if (StringUtils.isNotBlank(slindexString)) {
+				ws.addCell(new Label(j1 += 1, i, slindexString));
+			} else {
+				ws.addCell(new Label(j1 += 1, i, "0"));
+			}
 			i++;
+			ddcFlow.setSynFlag(null);
+			iDdcFlowDao.updateCleanBefore(ddcFlow);
 		}
 	}
 
@@ -378,7 +400,8 @@ public class DataServiceImp implements IDataService {
 		ws.mergeCells(0, 0, 6, 0);
 		ws.addCell(label);
 		int j = 0;
-		ws.addCell(new Label(j, 2, "LSH", wcfFC2));
+		ws.addCell(new Label(j, 2, "ID", wcfFC2));
+		ws.addCell(new Label(j += 1, 2, "LSH", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "HYXHZH", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "HYXHSQPE", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "BZ", wcfFC2));
@@ -399,7 +422,8 @@ public class DataServiceImp implements IDataService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcHyxhBasb ddcHyxhBasb : ddcHyxhBasbs) {
 			int j1 = 0;
-			ws.addCell(new Label(j1, i, ddcHyxhBasb.getLsh()));
+			ws.addCell(new Label(j1, i, ddcHyxhBasb.getId() + ""));
+			ws.addCell(new Label(j1 += 1, i, ddcHyxhBasb.getLsh()));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhBasb.getHyxhzh()));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhBasb.getHyxhsqpe() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhBasb.getBz()));
@@ -420,6 +444,8 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhBasb.getSlIndex() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhBasb.getHyxhmc()));
 			i++;
+			ddcHyxhBasb.setSynFlag(null);
+			iDdcHyxhBasbDao.updateCleanBefore(ddcHyxhBasb);
 		}
 
 	}
@@ -453,6 +479,7 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(new Label(j += 1, 2, "HYXHLB", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "SYN_FLAG", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "TOTALPE", wcfFC2));
+		ws.addCell(new Label(j += 1, 2, "NENABLE", wcfFC2));
 		List<DdcHyxhBase> ddcHyxhBases = iDdcHyxhBaseDao.findByProperty(
 				"synFlag", SystemConstants.SYSNFLAG_UPDATE);
 		int i = 3;
@@ -484,8 +511,10 @@ public class DataServiceImp implements IDataService {
 			} else {
 				ws.addCell(new Label(j1 += 1, i, ""));
 			}
-
+			ws.addCell(new Label(j1 += 1, i, ddcHyxhBase.getnEnable() + ""));
 			i++;
+			ddcHyxhBase.setSynFlag(null);
+			iDdcHyxhBaseDao.updateCleanBefore(ddcHyxhBase);
 		}
 	}
 
@@ -563,6 +592,8 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdw.getShFlag() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdw.getTotalPe() + ""));
 			i++;
+			ddcHyxhSsdw.setSynFlag(null);
+			iDdcHyxhSsdwDao.updateCleanBefore(ddcHyxhSsdw);
 		}
 	}
 
@@ -582,7 +613,8 @@ public class DataServiceImp implements IDataService {
 		ws.mergeCells(0, 0, 6, 0);
 		ws.addCell(label);
 		int j = 0;
-		ws.addCell(new Label(j, 2, "LSH", wcfFC2));
+		ws.addCell(new Label(j, 2, "ID", wcfFC2));
+		ws.addCell(new Label(j += 1, 2, "LSH", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "HYXHZH", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "SSDWID", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "CPHM", wcfFC2));
@@ -625,7 +657,8 @@ public class DataServiceImp implements IDataService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (DdcHyxhSsdwclsb ddcHyxhSsdwclsb : ddcHyxhSsdwclsbs) {
 			int j1 = 0;
-			ws.addCell(new Label(j1, i, ddcHyxhSsdwclsb.getLsh()));
+			ws.addCell(new Label(j1, i, ddcHyxhSsdwclsb.getId() + ""));
+			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb.getLsh()));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb.getHyxhzh()));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb.getSsdwId()));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb.getCphm()));
@@ -682,6 +715,8 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb
 					.getVcEbikeInvoiceImg()));
 			i++;
+			ddcHyxhSsdwclsb.setSynFlag(null);
+			iDdcHyxhSsdwclsbDao.updateCleanBefore(ddcHyxhSsdwclsb);
 		}
 
 	}
@@ -712,8 +747,8 @@ public class DataServiceImp implements IDataService {
 			saveUpdateDaxxb(sheet);
 			Sheet approveSheet = wb.getSheetAt(1);// 审批信息表-只新增
 			saveApproveUser(approveSheet);
-			Sheet flowSheet = wb.getSheetAt(2);// flow--外网的数据只新增
-			saveFlow(flowSheet);
+			Sheet flowSheet = wb.getSheetAt(2);// flow--外网的数据新增、修改（注销）
+			saveUpdateFlow(flowSheet);
 			Sheet hyxhSbSheet = wb.getSheetAt(3);// ddc_hyxh_basb--内网的数据只更新
 			updateDdcHyxhBasb(hyxhSbSheet);
 			Sheet hyxhBaseSheet = wb.getSheetAt(4);// ddc_hyxh_base:内网的数据新增或修改
@@ -726,6 +761,12 @@ public class DataServiceImp implements IDataService {
 
 			Sheet ssdwClsbSheet = wb.getSheetAt(6);// DDC_HYXH_SSDWCLSB 内网只修改
 			updateSsdwClsb(ssdwClsbSheet);
+
+			Sheet driverSheet = wb.getSheetAt(7);// ddc_driver 内网的数据只新增
+			saveDriver(driverSheet);
+
+			Sheet hmdSheet = wb.getSheetAt(8);// ddc_hmd内网 新增或修改
+			saveUpdateDdchmd(hmdSheet);
 
 		} catch (EncryptedDocumentException | IOException e) {
 			e.printStackTrace();
@@ -741,80 +782,164 @@ public class DataServiceImp implements IDataService {
 	/**
 	 * 方法描述：
 	 * 
+	 * @param hmdSheet
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月23日 下午2:53:42
+	 */
+	private void saveUpdateDdchmd(Sheet hmdSheet) {
+		try {
+			for (int i = 3; i <= hmdSheet.getLastRowNum(); i++) {
+				Row row = hmdSheet.getRow(i);
+				if (row != null) {
+					int j = 0;
+					DdcHmd ddcHmd = new DdcHmd();
+					ddcHmd.setId(Long.parseLong(row.getCell(j) + ""));
+					ddcHmd.setJsrxm(row.getCell(j += 1) + "");
+					ddcHmd.setSfzhm(row.getCell(j += 1) + "");
+					ddcHmd.setXb(row.getCell(j += 1) + "");
+					ddcHmd.setLxdh(row.getCell(j += 1) + "");
+					ddcHmd.setBz(row.getCell(j += 1) + "");
+					ddcHmd.setSynFlag(row.getCell(j += 1) + "");
+					ddcHmd.setnEnable(Integer.parseInt(row.getCell(j += 1) + ""));
+					if (ddcHmd.getSynFlag()
+							.equals(SystemConstants.SYSNFLAG_ADD)) {
+						List<DdcHmd> ddcHmds = iDdcHmdDao.findByProperty(
+								"sfzhm", ddcHmd.getSfzhm());
+						if (CollectionUtils.isEmpty(ddcHmds)) {
+							ddcHmd.setSynFlag(ddcHmd.getSynFlag() + "_N");
+							iDdcHmdDao.save(ddcHmd);
+						}
+					}
+					if (ddcHmd.getSynFlag().equals(
+							SystemConstants.SYSNFLAG_UPDATE)) {
+						List<DdcHmd> ddcHmds = iDdcHmdDao.findByProperty(
+								"sfzhm", ddcHmd.getSfzhm());
+						if (CollectionUtils.isEmpty(ddcHmds)) {
+							ddcHmd.setSynFlag(ddcHmd.getSynFlag() + "_N");
+							iDdcHmdDao.save(ddcHmd);
+						} else {
+							iDdcHmdDao.update(ddcHmd);
+						}
+					}
+
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 方法描述：
+	 * 
+	 * @param driverSheet
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年4月23日 下午2:39:36
+	 */
+	private void saveDriver(Sheet driverSheet) {
+
+		for (int i = 3; i <= driverSheet.getLastRowNum(); i++) {
+			Row row = driverSheet.getRow(i);
+			if (row != null) {
+				int j = 0;
+				DdcDriver ddcDriver = new DdcDriver();
+				ddcDriver.setId(Long.parseLong(row.getCell(j) + ""));
+				ddcDriver.setDabh(row.getCell(j += 1) + "");
+				ddcDriver.setDaid(Long.parseLong(row.getCell(j += 1) + ""));
+				ddcDriver.setJsrxm(row.getCell(j += 1) + "");
+				ddcDriver.setXb(row.getCell(j += 1) + "");
+				ddcDriver.setLxdh(row.getCell(j += 1) + "");
+
+				ddcDriver.setSynFlag(row.getCell(j += 1) + "_N");
+				ddcDriver.setUserCode(row.getCell(j += 1) + "");
+				ddcDriver.setUserPassword(row.getCell(j += 1) + "");
+				ddcDriver.setSfzhm(row.getCell(j += 1) + "");
+				ddcDriver.setVcUserImg(row.getCell(j += 1) + "");
+				List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty(
+						"dabh", ddcDriver.getDabh());
+				if (CollectionUtils.isEmpty(ddcDrivers)) {
+					iDdcDriverDao.save(ddcDriver);
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * 方法描述：
+	 * 
 	 * @param ssdwClsbSheet
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年4月21日 下午5:51:00
+	 * @throws ParseException
 	 */
-	private void updateSsdwClsb(Sheet ssdwClsbSheet) {
+	private void updateSsdwClsb(Sheet ssdwClsbSheet) throws ParseException {
 		// TODO Auto-generated method stub
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		try {
-			for (int i = 3; i <= ssdwClsbSheet.getLastRowNum(); i++) {
-				Row row = ssdwClsbSheet.getRow(i);
-				if (row != null) {
-					int j = 0;
-					DdcHyxhSsdwclsb ddcHyxhSsdwclsb = new DdcHyxhSsdwclsb();
-					ddcHyxhSsdwclsb.setLsh(row.getCell(j) + "");
-					ddcHyxhSsdwclsb.setHyxhzh(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSsdwId(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setCphm(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setPpxh(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setCysy(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setDjh(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setJtzz(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setJsrxm1(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setXb1(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSfzmhm1(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setLxdh1(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setJsrxm2(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setXb2(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSfzmhm2(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setLxdh2(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setXsqy(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setBz(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSqr(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb
-							.setSqrq(sdf.parse(row.getCell(j += 1) + ""));
-					ddcHyxhSsdwclsb.setSlzl(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSlyj(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSlbz(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSlr(row.getCell(j += 1) + "");
-					String slrqString = row.getCell(j += 1) + "";
-					if (StringUtils.isNotBlank(slrqString)) {
-						ddcHyxhSsdwclsb.setSlrq(sdf.parse(slrqString));
-					} else {
-						ddcHyxhSsdwclsb.setSlrq(null);
-					}
-					ddcHyxhSsdwclsb.setSlbm(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSynFlag(row.getCell(j += 1) + "_N");
-					ddcHyxhSsdwclsb.setSqip(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setVcUser1Img(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setVcUser2Img(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setVcEbikeImg(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setTbyy(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setSlIndex(Integer.parseInt(row
-							.getCell(j += 1) + ""));
-					ddcHyxhSsdwclsb
-							.setVcUser1CardImg1(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb
-							.setVcUser1CardImg2(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb
-							.setVcUser2CardImg1(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb
-							.setVcUser2CardImg2(row.getCell(j += 1) + "");
-					ddcHyxhSsdwclsb.setnEnable(Integer.parseInt(row
-							.getCell(j += 1) + ""));
-					ddcHyxhSsdwclsb.setVcEbikeInvoiceImg(row.getCell(j += 1)
-							+ "");
 
-					iDdcHyxhSsdwclsbDao.update(ddcHyxhSsdwclsb);
-
+		for (int i = 3; i <= ssdwClsbSheet.getLastRowNum(); i++) {
+			Row row = ssdwClsbSheet.getRow(i);
+			if (row != null) {
+				int j = 0;
+				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = new DdcHyxhSsdwclsb();
+				ddcHyxhSsdwclsb.setId(Long.parseLong(row.getCell(j) + ""));
+				ddcHyxhSsdwclsb.setLsh(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setHyxhzh(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSsdwId(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setCphm(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setPpxh(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setCysy(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setDjh(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setJtzz(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setJsrxm1(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setXb1(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSfzmhm1(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setLxdh1(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setJsrxm2(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setXb2(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSfzmhm2(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setLxdh2(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setXsqy(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setBz(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSqr(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSqrq(sdf.parse(row.getCell(j += 1) + ""));
+				ddcHyxhSsdwclsb.setSlzl(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSlyj(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSlbz(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSlr(row.getCell(j += 1) + "");
+				String slrqString = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(slrqString)) {
+					ddcHyxhSsdwclsb.setSlrq(sdf.parse(slrqString));
+				} else {
+					ddcHyxhSsdwclsb.setSlrq(null);
 				}
+				ddcHyxhSsdwclsb.setSlbm(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSynFlag(row.getCell(j += 1) + "_N");
+				ddcHyxhSsdwclsb.setSqip(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setVcUser1Img(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setVcUser2Img(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setVcEbikeImg(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setTbyy(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setSlIndex(Integer.parseInt(row.getCell(j += 1)
+						+ ""));
+				ddcHyxhSsdwclsb.setVcUser1CardImg1(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setVcUser1CardImg2(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setVcUser2CardImg1(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setVcUser2CardImg2(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb.setnEnable(Integer.parseInt(row.getCell(j += 1)
+						+ ""));
+				ddcHyxhSsdwclsb.setVcEbikeInvoiceImg(row.getCell(j += 1) + "");
+
+				iDdcHyxhSsdwclsbDao.update(ddcHyxhSsdwclsb);
+
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+
 	}
 
 	/**
@@ -878,66 +1003,62 @@ public class DataServiceImp implements IDataService {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年4月21日 下午5:35:35
+	 * @throws ParseException
 	 */
-	private void saveUpdateHyxhBase(Sheet hyxhBaseSheet) {
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			for (int i = 3; i <= hyxhBaseSheet.getLastRowNum(); i++) {
-				Row row = hyxhBaseSheet.getRow(i);
-				if (row != null) {
-					int j = 0;
-					DdcHyxhBase ddcHyxhBase = new DdcHyxhBase();
-					ddcHyxhBase.setId(Long.parseLong(row.getCell(j) + ""));
-					ddcHyxhBase.setHyxhzh(row.getCell(j += 1) + "");
-					ddcHyxhBase.setHyxhmm(row.getCell(j += 1) + "");
-					ddcHyxhBase.setHyxhmc(row.getCell(j += 1) + "");
-					ddcHyxhBase.setHyxhdz(row.getCell(j += 1) + "");
-					ddcHyxhBase.setHyxhfzr(row.getCell(j += 1) + "");
-					ddcHyxhBase.setHyxhfzrdh(row.getCell(j += 1) + "");
-					ddcHyxhBase.setHyxhsjzpe(Integer.parseInt(row
-							.getCell(j += 1) + ""));
-					ddcHyxhBase.setBz(row.getCell(j += 1) + "");
-					ddcHyxhBase.setCjr(row.getCell(j += 1) + "");
-					ddcHyxhBase.setCjrq(sdf.parse(row.getCell(j += 1) + ""));
-					ddcHyxhBase.setCjbm(row.getCell(j += 1) + "");
-					ddcHyxhBase.setHyxhlb(row.getCell(j += 1) + "");
-					ddcHyxhBase.setSynFlag(row.getCell(j += 1) + "");
-					String totalString = row.getCell(j += 1) + "";
-					if (StringUtils.isNotBlank(totalString)) {
-						ddcHyxhBase.setTotalPe(Integer.parseInt(totalString));
-					} else {
-						ddcHyxhBase.setTotalPe(null);
-					}
-					if (ddcHyxhBase.getSynFlag().equals(
-							SystemConstants.SYSNFLAG_ADD)) {
-						List<DdcHyxhBase> ddcHyxhBases2 = iDdcHyxhBaseDao
-								.findByProperty("hyxhzh",
-										ddcHyxhBase.getHyxhzh());
-						if (CollectionUtils.isEmpty(ddcHyxhBases2)) {
-							ddcHyxhBase.setSynFlag(ddcHyxhBase.getSynFlag()
-									+ "_N");
-							iDdcHyxhBaseDao.save(ddcHyxhBase);
-						}
+	private void saveUpdateHyxhBase(Sheet hyxhBaseSheet) throws ParseException {
 
-					} else if (ddcHyxhBase.getSynFlag().equals(
-							SystemConstants.SYSNFLAG_ADD)) {
-						// 修改时，如果外网没有该协会则新增，有则修改
-						List<DdcHyxhBase> ddcHyxhBases = iDdcHyxhBaseDao
-								.findByProperty("hyxhzh",
-										ddcHyxhBase.getHyxhzh());
-						if (CollectionUtils.isEmpty(ddcHyxhBases)) {
-							ddcHyxhBase.setSynFlag(ddcHyxhBase.getSynFlag()
-									+ "_N");
-							iDdcHyxhBaseDao.save(ddcHyxhBase);
-						} else {
-							iDdcHyxhBaseDao.update(ddcHyxhBase);
-						}
-					}
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for (int i = 3; i <= hyxhBaseSheet.getLastRowNum(); i++) {
+			Row row = hyxhBaseSheet.getRow(i);
+			if (row != null) {
+				int j = 0;
+				DdcHyxhBase ddcHyxhBase = new DdcHyxhBase();
+				ddcHyxhBase.setId(Long.parseLong(row.getCell(j) + ""));
+				ddcHyxhBase.setHyxhzh(row.getCell(j += 1) + "");
+				ddcHyxhBase.setHyxhmm(row.getCell(j += 1) + "");
+				ddcHyxhBase.setHyxhmc(row.getCell(j += 1) + "");
+				ddcHyxhBase.setHyxhdz(row.getCell(j += 1) + "");
+				ddcHyxhBase.setHyxhfzr(row.getCell(j += 1) + "");
+				ddcHyxhBase.setHyxhfzrdh(row.getCell(j += 1) + "");
+				ddcHyxhBase.setHyxhsjzpe(Integer.parseInt(row.getCell(j += 1)
+						+ ""));
+				ddcHyxhBase.setBz(row.getCell(j += 1) + "");
+				ddcHyxhBase.setCjr(row.getCell(j += 1) + "");
+				ddcHyxhBase.setCjrq(sdf.parse(row.getCell(j += 1) + ""));
+				ddcHyxhBase.setCjbm(row.getCell(j += 1) + "");
+				ddcHyxhBase.setHyxhlb(row.getCell(j += 1) + "");
+				ddcHyxhBase.setSynFlag(row.getCell(j += 1) + "");
+				String totalString = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(totalString)) {
+					ddcHyxhBase.setTotalPe(Integer.parseInt(totalString));
+				} else {
+					ddcHyxhBase.setTotalPe(null);
 				}
+				ddcHyxhBase.setnEnable(Integer.parseInt(row.getCell(j += 1)
+						+ ""));
+				if (ddcHyxhBase.getSynFlag().equals(
+						SystemConstants.SYSNFLAG_ADD)) {
+					List<DdcHyxhBase> ddcHyxhBases2 = iDdcHyxhBaseDao
+							.findByProperty("hyxhzh", ddcHyxhBase.getHyxhzh());
+					if (CollectionUtils.isEmpty(ddcHyxhBases2)) {
+						ddcHyxhBase.setSynFlag(ddcHyxhBase.getSynFlag() + "_N");
+						iDdcHyxhBaseDao.save(ddcHyxhBase);
+					}
+
+				} else if (ddcHyxhBase.getSynFlag().equals(
+						SystemConstants.SYSNFLAG_UPDATE)) {
+					// 修改时，如果外网没有该协会则新增，有则修改
+					List<DdcHyxhBase> ddcHyxhBases = iDdcHyxhBaseDao
+							.findByProperty("hyxhzh", ddcHyxhBase.getHyxhzh());
+					if (CollectionUtils.isEmpty(ddcHyxhBases)) {
+						ddcHyxhBase.setSynFlag(ddcHyxhBase.getSynFlag() + "_N");
+						iDdcHyxhBaseDao.save(ddcHyxhBase);
+					} else {
+						iDdcHyxhBaseDao.update(ddcHyxhBase);
+					}
+				}
+
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 	}
@@ -949,45 +1070,44 @@ public class DataServiceImp implements IDataService {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年4月21日 下午5:32:44
+	 * @throws ParseException
 	 */
-	private void updateDdcHyxhBasb(Sheet hyxhSbSheet) {
+	private void updateDdcHyxhBasb(Sheet hyxhSbSheet) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		try {
-			for (int i = 3; i <= hyxhSbSheet.getLastRowNum(); i++) {
-				Row row = hyxhSbSheet.getRow(i);
-				if (row != null) {
-					int j = 0;
-					DdcHyxhBasb ddcHyxhBasb = new DdcHyxhBasb();
-					ddcHyxhBasb.setLsh(row.getCell(j) + "");
-					ddcHyxhBasb.setHyxhzh(row.getCell(j += 1) + "");
-					ddcHyxhBasb.setHyxhbcsjpe(Integer.parseInt(row
-							.getCell(j += 1) + ""));
-					ddcHyxhBasb.setBz(row.getCell(j += 1) + "");
-					ddcHyxhBasb.setSqr(row.getCell(j += 1) + "");
-					ddcHyxhBasb.setSqrq(sdf.parse(row.getCell(j += 1) + ""));
 
-					ddcHyxhBasb.setBjjg(row.getCell(j += 1) + "");
-					ddcHyxhBasb.setBjbz(row.getCell(j += 1) + "");
-					ddcHyxhBasb.setBzjr(row.getCell(j += 1) + "");
-					ddcHyxhBasb.setBjbm(row.getCell(j += 1) + "");
-					String bjrq = row.getCell(j += 1) + "";
-					if (StringUtils.isNotBlank(bjrq)) {
-						ddcHyxhBasb.setBjrq(sdf.parse(bjrq));
-					} else {
-						ddcHyxhBasb.setBjrq(null);
-					}
+		for (int i = 3; i <= hyxhSbSheet.getLastRowNum(); i++) {
+			Row row = hyxhSbSheet.getRow(i);
+			if (row != null) {
+				int j = 0;
+				DdcHyxhBasb ddcHyxhBasb = new DdcHyxhBasb();
+				ddcHyxhBasb.setId(Long.parseLong(row.getCell(j) + ""));
+				ddcHyxhBasb.setLsh(row.getCell(j += 1) + "");
+				ddcHyxhBasb.setHyxhzh(row.getCell(j += 1) + "");
+				ddcHyxhBasb.setHyxhsqpe(Integer.parseInt(row.getCell(j += 1)
+						+ ""));
+				ddcHyxhBasb.setBz(row.getCell(j += 1) + "");
+				ddcHyxhBasb.setSqr(row.getCell(j += 1) + "");
+				ddcHyxhBasb.setSqrq(sdf.parse(row.getCell(j += 1) + ""));
 
-					ddcHyxhBasb.setSynFlag(row.getCell(j += 1) + "_N");
-					ddcHyxhBasb.setTranDate(new Date());
-					ddcHyxhBasb.setSlIndex(Integer.parseInt(row.getCell(j += 1)
-							+ ""));
-					ddcHyxhBasb.setHyxhmc(row.getCell(j += 1) + "");
-					iDdcHyxhBasbDao.updateCleanBefore(ddcHyxhBasb);
-
+				ddcHyxhBasb.setBjjg(row.getCell(j += 1) + "");
+				ddcHyxhBasb.setBjbz(row.getCell(j += 1) + "");
+				ddcHyxhBasb.setBzjr(row.getCell(j += 1) + "");
+				ddcHyxhBasb.setBjbm(row.getCell(j += 1) + "");
+				String bjrq = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(bjrq)) {
+					ddcHyxhBasb.setBjrq(sdf.parse(bjrq));
+				} else {
+					ddcHyxhBasb.setBjrq(null);
 				}
+
+				ddcHyxhBasb.setSynFlag(row.getCell(j += 1) + "_N");
+				ddcHyxhBasb.setTranDate(new Date());
+				ddcHyxhBasb.setSlIndex(Integer.parseInt(row.getCell(j += 1)
+						+ ""));
+				ddcHyxhBasb.setHyxhmc(row.getCell(j += 1) + "");
+				iDdcHyxhBasbDao.updateCleanBefore(ddcHyxhBasb);
+
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 	}
@@ -999,79 +1119,103 @@ public class DataServiceImp implements IDataService {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年4月21日 下午5:30:42
+	 * @throws ParseException
 	 */
-	private void saveFlow(Sheet flowSheet) {
+	private void saveUpdateFlow(Sheet flowSheet) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		try {
-			for (int i = 3; i <= flowSheet.getLastRowNum(); i++) {
-				Row row = flowSheet.getRow(i);
-				if (row != null) {
-					int j = 0;
-					DdcFlow ddcFlow = new DdcFlow();
-					ddcFlow.setLsh(row.getCell(j) + "");
-					ddcFlow.setYwlx(row.getCell(j += 1) + "");
-					ddcFlow.setYwyy(row.getCell(j += 1) + "");
-					ddcFlow.setHyxhzh(row.getCell(j += 1) + "");
-					ddcFlow.setDabh(row.getCell(j += 1) + "");
-					ddcFlow.setCphm(row.getCell(j += 1) + "");
-					ddcFlow.setPpxh(row.getCell(j += 1) + "");
-					ddcFlow.setCysy(row.getCell(j += 1) + "");
-					ddcFlow.setDjh(row.getCell(j += 1) + "");
-					ddcFlow.setJtzz(row.getCell(j += 1) + "");
-					ddcFlow.setJsrxm1(row.getCell(j += 1) + "");
-					ddcFlow.setXb1(row.getCell(j += 1) + "");
-					ddcFlow.setSfzmhm1(row.getCell(j += 1) + "");
-					ddcFlow.setLxdh1(row.getCell(j += 1) + "");
-					ddcFlow.setJsrxm2(row.getCell(j += 1) + "");
-					ddcFlow.setXb2(row.getCell(j += 1) + "");
-					ddcFlow.setSfzmhm2(row.getCell(j += 1) + "");
-					ddcFlow.setLxdh2(row.getCell(j += 1) + "");
-					ddcFlow.setXsqy(row.getCell(j += 1) + "");
-					ddcFlow.setBz(row.getCell(j += 1) + "");
-					ddcFlow.setSlzl(row.getCell(j += 1) + "");
-					ddcFlow.setSlyj(row.getCell(j += 1) + "");
-					ddcFlow.setSlbz(row.getCell(j += 1) + "");
-					ddcFlow.setSlr(row.getCell(j += 1) + "");
-					ddcFlow.setSlrq(sdf.parse(row.getCell(j += 1) + ""));
-					ddcFlow.setSlbm(row.getCell(j += 1) + "");
-					ddcFlow.setGdyj(row.getCell(j += 1) + "");
-					ddcFlow.setTbyy(row.getCell(j += 1) + "");
-					ddcFlow.setGdbz(row.getCell(j += 1) + "");
-					ddcFlow.setGdr(row.getCell(j += 1) + "");
-					String gdrq = row.getCell(j += 1) + "";
-					if (StringUtils.isNotBlank(gdrq)) {
-						ddcFlow.setGdrq(sdf.parse(gdrq));
-					} else {
-						ddcFlow.setGdrq(null);
-					}
-					ddcFlow.setGdbm(row.getCell(j += 1) + "");
-					ddcFlow.setSynFlag(row.getCell(j += 1) + "_N");
-					ddcFlow.setYclb(row.getCell(j += 1) + "");
-					ddcFlow.setVcUser1Img(row.getCell(j += 1) + "");
-					ddcFlow.setVcUser2Img(row.getCell(j += 1) + "");
-					ddcFlow.setVcEbikeImg(row.getCell(j += 1) + "");
-					ddcFlow.setVcUser1CardImg1(row.getCell(j += 1) + "");
-					ddcFlow.setVcUser1CardImg2(row.getCell(j += 1) + "");
-					ddcFlow.setVcUser2CardImg1(row.getCell(j += 1) + "");
-					ddcFlow.setVcUser2CardImg2(row.getCell(j += 1) + "");
-					ddcFlow.setVcEbikeInvoiceImg(row.getCell(j += 1) + "");
-					ddcFlow.setSsdwId(row.getCell(j += 1) + "");
-					ddcFlow.setVcTableName(row.getCell(j += 1) + "");
-					ddcFlow.setiTableId(Long.parseLong(row.getCell(j += 1) + ""));
-					ddcFlow.setTranDate(new Date());
+
+		for (int i = 3; i <= flowSheet.getLastRowNum(); i++) {
+			Row row = flowSheet.getRow(i);
+			if (row != null) {
+				int j = 0;
+				DdcFlow ddcFlow = new DdcFlow();
+				ddcFlow.setLsh(row.getCell(j) + "");
+				ddcFlow.setYwlx(row.getCell(j += 1) + "");
+				ddcFlow.setYwyy(row.getCell(j += 1) + "");
+				ddcFlow.setHyxhzh(row.getCell(j += 1) + "");
+				ddcFlow.setDabh(row.getCell(j += 1) + "");
+				ddcFlow.setCphm(row.getCell(j += 1) + "");
+				ddcFlow.setPpxh(row.getCell(j += 1) + "");
+				ddcFlow.setCysy(row.getCell(j += 1) + "");
+				ddcFlow.setDjh(row.getCell(j += 1) + "");
+				ddcFlow.setJtzz(row.getCell(j += 1) + "");
+				ddcFlow.setJsrxm1(row.getCell(j += 1) + "");
+				ddcFlow.setXb1(row.getCell(j += 1) + "");
+				ddcFlow.setSfzmhm1(row.getCell(j += 1) + "");
+				ddcFlow.setLxdh1(row.getCell(j += 1) + "");
+				ddcFlow.setJsrxm2(row.getCell(j += 1) + "");
+				ddcFlow.setXb2(row.getCell(j += 1) + "");
+				ddcFlow.setSfzmhm2(row.getCell(j += 1) + "");
+				ddcFlow.setLxdh2(row.getCell(j += 1) + "");
+				ddcFlow.setXsqy(row.getCell(j += 1) + "");
+				ddcFlow.setBz(row.getCell(j += 1) + "");
+				ddcFlow.setSlzl(row.getCell(j += 1) + "");
+				ddcFlow.setSlyj(row.getCell(j += 1) + "");
+				ddcFlow.setSlbz(row.getCell(j += 1) + "");
+				ddcFlow.setSlr(row.getCell(j += 1) + "");
+				ddcFlow.setSlrq(sdf.parse(row.getCell(j += 1) + ""));
+				ddcFlow.setSlbm(row.getCell(j += 1) + "");
+				ddcFlow.setGdyj(row.getCell(j += 1) + "");
+				ddcFlow.setTbyy(row.getCell(j += 1) + "");
+				ddcFlow.setGdbz(row.getCell(j += 1) + "");
+				ddcFlow.setGdr(row.getCell(j += 1) + "");
+				String gdrq = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(gdrq)) {
+					ddcFlow.setGdrq(sdf.parse(gdrq));
+				} else {
+					ddcFlow.setGdrq(null);
+				}
+				ddcFlow.setGdbm(row.getCell(j += 1) + "");
+				ddcFlow.setSynFlag(row.getCell(j += 1) + "");
+				ddcFlow.setYclb(row.getCell(j += 1) + "");
+				ddcFlow.setVcUser1Img(row.getCell(j += 1) + "");
+				ddcFlow.setVcUser2Img(row.getCell(j += 1) + "");
+				ddcFlow.setVcEbikeImg(row.getCell(j += 1) + "");
+				ddcFlow.setVcUser1CardImg1(row.getCell(j += 1) + "");
+				ddcFlow.setVcUser1CardImg2(row.getCell(j += 1) + "");
+				ddcFlow.setVcUser2CardImg1(row.getCell(j += 1) + "");
+				ddcFlow.setVcUser2CardImg2(row.getCell(j += 1) + "");
+				ddcFlow.setVcEbikeInvoiceImg(row.getCell(j += 1) + "");
+				ddcFlow.setSsdwId(row.getCell(j += 1) + "");
+				ddcFlow.setVcTableName(row.getCell(j += 1) + "");
+				String tableIdString = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(tableIdString)) {
+					ddcFlow.setiTableId(Long.parseLong(tableIdString));
+				} else {
+					ddcFlow.setiTableId(null);
+				}
+				String slindexstr = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(slindexstr)) {
+					ddcFlow.setSlIndex(Integer.parseInt(slindexstr));
+				} else {
+					ddcFlow.setSlIndex(null);
+				}
+
+				ddcFlow.setTranDate(new Date());
+				if (ddcFlow.getSynFlag().equals(SystemConstants.SYSNFLAG_ADD)) {
 					// 根据流水号查询是否存在，存在则是重复导入
 					List<DdcFlow> ddcFlows = iDdcFlowDao.findByProperty("lsh",
 							ddcFlow.getLsh());
 
 					if (CollectionUtils.isEmpty(ddcFlows)) {
+						ddcFlow.setSynFlag(ddcFlow.getSynFlag() + "_N");
 						ddcFlow.setTranDate(new Date());
 						iDdcFlowDao.save(ddcFlow);
 					}
-
+				} else if (ddcFlow.getSynFlag().equals(
+						SystemConstants.SYSNFLAG_UPDATE)) {
+					// 查询该流水的id再更新
+					List<DdcFlow> wDdcFlows = iDdcFlowDao.findByProperty("lsh",
+							ddcFlow.getLsh());
+					if (CollectionUtils.isNotEmpty(wDdcFlows)) {
+						DdcFlow wDdcFlow = wDdcFlows.get(0);
+						ddcFlow.setSynFlag(ddcFlow.getSynFlag() + "_N");
+						ddcFlow.setId(wDdcFlow.getId());
+						iDdcFlowDao.updateCleanBefore(ddcFlow);
+					}
 				}
+
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 	}
@@ -1083,48 +1227,44 @@ public class DataServiceImp implements IDataService {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年4月21日 下午5:29:48
+	 * @throws ParseException
 	 */
-	private void saveApproveUser(Sheet approveSheet) {
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			for (int i = 3; i <= approveSheet.getLastRowNum(); i++) {
-				Row row = approveSheet.getRow(i);
-				if (row != null) {
-					int j = 0;
-					DdcApproveUser ddcApproveUser = new DdcApproveUser();
-					ddcApproveUser.setUserName(row.getCell(j) + "");
-					ddcApproveUser.setUserOrgname(row.getCell(j += 1) + "");
-					ddcApproveUser.setUserRoleName(row.getCell(j += 1) + "");
-					ddcApproveUser.setApproveIndex(Integer.parseInt(row
-							.getCell(j += 1) + ""));
-					ddcApproveUser.setApproveNote(row.getCell(j += 1) + "");
-					ddcApproveUser.setApproveTable(row.getCell(j += 1) + "");
-					ddcApproveUser.setApproveTableid(Long.parseLong(row
-							.getCell(j += 1) + ""));
+	private void saveApproveUser(Sheet approveSheet) throws ParseException {
 
-					ddcApproveUser.setApproveTime(sdf.parse(row.getCell(j += 1)
-							+ ""));
-					ddcApproveUser.setApproveState(Integer.parseInt(row
-							.getCell(j += 1) + ""));
-					ddcApproveUser.setLsh(row.getCell(j += 1) + "");
-					ddcApproveUser.setSysFlag(row.getCell(j += 1) + "_N");
-					ddcApproveUser.setApproveNo(row.getCell(j += 1) + "");
-					List<DdcApproveUser> ddcApproveUsers = iDdcApprovalUserDao
-							.findByProperty("approveNo",
-									ddcApproveUser.getApproveNo());
-					if (CollectionUtils.isEmpty(ddcApproveUsers)) {
-						ddcApproveUser.setTranDate(new Date());
-						try {
-							iDdcApprovalUserDao.save(ddcApproveUser);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for (int i = 3; i <= approveSheet.getLastRowNum(); i++) {
+			Row row = approveSheet.getRow(i);
+			if (row != null) {
+				int j = 0;
+				DdcApproveUser ddcApproveUser = new DdcApproveUser();
+				ddcApproveUser.setUserName(row.getCell(j) + "");
+				ddcApproveUser.setUserOrgname(row.getCell(j += 1) + "");
+				ddcApproveUser.setUserRoleName(row.getCell(j += 1) + "");
+				ddcApproveUser.setApproveIndex(Integer.parseInt(row
+						.getCell(j += 1) + ""));
+				ddcApproveUser.setApproveNote(row.getCell(j += 1) + "");
+				ddcApproveUser.setApproveTable(row.getCell(j += 1) + "");
+				ddcApproveUser.setApproveTableid(Long.parseLong(row
+						.getCell(j += 1) + ""));
+
+				ddcApproveUser.setApproveTime(sdf.parse(row.getCell(j += 1)
+						+ ""));
+				ddcApproveUser.setApproveState(Integer.parseInt(row
+						.getCell(j += 1) + ""));
+				ddcApproveUser.setLsh(row.getCell(j += 1) + "");
+				ddcApproveUser.setSysFlag(row.getCell(j += 1) + "_N");
+				ddcApproveUser.setApproveNo(row.getCell(j += 1) + "");
+				List<DdcApproveUser> ddcApproveUsers = iDdcApprovalUserDao
+						.findByProperty("approveNo",
+								ddcApproveUser.getApproveNo());
+				if (CollectionUtils.isEmpty(ddcApproveUsers)) {
+					ddcApproveUser.setTranDate(new Date());
+
+					iDdcApprovalUserDao.save(ddcApproveUser);
 
 				}
+
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 	}
@@ -1136,94 +1276,92 @@ public class DataServiceImp implements IDataService {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年4月21日 下午5:15:27
+	 * @throws ParseException
 	 */
-	private void saveUpdateDaxxb(Sheet sheet) {
+	private void saveUpdateDaxxb(Sheet sheet) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		try {
-			for (int i = 3; i <= sheet.getLastRowNum(); i++) {
-				Row row = sheet.getRow(i);
-				if (row != null) {
-					int j = 0;
-					DdcDaxxb daxxb = new DdcDaxxb();
-					daxxb.setId(Long.parseLong(row.getCell(j) + ""));
-					daxxb.setDabh(row.getCell(j += 1) + "");
-					daxxb.setYwlx(row.getCell(j += 1) + "");
-					daxxb.setYwyy(row.getCell(j += 1) + "");
-					daxxb.setHyxhzh(row.getCell(j += 1) + "");
-					daxxb.setSsdwId(row.getCell(j += 1) + "");
-					daxxb.setCphm(row.getCell(j += 1) + "");
-					daxxb.setPpxh(row.getCell(j += 1) + "");
-					daxxb.setCysy(row.getCell(j += 1) + "");
-					daxxb.setDjh(row.getCell(j += 1) + "");
-					daxxb.setJtzz(row.getCell(j += 1) + "");
-					daxxb.setJsrxm1(row.getCell(j += 1) + "");
-					daxxb.setXb1(row.getCell(j += 1) + "");
-					daxxb.setSfzmhm1(row.getCell(j += 1) + "");
-					daxxb.setLxdh1(row.getCell(j += 1) + "");
-					daxxb.setJsrxm2(row.getCell(j += 1) + "");
-					daxxb.setXb2(row.getCell(j += 1) + "");
-					daxxb.setSfzmhm2(row.getCell(j += 1) + "");
-					daxxb.setLxdh2(row.getCell(j += 1) + "");
-					daxxb.setXsqy(row.getCell(j += 1) + "");
-					daxxb.setBz(row.getCell(j += 1) + "");
-					daxxb.setZt(row.getCell(j += 1) + "");
-					daxxb.setSyrq(sdf.parse(row.getCell(j += 1) + ""));
-					daxxb.setSlzl(row.getCell(j += 1) + "");
-					daxxb.setSlyj(row.getCell(j += 1) + "");
-					daxxb.setSlbz(row.getCell(j += 1) + "");
-					daxxb.setSlr(row.getCell(j += 1) + "");
-					String slrq = row.getCell(j += 1) + "";
-					if (StringUtils.isNotBlank(slrq)) {
-						daxxb.setSlrq(sdf.parse(slrq));
-					}
-					daxxb.setSlbm(row.getCell(j += 1) + "");
-					daxxb.setGdyj(row.getCell(j += 1) + "");
-					daxxb.setTbyy(row.getCell(j += 1) + "");
-					daxxb.setGdbz(row.getCell(j += 1) + "");
-					daxxb.setGdr(row.getCell(j += 1) + "");
-					String gdrq = row.getCell(j += 1) + "";
-					if (StringUtils.isNotBlank(gdrq)) {
-						daxxb.setGdrq(sdf.parse(gdrq));
-					}
 
-					daxxb.setGdbm(row.getCell(j += 1) + "");
-					daxxb.setSynFlag(row.getCell(j += 1) + "");
-					daxxb.setVcUser1Img(row.getCell(j += 1) + "");
-					daxxb.setVcUser2Img(row.getCell(j += 1) + "");
-					daxxb.setVcEbikeImg(row.getCell(j += 1) + "");
-					daxxb.setVcUser1CardImg1(row.getCell(j += 1) + "");
-					daxxb.setVcUser1CardImg2(row.getCell(j += 1) + "");
-					daxxb.setVcUser2CardImg1(row.getCell(j += 1) + "");
-					daxxb.setVcUser2CardImg2(row.getCell(j += 1) + "");
-					daxxb.setVcEbikeInvoiceImg(row.getCell(j += 1) + "");
-					daxxb.setTranDate(new Date());
-					if (daxxb.getSynFlag().equals(SystemConstants.SYSNFLAG_ADD)) {
-						List<DdcDaxxb> daxxbs = iDdcDaxxbDao.findByProperty(
-								"dabh", daxxb.getDabh());
-						if (CollectionUtils.isEmpty(daxxbs)) {
-							daxxb.setSynFlag(daxxb.getSynFlag() + "_N");
-							iDdcDaxxbDao.save(daxxb);
-						}
+		for (int i = 3; i <= sheet.getLastRowNum(); i++) {
+			Row row = sheet.getRow(i);
+			if (row != null) {
+				int j = 0;
+				DdcDaxxb daxxb = new DdcDaxxb();
+				daxxb.setId(Long.parseLong(row.getCell(j) + ""));
+				daxxb.setDabh(row.getCell(j += 1) + "");
+				daxxb.setYwlx(row.getCell(j += 1) + "");
+				daxxb.setYwyy(row.getCell(j += 1) + "");
+				daxxb.setHyxhzh(row.getCell(j += 1) + "");
+				daxxb.setSsdwId(row.getCell(j += 1) + "");
+				daxxb.setCphm(row.getCell(j += 1) + "");
+				daxxb.setPpxh(row.getCell(j += 1) + "");
+				daxxb.setCysy(row.getCell(j += 1) + "");
+				daxxb.setDjh(row.getCell(j += 1) + "");
+				daxxb.setJtzz(row.getCell(j += 1) + "");
+				daxxb.setJsrxm1(row.getCell(j += 1) + "");
+				daxxb.setXb1(row.getCell(j += 1) + "");
+				daxxb.setSfzmhm1(row.getCell(j += 1) + "");
+				daxxb.setLxdh1(row.getCell(j += 1) + "");
+				daxxb.setJsrxm2(row.getCell(j += 1) + "");
+				daxxb.setXb2(row.getCell(j += 1) + "");
+				daxxb.setSfzmhm2(row.getCell(j += 1) + "");
+				daxxb.setLxdh2(row.getCell(j += 1) + "");
+				daxxb.setXsqy(row.getCell(j += 1) + "");
+				daxxb.setBz(row.getCell(j += 1) + "");
+				daxxb.setZt(row.getCell(j += 1) + "");
+				daxxb.setSyrq(sdf.parse(row.getCell(j += 1) + ""));
+				daxxb.setSlzl(row.getCell(j += 1) + "");
+				daxxb.setSlyj(row.getCell(j += 1) + "");
+				daxxb.setSlbz(row.getCell(j += 1) + "");
+				daxxb.setSlr(row.getCell(j += 1) + "");
+				String slrq = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(slrq)) {
+					daxxb.setSlrq(sdf.parse(slrq));
+				}
+				daxxb.setSlbm(row.getCell(j += 1) + "");
+				daxxb.setGdyj(row.getCell(j += 1) + "");
+				daxxb.setTbyy(row.getCell(j += 1) + "");
+				daxxb.setGdbz(row.getCell(j += 1) + "");
+				daxxb.setGdr(row.getCell(j += 1) + "");
+				String gdrq = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(gdrq)) {
+					daxxb.setGdrq(sdf.parse(gdrq));
+				}
 
-					} else if (daxxb.getSynFlag().equals(
-							SystemConstants.SYSNFLAG_UPDATE)) {
-						// 更新时，验证该档案编号是否存在，存在则更新，不存在则新增
-						List<DdcDaxxb> ddcDaxxbs = iDdcDaxxbDao.findByProperty(
-								"dabh", daxxb.getDabh());
-						if (CollectionUtils.isEmpty(ddcDaxxbs)) {
-							daxxb.setSynFlag(daxxb.getSynFlag() + "_N");
-							iDdcDaxxbDao.save(daxxb);
-						} else {
-							daxxb.setSynFlag(daxxb.getSynFlag() + "_N");
-							iDdcDaxxbDao.update(daxxb);
-						}
+				daxxb.setGdbm(row.getCell(j += 1) + "");
+				daxxb.setSynFlag(row.getCell(j += 1) + "");
+				daxxb.setVcUser1Img(row.getCell(j += 1) + "");
+				daxxb.setVcUser2Img(row.getCell(j += 1) + "");
+				daxxb.setVcEbikeImg(row.getCell(j += 1) + "");
+				daxxb.setVcUser1CardImg1(row.getCell(j += 1) + "");
+				daxxb.setVcUser1CardImg2(row.getCell(j += 1) + "");
+				daxxb.setVcUser2CardImg1(row.getCell(j += 1) + "");
+				daxxb.setVcUser2CardImg2(row.getCell(j += 1) + "");
+				daxxb.setVcEbikeInvoiceImg(row.getCell(j += 1) + "");
+				daxxb.setTranDate(new Date());
+				if (daxxb.getSynFlag().equals(SystemConstants.SYSNFLAG_ADD)) {
+					List<DdcDaxxb> daxxbs = iDdcDaxxbDao.findByProperty("dabh",
+							daxxb.getDabh());
+					if (CollectionUtils.isEmpty(daxxbs)) {
+						daxxb.setSynFlag(daxxb.getSynFlag() + "_N");
+						iDdcDaxxbDao.save(daxxb);
 					}
 
+				} else if (daxxb.getSynFlag().equals(
+						SystemConstants.SYSNFLAG_UPDATE)) {
+					// 更新时，验证该档案编号是否存在，存在则更新，不存在则新增
+					List<DdcDaxxb> ddcDaxxbs = iDdcDaxxbDao.findByProperty(
+							"dabh", daxxb.getDabh());
+					if (CollectionUtils.isEmpty(ddcDaxxbs)) {
+						daxxb.setSynFlag(daxxb.getSynFlag() + "_N");
+						iDdcDaxxbDao.save(daxxb);
+					} else {
+						daxxb.setSynFlag(daxxb.getSynFlag() + "_N");
+						iDdcDaxxbDao.updateCleanBefore(daxxb);
+					}
 				}
 
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+
 		}
 
 	}

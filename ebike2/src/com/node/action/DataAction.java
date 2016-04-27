@@ -105,6 +105,7 @@ public class DataAction {
 	@RequestMapping("/exportExcel")
 	public String exportExcel(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, WriteException {
+		String message = "success";
 		try {
 			PicPath imgPath = iCompanyService
 					.getPathById(SystemConstants.EXCEL_PATH);
@@ -168,6 +169,7 @@ public class DataAction {
 			 */
 			WritableSheet ws7 = wwb.createSheet("ddc_hyxh_ssdwclsb", 6);
 			iDataService.createDdcHyxhSsdwClSb(wcfFC, wcfFC2, ws7);
+
 			FileRecord fileRecord = new FileRecord();
 			fileRecord.setFilePath(outPath);
 			fileRecord.setFileName(fileName);
@@ -179,9 +181,14 @@ public class DataAction {
 
 			response.getWriter().print(outPath);
 		} catch (Exception e) {
+			message = e.getMessage();
 			e.printStackTrace();
 			response.getWriter().print("2");
 		}
+		if (message.equalsIgnoreCase("success")) {
+			System.out.println("*********************");
+		}
+
 		return null;
 
 	}
@@ -228,6 +235,13 @@ public class DataAction {
 					AjaxUtil.rendJson(response, false, "上传的文件为空");
 					return;
 				}
+				System.out.println("file.getOriginalFilename() = "
+						+ file.getOriginalFilename());
+				if (file.getOriginalFilename().endsWith("_W.xls")) {
+					AjaxUtil.rendJson(response, false, "你导入的是外网的文件！");
+					return;
+				}
+
 				message = iDataService.updateReadExcel(file.getInputStream());
 				if (message.equalsIgnoreCase("success")) {
 					try {

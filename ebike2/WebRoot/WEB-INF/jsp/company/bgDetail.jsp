@@ -342,7 +342,7 @@ function change(){
 					<td>${ddcDaxxb.dabh }</td>
 					<th>车牌号码：</th>
 					<td>${ddcDaxxb.cphm }</td>
-					<th>归档日期：</th>
+					<th>审批日期：</th>
 					<td>${ddcDaxxb.gdrq }</td>
 					<th>审验日期：</th>
 					<td>${ddcDaxxb.syrq }</td>
@@ -353,7 +353,7 @@ function change(){
 					<td colspan="3"><c:forEach items="${selectSlzls }" var="gd">
 						${gd.dmms1 }<br />
 						</c:forEach></td>
-					<th>归档意见：</th>
+					<th>审批意见：</th>
 					<td colspan="3"><c:if test="${ddcDaxxb.gdyj==null }">
 							审批中
 						</c:if> <c:if test="${ddcDaxxb.gdyj==0 }">
@@ -363,7 +363,7 @@ function change(){
 						</c:if></td>
 				</tr>
 				<tr>
-					<th>归档备注：</th>
+					<th>审批备注：</th>
 					<td colspan="7">${ddcDaxxb.gdbz }</td>
 				</tr>
 				<tr>

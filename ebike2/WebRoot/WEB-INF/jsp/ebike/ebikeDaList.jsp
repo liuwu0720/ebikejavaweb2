@@ -50,7 +50,11 @@ $(document).ready(function(){
 			field : 'DABH',
 			title : '档案编号',
 			align:'center',
-			width : 120
+			width : 120,
+			formatter:function(value,row,index){
+				var query = "<a  href='javascript:void(0)'  onclick='queryDetaiList(\""+row.DABH+"\")'>"+value+"</a>";
+				return query;
+			}
 		},{
 			field : 'CPHM',
 			title : '车牌号',
@@ -132,6 +136,11 @@ function deleteRow(id){
 	 } );
 	
 }
+//查看该档案的流水记录
+function queryDetaiList(obj){
+	window.location.href="<%=basePath%>ssdwAction/getFlowList?dabh="+obj
+}
+
 function zhuxiaoSure(){
 	var flag = checkValues();
 	

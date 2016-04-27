@@ -1,14 +1,10 @@
 package com.node.model;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +21,6 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "DDC_DAXXB", uniqueConstraints = @UniqueConstraint(columnNames = "DABH"))
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class DdcDaxxb implements java.io.Serializable {
 
 	// Fields
@@ -41,8 +36,8 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String hyxhzh;//
 	private String hyxhzhName;
 	private String ssdwId;// 单位ID
-	private String cphm;
-	private String ppxh;
+	private String cphm;// 车牌号码
+	private String ppxh;// 品牌型号
 	private String ssdwName;
 	private String cysy;// 车身验色
 	private String cysyName;
@@ -110,9 +105,8 @@ public class DdcDaxxb implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@SequenceGenerator(name = "DDC_DAXXBID", sequenceName = "SEQ_DDC_DAXXB", allocationSize = 1)
+
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_DAXXBID")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;

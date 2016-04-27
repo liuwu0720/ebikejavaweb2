@@ -102,18 +102,6 @@ $(document).ready(function(){
 				}
 			}
 		},{
-			field : 'shFlag',
-			title : '是否审核',
-			align:'center',
-			width : 120,
-			formatter:function(value,index){
-				if(value == 0 ){
-					return "<p style='color:red'>未审核</p>";
-				}else{
-					return "已审核";
-				}
-			}
-		},{
 			field : 'null',
 			title:'操作',
 			align:'center',
@@ -404,7 +392,7 @@ function resetPassword(id){
 				</tr>
 				<tr>
 					<th>住所地址</th>
-					<td><input class="easyui-validatebox"  readonly="readonly"   name="zsdz" type="text"  style="height: 32px;width:200px;"></input>
+					<td><input class="easyui-validatebox"  name="zsdz" type="text"  style="height: 32px;width:200px;"></input>
 					</td>
 				</tr>
 				<tr>
@@ -414,7 +402,7 @@ function resetPassword(id){
 				</tr>
 				<tr >
 					<th>联系电话:</th>
-					<td><input class="easyui-validatebox"    type="text" name="lxdh" style="height: 32px"></input>
+					<td><input class="easyui-validatebox" data-options="validType:'phoneNum'"   type="text" name="lxdh" style="height: 32px"></input>
 					</td>
 				</tr>
 				

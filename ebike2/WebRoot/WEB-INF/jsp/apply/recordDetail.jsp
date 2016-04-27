@@ -171,8 +171,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			<td>${ddcHyxhSsdwclsb.ssdwName }</td>
     			<th>品牌型号</th>
     			<td>${ddcHyxhSsdwclsb.ppxh }</td>
-    			<th></th>
-    			<td></td>
+    			<th>申请日期</th>
+    			<td><fmt:formatDate value="${ddcHyxhSsdwclsb.sqrq }" pattern="yyyy-MM-dd"/></td>
     		</tr>
     		<tr>
     			<th>电机号</th>
@@ -227,13 +227,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<tr>
     			
     			<th>申请备注</th>
-    			<td>${ddcHyxhSsdwclsb.bz }</td>
-    			<th>申请人</th>
-    			<td>${ddcHyxhSsdwclsb.sqr }</td>
-    			<th>申请日期</th>
-    			<td><fmt:formatDate value="${ddcHyxhSsdwclsb.sqrq }" pattern="yyyy-MM-dd"/></td>
-    			<th></th>
-    			<td></td>
+    			<td colspan="7">${ddcHyxhSsdwclsb.bz }</td>
     		</tr>
     		<tr>
     			<th>办理人</th>

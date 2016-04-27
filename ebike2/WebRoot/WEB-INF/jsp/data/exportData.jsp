@@ -105,7 +105,35 @@ function exportRowData(){
 		}						
 	});
 }
+function uploadFile(){
+	$('#fileform').form('submit', {
+		url : "<%=basePath%>dataAction/importExcel",
+		onSubmit : function() {
+			var isValid = $("#fileform").form('enableValidation').form(
+					'validate');
 
+			if (!isValid) {
+				$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
+			}
+			return isValid; // 返回false终止表单提交
+		},
+		success : function(data) {
+			var data = eval('(' + data + ')'); // change the JSON
+			if (data.isSuccess) {
+				$.messager.show({ // show error message
+					title : '提示',
+					msg : data.message
+				});
+				$("#dg").datagrid("reload");
+			}else{
+				alert(data.message);
+			}
+			$.messager.progress('close'); // 如果提交成功则隐藏进度条
+
+		}
+
+	});
+}
 </script>
 </head>
 <body  class="easyui-layout">
@@ -113,9 +141,10 @@ function exportRowData(){
 	<div>
 		<div id="tb" class="searchdiv">
 			
-			<form action="" method="post"  enctype="multipart/form-data">
+			<form id="fileform" method="post"  enctype="multipart/form-data">
 				<span>导入内网文件</span><input id="card2img_jsr2" type="file"
 						name="fileinput"  />
+			<button type="button" onclick="uploadFile()" class="btn">上传</button>						
 			</form>		
 		</div>
 		<table id="dg" style="width:90%;">

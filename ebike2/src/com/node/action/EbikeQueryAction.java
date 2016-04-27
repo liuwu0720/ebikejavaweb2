@@ -121,7 +121,7 @@ public class EbikeQueryAction {
 		if (StringUtils.isNotBlank(xsqy)) {
 			sql += " and a.XSQY = '" + xsqy + "'";
 		}
-		sql += " and a.ywlx !='D' and a.slyj=0  order by A.ID DESC";// 查出没有注销且变更不在审批中的记录
+		sql += " and a.zt!='E'  order by A.ID DESC";
 
 		Map<String, Object> resultMap = iEbikeService.queryBySpringSql(sql, p);
 		return resultMap;

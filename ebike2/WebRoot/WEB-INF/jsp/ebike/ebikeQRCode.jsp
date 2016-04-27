@@ -84,7 +84,7 @@ function exportPage() {
 		    <div style="display:inline-block;width:330px;height:400px;">
 		   <ul>
 		        <li><label>人员姓名&nbsp;:&nbsp;</label> ${ddcDaxxb.jsrxm1 }</li>
-		        <li><label>联系电话&nbsp;:&nbsp;</label>${ddcDaxxb.lxdh2 }</li>
+		        <li><label>联系电话&nbsp;:&nbsp;</label>${ddcDaxxb.lxdh1 }</li>
 		        <li><label>性别&nbsp;:&nbsp;</label>	<c:if test="${ddcDaxxb.xb1 == 0 }">男</c:if>
 					<c:if test="${ddcDaxxb.xb1 == 1 }">女</c:if></li>
 		    	<li><label>所属单位&nbsp;:&nbsp;</label> ${ddcDaxxb.ssdwName }</li>
@@ -120,7 +120,8 @@ function exportPage() {
 	<li><label>联系电话&nbsp;:&nbsp;</label>${ddcDaxxb.lxdh2 }</li>
 	 <li><label>性别&nbsp;:&nbsp;</label>	<c:if test="${ddcDaxxb.xb2 == 0 }">男</c:if>
 					<c:if test="${ddcDaxxb.xb2 == 1 }">女</c:if></li>
-	<li><label>申报单位&nbsp;:&nbsp;</label> ${ddcDaxxb.ssdwName }</li>
+	<li><label>所属单位&nbsp;:&nbsp;</label> ${ddcDaxxb.ssdwName }</li>
+		    	<li><label>所属协会&nbsp;:&nbsp;</label>${ddcDaxxb.hyxhzhName }</li> 
 	<li><label>品牌型号&nbsp;:&nbsp;</label>${ddcDaxxb.ppxh }</li>
 	<li><label>电机号&nbsp;:&nbsp;</label>${ddcDaxxb.djh }</li>
 	<li><label>车身颜色&nbsp;:&nbsp;</label> ${ddcDaxxb.cysyName }</li>

@@ -113,7 +113,7 @@ public class GenericHibernateDao<T extends Serializable, PK extends Serializable
 
 	// 更新实体
 	public void update(T entity) {
-		getHibernateTemplate().update(entity);
+		getHibernateTemplate().merge(entity);
 	}
 
 	// 防止同一session两个对象时Hibernate报错)

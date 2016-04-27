@@ -437,14 +437,15 @@ public class CompanyAction {
 			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(dId);
 			ddcHyxhSsdw.setZt(SystemConstants.DISENABLE_ZT);
 			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+			ddcHyxhSsdw.setTranDate(new Date());
 			iCompanyService.update(ddcHyxhSsdw);
-			DdcHyxhBase ddcHyxhBase = iUserService.getByUserAccount(ddcHyxhSsdw
-					.getHyxhzh());
-			if (ddcHyxhSsdw.getTotalPe() != null) {
-				ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
-						+ ddcHyxhSsdw.getTotalPe());
-				iUserService.update(ddcHyxhBase);
-			}
+			/*
+			 * DdcHyxhBase ddcHyxhBase =
+			 * iUserService.getByUserAccount(ddcHyxhSsdw .getHyxhzh()); if
+			 * (ddcHyxhSsdw.getTotalPe() != null) {
+			 * ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe() +
+			 * ddcHyxhSsdw.getTotalPe()); iUserService.update(ddcHyxhBase); }
+			 */
 
 			AjaxUtil.rendJson(response, true, "操作成功");
 		} catch (Exception e) {

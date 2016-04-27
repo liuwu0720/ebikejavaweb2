@@ -135,6 +135,8 @@ public class SystemConstants {
 	 */
 	public static final String TEST_USER = "cs";
 	public static final Integer EXCEL_PATH = 2;
+	public static final String DAXXB_TABLE = "DDC_DAXXB";
+	public static final String DDCFLOW_TABLE = "DDC_FLOW";
 
 	public static void main(String[] args) {
 		String codeString = "13366665555";

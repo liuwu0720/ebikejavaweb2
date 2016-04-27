@@ -100,7 +100,7 @@ $(document).ready(function(){
 															var update = "<a  href='javascript:void(0)'  onclick='updateRow("
 																	+ row.id
 																	+ ","
-																	+ row.dwpe
+																	+ row.totalPe
 																	+ ")'>修改配额</a>"
 
 															return update;
@@ -128,7 +128,7 @@ $(document).ready(function(){
 		$('#dgformDiv').dialog('open').dialog('setTitle', '修改配额');
 		$('#dgform').form('load', {
 			id : obj,
-			dwpe : obj2
+			totalPe : obj2
 		});
 	}
 	
@@ -179,7 +179,7 @@ $(document).ready(function(){
 					style="line-height:26px;border:1px solid #ccc"> <a
 					class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
-				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">实际配额：${ddcHyxhBase.totalPe }   剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
+				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">协会总配额：${ddcHyxhBase.totalPe }   剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 			</div>
 		<table id="dg" style="width:90%;">
 		</table>
@@ -190,8 +190,8 @@ $(document).ready(function(){
 		<form id="dgform" class="easyui-form" method="post"  >
 			<table class="table">
 				<tr>
-					<td>申请配额:</td>
-					<td><input id="ss" class="easyui-numberspinner" name="dwpe"
+					<td>总配额:</td>
+					<td><input id="ss" class="easyui-numberspinner" name="totalPe"
 						data-options="increment:1,required:true,validType:'number'"  min="0"
 						style="width:120px;height:30px;"></input></td>
 				</tr>

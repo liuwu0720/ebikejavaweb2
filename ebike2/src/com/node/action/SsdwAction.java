@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -38,6 +39,7 @@ import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.DdcHyxhSsdwclsbLog;
+import com.node.model.DdcSjzd;
 import com.node.model.PicPath;
 import com.node.service.IApplyService;
 import com.node.service.ICompanyService;
@@ -287,14 +289,12 @@ public class SsdwAction {
 				Object object = iApplyService.getDateBySQL(sql);
 				String seq = object.toString();
 				String md = new SimpleDateFormat("yyMMdd").format(new Date());
-				ddcHyxhSsdwclsb.setLsh("B" + md + seq);
-				ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
-				ddcHyxhSsdwclsb.setTranDate(new Date());
+				ddcHyxhSsdwclsb.setLsh("A" + md + seq);
+
 				saveLog(ddcHyxhSsdwclsb, "新增", request);
 				iApplyService.saveDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			} else {
-				ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
-				ddcHyxhSsdwclsb.setTranDate(new Date());
+
 				saveLog(ddcHyxhSsdwclsb, "修改", request);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
@@ -466,7 +466,7 @@ public class SsdwAction {
 
 	/**
 	 * 
-	 * 方法描述：
+	 * 方法描述：车辆备案申报审批
 	 * 
 	 * @param state
 	 *            1--拒绝 0-同意
@@ -501,6 +501,12 @@ public class SsdwAction {
 
 			// 审批人
 			DdcApproveUser ddcApproveUser = new DdcApproveUser();
+			String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
+			Object object = iApplyService.getDateBySQL(sql);
+			String seq = object.toString();
+			String md = new SimpleDateFormat("yyMMdd").format(new Date());
+			String approveNo = "W" + md + seq;// 生成审批号
+			ddcApproveUser.setApproveNo(approveNo);
 			ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
 			ddcApproveUser.setUserRoleName("行业协会");
 			ddcApproveUser.setApproveIndex(1);
@@ -509,7 +515,7 @@ public class SsdwAction {
 			ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
 			ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
 			ddcApproveUser.setApproveTime(new Date());
-			// ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+			ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
 			try {
 				iCompanyService.update(ddcHyxhSsdw);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
@@ -541,6 +547,8 @@ public class SsdwAction {
 			ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
 			ddcApproveUser.setApproveTime(new Date());
 			ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+			ddcApproveUser.setTranDate(new Date());
+			ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
 			try {
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 				iApplyService.saveDdcApproveUser(ddcApproveUser);
@@ -566,6 +574,8 @@ public class SsdwAction {
 	@RequestMapping("/getFlowList")
 	public String getFlowList(HttpServletRequest request, String dabh) {
 		request.setAttribute("dabh", dabh);
+		List<DdcSjzd> ywylxs = iApplyService.getSjzdByDmlb("YWLX");// 业务原因
+		request.setAttribute("ywylxs", ywylxs);
 		return "ebike/flowList";
 	}
 

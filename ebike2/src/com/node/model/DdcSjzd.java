@@ -1,14 +1,10 @@
 package com.node.model;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -60,8 +56,6 @@ public class DdcSjzd implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@SequenceGenerator(name = "DDC_SJZD", sequenceName = "SEQ_DDC_SJZD", allocationSize = 1)
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_SJZD")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;

@@ -77,16 +77,19 @@ public class UserAction {
 	public void checkUser(HttpServletRequest request,
 			HttpServletResponse response, String cuser, String cpassword,
 			String role, String ccode) {
-		/*
-		 * String code = (String) request.getSession().getAttribute("certCode");
-		 * 
-		 * if (StringUtils.isEmpty(code) || StringUtils.isEmpty(ccode)) {
-		 * AjaxUtil.rendJson(response, false, "验证码获取失败，请刷新页面重试"); return; }
-		 * 
-		 * 
-		 * if (!code.equalsIgnoreCase(ccode)) { AjaxUtil.rendJson(response,
-		 * false, "验证码不正确"); return; }
-		 */
+
+		String code = (String) request.getSession().getAttribute("certCode");
+
+		if (StringUtils.isEmpty(code) || StringUtils.isEmpty(ccode)) {
+			AjaxUtil.rendJson(response, false, "验证码获取失败，请刷新页面重试");
+			return;
+		}
+
+		if (!code.equalsIgnoreCase(ccode)) {
+			AjaxUtil.rendJson(response, false, "验证码不正确");
+			return;
+		}
+
 		if (role.equals(SystemConstants.ROLE_HYXH)
 				|| role.equals(SystemConstants.ROLE_ADMIN)) {
 			DdcHyxhBase ddcHyxhBase = iUserService.getByUserAccount(cuser);

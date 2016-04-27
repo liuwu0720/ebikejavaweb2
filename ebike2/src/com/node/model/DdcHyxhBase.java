@@ -1,14 +1,10 @@
 package com.node.model;
 
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +42,7 @@ public class DdcHyxhBase implements java.io.Serializable {
 	private String tranFlag;
 	private Date tranDate;
 	private Integer totalPe;// 总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数
+	private Integer nEnable;
 
 	// Constructors
 
@@ -80,9 +77,7 @@ public class DdcHyxhBase implements java.io.Serializable {
 		this.tranDate = tranDate;
 	}
 
-	@SequenceGenerator(name = "DDC_HYXH_BASE", sequenceName = "SEQ_DDC_HYXH_BASE", allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_HYXH_BASE")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
@@ -239,6 +234,19 @@ public class DdcHyxhBase implements java.io.Serializable {
 	 */
 	public void setTotalPe(Integer totalPe) {
 		this.totalPe = totalPe;
+	}
+
+	@Column(name = "NENABLE", precision = 0)
+	public Integer getnEnable() {
+		return nEnable;
+	}
+
+	/**
+	 * @param nEnable
+	 *            : set the property nEnable.
+	 */
+	public void setnEnable(Integer nEnable) {
+		this.nEnable = nEnable;
 	}
 
 }

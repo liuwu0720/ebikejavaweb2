@@ -156,6 +156,7 @@ function cancelSb(id){
 							window.location.href='<%=basePath%>ssdwAction/getAllBa';
 						}else{
 							alert(data.message);
+							$("#dg").datagrid('reload');
 						}
 					   }
 				  ,"json");
@@ -186,14 +187,14 @@ function addRowData(){
 		 url:'<%=basePath%>applyAction/getAllColorsAjax',    
 		    valueField:'dmz',    
 		    textField:'dmms1',
-		    value:""   //默认选中的值       
+		    value:"1"   //默认选中的值       
 	});
 	//行驶区域
 	$('#xsqy').combobox({
 		 url:'<%=basePath%>applyAction/getAllAreaAjax',    
 		    valueField:'dmz',    
 		    textField:'dmms1',
-		    value:""   //默认选中的值       
+		    value:"440303"   //默认选中的值       
 	})
 	
 	$('#xb1,#xb2').combobox({
@@ -216,24 +217,7 @@ function updateRow(id){
 	$.messager.progress({
 		text:"正在处理，请稍候..."
 	});
-	$.post("<%=basePath%>ssdwAction/cancelSb", 
-			{id:id},    
-			   function (data, textStatus)
-			   {     
-					
-				if (data.isSuccess) {
-					$.messager.show({ // show error message
-						title : '提示',
-						msg : data.message
-					});
-					$("#dg").datagrid('reload');
-					window.location.href="<%=basePath%>applyAction/updateRecordApprovalInfoById?id="+id;
-				}else{
-					alert(data.message);
-				}
-				$.messager.progress('close'); // 如果提交成功则隐藏进度条
-			   }
-		  ,"json");
+	window.location.href="<%=basePath%>applyAction/updateRecordApprovalInfoById?id="+id;
 
 }
 
@@ -421,7 +405,7 @@ function exportRowData(){
 						data-options="required:true" name="djh" style="height: 32px"></input>
 					</td>
 					<td>脚踏装置:</td>
-					<td><select id="jtzz" class="easyui-combobox" name="jtzz"
+					<td><select id="jtzz" class="easyui-combobox" name="jtzz" data-options="required:true"
 						style="height:32px;width: 50px;">
 							<option value="0">有</option>
 							<option value="1">无</option>
@@ -499,7 +483,7 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>行驶区域</td>
-					<td><input id="xsqy" name="xsqy"    style="height:30px;"></td>
+					<td><input id="xsqy" name="xsqy"  style="height:30px;"></td>
 					<td>备注</td>
 					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
 				</tr>

@@ -79,7 +79,7 @@ $(document).ready(function(){
 			title : '受理意见',
 			align:'center',
 			width : 120,
-			formatter:function(value,index){
+			formatter:function(value,row,index){
 				if(value == 0){
 					return "同意";
 				}else if(value == 1){
@@ -148,7 +148,10 @@ function queryRow(id){
 	window.location.href="<%=basePath%>ebikeWaterAction/queryInfoById?id="+id
 	
 }
-
+//查看该档案的流水记录
+function queryDetaiList(obj){
+	window.location.href="<%=basePath%>ssdwAction/getFlowList?dabh="+obj
+}
 
 
 </script>

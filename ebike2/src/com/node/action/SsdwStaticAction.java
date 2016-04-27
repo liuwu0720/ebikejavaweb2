@@ -7,12 +7,17 @@
  */
 package com.node.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mangofactory.swagger.annotations.ApiIgnore;
+import com.node.model.DdcSjzd;
+import com.node.service.IApplyService;
 
 /**
  * 类描述：
@@ -25,9 +30,13 @@ import com.mangofactory.swagger.annotations.ApiIgnore;
 @RequestMapping("/ssdwStaticAction")
 @ApiIgnore
 public class SsdwStaticAction {
+	@Autowired
+	IApplyService iApplyService;
 
 	@RequestMapping("/getYwList")
 	public String getYwList(HttpServletRequest request) {
+		List<DdcSjzd> ywylxs = iApplyService.getSjzdByDmlb("YWLX");// 业务原因
+		request.setAttribute("ywylxs", ywylxs);
 		return "company/flowList";
 	}
 }
