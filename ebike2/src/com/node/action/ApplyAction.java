@@ -635,29 +635,36 @@ public class ApplyAction {
 		try {
 			for (int i = 0; i < ids.length; i++) {
 				long id = Long.parseLong(ids[i]);
+
 				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 						.getDdcHyxhSsdwclsbById(id);
 				if (StringUtils.isBlank(ddcHyxhSsdwclsb.getSynFlag())) {
 					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 					ddcHyxhSsdwclsb.setTranDate(new Date());
+					DdcApproveUser ddcApproveUser = new DdcApproveUser();
+
+					String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
+					Object object = iApplyService.getDateBySQL(sql);
+					String seq = object.toString();
+					String md = new SimpleDateFormat("yyMMdd")
+							.format(new Date());
+					String approveNo = "W" + md + seq;// 生成审批号
+					ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+					ddcApproveUser.setTranDate(new Date());
+					ddcApproveUser.setApproveNo(approveNo);
+					ddcApproveUser.setApproveIndex(1);
+					ddcApproveUser
+							.setApproveTable(SystemConstants.RECORDSBTABLE);
+					ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
+					ddcApproveUser.setApproveTime(new Date());
+					ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
+					ddcApproveUser.setUserRoleName("行业协会");
+					iApplyService.saveDdcApproveUser(ddcApproveUser);
 				}
 
 				ddcHyxhSsdwclsb.setSlIndex(1);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
-				DdcApproveUser ddcApproveUser = new DdcApproveUser();
-				String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
-				Object object = iApplyService.getDateBySQL(sql);
-				String seq = object.toString();
-				String md = new SimpleDateFormat("yyMMdd").format(new Date());
-				String approveNo = "W" + md + seq;// 生成审批号
-				ddcApproveUser.setApproveNo(approveNo);
-				ddcApproveUser.setApproveIndex(1);
-				ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
-				ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
-				ddcApproveUser.setApproveTime(new Date());
-				ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
-				ddcApproveUser.setUserRoleName("行业协会");
-				iApplyService.saveDdcApproveUser(ddcApproveUser);
+
 			}
 			AjaxUtil.rendJson(response, true, "成功");
 		} catch (Exception e) {

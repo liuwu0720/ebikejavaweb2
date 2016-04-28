@@ -76,6 +76,15 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
+			field : 'SLRQ',
+			title : '备案时间',
+			align:'center',
+			width : 50,
+			formatter:function(value,index){
+				var unixTimestamp = new Date(value);   
+				return unixTimestamp.toLocaleString();
+			}   
+		},{
 			field : 'ZT',
 			title : '车辆状态',
 			align:'center',
@@ -126,6 +135,17 @@ $(document).ready(function(){
 		 url:'<%=basePath%>applyAction/getAllAreaAjax',    
 		    valueField:'dmz',    
 		    textField:'dmms1'
+	})
+	$('#zt').combobox({
+		valueField: 'label',
+		textField: 'value',
+		data: [{
+			label: 'A',
+			value: '正常'
+		},{
+			label: 'E',
+			value: '注销'
+		}]
 	})
 });
 //注销
@@ -211,7 +231,8 @@ function doSearch(){
 		cphm:$("#cphm").val(),
 		jsrxm1:$("#jsrxm1").val(),
 		xsqy:$("#xsqy1").combobox('getValue'),
-		ssdw:$("#ssdw").combobox('getValue')
+		ssdw:$("#ssdw").combobox('getValue'),
+		 zt:$("#zt").combobox("getValue")
 	}); 
 }
 
@@ -273,13 +294,15 @@ function excelExport(){
 				<span>电机号:</span> <input id="djh" 
 					class="easyui-validatebox" type="text" style="height:30px;width: 80px;">
 				<span>姓名:</span> <input id="jsrxm1" 
-					class="easyui-validatebox" type="text"style="height:30px;width: 80px;" > <br>
+					class="easyui-validatebox" type="text"style="height:30px;width: 80px;" > 
 				<span>车牌号</span> <input id="cphm" name="cphm"
-					class="easyui-validatebox" type="text" style="height:30px;width: 80px;">	
+					class="easyui-validatebox" type="text" style="height:30px;width: 80px;"><br>	
 				<span>行驶区域</span>	
 				<input id="xsqy1" style="height:30px;width: 80px;" >	
 				<span>公司名称:</span>
-				 <input id="ssdw" style="height: 32px;">   &nbsp;&nbsp;&nbsp;
+				 <input id="ssdw" style="height: 32px;">
+				<span>车辆状态</span>
+				<input id="zt" style="height: 32px;">	
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>

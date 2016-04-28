@@ -83,7 +83,7 @@ $(document).ready(function(){
 			field : 'SYRQ',
 			title : '审验日期',
 			align:'center',
-			width : 50,
+			width : 120,
 			formatter:function(value,index){
 				var unixTimestamp = new Date(value);   
 				return unixTimestamp.toLocaleString();
@@ -92,7 +92,7 @@ $(document).ready(function(){
 			field : 'SLYJ',
 			title : '审批状态',
 			align:'center',
-			width : 80,
+			width : 50,
 			formatter:function(value,row,index){
 				if(value == null){
 				   return "等待审批";

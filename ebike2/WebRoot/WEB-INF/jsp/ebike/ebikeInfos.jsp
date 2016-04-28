@@ -48,6 +48,11 @@ $(document).ready(function(){
 			}
 		}],
 		columns : [ [{
+			field : 'LSH',
+			title : '流水号',
+			align:'center',
+			width : 50
+		},{
 			field : 'SSDWNAME',
 			title : '单位名称',
 			align:'center',
@@ -186,6 +191,7 @@ function excelExport(){
 //查询功能
 function doSearch(){
 	 $('#dg').datagrid('load',{
+		 	lsh:$("#lsh").val(),
 			dabh: $("#dabh").val(),
 			djh: $('#djh').val(),
 			cphm:$("#cphm").val(),
@@ -247,10 +253,13 @@ function queryHyxhDwDetail(obj){
 			<div id="tb" >
 				<span>档案编号</span>
 				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
-				<span>电机号</span> <input id="djh" name="djh"
+				<span>电机号</span> <input id="djh" 
 					class="easyui-validatebox" type="text" >
-				<span>车牌号</span> <input id="cphm" name="cphm"	class="easyui-validatebox" type="text" >
-				</select> <br>
+				<span>车牌号</span> <input id="cphm" 	class="easyui-validatebox" type="text" >
+				</select> 
+				<span>流水号</span>
+				 <input id="lsh"class="easyui-validatebox" type="text" >
+				<br>
 				<span>行驶区域</span>	
 				<input id="xsqy1" style="height:30px;" >
 				<span>公司名称</span>

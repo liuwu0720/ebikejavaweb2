@@ -125,9 +125,8 @@ function doSearch(){
 		ywlx: $("#ywlx").combobox('getValue'),
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
-		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值)
-		dtend:$('#dtend').datebox('getValue'),
-		ssdw:$("#ssdw").combobox('getValue')
+		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值
+		dtend:$('#dtend').datebox('getValue')
 	}); 
 }
 
@@ -156,10 +155,10 @@ function queryRow(id){
 				<span>受理时间</span>
 				<input id="dtstart" type="text" class="easyui-datebox" style="height: 30px;"></input> 至：  
 				<input id="dtend" type="text" class="easyui-datebox" style="height: 30px;"></input>	<br>	
-				<span>车牌号:</span> <input id="cphm" name="cphm"
+				<span>车牌号:</span> <input id="cphm" 
 					class="easyui-validatebox" type="text" > 
-				<span>电机号:</span> <input id="djh" name="djh"
-					class="easyui-validatebox" type="text" > &nbsp;&nbsp;&nbsp;	
+				<span>电机号:</span> <input id="djh" 
+					class="easyui-validatebox" type="text" >	
 				
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>

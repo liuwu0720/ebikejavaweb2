@@ -346,7 +346,7 @@ function exportRowData(){
 	<div>
 		<div id="tb" class="searchdiv">
 				<span>申报时间</span>
-				<input id="dd" type="text" class="easyui-datebox" style="height: 30px;"></input>   至：  
+				<input id="dd" type="text" class="easyui-datebox" style="height: 30px;"></input>至  
 				<input id="dtend" type="text" class="easyui-datebox"style="height: 30px;"></input>				
 				<span>电机号</span> <input id="djh" class="easyui-validatebox"><br/>
 				<span>审批状态</span>

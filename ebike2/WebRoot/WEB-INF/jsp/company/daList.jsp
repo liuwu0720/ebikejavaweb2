@@ -81,14 +81,27 @@ $(document).ready(function(){
 			align:'center',
 			width : 50
 		},{
-			field : 'SYRQ',
-			title : '审验日期',
+			field : 'SLRQ',
+			title : '备案时间',
 			align:'center',
-			width : 50,
+			width : 120,
 			formatter:function(value,index){
 				var unixTimestamp = new Date(value);   
 				return unixTimestamp.toLocaleString();
 			}   
+		},{
+			field : 'ZT',
+			title : '车辆状态',
+			align:'center',
+			width : 50,
+			formatter:function(value,index){
+				if(value == '注销'){
+					
+					return "<p style='color:red'>注销</p>";
+				}else{
+					return value;
+				}
+			}
 		},{
 			field : 'null',
 			title:'操作',
@@ -121,6 +134,17 @@ $(document).ready(function(){
 		 url:'<%=basePath%>applyAction/getAllAreaAjax',    
 		    valueField:'dmz',    
 		    textField:'dmms1'
+	})
+	$('#zt').combobox({
+		valueField: 'label',
+		textField: 'value',
+		data: [{
+			label: 'A',
+			value: '正常'
+		},{
+			label: 'E',
+			value: '注销'
+		}]
 	})
 });
 //注销
@@ -200,7 +224,8 @@ function doSearch(){
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
 		jsrxm1:$("#jsrxm1").val(),
-		xsqy:$("#xsqy1").combobox('getValue')
+		xsqy:$("#xsqy1").combobox('getValue'),
+		 zt:$("#zt").combobox("getValue")
 	}); 
 }
 
@@ -249,17 +274,18 @@ function queryQRCode(id){
 	<div>
 		<div id="tb" style="padding: 5px; background: #E8F1FF;">
 				<span>档案编号</span>
-				<input id="dabh" type="text" class="easyui-validatebox" name="dabh" ></input>
-				<span>电机号</span> <input id="djh" name="djh"
+				<input id="dabh" type="text" class="easyui-validatebox" ></input>
+				<span>电机号</span> <input id="djh"
 					class="easyui-validatebox" type="text" >
-				<span>车牌号</span> <input id="cphm" name="cphm"
+				<span>车牌号</span> <input id="cphm"
 					class="easyui-validatebox" type="text" >
-				</select> 
-				<span>驾驶人1</span> <input id="jsrxm1" name="cphm"
+				<br/>
+				<span>驾驶人1</span> <input id="jsrxm1" 
 				class="easyui-validatebox" type="text" >
 				<span>行驶区域</span>	
 				<input id="xsqy1" style="height:30px;width: 80px;" >
-				
+				<span>车辆状态</span>
+				<input id="zt" style="height: 32px;">
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>

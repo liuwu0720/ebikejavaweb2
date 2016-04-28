@@ -276,8 +276,8 @@ public class EbikeChangAction {
 	@RequestMapping("/queryAll")
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request, String djh,
-			String cphm, String jsrxm1, String dabh, String ywlx, String slyj,
-			String xsqy, HttpServletResponse response) {
+			String lsh, String cphm, String jsrxm1, String dabh, String ywlx,
+			String slyj, String xsqy, HttpServletResponse response) {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
@@ -287,6 +287,11 @@ public class EbikeChangAction {
 				+ "t.djh,t.jsrxm1,t.xsqy,(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=t.xsqy AND D.DMLB='SSQY') as XSQYNAME,t.slyj,"
 				+ "t.SSDWID, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=t.SSDWID)as ssdwname ,t.slrq from DDC_FLOW t where t.ywlx !='A' and t.hyxhzh ='"
 				+ ddcHyxhBase.getHyxhzh() + "'  ";
+		// 流水号
+		if (StringUtils.isNotBlank(lsh)) {
+			sql += " and t.lsh like '%" + lsh + "%'";
+		}
+
 		// 电机号
 		if (StringUtils.isNotBlank(djh)) {
 			sql += " and t.djh like '%" + djh + "%'";

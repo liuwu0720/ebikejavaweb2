@@ -1,92 +1,8 @@
--- Create table
-create table DDC_HYXH_BASE
-(
-  id        NUMBER not null,
-  hyxhzh    VARCHAR2(20) not null,
-  hyxhmm    VARCHAR2(20),
-  hyxhmc    VARCHAR2(100),
-  hyxhdz    VARCHAR2(200),
-  hyxhfzr   VARCHAR2(50),
-  hyxhfzrdh VARCHAR2(50),
-  hyxhsjzpe NUMBER default 0,
-  bz        VARCHAR2(200),
-  cjr       VARCHAR2(20),
-  cjrq      DATE,
-  cjbm      VARCHAR2(20),
-  hyxhlb    VARCHAR2(10),
-  syn_flag  VARCHAR2(10),
-  tran_flag VARCHAR2(10),
-  tran_date DATE,
-  totalpe   NUMBER,
-  nenable   NUMBER default 1
-)
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
-comment on table DDC_HYXH_BASE
-  is '行业协会信息基本信息表';
--- Add comments to the columns 
-comment on column DDC_HYXH_BASE.hyxhzh
-  is '行业协会账户';
-comment on column DDC_HYXH_BASE.hyxhmm
-  is '行业协会密码';
-comment on column DDC_HYXH_BASE.hyxhmc
-  is '行业协会名称';
-comment on column DDC_HYXH_BASE.hyxhdz
-  is '行业协会地址';
-comment on column DDC_HYXH_BASE.hyxhfzr
-  is '行业协会负责人';
-comment on column DDC_HYXH_BASE.hyxhfzrdh
-  is '行业协会负责人电话';
-comment on column DDC_HYXH_BASE.hyxhsjzpe
-  is '行业协会剩余配额';
-comment on column DDC_HYXH_BASE.bz
-  is '备注信息';
-comment on column DDC_HYXH_BASE.cjr
-  is '创建人';
-comment on column DDC_HYXH_BASE.cjrq
-  is '创建日期';
-comment on column DDC_HYXH_BASE.cjbm
-  is '创建部门';
-comment on column DDC_HYXH_BASE.hyxhlb
-  is '行业协会类别';
-comment on column DDC_HYXH_BASE.syn_flag
-  is '同步标志';
-comment on column DDC_HYXH_BASE.tran_flag
-  is '传送标志';
-comment on column DDC_HYXH_BASE.tran_date
-  is '传送时间';
-comment on column DDC_HYXH_BASE.totalpe
-  is '总配额';
-comment on column DDC_HYXH_BASE.nenable
-  is '1 禁用 0 启用';
--- Create/Recreate primary, unique and foreign key constraints 
-alter table DDC_HYXH_BASE
-  add primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-
-
-
--- Create table
-drop table DDC_APPROVE_USER;
+prompt PL/SQL Developer import file
+prompt Created on 2016年4月28日 by liuwu
+set feedback off
+set define off
+prompt Creating DDC_APPROVE_USER...
 create table DDC_APPROVE_USER
 (
   id              NUMBER not null,
@@ -104,20 +20,9 @@ create table DDC_APPROVE_USER
   tran_date       DATE,
   approve_no      VARCHAR2(100)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_APPROVE_USER
   is '审批人意见表';
--- Add comments to the columns 
 comment on column DDC_APPROVE_USER.id
   is '主键';
 comment on column DDC_APPROVE_USER.user_name
@@ -146,22 +51,10 @@ comment on column DDC_APPROVE_USER.tran_date
   is '传送时间';
 comment on column DDC_APPROVE_USER.approve_no
   is '审批编号(唯一)';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_APPROVE_USER
-  add constraint PK_DDC_APPROVE_USER primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Create table
-drop table DDC_DAXXB;
+  add constraint PK_DDC_APPROVE_USER primary key (ID);
+
+prompt Creating DDC_DAXXB...
 create table DDC_DAXXB
 (
   id                NUMBER not null,
@@ -215,20 +108,9 @@ create table DDC_DAXXB
   vc_user2_cardimg2 VARCHAR2(100),
   vc_ebike_invoice  VARCHAR2(100)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_DAXXB
   is '电动车档案信息表';
--- Add comments to the columns 
 comment on column DDC_DAXXB.dabh
   is '新进入的数据，自动生成档案编号4403 00000001；老数据去更新';
 comment on column DDC_DAXXB.ywlx
@@ -317,35 +199,12 @@ comment on column DDC_DAXXB.vc_user2img
   is '驾驶人照片2';
 comment on column DDC_DAXXB.vc_ebike_img
   is '车辆照片';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_DAXXB
-  add primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (ID);
 alter table DDC_DAXXB
-  add constraint UNI_DDC_DAXXB unique (DABH)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-  drop table DDC_DAXXB_LOG;
+  add constraint UNI_DDC_DAXXB unique (DABH);
+
+prompt Creating DDC_DAXXB_LOG...
 create table DDC_DAXXB_LOG
 (
   id                NUMBER not null,
@@ -403,20 +262,9 @@ create table DDC_DAXXB_LOG
   vc_user2_cardimg2 VARCHAR2(100),
   vc_ebike_invoice  VARCHAR2(100)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_DAXXB_LOG
   is '电动车档案信息表';
--- Add comments to the columns 
 comment on column DDC_DAXXB_LOG.dabh
   is '档案编号';
 comment on column DDC_DAXXB_LOG.ywlx
@@ -513,23 +361,54 @@ comment on column DDC_DAXXB_LOG.vc_user1img
   is '驾驶人1图片';
 comment on column DDC_DAXXB_LOG.vc_user2img
   is '驾驶人2图片';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_DAXXB_LOG
-  add constraint PK_DDC_DAXXB_LOG primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-    drop table DDC_FLOW;
--- Create table
+  add constraint PK_DDC_DAXXB_LOG primary key (ID);
+
+prompt Creating DDC_DRIVER...
+create table DDC_DRIVER
+(
+  id            NUMBER not null,
+  dabh          VARCHAR2(50),
+  daid          NUMBER,
+  jsrxm         VARCHAR2(50),
+  xb            VARCHAR2(50),
+  lxdh          VARCHAR2(50),
+  syn_flag      VARCHAR2(50),
+  tran_date     DATE default sysdate,
+  user_code     VARCHAR2(50),
+  user_password VARCHAR2(50),
+  sfzhm         VARCHAR2(50),
+  vcuser_img    VARCHAR2(100)
+)
+;
+comment on table DDC_DRIVER
+  is '司机表';
+comment on column DDC_DRIVER.id
+  is '主键';
+comment on column DDC_DRIVER.dabh
+  is '档案编号';
+comment on column DDC_DRIVER.daid
+  is '档案表ID';
+comment on column DDC_DRIVER.jsrxm
+  is '姓名';
+comment on column DDC_DRIVER.xb
+  is '性别';
+comment on column DDC_DRIVER.lxdh
+  is '联系电话';
+comment on column DDC_DRIVER.syn_flag
+  is '传送标志';
+comment on column DDC_DRIVER.tran_date
+  is '传送时间';
+comment on column DDC_DRIVER.user_code
+  is '用户名';
+comment on column DDC_DRIVER.user_password
+  is '用户密码';
+comment on column DDC_DRIVER.sfzhm
+  is '身份证号码';
+alter table DDC_DRIVER
+  add constraint PK_DDC_DRIVER primary key (ID);
+
+prompt Creating DDC_FLOW...
 create table DDC_FLOW
 (
   id                NUMBER not null,
@@ -586,20 +465,9 @@ create table DDC_FLOW
   tableid           NUMBER,
   sl_index          NUMBER
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_FLOW
   is '电动车业务流水表';
--- Add comments to the columns 
 comment on column DDC_FLOW.lsh
   is '业务流水号';
 comment on column DDC_FLOW.ywlx
@@ -698,23 +566,10 @@ comment on column DDC_FLOW.tableid
   is '业务表ID';
 comment on column DDC_FLOW.sl_index
   is '受理顺序--针对注销业务';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_FLOW
-  add primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (ID);
 
-  -- Create table
-      drop table DDC_FLOW_LOG;
+prompt Creating DDC_FLOW_LOG...
 create table DDC_FLOW_LOG
 (
   id        NUMBER not null,
@@ -763,20 +618,9 @@ create table DDC_FLOW_LOG
   czrq      DATE,
   cznr      VARCHAR2(20)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_FLOW_LOG
   is '电动车业务流水表';
--- Add comments to the columns 
 comment on column DDC_FLOW_LOG.lsh
   is '业务流水号';
 comment on column DDC_FLOW_LOG.ywlx
@@ -869,22 +713,10 @@ comment on column DDC_FLOW_LOG.czrq
   is '操作日期';
 comment on column DDC_FLOW_LOG.cznr
   is '操作内容';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_FLOW_LOG
-  add constraint PK_DDC_FLOW_LOG primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
- drop table  DDC_HMD;
+  add constraint PK_DDC_FLOW_LOG primary key (ID);
+
+prompt Creating DDC_HMD...
 create table DDC_HMD
 (
   id        NUMBER(11) not null,
@@ -898,22 +730,12 @@ create table DDC_HMD
   cjrq      DATE,
   syn_flag  VARCHAR2(10),
   tran_flag VARCHAR2(10),
-  tran_date DATE
+  tran_date DATE,
+  nenable   NUMBER
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HMD
   is '黑名单信息管理';
--- Add comments to the columns 
 comment on column DDC_HMD.id
   is '编号';
 comment on column DDC_HMD.jsrxm
@@ -938,22 +760,10 @@ comment on column DDC_HMD.tran_flag
   is '传送标志';
 comment on column DDC_HMD.tran_date
   is '传送日期';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_HMD
-  add primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-  drop table  DDC_HYXH_BASB; 
+  add primary key (ID);
+
+prompt Creating DDC_HYXH_BASB...
 create table DDC_HYXH_BASB
 (
   id         NUMBER not null,
@@ -975,20 +785,9 @@ create table DDC_HYXH_BASB
   sl_index   NUMBER default 1,
   hyxhmc     VARCHAR2(50)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HYXH_BASB
   is '行业协会备案申报表';
--- Add comments to the columns 
 comment on column DDC_HYXH_BASB.id
   is '序列';
 comment on column DDC_HYXH_BASB.lsh
@@ -1025,35 +824,12 @@ comment on column DDC_HYXH_BASB.sl_index
   is '当前审批角色顺序 1-受理民警 2-领导 数字大等级高';
 comment on column DDC_HYXH_BASB.hyxhmc
   is '行业协会名称';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_HYXH_BASB
-  add constraint PK_DDC_HYXH_BASB primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
+  add constraint PK_DDC_HYXH_BASB primary key (ID);
 alter table DDC_HYXH_BASB
-  add constraint NK_DDC_HYXH_BASB_XH unique (LSH)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-  drop table  DDC_HYXH_BASB_LOG;  
+  add constraint NK_DDC_HYXH_BASB_XH unique (LSH);
+
+prompt Creating DDC_HYXH_BASB_LOG...
 create table DDC_HYXH_BASB_LOG
 (
   id         NUMBER not null,
@@ -1101,20 +877,9 @@ create table DDC_HYXH_BASB_LOG
   czrq       DATE,
   cznr       VARCHAR2(20)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HYXH_BASB_LOG
   is '行业协会备案申报表';
--- Add comments to the columns 
 comment on column DDC_HYXH_BASB_LOG.lsh
   is '申报配额流水号';
 comment on column DDC_HYXH_BASB_LOG.hyxhzh
@@ -1201,23 +966,10 @@ comment on column DDC_HYXH_BASB_LOG.czrq
   is '操作日期';
 comment on column DDC_HYXH_BASB_LOG.cznr
   is '操作内容';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_HYXH_BASB_LOG
-  add constraint PK_DDCBASB_LOG primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
- drop table  DDC_HYXH_BASE;   
--- Create table
+  add constraint PK_DDCBASB_LOG primary key (ID);
+
+prompt Creating DDC_HYXH_BASE...
 create table DDC_HYXH_BASE
 (
   id        NUMBER not null,
@@ -1239,20 +991,9 @@ create table DDC_HYXH_BASE
   totalpe   NUMBER,
   nenable   NUMBER default 1
 )
-tablespace EBIKEIN_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HYXH_BASE
   is '行业协会信息基本信息表';
--- Add comments to the columns 
 comment on column DDC_HYXH_BASE.hyxhzh
   is '行业协会账户';
 comment on column DDC_HYXH_BASE.hyxhmm
@@ -1286,24 +1027,11 @@ comment on column DDC_HYXH_BASE.tran_date
 comment on column DDC_HYXH_BASE.totalpe
   is '总配额';
 comment on column DDC_HYXH_BASE.nenable
-  is '1 禁用 0启用';
--- Create/Recreate primary, unique and foreign key constraints 
+  is '1 禁用 0 启用';
 alter table DDC_HYXH_BASE
-  add primary key (ID)
-  using index 
-  tablespace EBIKEIN_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (ID);
 
-  -- Create table
-  drop table  DDC_HYXH_SSDW;    
+prompt Creating DDC_HYXH_SSDW...
 create table DDC_HYXH_SSDW
 (
   id         NUMBER not null,
@@ -1330,20 +1058,9 @@ create table DDC_HYXH_SSDW
   shflag     NUMBER default 0,
   totalpe    NUMBER
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HYXH_SSDW
   is '行业协会信息所属单位';
--- Add comments to the columns 
 comment on column DDC_HYXH_SSDW.id
   is '记录ID';
 comment on column DDC_HYXH_SSDW.hyxhzh
@@ -1390,35 +1107,12 @@ comment on column DDC_HYXH_SSDW.shflag
   is '审核标志 0-未审核等待提交资料  1-已审核';
 comment on column DDC_HYXH_SSDW.totalpe
   is '单位总配额';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_HYXH_SSDW
-  add constraint PK_DDC_HYXH_SSDW primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
+  add constraint PK_DDC_HYXH_SSDW primary key (ID);
 alter table DDC_HYXH_SSDW
-  add constraint UNK_DDC_HYXH_SSDW unique (DWMC)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-   drop table  DDC_HYXH_SSDWCLSB;    
+  add constraint UNK_DDC_HYXH_SSDW unique (DWMC);
+
+prompt Creating DDC_HYXH_SSDWCLSB...
 create table DDC_HYXH_SSDWCLSB
 (
   id                NUMBER not null,
@@ -1468,20 +1162,9 @@ create table DDC_HYXH_SSDWCLSB
   enable            NUMBER default 1,
   vc_ebike_invoice  VARCHAR2(100)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HYXH_SSDWCLSB
   is '行业协会信息所属单位车辆申报表';
--- Add comments to the columns 
 comment on column DDC_HYXH_SSDWCLSB.id
   is '序列';
 comment on column DDC_HYXH_SSDWCLSB.lsh
@@ -1574,35 +1257,12 @@ comment on column DDC_HYXH_SSDWCLSB.enable
   is '1-有效 0无效';
 comment on column DDC_HYXH_SSDWCLSB.vc_ebike_invoice
   is '车辆购车发票';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_HYXH_SSDWCLSB
-  add constraint PK_DDC_HYXH_SSDWCLSB primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
+  add constraint PK_DDC_HYXH_SSDWCLSB primary key (ID);
 alter table DDC_HYXH_SSDWCLSB
-  add constraint UNK_DDC_HYXH_SSDWCLSB unique (LSH)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-    drop table  DDC_HYXH_SSDWCLSB_LOG;  
+  add constraint UNK_DDC_HYXH_SSDWCLSB unique (LSH);
+
+prompt Creating DDC_HYXH_SSDWCLSB_LOG...
 create table DDC_HYXH_SSDWCLSB_LOG
 (
   id        NUMBER,
@@ -1645,20 +1305,9 @@ create table DDC_HYXH_SSDWCLSB_LOG
   cznr      VARCHAR2(20),
   sqip      VARCHAR2(50)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HYXH_SSDWCLSB_LOG
   is '行业协会信息所属单位车辆申报表';
--- Add comments to the columns 
 comment on column DDC_HYXH_SSDWCLSB_LOG.id
   is '序列';
 comment on column DDC_HYXH_SSDWCLSB_LOG.lsh
@@ -1737,30 +1386,8 @@ comment on column DDC_HYXH_SSDWCLSB_LOG.cznr
   is '操作内容';
 comment on column DDC_HYXH_SSDWCLSB_LOG.sqip
   is '申请IP地址';
--- Create/Recreate indexes 
-create unique index BIN$ziQDSQCNR3OyrMwC8vwa9g==$0 on DDC_HYXH_SSDWCLSB_LOG (ID)
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Create/Recreate primary, unique and foreign key constraints 
-alter table DDC_HYXH_SSDWCLSB_LOG
-  add constraint BIN$0HbyJaQKT3WCW0XgHOqdeQ==$0 primary key (ID);
--- Create/Recreate check constraints 
-alter table DDC_HYXH_SSDWCLSB_LOG
-  add constraint BIN$0gQFJ7UjT6GcubERuPsy4g==$0
-  check ("ID" IS NOT NULL);
-alter table DDC_HYXH_SSDWCLSB_LOG
-  add constraint BIN$R2HXzr3JQaCpltNEb1tIMQ==$0
-  check ("LSH" IS NOT NULL);
-  -- Create table
-   drop table  DDC_HYXH_SSDW_LOG;  
+
+prompt Creating DDC_HYXH_SSDW_LOG...
 create table DDC_HYXH_SSDW_LOG
 (
   id        NUMBER not null,
@@ -1786,20 +1413,9 @@ create table DDC_HYXH_SSDW_LOG
   cznr      VARCHAR2(200),
   dwpe      NUMBER
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_HYXH_SSDW_LOG
   is '行业协会信息所属单位';
--- Add comments to the columns 
 comment on column DDC_HYXH_SSDW_LOG.id
   is '记录ID';
 comment on column DDC_HYXH_SSDW_LOG.hyxhzh
@@ -1844,22 +1460,10 @@ comment on column DDC_HYXH_SSDW_LOG.cznr
   is '操作内容';
 comment on column DDC_HYXH_SSDW_LOG.dwpe
   is '单位配额';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_HYXH_SSDW_LOG
-  add constraint PK_DDC_HYXH_SSDW_LOG primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-     drop table  DDC_SJZD;  
+  add constraint PK_DDC_HYXH_SSDW_LOG primary key (ID);
+
+prompt Creating DDC_SJZD...
 create table DDC_SJZD
 (
   id        VARCHAR2(20) not null,
@@ -1875,20 +1479,9 @@ create table DDC_SJZD
   tran_flag VARCHAR2(10),
   tran_date DATE
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table DDC_SJZD
   is '电动车业务数据字典表';
--- Add comments to the columns 
 comment on column DDC_SJZD.id
   is '记录ID';
 comment on column DDC_SJZD.dmz
@@ -1907,22 +1500,10 @@ comment on column DDC_SJZD.cjrq
   is '创建日期';
 comment on column DDC_SJZD.cjbm
   is '创建部门';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_SJZD
-  add constraint PK_DDC_SJZD primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-      drop table  FILERECORD;   
+  add constraint PK_DDC_SJZD primary key (ID);
+
+prompt Creating FILERECORD...
 create table FILERECORD
 (
   id        NUMBER,
@@ -1931,20 +1512,11 @@ create table FILERECORD
   flag      NUMBER,
   filepath  VARCHAR2(100)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the columns 
+;
 comment on column FILERECORD.flag
   is '0-导入 1-导出';
-  -- Create table
+
+prompt Creating HYXH_MENU...
 create table HYXH_MENU
 (
   id      NUMBER not null,
@@ -1954,35 +1526,13 @@ create table HYXH_MENU
   i_pid   NUMBER,
   n_index NUMBER
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table HYXH_MENU
   is '行业协会操作菜单';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table HYXH_MENU
-  add constraint PK_HYXH_MENU primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-   drop table  PIC_PATH;    
+  add constraint PK_HYXH_MENU primary key (ID);
+
+prompt Creating PIC_PATH...
 create table PIC_PATH
 (
   id            NUMBER not null,
@@ -1992,20 +1542,9 @@ create table PIC_PATH
   vc_type       VARCHAR2(100),
   vc_parse_path VARCHAR2(100)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table PIC_PATH
   is '图片路径配置表';
--- Add comments to the columns 
 comment on column PIC_PATH.id
   is '主键';
 comment on column PIC_PATH.vc_addpath
@@ -2018,235 +1557,347 @@ comment on column PIC_PATH.vc_type
   is '图片类型名称';
 comment on column PIC_PATH.vc_parse_path
   is '图片解析路径';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table PIC_PATH
-  add constraint PK_PICPATH primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  -- Create table
-    drop table  ROLE_MENU;   
+  add constraint PK_PICPATH primary key (ID);
+
+prompt Creating ROLE_MENU...
 create table ROLE_MENU
 (
   id   NUMBER not null,
   role NUMBER,
   menu VARCHAR2(50)
 )
-tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
+;
 comment on table ROLE_MENU
   is '角色---菜单关联';
--- Add comments to the columns 
 comment on column ROLE_MENU.id
   is '主键';
 comment on column ROLE_MENU.role
   is '角色 1-行业协会 2-单位  3-管理员';
 comment on column ROLE_MENU.menu
   is '角色';
--- Create/Recreate primary, unique and foreign key constraints 
 alter table ROLE_MENU
-  add constraint PK_ROLE_MENU primary key (ID)
-  using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
-  
-  
--- Create table
--- Create table
-create table DDC_DRIVER
-(
-  id            NUMBER not null,
-  dabh          VARCHAR2(50),
-  daid          NUMBER,
-  jsrxm         VARCHAR2(50),
-  xb            VARCHAR2(50),
-  lxdh          VARCHAR2(50),
-  syn_flag      VARCHAR2(50),
-  tran_date     DATE default sysdate,
-  user_code     VARCHAR2(50),
-  user_password VARCHAR2(50),
-  sfzhm         VARCHAR2(50),
-  vcuser_img    VARCHAR2(100)
-)
-tablespace EBIKEIN_DATA
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
--- Add comments to the table 
-comment on table DDC_DRIVER
-  is '司机表';
--- Add comments to the columns 
-comment on column DDC_DRIVER.id
-  is '主键';
-comment on column DDC_DRIVER.dabh
-  is '档案编号';
-comment on column DDC_DRIVER.daid
-  is '档案表ID';
-comment on column DDC_DRIVER.jsrxm
-  is '姓名';
-comment on column DDC_DRIVER.xb
-  is '姓名';
-comment on column DDC_DRIVER.lxdh
-  is '联系电话';
-comment on column DDC_DRIVER.syn_flag
-  is '传送标志';
-comment on column DDC_DRIVER.tran_date
-  is '传送时间';
-comment on column DDC_DRIVER.user_code
-  is '用户名';
-comment on column DDC_DRIVER.user_password
-  is '用户密码';
--- Create/Recreate primary, unique and foreign key constraints 
-alter table DDC_DRIVER
-  add constraint PK_DDC_DRIVER primary key (ID)
-  using index 
-  tablespace EBIKEIN_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    minextents 1
-    maxextents unlimited
-  );
+  add constraint PK_ROLE_MENU primary key (ID);
 
-  
-  =========================================================================================
-  insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (83, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 34, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (61, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 40, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (84, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, -1099, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (1, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 2211, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (81, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 28, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (82, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 24, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (85, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1378, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (86, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1365, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (89, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 566, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (241, 'szsyzglj', '123456', '深圳市邮政管理局', null, '冯以新', '13312919852', 4318, null, '052067', to_date('04-03-2014 11:33:02', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'C', 'UP', '1', to_date('15-04-2014 16:27:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (261, 'jjkjc', '123456', '系统测试账户', null, null, null, 65, null, '052067', to_date('06-05-2014 11:06:20', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('06-05-2014 14:44:09', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (202, 'szqbs', '123456', '深圳侨报社', null, '刘伟煌', '13502826775', 70, null, '065928', to_date('25-10-2012 16:57:41', 'dd-mm-yyyy hh24:mi:ss'), '30199', 'H', 'UP', '1', to_date('11-12-2012 14:04:05', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (201, 'szcswl', '123456', '中国电信深圳传送网络运营中心', null, '张宗雄', '13302990151', 60, null, '065928', to_date('25-10-2012 16:55:12', 'dd-mm-yyyy hh24:mi:ss'), '30199', 'M', 'UP', '1', to_date('25-10-2012 20:39:02', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (221, 'skxxb', '123456', '深圳市蛇口消息报', '南山区党校大厦11、12、13楼', '唐前华', '13902923543', 28, null, '065922', to_date('22-04-2013 10:24:40', 'dd-mm-yyyy hh24:mi:ss'), '30465', 'H', 'UP', '1', to_date('22-04-2013 10:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (136, 'cs', '123456', '测试', null, null, null, 1, null, 'test', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'O', 'UP', '1', to_date('11-01-2016 18:01:17', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (121, 'szspxh', '123456', '市食品行业协会饮用水委员会', null, null, null, 9108, null, 'admin', to_date('04-04-2012 17:20:52', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'A', 'UP', '1', to_date('28-04-2013 15:57:37', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (134, 'gzrb', '123456', '广州日报', null, null, null, 12, null, 'admin', to_date('04-04-2012 17:28:58', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('23-07-2013 10:04:36', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (122, 'szrqxh', '123456', '市燃气行业协会', null, null, null, 3331, null, 'admin', to_date('04-04-2012 17:21:20', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'B', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (123, 'szwlxh', '123456', '市物流与供应链管理协会', null, null, null, 8474, null, 'admin', to_date('04-04-2012 17:21:39', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'C', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (124, 'sznyxh', '123456', '奶业行业协会', null, null, null, 1169, null, 'admin', to_date('04-04-2012 17:21:55', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'D', 'UP', '1', to_date('06-12-2013 21:03:37', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (125, 'szfwxh', '123456', '市服务行业协会维修业', null, null, null, 2918, null, 'admin', to_date('04-04-2012 17:22:21', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'E', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (126, 'sztzxh', '123456', '市特种设备行业协会电梯维修', null, null, null, 1430, null, 'admin', to_date('04-04-2012 17:22:40', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'F', 'UP', '1', to_date('09-04-2013 13:15:45', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (127, 'szswgs', '123456', '市水务(集团)有限公司', null, null, null, 324, null, 'admin', to_date('04-04-2012 17:22:59', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'G', 'UP', '1', to_date('06-12-2013 21:03:37', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (128, 'szbygs', '123456', '市报业集团发行物流有限公司', null, null, null, 1048, null, 'admin', to_date('04-04-2012 17:23:18', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (129, 'nfdsbgs', '123456', '南方都市报经营有限公司深圳分公司', null, null, null, 557, null, 'admin', to_date('04-04-2012 17:24:50', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (130, 'nfbyjt', '123456', '南方报业传媒集团深圳记者站', null, null, null, 78, null, 'admin', to_date('04-04-2012 17:25:12', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-04-2012 18:35:40', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (131, 'sztwsx', '123456', '市天威视讯股份有限公司', null, null, null, 539, null, 'admin', to_date('04-04-2012 17:25:38', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'L', 'UP', '1', to_date('23-07-2013 10:04:36', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (132, 'zgdxgs', '123456', '中国电信公司深圳分公司', null, null, null, 2325, null, 'admin', to_date('04-04-2012 17:26:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (133, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1401, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (141, 'szttgs', '123456', '中国铁通集团有限公司深圳分公司', null, null, null, 120, null, 'admin', to_date('10-04-2012 17:29:48', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('10-04-2012 18:35:40', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (142, 'szltgs', '123456', '中国联合网络通信有限公司深圳分公司', null, null, null, 485, null, 'admin', to_date('10-04-2012 17:30:07', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('10-04-2012 18:35:40', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (143, 'szycbs', '123456', '羊城晚报社驻深圳办事处', null, null, null, 42, null, 'admin', to_date('10-04-2012 17:30:31', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (161, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 38, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (162, 'zggjgs', '123456', '中国国际图书贸易集团有限公司深圳分公司', null, null, null, 10, null, '052067', to_date('10-05-2012 17:18:57', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (163, 'szwxgs', '123456', '深圳市万象通报刊投递有限公司', null, null, null, 39, null, '052067', to_date('10-05-2012 17:19:38', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('09-04-2013 13:15:46', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (164, 'szhwgs', '123456', '深圳市华文图书有限公司', null, null, null, 44, null, '052067', to_date('10-05-2012 17:20:14', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('06-12-2013 21:03:37', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (181, 'skdst', '123456', '蛇口电视台', null, '刘青青', '13902923543', 23, null, '052067', to_date('19-06-2012 11:01:09', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'L', 'UP', '1', to_date('19-06-2012 12:50:16', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (281, 'szjrzx', '123456', '深圳市技安科技有限公司', '深圳市罗湖区人民南路2069号国际商业大厦东座8楼', '冯立敏', '15013890900', 35, null, '052067', to_date('15-04-2015 09:49:59', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP', '1', to_date('17-04-2015 18:22:22', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (21, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 34, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (41, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 36, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', '1', to_date('10-05-2012 18:40:19', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (87, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1032, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
-insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe)
-values (88, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 699, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP', '1', to_date('22-10-2014 18:02:25', 'dd-mm-yyyy hh24:mi:ss'), null);
+prompt Disabling triggers for DDC_APPROVE_USER...
+alter table DDC_APPROVE_USER disable all triggers;
+prompt Disabling triggers for DDC_DAXXB...
+alter table DDC_DAXXB disable all triggers;
+prompt Disabling triggers for DDC_DAXXB_LOG...
+alter table DDC_DAXXB_LOG disable all triggers;
+prompt Disabling triggers for DDC_DRIVER...
+alter table DDC_DRIVER disable all triggers;
+prompt Disabling triggers for DDC_FLOW...
+alter table DDC_FLOW disable all triggers;
+prompt Disabling triggers for DDC_FLOW_LOG...
+alter table DDC_FLOW_LOG disable all triggers;
+prompt Disabling triggers for DDC_HMD...
+alter table DDC_HMD disable all triggers;
+prompt Disabling triggers for DDC_HYXH_BASB...
+alter table DDC_HYXH_BASB disable all triggers;
+prompt Disabling triggers for DDC_HYXH_BASB_LOG...
+alter table DDC_HYXH_BASB_LOG disable all triggers;
+prompt Disabling triggers for DDC_HYXH_BASE...
+alter table DDC_HYXH_BASE disable all triggers;
+prompt Disabling triggers for DDC_HYXH_SSDW...
+alter table DDC_HYXH_SSDW disable all triggers;
+prompt Disabling triggers for DDC_HYXH_SSDWCLSB...
+alter table DDC_HYXH_SSDWCLSB disable all triggers;
+prompt Disabling triggers for DDC_HYXH_SSDWCLSB_LOG...
+alter table DDC_HYXH_SSDWCLSB_LOG disable all triggers;
+prompt Disabling triggers for DDC_HYXH_SSDW_LOG...
+alter table DDC_HYXH_SSDW_LOG disable all triggers;
+prompt Disabling triggers for DDC_SJZD...
+alter table DDC_SJZD disable all triggers;
+prompt Disabling triggers for FILERECORD...
+alter table FILERECORD disable all triggers;
+prompt Disabling triggers for HYXH_MENU...
+alter table HYXH_MENU disable all triggers;
+prompt Disabling triggers for PIC_PATH...
+alter table PIC_PATH disable all triggers;
+prompt Disabling triggers for ROLE_MENU...
+alter table ROLE_MENU disable all triggers;
+prompt Deleting ROLE_MENU...
+delete from ROLE_MENU;
 commit;
-prompt 42 records loaded
-prompt Loading DDC_HYXH_SSDW...
-insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
-values (222, 'gzrb', 'fjdferer4', null, null, null, null, null, '广州日报', to_date('11-04-2016 17:01:19', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 1, null, 'abcd123', '123456', 0, 5);
-insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
-values (462, 'szwlxh', 'SZWLDW', 'dfdfessf', 'ddddddddddd', 'ddddddddddddddddd', '13322222222', null, null, to_date('12-04-2016 11:34:47', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 21, '160412/201604121134475824.jpg', 'asdf123', '123456', 1, 22);
-insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
-values (262, 'szwlxh', 'dffd', null, null, null, null, null, '市物流与供应链管理协会', to_date('14-04-2016 10:01:05', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 33, null, 'ddddddddg', '123456', 0, 33);
-insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
-values (261, 'szwlxh', 'gtrtrt', null, null, null, null, null, '市物流与供应链管理协会', to_date('14-04-2016 09:51:38', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 22, null, 'fgfgfgfg', '123456', 0, 22);
-insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
-values (221, 'gzrb', '广州日子砝码', null, null, null, null, null, '广州日报', to_date('11-04-2016 15:24:56', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'UP', null, null, 10, null, 'abcd1111', '123456', 0, 11);
-insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
-values (202, 'nfdsbgs', 'dfeeredfdf', 'ddgdf', '深圳大厦大厦大厦大厦在', '磊', '13322222020', null, null, to_date('10-04-2016 11:03:06', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'UP', null, null, 6, '160410/201604101103062775.jpg', 'ssdw123456', '123456', 1, 9);
-insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
-values (263, 'szwlxh', 'fffffffff', null, null, null, null, null, '市物流与供应链管理协会', to_date('14-04-2016 10:01:18', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, null, 33, null, 'e333333333', '123456', 0, 33);
+prompt Deleting PIC_PATH...
+delete from PIC_PATH;
+commit;
+prompt Deleting HYXH_MENU...
+delete from HYXH_MENU;
+commit;
+prompt Deleting FILERECORD...
+delete from FILERECORD;
+commit;
+prompt Deleting DDC_SJZD...
+delete from DDC_SJZD;
+commit;
+prompt Deleting DDC_HYXH_SSDW_LOG...
+delete from DDC_HYXH_SSDW_LOG;
+commit;
+prompt Deleting DDC_HYXH_SSDWCLSB_LOG...
+delete from DDC_HYXH_SSDWCLSB_LOG;
+commit;
+prompt Deleting DDC_HYXH_SSDWCLSB...
+delete from DDC_HYXH_SSDWCLSB;
+commit;
+prompt Deleting DDC_HYXH_SSDW...
+delete from DDC_HYXH_SSDW;
+commit;
+prompt Deleting DDC_HYXH_BASE...
+delete from DDC_HYXH_BASE;
+commit;
+prompt Deleting DDC_HYXH_BASB_LOG...
+delete from DDC_HYXH_BASB_LOG;
+commit;
+prompt Deleting DDC_HYXH_BASB...
+delete from DDC_HYXH_BASB;
+commit;
+prompt Deleting DDC_HMD...
+delete from DDC_HMD;
+commit;
+prompt Deleting DDC_FLOW_LOG...
+delete from DDC_FLOW_LOG;
+commit;
+prompt Deleting DDC_FLOW...
+delete from DDC_FLOW;
+commit;
+prompt Deleting DDC_DRIVER...
+delete from DDC_DRIVER;
+commit;
+prompt Deleting DDC_DAXXB_LOG...
+delete from DDC_DAXXB_LOG;
+commit;
+prompt Deleting DDC_DAXXB...
+delete from DDC_DAXXB;
+commit;
+prompt Deleting DDC_APPROVE_USER...
+delete from DDC_APPROVE_USER;
+commit;
+prompt Loading DDC_APPROVE_USER...
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (373, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 1, 'gggggggfffffffffffffffffffffffffffff', 'DDC_HYXH_SSDWCLSB', 20, to_date('28-04-2016 15:49:29', 'dd-mm-yyyy hh24:mi:ss'), 1, 'A16042819', 'ADD_N', to_date('28-04-2016 15:50:16', 'dd-mm-yyyy hh24:mi:ss'), 'N16042863');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (377, '中国图书进出口深圳公司', null, '行业协会', 1, 'xxxxxxxxxxxxxxx', 'DDC_HYXH_SSDWCLSB', 26, to_date('28-04-2016 16:10:16', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042825', null, to_date('28-04-2016 16:10:16', 'dd-mm-yyyy hh24:mi:ss'), 'W160428376');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (379, '中国图书进出口深圳公司', null, '行业协会', 1, 'xxxxxxxxxxxxxxxxxxxxx', 'DDC_HYXH_SSDWCLSB', 24, to_date('28-04-2016 16:10:21', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042823', null, to_date('28-04-2016 16:10:21', 'dd-mm-yyyy hh24:mi:ss'), 'W160428378');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (372, '中国图书进出口深圳公司', null, '行业协会', 1, 'fddddddddddddd', 'DDC_HYXH_SSDWCLSB', 20, to_date('28-04-2016 15:47:10', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042819', null, to_date('28-04-2016 15:47:10', 'dd-mm-yyyy hh24:mi:ss'), 'W160428371');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (380, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'sssssssssssssssssss', 'DDC_HYXH_SSDWCLSB', 28, to_date('28-04-2016 16:12:22', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042827', 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042874');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (375, '中国图书进出口深圳公司', null, '行业协会', 1, 'dgrgrtttt', 'DDC_HYXH_SSDWCLSB', 28, to_date('28-04-2016 16:10:11', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042827', null, to_date('28-04-2016 16:10:11', 'dd-mm-yyyy hh24:mi:ss'), 'W160428374');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (381, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'dfffffffff', 'DDC_HYXH_SSDWCLSB', 26, to_date('28-04-2016 16:12:27', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042825', 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042876');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (382, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'ssssssssssssss', 'DDC_HYXH_SSDWCLSB', 26, to_date('28-04-2016 16:12:35', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042825', 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042878');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (383, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'ssssssssssss', 'DDC_HYXH_SSDWCLSB', 24, to_date('28-04-2016 16:12:43', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042823', 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042880');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (384, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'qqqqqqqqqqqqqqqqqqq', 'DDC_HYXH_SSDWCLSB', 24, to_date('28-04-2016 16:12:49', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042823', 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042882');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (385, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'dddddddddd', 'DDC_HYXH_BASB', 3, to_date('28-04-2016 16:11:51', 'dd-mm-yyyy hh24:mi:ss'), 0, null, 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042868');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (386, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'dffffffssssssssssssss', 'DDC_HYXH_BASB', 3, to_date('28-04-2016 16:11:56', 'dd-mm-yyyy hh24:mi:ss'), 0, null, 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042870');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (387, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'fdddddddddddddddd', 'DDC_HYXH_SSDWCLSB', 28, to_date('28-04-2016 16:12:17', 'dd-mm-yyyy hh24:mi:ss'), 0, 'A16042827', 'ADD_N', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 'N16042872');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (393, '中国图书进出口深圳公司', null, '行业协会', 1, 'dddddddddddddddddd', 'DDC_FLOW', 20, to_date('28-04-2016 16:55:01', 'dd-mm-yyyy hh24:mi:ss'), 0, 'B16042819', null, to_date('28-04-2016 16:55:01', 'dd-mm-yyyy hh24:mi:ss'), 'W160428392');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (391, '中国图书进出口深圳公司', null, '行业协会', 1, 'fdddddddddddd', 'DDC_FLOW', 24, to_date('28-04-2016 16:54:52', 'dd-mm-yyyy hh24:mi:ss'), 0, 'C16042823', null, to_date('28-04-2016 16:54:52', 'dd-mm-yyyy hh24:mi:ss'), 'W160428390');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (394, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'dssssssssss', 'DdcFlow', 16, to_date('28-04-2016 16:54:04', 'dd-mm-yyyy hh24:mi:ss'), 0, 'D16042821', 'ADD_N', to_date('28-04-2016 16:57:13', 'dd-mm-yyyy hh24:mi:ss'), 'N16042887');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (395, '陈展熊', '新安中队', '禁摩办   管理员   大队管理员   ', 2, 'aaaaaaaa', ' DDC_FLOW', 16, to_date('28-04-2016 16:53:59', 'dd-mm-yyyy hh24:mi:ss'), 0, 'D16042821', 'ADD_N', to_date('28-04-2016 16:57:13', 'dd-mm-yyyy hh24:mi:ss'), 'N16042885');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (370, '中国图书进出口深圳公司', null, '行业协会', 1, 'fdddddddddddd', 'DDC_HYXH_SSDWCLSB', 22, to_date('28-04-2016 15:46:59', 'dd-mm-yyyy hh24:mi:ss'), 1, 'A16042821', null, null, 'W160428369');
+insert into DDC_APPROVE_USER (id, user_name, user_orgname, user_role_name, approve_index, approve_note, approve_table, approve_tableid, approve_time, approve_state, lsh, syn_flag, tran_date, approve_no)
+values (389, '中国图书进出口深圳公司', null, '行业协会', 1, 'eeeeeeeeee', 'DDC_FLOW', 22, to_date('28-04-2016 16:30:15', 'dd-mm-yyyy hh24:mi:ss'), 0, 'D16042821', null, to_date('28-04-2016 16:30:15', 'dd-mm-yyyy hh24:mi:ss'), 'W160428388');
+commit;
+prompt 19 records loaded
+prompt Loading DDC_DAXXB...
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (8, '440300000007', 'D', 'A', 'zgtsgs', '21', 'H000002', '遥遥deee', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112222', null, null, null, null, '440318', 'ddddddddsssssssss', 'E', to_date('28-04-2018 16:12:35', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'dssssssssss', '054395', to_date('28-04-2016 16:12:35', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'dssssssssss', '054395', to_date('28-04-2016 16:54:04', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'UP_N', null, to_date('28-04-2016 16:57:13', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281608248215.jpg', '160428/201604281608241927.jpg', '160428/201604281608241113.jpg', '160428/201604281608243420.jpg', '160428/201604281608247747.jpg', '160428/201604281608248735.jpg', '160428/201604281608246751.jpg', '160428/201604281608251312.jpg');
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (9, '440300000008', 'B', 'A', 'zgtsgs', '21', 'H000003', '遥遥111', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112233', null, null, null, null, '440304', null, 'A', to_date('28-04-2018 16:12:49', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'qqqqqqqqqqqqqqqqqqq', '054395', to_date('28-04-2016 16:12:49', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, null, '054395', to_date('28-04-2016 16:12:49', 'dd-mm-yyyy hh24:mi:ss'), '30112', null, null, to_date('28-04-2016 16:20:31', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281607349253.jpg', null, '160428/201604281607341094.jpg', '160428/201604281607345841.jpg', '160428/201604281607344007.jpg', null, null, '160428/201604281607346463.jpg');
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (7, '440300000006', 'C', 'A', 'zgtsgs', '21', 'H000001', '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321144442', null, null, null, null, '440304', 'dffffff', 'A', to_date('28-04-2018 16:12:22', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'sssssssssssssssssss', '054395', to_date('28-04-2016 16:12:22', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, null, '054395', to_date('28-04-2016 16:12:22', 'dd-mm-yyyy hh24:mi:ss'), '30112', null, null, null, '160428/201604281609417351.jpg', '160428/201604281609417531.jpg', '160428/201604281609404085.jpg', '160428/201604281609413518.jpg', '160428/201604281609418482.jpg', '160428/201604281609419581.jpg', '160428/201604281609425863.jpg', '160428/201604281609422188.jpg');
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (1, '440300000000', 'D', 'A', 'szwlxh', '462', 'C000001', 'efdfee333', '1', 'ere3333r34', '0', '武顺', '0', '430621198807206664', '13366666655', 'AAA', '0', '430621198807206667', '13322221113', null, null, null, null, '440319', 'ereeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'A', to_date('28-04-2018 11:05:59', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '1', 'fdddssssssssssssssss', '054395', to_date('28-04-2016 11:05:59', 'dd-mm-yyyy hh24:mi:ss'), '30112', '1', null, 'fdddssssssssssssssss', '054395', to_date('28-04-2016 11:15:26', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'UP_N', null, to_date('28-04-2016 11:16:30', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281032319777.jpg', '160428/201604281032326049.jpg', '160428/201604281032312489.jpg', '160428/201604281032327357.jpg', '160428/201604281032321948.jpg', '160428/201604281032325314.jpg', '160428/201604281032324676.jpg', '160428/201604281032336388.jpg');
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (3, '440300000002', 'D', 'A', 'szwlxh', '462', 'C000003', 'eddddd', '1', 'esssss', '0', '武顺22', '0', '430621198807206669', '13322224443', null, '-1', null, null, null, null, null, null, '440305', null, 'E', to_date('28-04-2018 11:06:17', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'ddddddd', '054395', to_date('28-04-2016 11:06:17', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'ddddddd', '054395', to_date('28-04-2016 11:15:17', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'UP_N', null, to_date('28-04-2016 11:16:30', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281030472998.jpg', null, '160428/201604281030467564.jpg', '160428/201604281030479200.jpg', '160428/201604281030472523.jpg', null, null, '160428/201604281030478776.png');
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (4, '440300000003', 'A', 'A', 'cs', '1', 'O000001', 'dfdfd', '1', 'fderer', '0', 'rer', '0', '430621198807206666', '13322224444', null, '-1', null, null, null, null, null, null, '440305', null, 'A', to_date('28-04-2018 11:06:26', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'ffffffffffddddddddddd', '054395', to_date('28-04-2016 11:06:26', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, null, '054395', to_date('28-04-2016 11:06:26', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'ADD_N', null, to_date('28-04-2016 11:08:38', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281023012207.jpg', null, '160428/201604281023019653.jpg', '160428/201604281023011285.jpg', '160428/201604281023013603.jpg', null, null, '160428/201604281023013735.jpg');
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (5, '440300000004', 'A', 'A', 'cs', '1', 'O000002', 'edddddsad', '1', 'essssssdsw22', '0', 'derfert', '0', '430621198807206666', '13322224444', 'AAA', '0', '430621198807206667', '13322221111', null, null, null, null, '440303', 'fdfdfe', 'A', to_date('28-04-2018 11:06:36', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'deeeeeeeeeeeeeeeee', '054395', to_date('28-04-2016 11:06:36', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, null, '054395', to_date('28-04-2016 11:06:36', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'ADD_N', null, to_date('28-04-2016 11:08:38', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281022264541.jpg', '160428/201604281022266222.jpg', '160428/20160428102226859.jpg', '160428/201604281022266155.jpg', '160428/201604281022275238.jpg', '160428/201604281022277050.jpg', '160428/201604281022272528.jpg', null);
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (6, '440300000005', 'A', 'A', 'cs', '1', 'O000003', 'eddddd', '1', 'esssss', '0', '武顺22', '0', '430621198807206666', '13322224444', null, '-1', null, null, null, null, null, null, '440303', null, 'A', to_date('28-04-2018 11:06:44', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'fda', '054395', to_date('28-04-2016 11:06:45', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, null, '054395', to_date('28-04-2016 11:06:45', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'ADD_N', null, to_date('28-04-2016 11:08:38', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281021218075.jpg', null, '160428/201604281021204456.jpg', '160428/201604281021219068.jpg', '160428/201604281021219809.jpg', null, null, '160428/201604281021219545.jpg');
+insert into DDC_DAXXB (id, dabh, ywlx, ywyy, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, zt, syrq, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice)
+values (2, '440300000001', 'D', 'A', 'szwlxh', '462', 'C000002', 'edddddsadfdf', '1', 'esssss', '0', '武顺', '0', '430621198807206669', '13322224433', null, '-1', null, null, null, null, null, null, '440308', null, 'A', to_date('28-04-2018 11:06:09', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '1', 'ddddddddddddddddd', '054395', to_date('28-04-2016 11:06:09', 'dd-mm-yyyy hh24:mi:ss'), '30112', '1', null, 'ddddddddddddddddd', '054395', to_date('28-04-2016 11:15:38', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'UP_N', null, to_date('28-04-2016 11:16:30', 'dd-mm-yyyy hh24:mi:ss'), '160428/201604281031204981.jpg', null, '160428/201604281031201921.jpg', '160428/201604281031218208.jpg', '160428/201604281031212181.jpg', null, null, '160428/201604281031219437.jpg');
+commit;
+prompt 9 records loaded
+prompt Loading DDC_DAXXB_LOG...
+prompt Table is empty
+prompt Loading DDC_DRIVER...
+insert into DDC_DRIVER (id, dabh, daid, jsrxm, xb, lxdh, syn_flag, tran_date, user_code, user_password, sfzhm, vcuser_img)
+values (31, '440300000007', 8, '李四朋', '0', '13322221111', 'ADD_N', null, '13322221111', '123456', '430621988072069', '160428/201604281608248215.jpg');
+insert into DDC_DRIVER (id, dabh, daid, jsrxm, xb, lxdh, syn_flag, tran_date, user_code, user_password, sfzhm, vcuser_img)
+values (33, '440300000008', 9, '李四朋', '0', '13322221111', 'ADD_N', null, '13322221111', '123456', '430621988072069', '160428/201604281607349253.jpg');
+insert into DDC_DRIVER (id, dabh, daid, jsrxm, xb, lxdh, syn_flag, tran_date, user_code, user_password, sfzhm, vcuser_img)
+values (29, '440300000006', 7, '李四朋', '0', '13322221111', 'ADD_N', null, '13322221111', '123456', '430621988072069', '160428/201604281609417351.jpg');
+commit;
+prompt 3 records loaded
+prompt Loading DDC_FLOW...
+insert into DDC_FLOW (id, lsh, ywlx, ywyy, hyxhzh, dabh, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, yclb, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice, ssdwid, tablename, tableid, sl_index)
+values (15, 'A16042819', 'A', 'A', 'zgtsgs', null, null, 'A2323effff', '1', 'DJH2323344', '0', '李四', '0', '430621988072068', '13322221111', null, '-1', null, null, null, null, null, null, '440303', null, null, '1', 'gggggggfffffffffffffffffffffffffffff', '054395', to_date('28-04-2016 15:40:35', 'dd-mm-yyyy hh24:mi:ss'), '30112', '1', '12,1,2,4,5', 'gggggggfffffffffffffffffffffffffffff', '054395', to_date('28-04-2016 15:49:29', 'dd-mm-yyyy hh24:mi:ss'), null, 'ADD_N', null, to_date('28-04-2016 15:50:16', 'dd-mm-yyyy hh24:mi:ss'), '0', '160428/201604281540351831.jpg', null, '160428/201604281540358333.jpg', '160428/20160428154035551.jpg', '160428/201604281540356401.jpg', null, null, '160428/201604281540355062.jpeg', '21', 'DDC_HYXH_SSDWCLSB', 20, 1);
+insert into DDC_FLOW (id, lsh, ywlx, ywyy, hyxhzh, dabh, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, yclb, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice, ssdwid, tablename, tableid, sl_index)
+values (20, 'B16042819', 'B', null, 'zgtsgs', '440300000008', 'H000003', '遥遥111', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112233', null, null, null, null, '440304', 'kkkkkkkkkkkkkk', '5,1', '0', 'qqqqqqqqqqqqqqqqqqq', '054395', to_date('28-04-2016 16:20:31', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'dddddddddddddddddd', '054395', to_date('28-04-2016 16:55:01', 'dd-mm-yyyy hh24:mi:ss'), '30112', null, null, to_date('28-04-2016 16:55:01', 'dd-mm-yyyy hh24:mi:ss'), null, '160428/201604281607349253.jpg', null, '160428/201604281607341094.jpg', '160428/201604281607345841.jpg', '160428/201604281607344007.jpg', null, null, '160428/201604281607346463.jpg', '21', 'DDC_DAXXB', 9, 1);
+insert into DDC_FLOW (id, lsh, ywlx, ywyy, hyxhzh, dabh, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, yclb, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice, ssdwid, tablename, tableid, sl_index)
+values (16, 'A16042825', 'A', 'A', 'zgtsgs', '440300000007', 'H000002', '遥遥deee', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112222', null, null, null, null, '440318', 'ddddddddsssssssss', '1,2,3,4', '0', 'ssssssssssssss', '054395', to_date('28-04-2016 16:08:24', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'ssssssssssssss', '054395', to_date('28-04-2016 16:12:35', 'dd-mm-yyyy hh24:mi:ss'), null, 'ADD_N', null, to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), '0', '160428/201604281608248215.jpg', '160428/201604281608241927.jpg', '160428/201604281608241113.jpg', '160428/201604281608243420.jpg', '160428/201604281608247747.jpg', '160428/201604281608248735.jpg', '160428/201604281608246751.jpg', '160428/201604281608251312.jpg', '21', 'DDC_HYXH_SSDWCLSB', 26, 2);
+insert into DDC_FLOW (id, lsh, ywlx, ywyy, hyxhzh, dabh, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, yclb, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice, ssdwid, tablename, tableid, sl_index)
+values (17, 'A16042823', 'A', 'A', 'zgtsgs', '440300000008', 'H000003', '遥遥111', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', null, '-1', null, null, null, null, null, null, '440304', null, '1,2,3,4', '0', 'qqqqqqqqqqqqqqqqqqq', '054395', to_date('28-04-2016 16:07:34', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'qqqqqqqqqqqqqqqqqqq', '054395', to_date('28-04-2016 16:12:49', 'dd-mm-yyyy hh24:mi:ss'), null, 'ADD_N', null, to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), '0', '160428/201604281607349253.jpg', null, '160428/201604281607341094.jpg', '160428/201604281607345841.jpg', '160428/201604281607344007.jpg', null, null, '160428/201604281607346463.jpg', '21', 'DDC_HYXH_SSDWCLSB', 24, 2);
+insert into DDC_FLOW (id, lsh, ywlx, ywyy, hyxhzh, dabh, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, yclb, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice, ssdwid, tablename, tableid, sl_index)
+values (18, 'A16042827', 'A', 'A', 'zgtsgs', '440300000006', 'H000001', '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321144442', null, null, null, null, '440308', 'dffffff', '1,2,3,4', '0', 'sssssssssssssssssss', '054395', to_date('28-04-2016 16:09:40', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'sssssssssssssssssss', '054395', to_date('28-04-2016 16:12:22', 'dd-mm-yyyy hh24:mi:ss'), null, 'ADD_N', null, to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), '0', '160428/201604281609417351.jpg', '160428/201604281609417531.jpg', '160428/201604281609404085.jpg', '160428/201604281609413518.jpg', '160428/201604281609418482.jpg', '160428/201604281609419581.jpg', '160428/201604281609425863.jpg', '160428/201604281609422188.jpg', '21', 'DDC_HYXH_SSDWCLSB', 28, 2);
+insert into DDC_FLOW (id, lsh, ywlx, ywyy, hyxhzh, dabh, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, yclb, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice, ssdwid, tablename, tableid, sl_index)
+values (22, 'D16042821', 'D', 'A,B,C,D,E', 'zgtsgs', '440300000007', 'H000002', '遥遥deee', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112222', null, null, null, null, '440318', 'dffffffffffffffff', '1,2,3', '0', 'dssssssssss', '陈展熊', to_date('28-04-2016 16:20:55', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'dssssssssss', '054395', to_date('28-04-2016 16:54:04', 'dd-mm-yyyy hh24:mi:ss'), '30112', 'UP_N', null, to_date('28-04-2016 16:57:13', 'dd-mm-yyyy hh24:mi:ss'), null, '160428/201604281608248215.jpg', '160428/201604281608241927.jpg', '160428/201604281608241113.jpg', '160428/201604281608243420.jpg', '160428/201604281608247747.jpg', '160428/201604281608248735.jpg', '160428/201604281608246751.jpg', '160428/201604281608251312.jpg', '21', 'DDC_DAXXB', 8, 2);
+insert into DDC_FLOW (id, lsh, ywlx, ywyy, hyxhzh, dabh, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, slzl, slyj, slbz, slr, slrq, slbm, gdyj, tbyy, gdbz, gdr, gdrq, gdbm, syn_flag, tran_flag, tran_date, yclb, vc_user1img, vc_user2img, vc_ebike_img, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, vc_ebike_invoice, ssdwid, tablename, tableid, sl_index)
+values (24, 'C16042823', 'C', null, 'zgtsgs', '440300000006', 'H000001', '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321144442', null, null, null, null, '440304', 'dddddddddddddddd', '3,4', '0', 'sssssssssssssssssss', '054395', to_date('28-04-2016 16:21:11', 'dd-mm-yyyy hh24:mi:ss'), '30112', '0', null, 'fdddddddddddd', '054395', to_date('28-04-2016 16:54:52', 'dd-mm-yyyy hh24:mi:ss'), '30112', null, null, to_date('28-04-2016 16:54:52', 'dd-mm-yyyy hh24:mi:ss'), null, '160428/201604281609417351.jpg', '160428/201604281609417531.jpg', '160428/201604281609404085.jpg', '160428/201604281609413518.jpg', '160428/201604281609418482.jpg', '160428/201604281609419581.jpg', '160428/201604281609425863.jpg', '160428/201604281609422188.jpg', '21', 'DDC_DAXXB', 7, 1);
 commit;
 prompt 7 records loaded
+prompt Loading DDC_FLOW_LOG...
+prompt Table is empty
+prompt Loading DDC_HMD...
+prompt Table is empty
+prompt Loading DDC_HYXH_BASB...
+insert into DDC_HYXH_BASB (id, lsh, hyxhzh, hyxhsqpe, bz, sqr, sqrq, hyxhbcsjpe, bjjg, bjbz, bzjr, bjbm, bjrq, syn_flag, tran_flag, tran_date, sl_index, hyxhmc)
+values (3, 'F16042829', 'zgtsgs', 100, 'ddddddddddddddddddddddddddddddd', 'zgtsgs', to_date('28-04-2016 16:10:42', 'dd-mm-yyyy hh24:mi:ss'), null, '0', 'dffffffssssssssssssss', '陈展熊', '新安中队', to_date('28-04-2016 16:11:56', 'dd-mm-yyyy hh24:mi:ss'), 'UP_N', null, to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 2, '中国图书进出口深圳公司');
+commit;
+prompt 1 records loaded
+prompt Loading DDC_HYXH_BASB_LOG...
+prompt Table is empty
+prompt Loading DDC_HYXH_BASE...
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (84, 'zgtsgs', '111111', '中国图书进出口深圳公司', null, null, '13322222222', 1146, null, '超级管理员', to_date('28-04-2016 10:12:07', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP', null, null, 1200, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (1, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 2211, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', 'UP_N', null, null, 2211, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (241, 'szsyzglj', '123456', '深圳市邮政管理局', null, '冯以新', '13312919852', 4318, null, '052067', to_date('04-03-2014 11:33:02', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'C', 'UP_N', null, null, 4318, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (261, 'jjkjc', '123456', '系统测试账户', null, null, null, 65, null, '052067', to_date('06-05-2014 11:06:20', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP_N', null, null, 65, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (202, 'szqbs', '123456', '深圳侨报社', null, '刘伟煌', '13502826775', 70, null, '065928', to_date('25-10-2012 16:57:41', 'dd-mm-yyyy hh24:mi:ss'), '30199', 'H', 'UP_N', null, null, 70, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (201, 'szcswl', '123456', '中国电信深圳传送网络运营中心', null, '张宗雄', '13302990151', 60, null, '065928', to_date('25-10-2012 16:55:12', 'dd-mm-yyyy hh24:mi:ss'), '30199', 'M', 'UP_N', null, null, 60, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (221, 'skxxb', '123456', '深圳市蛇口消息报', '南山区党校大厦11、12、13楼', '唐前华', '13902923543', 28, null, '065922', to_date('22-04-2013 10:24:40', 'dd-mm-yyyy hh24:mi:ss'), '30465', 'H', 'UP_N', null, null, 28, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (121, 'szspxh', '123456', '市食品行业协会饮用水委员会', null, null, null, 9108, null, 'admin', to_date('04-04-2012 17:20:52', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'A', 'UP_N', null, null, 9108, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (134, 'gzrb', '123456', '广州日报', null, null, null, 12, null, 'admin', to_date('04-04-2012 17:28:58', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 12, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (122, 'szrqxh', '123456', '市燃气行业协会', null, null, null, 3331, null, 'admin', to_date('04-04-2012 17:21:20', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'B', 'UP_N', null, null, 3331, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (123, 'szwlxh', '123456', '市物流与供应链管理协会', null, null, null, 8508, null, 'admin', to_date('04-04-2012 17:21:39', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'C', null, null, null, 8507, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (124, 'sznyxh', '123456', '奶业行业协会', null, null, null, 1169, null, 'admin', to_date('04-04-2012 17:21:55', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'D', 'UP_N', null, null, 1169, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (125, 'szfwxh', '123456', '市服务行业协会维修业', null, null, null, 2918, null, 'admin', to_date('04-04-2012 17:22:21', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'E', 'UP_N', null, null, 2918, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (126, 'sztzxh', '123456', '市特种设备行业协会电梯维修', null, null, null, 1430, null, 'admin', to_date('04-04-2012 17:22:40', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'F', 'UP_N', null, null, 1430, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (127, 'szswgs', '123456', '市水务(集团)有限公司', null, null, null, 324, null, 'admin', to_date('04-04-2012 17:22:59', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'G', 'UP_N', null, null, 324, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (128, 'szbygs', '123456', '市报业集团发行物流有限公司', null, null, null, 1048, null, 'admin', to_date('04-04-2012 17:23:18', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 1048, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (129, 'nfdsbgs', '123456', '南方都市报经营有限公司深圳分公司', null, null, null, 557, null, 'admin', to_date('04-04-2012 17:24:50', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 557, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (130, 'nfbyjt', '123456', '南方报业传媒集团深圳记者站', null, null, null, 78, null, 'admin', to_date('04-04-2012 17:25:12', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 78, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (131, 'sztwsx', '123456', '市天威视讯股份有限公司', null, null, null, 539, null, 'admin', to_date('04-04-2012 17:25:38', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'L', 'UP_N', null, null, 539, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (132, 'zgdxgs', '123456', '中国电信公司深圳分公司', null, null, null, 2325, null, 'admin', to_date('04-04-2012 17:26:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP_N', null, null, 2325, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (133, 'szyzj', '123456', '广东省邮政公司深圳市分公司', '深圳市福田区滨河大道9023号国通大厦21-24层', '刘国东', '13802215899', 1401, null, 'admin', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'N', null, null, null, 1401, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (141, 'szttgs', '123456', '中国铁通集团有限公司深圳分公司', null, null, null, 120, null, 'admin', to_date('10-04-2012 17:29:48', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP_N', null, null, 120, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (142, 'szltgs', '123456', '中国联合网络通信有限公司深圳分公司', null, null, null, 485, null, 'admin', to_date('10-04-2012 17:30:07', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP_N', null, null, 485, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (143, 'szycbs', '123456', '羊城晚报社驻深圳办事处', null, null, null, 42, null, 'admin', to_date('10-04-2012 17:30:31', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 42, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (161, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 38, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', null, null, null, 38, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (162, 'zggjgs', '123456', '中国国际图书贸易集团有限公司深圳分公司', null, null, null, 10, null, '052067', to_date('10-05-2012 17:18:57', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 10, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (163, 'szwxgs', '123456', '深圳市万象通报刊投递有限公司', null, null, null, 39, null, '052067', to_date('10-05-2012 17:19:38', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 39, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (164, 'szhwgs', '123456', '深圳市华文图书有限公司', null, null, null, 44, null, '052067', to_date('10-05-2012 17:20:14', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', 'UP_N', null, null, 44, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (181, 'skdst', '123456', '蛇口电视台', null, '刘青青', '13902923543', 23, null, '052067', to_date('19-06-2012 11:01:09', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'L', 'UP_N', null, null, 23, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (281, 'szjrzx', '123456', '深圳市技安科技有限公司', '深圳市罗湖区人民南路2069号国际商业大厦东座8楼', '冯立敏', '15013890900', 35, null, '超级管理员', to_date('28-04-2016 09:39:23', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'M', 'UP_N', null, null, 35, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (41, 'zgtsgs', '123456', '中国图书进出口深圳公司', null, null, null, 36, null, '052067', to_date('10-05-2012 17:18:00', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'H', null, null, null, 36, 0);
+insert into DDC_HYXH_BASE (id, hyxhzh, hyxhmm, hyxhmc, hyxhdz, hyxhfzr, hyxhfzrdh, hyxhsjzpe, bz, cjr, cjrq, cjbm, hyxhlb, syn_flag, tran_flag, tran_date, totalpe, nenable)
+values (136, 'cs', '123456', '测试', null, null, null, 34, null, 'test', to_date('04-04-2012 17:28:42', 'dd-mm-yyyy hh24:mi:ss'), '30015', 'O', null, null, null, 34, 0);
+commit;
+prompt 32 records loaded
+prompt Loading DDC_HYXH_SSDW...
+insert into DDC_HYXH_SSDW (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, dwpe, vc_picpath, usercode, password, shflag, totalpe)
+values (21, 'zgtsgs', 'abcd123', null, null, null, null, null, '中国图书进出口深圳公司', to_date('28-04-2016 15:38:44', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, null, null, to_date('28-04-2016 16:09:48', 'dd-mm-yyyy hh24:mi:ss'), 52, null, 'abcd123', '123456', 1, 55);
+commit;
+prompt 1 records loaded
+prompt Loading DDC_HYXH_SSDWCLSB...
+insert into DDC_HYXH_SSDWCLSB (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, sqip, vc_user1img, vc_user2img, vc_ebike_img, tbyy, sl_index, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, enable, vc_ebike_invoice)
+values (24, 'A16042823', 'zgtsgs', '21', 'H000003', '遥遥111', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', null, '-1', null, null, null, null, null, null, '440304', null, 'abcd123', to_date('28-04-2016 16:07:34', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'qqqqqqqqqqqqqqqqqqq', '陈展熊', to_date('28-04-2016 16:12:49', 'dd-mm-yyyy hh24:mi:ss'), '新安中队', 'UP_N', null, null, null, '160428/201604281607349253.jpg', null, '160428/201604281607341094.jpg', null, 2, '160428/201604281607345841.jpg', '160428/201604281607344007.jpg', null, null, 1, '160428/201604281607346463.jpg');
+insert into DDC_HYXH_SSDWCLSB (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, sqip, vc_user1img, vc_user2img, vc_ebike_img, tbyy, sl_index, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, enable, vc_ebike_invoice)
+values (26, 'A16042825', 'zgtsgs', '21', 'H000002', '遥遥deee', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112222', null, null, null, null, '440318', 'ddddddddsssssssss', 'abcd123', to_date('28-04-2016 16:08:24', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'ssssssssssssss', '陈展熊', to_date('28-04-2016 16:12:35', 'dd-mm-yyyy hh24:mi:ss'), '新安中队', 'UP_N', null, null, null, '160428/201604281608248215.jpg', '160428/201604281608241927.jpg', '160428/201604281608241113.jpg', null, 2, '160428/201604281608243420.jpg', '160428/201604281608247747.jpg', '160428/201604281608248735.jpg', '160428/201604281608246751.jpg', 1, '160428/201604281608251312.jpg');
+insert into DDC_HYXH_SSDWCLSB (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, sqip, vc_user1img, vc_user2img, vc_ebike_img, tbyy, sl_index, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, enable, vc_ebike_invoice)
+values (28, 'A16042827', 'zgtsgs', '21', 'H000001', '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321144442', null, null, null, null, '440308', 'dffffff', 'abcd123', to_date('28-04-2016 16:09:40', 'dd-mm-yyyy hh24:mi:ss'), '1,2,3,4', '0', 'sssssssssssssssssss', '陈展熊', to_date('28-04-2016 16:12:22', 'dd-mm-yyyy hh24:mi:ss'), '新安中队', 'UP_N', null, null, null, '160428/201604281609417351.jpg', '160428/201604281609417531.jpg', '160428/201604281609404085.jpg', null, 2, '160428/201604281609413518.jpg', '160428/201604281609418482.jpg', '160428/201604281609419581.jpg', '160428/201604281609425863.jpg', 1, '160428/201604281609422188.jpg');
+insert into DDC_HYXH_SSDWCLSB (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, sqip, vc_user1img, vc_user2img, vc_ebike_img, tbyy, sl_index, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, enable, vc_ebike_invoice)
+values (20, 'A16042819', 'zgtsgs', '21', null, 'A2323effff', '1', 'DJH2323344', '0', '李四', '0', '430621988072068', '13322221111', null, '-1', null, null, null, null, null, null, '440303', null, 'abcd123', to_date('28-04-2016 15:40:35', 'dd-mm-yyyy hh24:mi:ss'), null, '1', 'gggggggfffffffffffffffffffffffffffff', '陈展熊', to_date('28-04-2016 15:49:29', 'dd-mm-yyyy hh24:mi:ss'), '新安中队', 'UP_N', null, null, null, '160428/201604281540351831.jpg', null, '160428/201604281540358333.jpg', '12,1,2,4,5', 1, '160428/20160428154035551.jpg', '160428/201604281540356401.jpg', null, null, 1, '160428/201604281540355062.jpeg');
+insert into DDC_HYXH_SSDWCLSB (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, sqip, vc_user1img, vc_user2img, vc_ebike_img, tbyy, sl_index, vc_user1_cardimg1, vc_user1_cardimg2, vc_user2_cardimg1, vc_user2_cardimg2, enable, vc_ebike_invoice)
+values (22, 'A16042821', 'zgtsgs', '21', null, '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112222', null, null, null, null, '440304', null, 'abcd123', to_date('28-04-2016 15:42:20', 'dd-mm-yyyy hh24:mi:ss'), null, '1', 'fdddddddddddd', '中国图书进出口深圳公司', to_date('28-04-2016 15:46:59', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, '160428/201604281541322904.jpg', '160428/201604281542202565.jpg', '160428/201604281541317301.jpg', '1,2,6,7', 1, '160428/201604281541322952.jpg', '160428/201604281541324804.jpg', '160428/201604281542213529.png', '160428/201604281542219182.png', 1, '160428/201604281542229182.jpg');
+commit;
+prompt 5 records loaded
+prompt Loading DDC_HYXH_SSDWCLSB_LOG...
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (3, 'A1604286', 'cs', '1', null, 'dfdfd', '1', 'fderer', '0', 'rer', '0', '430621198807206666', '13322224444', null, '-1', null, null, null, null, null, null, '440305', null, 'aaaaaa', to_date('28-04-2016 10:23:01', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 10:23:01', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (12, 'A16042823', 'zgtsgs', '21', null, '遥遥111', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', null, '-1', null, null, null, null, null, null, '440304', null, 'abcd123', to_date('28-04-2016 16:07:34', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 16:07:34', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (13, 'A16042825', 'zgtsgs', '21', null, '遥遥deee', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112222', null, null, null, null, '440318', 'ddddddddsssssssss', 'abcd123', to_date('28-04-2016 16:08:24', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 16:08:31', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (14, 'A16042827', 'zgtsgs', '21', null, '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321144442', null, null, null, null, '440308', 'dffffff', 'abcd123', to_date('28-04-2016 16:09:40', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 16:09:48', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (9, 'A16042819', 'zgtsgs', '21', null, 'A2323effff', '1', 'DJH2323344', '0', '李四', '0', '430621988072068', '13322221111', null, '-1', null, null, null, null, null, null, '440303', null, 'abcd123', to_date('28-04-2016 15:40:35', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 15:40:38', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (10, 'A16042821', 'zgtsgs', '21', null, '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', null, '-1', null, null, null, null, null, null, '440304', null, 'abcd123', to_date('28-04-2016 15:41:31', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 15:41:32', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (11, 'A16042821', 'zgtsgs', '21', null, '遥遥', '1', 'DJH232334444', '0', '李四朋', '0', '430621988072069', '13322221111', '老朋友', '0', '430621988072067', '13321112222', null, null, null, null, '440304', null, 'abcd123', to_date('28-04-2016 15:42:20', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 15:42:22', 'dd-mm-yyyy hh24:mi:ss'), '修改', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (1, 'A1604282', 'cs', '1', null, 'eddddd', '1', 'esssss', '0', '武顺22', '0', '430621198807206666', '13322224444', null, '-1', null, null, null, null, null, null, '440303', null, 'aaaaaa', to_date('28-04-2016 10:21:20', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 10:21:21', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (2, 'A1604284', 'cs', '1', null, 'edddddsad', '1', 'essssssdsw22', '0', 'derfert', '0', '430621198807206666', '13322224444', 'AAA', '0', '430621198807206667', '13322221111', null, null, null, null, '440303', 'fdfdfe', 'aaaaaa', to_date('28-04-2016 10:22:26', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 10:22:27', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (4, 'A1604288', 'szwlxh', '462', null, 'eddddd', '1', 'esssss', '0', '武顺22', '0', '430621198807206669', '13322224443', null, '-1', null, null, null, null, null, null, '440305', null, 'asdf123', to_date('28-04-2016 10:30:46', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 10:30:48', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (5, 'A16042810', 'szwlxh', '462', null, 'edddddsadfdf', '1', 'esssss', '0', '武顺', '0', '430621198807206669', '13322224433', null, '-1', null, null, null, null, null, null, '440308', null, 'asdf123', to_date('28-04-2016 10:31:20', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 10:31:21', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (6, 'A16042812', 'szwlxh', '462', null, 'efdfee333', '1', 'ere3333r34', '0', '武顺', '0', '430621198807206664', '13366666655', 'AAA', '0', '430621198807206667', '13322221113', null, null, null, null, '440319', 'ereeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'asdf123', to_date('28-04-2016 10:32:31', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 10:32:33', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (7, 'A16042815', 'szwlxh', '462', null, 'eddddd', '1', 'esssss', '0', '武顺22', '0', '430621198807206666', '13322224444', null, '-1', null, null, null, null, null, null, '440303', null, 'asdf123', to_date('28-04-2016 15:02:45', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 15:02:46', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+insert into DDC_HYXH_SSDWCLSB_LOG (id, lsh, hyxhzh, ssdwid, cphm, ppxh, cysy, djh, jtzz, jsrxm1, xb1, sfzmhm1, lxdh1, jsrxm2, xb2, sfzmhm2, lxdh2, jsrxm3, xb3, sfzmhm3, lxdh3, xsqy, bz, sqr, sqrq, slzl, slyj, slbz, slr, slrq, slbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, sqip)
+values (8, 'A16042817', 'szwlxh', '462', null, 'dfdf', '1', 'fdfdfdfee', '0', '武顺', '0', '430621198807206669', '13322224433', null, '-1', null, null, null, null, null, null, '440305', null, 'asdf123', to_date('28-04-2016 15:03:29', 'dd-mm-yyyy hh24:mi:ss'), null, null, null, null, null, null, null, null, null, null, null, to_date('28-04-2016 15:03:30', 'dd-mm-yyyy hh24:mi:ss'), '新增', '192.168.76.1');
+commit;
+prompt 14 records loaded
+prompt Loading DDC_HYXH_SSDW_LOG...
+insert into DDC_HYXH_SSDW_LOG (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, dwpe)
+values (1, 'cs', '测试单位', 'KDFDKK', null, null, null, null, null, to_date('27-04-2016 20:26:46', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, to_date('27-04-2016 20:26:47', 'dd-mm-yyyy hh24:mi:ss'), null, null, to_date('27-04-2016 20:26:47', 'dd-mm-yyyy hh24:mi:ss'), '新增  ip=192.168.76.1', 33);
+insert into DDC_HYXH_SSDW_LOG (id, hyxhzh, dwmc, zzjgdmzh, zsdz, lxr, lxdh, bz, sqr, sqrq, zt, shr, shrq, shbm, syn_flag, tran_flag, tran_date, czr, czbm, czrq, cznr, dwpe)
+values (21, 'zgtsgs', 'abcd123', null, null, null, null, null, '中国图书进出口深圳公司', to_date('28-04-2016 15:38:44', 'dd-mm-yyyy hh24:mi:ss'), '1', null, null, null, 'ADD', null, to_date('28-04-2016 15:38:44', 'dd-mm-yyyy hh24:mi:ss'), null, '30015', to_date('28-04-2016 15:38:44', 'dd-mm-yyyy hh24:mi:ss'), '新增  ip=192.168.76.1', 55);
+commit;
+prompt 2 records loaded
 prompt Loading DDC_SJZD...
 insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag, tran_flag, tran_date)
 values ('92', '2099-01-01 00:00:00', '行业协会停止录入时间', null, 'HYXHTZLRSJ', '行业协会停止录入时间', '数据库添加', to_date('28-04-2012', 'dd-mm-yyyy'), '程序开发', 'UW', null, null);
@@ -2442,42 +2093,85 @@ insert into DDC_SJZD (id, dmz, dmms1, dmms2, dmlb, bz, cjr, cjrq, cjbm, syn_flag
 values ('93', 'F', '行驶区域', null, 'YWYY_B', '业务原因', '数据库添加', to_date('25-05-2012', 'dd-mm-yyyy'), '程序开发', 'UW', null, null);
 commit;
 prompt 96 records loaded
+prompt Loading FILERECORD...
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (1, '20160427200403_W.xls', to_date('27-04-2016 20:04:03', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160427200403_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (21, '20160426154609_N.xls', to_date('28-04-2016 10:05:31', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (23, '20160426154609_N.xls', to_date('28-04-2016 10:10:57', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (27, '20160426154609_N.xls', to_date('28-04-2016 11:10:27', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (28, '20160428111245_W.xls', to_date('28-04-2016 11:12:45', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428111245_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (29, '20160426154609_N.xls', to_date('28-04-2016 11:16:30', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (30, '20160428150441_W.xls', to_date('28-04-2016 15:04:41', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428150441_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (32, '20160428154736_W.xls', to_date('28-04-2016 15:47:36', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428154736_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (33, '20160426154609_N.xls', to_date('28-04-2016 15:50:16', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (36, '20160428162405_W.xls', to_date('28-04-2016 16:24:05', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428162405_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (37, '20160428163019_W.xls', to_date('28-04-2016 16:30:19', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428163019_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (34, '20160428161053_W.xls', to_date('28-04-2016 16:10:53', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428161053_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (35, '20160426154609_N.xls', to_date('28-04-2016 16:16:23', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (25, '20160428103603_W.xls', to_date('28-04-2016 10:36:03', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428103603_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (26, '20160428104318_W.xls', to_date('28-04-2016 10:43:18', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428104318_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (31, '20160426154609_N.xls', to_date('28-04-2016 15:10:01', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (38, '20160428165520_W.xls', to_date('28-04-2016 16:55:20', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428165520_W.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (39, '20160426154609_N.xls', to_date('28-04-2016 16:57:13', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (22, '20160426154609_N.xls', to_date('28-04-2016 10:05:32', 'dd-mm-yyyy hh24:mi:ss'), 0, 'http://192.168.76.1:8089/excel//20160426154609_N.xls');
+insert into FILERECORD (id, filename, datetiime, flag, filepath)
+values (24, '20160428103554_W.xls', to_date('28-04-2016 10:35:54', 'dd-mm-yyyy hh24:mi:ss'), 1, 'http://192.168.76.1:8089/excel/20160428103554_W.xls');
+commit;
+prompt 20 records loaded
 prompt Loading HYXH_MENU...
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
 values (1, '单位信息管理', '&#xe61a;', 'companyAction/getAll', 8, 1);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
 values (2, '备案审批', '&#xe61b;', 'applyAction/getAll', 8, 2);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
-values (3, '单位配额管理', '&#xe60f;', 'companyQtyAction/getAll', 8, 3);
+values (3, '单位配额管理', '&#xe601;', 'companyQtyAction/getAll', 8, 3);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
-values (4, '变更审批', '&#xe612;', 'ebikeChangeAction/getAll', 8, 4);
+values (4, '变更审批', '&#xe60e;', 'ebikeChangeAction/getAll', 8, 4);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
-values (6, '档案查询', '&#xe615;', 'ebikeQueryAction/getAll', 8, 6);
+values (6, '档案查询', '&#xe60a;', 'ebikeQueryAction/getAll', 8, 6);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
-values (7, '业务流水统计', '&#xe616;', 'ebikeWaterAction/getAll', 8, 8);
+values (7, '业务流水统计', '&#xe61f;', 'ebikeWaterAction/getAll', 8, 8);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
 values (8, '信息管理列表', '&#xe61c;', null, 0, 1);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
 values (9, '配额申报', '&#xe60e;', 'applyAction/applyQtys', 8, 7);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
-values (14, '接口测试', '&#xe60a;', 'appAction/interface', 8, 13);
+values (14, '接口测试', '&#xe607;', 'appAction/interface', 8, 13);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
 values (15, '数据同步', '&#xe612;', 'dataAction/export', 8, 14);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
-values (10, '备案申报', '&#xe61b;', 'ssdwAction/getAllBa', 8, 9);
+values (10, '备案申报', '&#xe619;', 'ssdwAction/getAllBa', 8, 9);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
 values (11, '变更申报', '&#xe612;', 'ssdwChangeAction/getAllBg', 8, 10);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
 values (12, '档案查询', '&#xe615;', 'ssdwQueryAction/getDaList', 8, 11);
 insert into HYXH_MENU (id, vc_menu, vc_icon, vc_url, i_pid, n_index)
-values (13, '业务统计', '&#xe616;', 'ssdwStaticAction/getYwList', 8, 12);
+values (13, '业务统计', '&#xe618;', 'ssdwStaticAction/getYwList', 8, 12);
 commit;
 prompt 14 records loaded
 prompt Loading PIC_PATH...
 insert into PIC_PATH (id, vc_addpath, dt_add, i_type, vc_type, vc_parse_path)
 values (2, 'D:/apache-tomcat-6.0.45/webapps/ROOT/excel/', to_date('14-04-2016 17:23:30', 'dd-mm-yyyy hh24:mi:ss'), 2, 'EXCEL', 'http://192.168.76.1:8089/excel/');
 insert into PIC_PATH (id, vc_addpath, dt_add, i_type, vc_type, vc_parse_path)
-values (1, 'D:/apache-tomcat-6.0.45/webapps/ROOT/images/', to_date('12-03-2016 12:40:03', 'dd-mm-yyyy hh24:mi:ss'), 1, '营业执照', 'http://192.168.76.1:8089/mages/');
+values (1, 'D:/apache-tomcat-6.0.45/webapps/ROOT/images/', to_date('12-03-2016 12:40:03', 'dd-mm-yyyy hh24:mi:ss'), 1, '营业执照', 'http://192.168.76.1:8089/images/');
 commit;
 prompt 2 records loaded
 prompt Loading ROLE_MENU...
@@ -2489,12 +2183,38 @@ insert into ROLE_MENU (id, role, menu)
 values (3, 3, '1,2,3,4,5,6,7,8,9,14,15');
 commit;
 prompt 3 records loaded
+prompt Enabling triggers for DDC_APPROVE_USER...
+alter table DDC_APPROVE_USER enable all triggers;
+prompt Enabling triggers for DDC_DAXXB...
+alter table DDC_DAXXB enable all triggers;
+prompt Enabling triggers for DDC_DAXXB_LOG...
+alter table DDC_DAXXB_LOG enable all triggers;
+prompt Enabling triggers for DDC_DRIVER...
+alter table DDC_DRIVER enable all triggers;
+prompt Enabling triggers for DDC_FLOW...
+alter table DDC_FLOW enable all triggers;
+prompt Enabling triggers for DDC_FLOW_LOG...
+alter table DDC_FLOW_LOG enable all triggers;
+prompt Enabling triggers for DDC_HMD...
+alter table DDC_HMD enable all triggers;
+prompt Enabling triggers for DDC_HYXH_BASB...
+alter table DDC_HYXH_BASB enable all triggers;
+prompt Enabling triggers for DDC_HYXH_BASB_LOG...
+alter table DDC_HYXH_BASB_LOG enable all triggers;
 prompt Enabling triggers for DDC_HYXH_BASE...
 alter table DDC_HYXH_BASE enable all triggers;
 prompt Enabling triggers for DDC_HYXH_SSDW...
 alter table DDC_HYXH_SSDW enable all triggers;
+prompt Enabling triggers for DDC_HYXH_SSDWCLSB...
+alter table DDC_HYXH_SSDWCLSB enable all triggers;
+prompt Enabling triggers for DDC_HYXH_SSDWCLSB_LOG...
+alter table DDC_HYXH_SSDWCLSB_LOG enable all triggers;
+prompt Enabling triggers for DDC_HYXH_SSDW_LOG...
+alter table DDC_HYXH_SSDW_LOG enable all triggers;
 prompt Enabling triggers for DDC_SJZD...
 alter table DDC_SJZD enable all triggers;
+prompt Enabling triggers for FILERECORD...
+alter table FILERECORD enable all triggers;
 prompt Enabling triggers for HYXH_MENU...
 alter table HYXH_MENU enable all triggers;
 prompt Enabling triggers for PIC_PATH...
@@ -2504,5 +2224,3 @@ alter table ROLE_MENU enable all triggers;
 set feedback on
 set define on
 prompt Done.
-  
-  

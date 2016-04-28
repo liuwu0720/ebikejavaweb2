@@ -66,16 +66,17 @@ public class SsdwQueryAction {
 	@RequestMapping("/queryAll")
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request, String djh,
-			String cphm, String jsrxm1, String dabh, String ywlx, String slyj,
-			String xsqy, HttpServletResponse response) {
+			String zt, String cphm, String jsrxm1, String dabh, String ywlx,
+			String slyj, String xsqy, HttpServletResponse response) {
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 
-		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.JSRXM1,A.GDYJ,A.SFZMHM1,A.YWLX, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.SSDWID and rownum = 1) AS DWMC,"
+		String sql = "select A.ID,A.DABH,A.CPHM,A.DJH,A.JSRXM1,A.GDYJ,A.SFZMHM1,A.YWLX,A.SLRQ, (SELECT S.DWMC FROM DDC_HYXH_SSDW S WHERE S.ID=A.SSDWID and rownum = 1) AS DWMC,"
 				+ " (select d.DMMS1 from ddc_sjzd d where d.dmz = a.cysy and d.dmlb='CSYS' and rownum=1)as csysname,"
 				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz = a.YWLX and d.dmlb='YWLX' and rownum=1)as YWLXNAME,"
-				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz=a.xsqy and d.dmlb='SSQY' and rownum = 1) as xsqy ,a.SYRQ,a.slyj "
+				+ "(select d.DMMS1 from ddc_sjzd d where d.dmz=a.xsqy and d.dmlb='SSQY' and rownum = 1) as xsqy ,a.SYRQ,a.slyj ,"
+				+ "(SELECT D.DMMS1 FROM DDC_SJZD D WHERE D.DMZ=A.ZT AND D.DMLB='CLZT' and rownum = 1 )AS ZT "
 				+ " from DDC_DAXXB A WHERE A.SSDWID='"
 				+ ddcHyxhSsdw.getId()
 				+ "'  ";
@@ -89,7 +90,7 @@ public class SsdwQueryAction {
 		}
 		// 车牌号
 		if (StringUtils.isNotBlank(cphm)) {
-			sql += " and a.sfzhm1 like '%" + cphm + "%'";
+			sql += " and a.cphm like '%" + cphm + "%'";
 		}
 		// 驾驶人
 		if (StringUtils.isNotBlank(jsrxm1)) {
@@ -99,7 +100,9 @@ public class SsdwQueryAction {
 		if (StringUtils.isNotBlank(xsqy)) {
 			sql += " and a.XSQY = '" + xsqy + "'";
 		}
-
+		if (StringUtils.isNotBlank(zt)) {
+			sql += " and a.zt = '" + zt + "'";
+		}
 		sql += " and a.zt!='E'   order by A.ID DESC";// 查出没有注销且变更不在审批中的记录
 
 		Map<String, Object> resultMap = iEbikeService.queryBySpringSql(sql, p);
