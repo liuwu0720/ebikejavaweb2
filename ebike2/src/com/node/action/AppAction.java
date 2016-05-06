@@ -39,7 +39,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 /**
- * 类描述：11112222
+ * 类描述：12
  * 
  * @version: 1.0
  * @author: liuwu
