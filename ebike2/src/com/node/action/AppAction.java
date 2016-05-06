@@ -39,7 +39,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 /**
- * 类描述：
+ * 类描述：1111
  * 
  * @version: 1.0
  * @author: liuwu
@@ -77,7 +77,7 @@ public class AppAction {
 	@ApiOperation(value = "根据档案编号查询出车辆信息", notes = "二维码扫描档案编号返回的数据<br/>"
 			+ "	private String dabh;// 档案编号4403 00000001<br/>"
 			+ " private String cysyName;//车身颜色<br/>private String cphm;// 车牌号码<br/>	"
-			+ "private String djh;// 电机号<br/>	private String jtzz;// 脚踏装置（有、无）<br/>"
+			+ "private String djh;// 电机号<br/>	private String jtzz;// 脚踏装置（0:有、1:无）<br/>"
 			+ "private String jsrxm1;// 驾驶人姓名1<br/>	 private String xb1;// 性别1<br/>"
 			+ "private String sfzmhm1;// 身份证号码1<br/>private String lxdh1;// 联系电话1<br/>	"
 			+ "private String jsrxm2;// 驾驶人姓名2	<br/>private String xb2;// 性别2<br/>"
@@ -121,7 +121,8 @@ public class AppAction {
 			ddcDaxxb.setHyxhzhName(ddcHyxhBase.getHyxhmc());
 			String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
 			String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
-
+			String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
+			ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
 			ddcDaxxb.setVcShowUser1Img(showUser1Img);
 			ddcDaxxb.setVcShowUser2Img(showUser2Img);
 			return AjaxUtil.getMapByNotException(true, ddcDaxxb);
@@ -221,7 +222,8 @@ public class AppAction {
 				ddcDaxxb.setHyxhzhName(ddcHyxhBase.getHyxhmc());
 				String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
 				String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
-
+				String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
+				ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
 				ddcDaxxb.setVcShowUser1Img(showUser1Img);
 				ddcDaxxb.setVcShowUser2Img(showUser2Img);
 				daxxbs.add(ddcDaxxb);

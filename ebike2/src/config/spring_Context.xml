@@ -32,9 +32,9 @@
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
 		<property name="user" value="ebikeout" />
 		<property name="password" value="ebikeout" />
-	<!-- 	<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.2.197:1521:ddcxtdb" />
+		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.2.197:1521:ddcxtdb" />
 		<property name="user" value="ddcxt" />
-		<property name="password" value="ddcxt2016##" /> -->
+		<property name="password" value="ddcxt2016##" />  -->
 		
 		<!-- 指定连接数据库连接池的最大连接数 -->
 		<property name="maxPoolSize" value="40" />
