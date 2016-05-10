@@ -230,7 +230,7 @@ function queryRow(id){
 	$.messager.progress({
 		text:"正在处理，请稍候..."
 	});
-	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id;
+	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+2;
 }
 
 //修改

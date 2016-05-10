@@ -365,7 +365,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<button type="button" onclick="sureState(0)" class="btn">同意</button>
 			<button type="button" onclick="sureState(1)" class="btn">拒绝</button>
 			</c:if>	
+			<c:if test="${type == 2 }">
 			<button type="button" class="btn" onclick="exportPage()">打印</button>
+			</c:if>	
 			<button type="button" class="btn" onclick="history.back()">返回</button>
 			</div>
     </form>

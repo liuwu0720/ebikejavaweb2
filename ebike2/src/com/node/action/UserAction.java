@@ -243,10 +243,16 @@ public class UserAction {
 			String userPassword, HttpServletResponse response)
 			throws IOException {
 		try {
-			DdcHyxhBase ddcHyxhBase = iUserService.getById(Long.parseLong(id));
-			ddcHyxhBase.setHyxhmm(userPassword);
-			iUserService.update(ddcHyxhBase);
-			AjaxUtil.rendJson(response, true, "成功");
+			if (StringUtils.isNotBlank(userPassword)) {
+				DdcHyxhBase ddcHyxhBase = iUserService.getById(Long
+						.parseLong(id));
+				ddcHyxhBase.setHyxhmm(userPassword.trim());
+				iUserService.update(ddcHyxhBase);
+				AjaxUtil.rendJson(response, true, "修改成功");
+
+			} else {
+				AjaxUtil.rendJson(response, false, "密码不能为空格或无效字符串");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -271,18 +277,23 @@ public class UserAction {
 			@RequestParam(value = "file_upload", required = false) MultipartFile fileupload,
 			DdcHyxhSsdw ddcHyxhSsdw, HttpServletResponse response) {
 		try {
-			ddcHyxhSsdw.setSqrq(new Date());
-			ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
-			String licenseImg = uploadImg(request, fileupload);// 上传车身照片
-			if (StringUtils.isNotBlank(licenseImg)) {
-				ddcHyxhSsdw.setVcPicPath(licenseImg);
+			if (StringUtils.isNotBlank(ddcHyxhSsdw.getPassWord())) {
+				ddcHyxhSsdw.setSqrq(new Date());
+				ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
+				String licenseImg = uploadImg(request, fileupload);// 上传车身照片
+				if (StringUtils.isNotBlank(licenseImg)) {
+					ddcHyxhSsdw.setVcPicPath(licenseImg);
+				} else {
+					ddcHyxhSsdw.setVcPicPath(ddcHyxhSsdw.getVcPicPath());
+				}
+				ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+				ddcHyxhSsdw.setTranDate(new Date());
+				iCompanyService.update(ddcHyxhSsdw);
+				AjaxUtil.rendJson(response, true, "成功");
 			} else {
-				ddcHyxhSsdw.setVcPicPath(ddcHyxhSsdw.getVcPicPath());
+				AjaxUtil.rendJson(response, false, "密码不能为空格或才无效字符串");
 			}
-			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
-			ddcHyxhSsdw.setTranDate(new Date());
-			iCompanyService.update(ddcHyxhSsdw);
-			AjaxUtil.rendJson(response, true, "成功");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			AjaxUtil.rendJson(response, false, "失败！");
