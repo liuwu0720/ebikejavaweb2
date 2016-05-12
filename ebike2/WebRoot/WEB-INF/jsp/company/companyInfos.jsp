@@ -110,10 +110,11 @@ $(document).ready(function(){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.id+")'>查看</a>&nbsp;&nbsp;&nbsp;"
 				var update = "<a  href='javascript:void(0)'  onclick='resetPassword("+row.id+")'>重置</a>&nbsp;&nbsp;&nbsp;"
 				var deleteRow = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.id+")'>禁用</a>&nbsp;&nbsp;&nbsp;"
+				var resetRow = "<a  href='javascript:void(0)'  onclick='resetRow("+row.id+")'>启用</a>&nbsp;&nbsp;&nbsp;"
 				if(row.zt == '1'){
 					return query+update+deleteRow;
 				}else{
-					return query
+					return query+resetRow;
 				}
 				
 			
@@ -157,8 +158,7 @@ function doSearch(){
 function addRowData(){
 	$('#dgform').form('clear');
 	$('#dgformDiv').dialog('open').dialog('setTitle', '新增单位信息');
-	//$("#img").attr("src",null);
-	$("#img_tr").hide();
+	$('#totalPe_tr').show();
 	$('#ss').spinner({    
 	    required:true,    
 	    value:0    
@@ -188,31 +188,14 @@ function queryRow(id){
 //修改
 function updateRowData(id){
 	$('#dgform').form('clear');
-	var data = $('#dg').datagrid('getSelected');   
+	var data = $('#dg').datagrid('getSelected'); 
+	$('#totalPe_tr').hide();
 	if(data){
 		 $('#dgformDiv').dialog('open').dialog('setTitle', '详情信息');
 		$('#dgform').form('load', data);
 	}else{
 		alert("请选择要修改的行");
 	}
-<%-- 	$.ajax({
-		type: "GET",
-   	    url: "<%=basePath%>companyAction/queryInfoById",
-   	   data:{
-		  id:id
-	   }, 
-	   dataType: "json",
-	   success:function(data){
- 			 
- 			  if(data){
- 				 $('#dgformDiv').dialog('open').dialog('setTitle', '详情信息');
- 				 $('#dgform').form('load', data);
- 				$("#img_tr").show();
- 				 $("#img").attr("src",data.vcShowPath);
- 				 
- 			  }
- 		  }
-	}) --%>
 }
 
 //保存操作
@@ -293,7 +276,7 @@ function deleteRow(id){
 	$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
 	    if (r){    
 	    	$.post("<%=basePath%>companyAction/deleteRowData", 
-	    			{"id":id},    
+	    			{"id":id,"status":0},    
 	    			   function (data, textStatus)
 	    			   {     
 	    					
@@ -312,6 +295,31 @@ function deleteRow(id){
 	}); 
 	
 }
+//启用
+function resetRow(id){
+	$.messager.confirm('确认','您确认想要启用吗？',function(r){    
+	    if (r){    
+	    	$.post("<%=basePath%>companyAction/deleteRowData", 
+	    			{"id":id,"status":1},    
+	    			   function (data, textStatus)
+	    			   {     
+	    					
+	    				if (data.isSuccess) {
+	    					$.messager.show({ // show error message
+	    						title : '提示',
+	    						msg : data.message
+	    					});
+	    					window.location.reload();
+	    				}else{
+	    					alert(data.message);
+	    				}
+	    			   }
+	    		  ,"json");   
+	    }    
+	}); 
+	
+}
+
 
 //密码重置
 function resetPassword(id){
@@ -385,7 +393,7 @@ function resetPassword(id){
 						data-options="required:true,validType:'username'" name="userCode"  style="height: 32px;"></input></td>
 				</tr>
 				
-				<tr>
+				<tr id="totalPe_tr">
 					<th>单位总配额</th>
 					<td><input  class="easyui-numberspinner" name="totalPe" data-options="increment:1,required:true,validType:'number'" value="0" min="0" style="width:120px;height:30px;"></input>
 					</td>
@@ -411,6 +419,7 @@ function resetPassword(id){
 				 <input type="hidden"   name="dwpe" >
 			    <input type="hidden"   name="passWord" >
 				<input type="hidden"   name="vcPicPath" >
+				<input  type="hidden"  name="id">
 				<input  type="hidden"  name="id">
 			</div>
 		</form>

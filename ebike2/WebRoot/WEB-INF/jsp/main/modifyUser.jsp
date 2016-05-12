@@ -187,8 +187,8 @@
 				</tr>
 				<tr>
 					<th>总配额</th>
-					<td><input class="easyui-validatebox" type="text" name="dwpe" readonly="readonly"
-						value="${ddcHyxhSsdw.dwpe }"></input></td>
+					<td><input class="easyui-validatebox" type="text" name="totalPe" readonly="readonly"
+						value="${ddcHyxhSsdw.totalPe }"></input></td>
 				</tr>
 				<tr>
 					<th>上传营业执照(800*600)</th>

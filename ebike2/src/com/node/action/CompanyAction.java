@@ -187,7 +187,7 @@ public class CompanyAction {
 
 		ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
 		/**
-		 * 验证剩余配额数量
+		 * vbg 验证剩余配额数量
 		 */
 		if (ddcHyxhSsdw.getId() == null) {
 			// 剩余配额减少
@@ -214,9 +214,10 @@ public class CompanyAction {
 			String message = iCompanyService.queryIsSame(ddcHyxhSsdw);
 			if (message.equals("success")) {
 				try {
-					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe());
+					ddcHyxhSsdw.setTotalPe(ddcHyxhSsdw.getTotalPe());
 					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 					ddcHyxhSsdw.setTranDate(new Date());
+					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe());
 					iCompanyService.save(ddcHyxhSsdw);
 					// 保存操作日志
 					saveLog(ddcHyxhSsdw, "新增", request);
@@ -247,6 +248,11 @@ public class CompanyAction {
 							.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe() - minus);
 					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 					ddcHyxhSsdw.setTranDate(new Date());
+					/*
+					 * int useNum = ddcHyxhSsdw.getTotalPe() -
+					 * ddcHyxhSsdw.getDwpe();
+					 * ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe() - useNum);
+					 */
 					iCompanyService.update(ddcHyxhSsdw);
 					ddcHyxhBase.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 					ddcHyxhBase.setTranDate(new Date());
@@ -430,12 +436,17 @@ public class CompanyAction {
 	 * @version: 2016年4月1日 下午5:26:17
 	 */
 	@RequestMapping("/deleteRowData")
-	public void deleteRowData(HttpServletResponse response,
+	public void deleteRowData(HttpServletResponse response, String status,
 			HttpServletRequest request, String id) {
 		long dId = Long.parseLong(id);
 		try {
 			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(dId);
-			ddcHyxhSsdw.setZt(SystemConstants.DISENABLE_ZT);
+			if (status.equals("0")) {
+				ddcHyxhSsdw.setZt(SystemConstants.DISENABLE_ZT);
+			} else if (status.equals("1")) {
+				ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
+			}
+
 			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 			ddcHyxhSsdw.setTranDate(new Date());
 			iCompanyService.update(ddcHyxhSsdw);
