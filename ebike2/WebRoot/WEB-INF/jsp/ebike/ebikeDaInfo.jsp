@@ -61,8 +61,8 @@ function exportPage() {
 					<td>${ddcDaxxb.ssdwName }</td>					
 					<th>档案编号</th>
 					<td>${ddcDaxxb.dabh }</td>
-					<th>业务类型</th>
-					<td>${ddcDaxxb.ywlxName }</td>					
+					<th>车牌号码</th>
+					<td>${ddcDaxxb.cphm }</td>					
 					<th>车辆状态</th>
 					<td>${ddcDaxxb.ztName }</td>
 				</tr>

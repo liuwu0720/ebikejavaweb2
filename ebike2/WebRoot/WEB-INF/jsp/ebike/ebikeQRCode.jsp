@@ -22,7 +22,7 @@ $(document).ready(function(){
         width : 150,//设置宽高
         height : 150
     });
-    qrcode.makeCode(${ddcDaxxb.dabh});
+    qrcode.makeCode('${ddcDaxxb.dabh}');
     
     if('${ddcDaxxb.jsrxm2}'){
 	    var qrcode2 = new QRCode(document.getElementById("qrcode2"), {
@@ -30,7 +30,7 @@ $(document).ready(function(){
 	        height : 150
 	    });
 	    
-	    qrcode2.makeCode(${ddcDaxxb.dabh});
+	    qrcode2.makeCode('${ddcDaxxb.dabh}');
     }
     
   
@@ -95,6 +95,7 @@ function exportPage() {
 		    	<li><label>行驶区域&nbsp;:&nbsp;</label> ${ddcDaxxb.xsqyName }</li>
 		    	<li><label>车辆状态&nbsp;:&nbsp;</label>${ddcDaxxb.ztName }</li>
 		    	<li><label>档案编号&nbsp;:&nbsp;</label>${ddcDaxxb.dabh}</li>
+		    	<li><label>车牌号码&nbsp;:&nbsp;</label>${ddcDaxxb.cphm}</li>
 		    </ul>	 
 		     </div>
 	   </div>   
@@ -128,6 +129,7 @@ function exportPage() {
 	<li><label>行驶区域&nbsp;:&nbsp;</label> ${ddcDaxxb.xsqyName }</li>
 	<li><label>车辆状态&nbsp;:&nbsp;</label>${ddcDaxxb.ztName }</li>
 	<li><label>档案编号&nbsp;:&nbsp;</label>${ddcDaxxb.dabh}</li>
+	<li><label>车牌号码&nbsp;:&nbsp;</label>${ddcDaxxb.cphm}</li>
 	</ul>
 	</div>
 	</div>
