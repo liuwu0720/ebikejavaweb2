@@ -655,6 +655,7 @@ public class ApplyAction {
 					ddcApproveUser.setApproveIndex(1);
 					ddcApproveUser
 							.setApproveTable(SystemConstants.RECORDSBTABLE);
+					ddcApproveUser.setApproveState(0);
 					ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
 					ddcApproveUser.setApproveTime(new Date());
 					ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());

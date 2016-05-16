@@ -361,7 +361,7 @@ function resetPassword(id){
 					<option value="1">启用</option>
 				</select>
 				<a 	class="easyui-linkbutton" plain="true" onclick="doSearch()" iconCls="icon-search" >查询 </a>
-				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">实际配额：${ddcHyxhBase.totalPe }   剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
+				<div style="text-align: center;background-color:#E8F1FF; "><p style="color: red">总配额：${ddcHyxhBase.totalPe }   剩余配额：${ddcHyxhBase.hyxhsjzpe }</p></div>
 		</div>
 	<table id="dg" style="width:90%;">
 		

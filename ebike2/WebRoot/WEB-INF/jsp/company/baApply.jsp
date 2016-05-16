@@ -467,13 +467,13 @@ function exportRowData(){
 				<tr>
 					<td>驾驶人1身份证正面</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
-						name="card1img_jsr1" " /><br /></td>
+						name="card1img_jsr1"/></td>
 					<td>驾驶人2身份证正面</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
-						name="card1img_jsr2" " /><br /></td>	
+						name="card1img_jsr2"/></td>	
 					
 				</tr>
-					<tr>
+				<tr>
 					<td>驾驶人1身份证反面</td>
 					<td><input  type="file"  onchange="CheckFileSize(this);"
 						name="card2img_jsr1" /><br /></td>

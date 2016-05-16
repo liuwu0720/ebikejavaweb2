@@ -99,6 +99,8 @@ public class UserAction {
 				AjaxUtil.rendJson(response, false, "用户名或密码错误！");
 				return;
 			} else {
+				request.getSession().removeAttribute(
+						SystemConstants.SESSION_USER);
 				request.getSession().setAttribute(SystemConstants.SESSION_USER,
 						ddcHyxhBase);
 				AjaxUtil.rendJson(response, true, "验证通过");
@@ -112,6 +114,8 @@ public class UserAction {
 				AjaxUtil.rendJson(response, false, "用户名或密码错误！");
 				return;
 			} else {
+				request.getSession().removeAttribute(
+						SystemConstants.SESSION_USER);
 				request.getSession().setAttribute(SystemConstants.SESSION_USER,
 						ddcHyxhSsdw);
 				AjaxUtil.rendJson(response, true, "验证通过");

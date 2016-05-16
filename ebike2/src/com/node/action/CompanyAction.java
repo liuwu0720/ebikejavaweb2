@@ -193,28 +193,17 @@ public class CompanyAction {
 			// 剩余配额减少
 			ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getHyxhsjzpe()
 					- ddcHyxhSsdw.getTotalPe());
-			if (ddcHyxhBase.getHyxhsjzpe() <= 0) {
+			if (ddcHyxhBase.getHyxhsjzpe() < 0) {
 				AjaxUtil.rendJson(response, false, "配额不足不能再分配");
 				return;
 			}
 		}
-
-		/*
-		 * try { String jpgPath = uploadImg(request, file); String imgPath =
-		 * ddcHyxhSsdw.getVcPicPath(); if (StringUtils.isNotBlank(jpgPath)) {
-		 * ddcHyxhSsdw.setVcPicPath(jpgPath); } else {
-		 * ddcHyxhSsdw.setVcPicPath(imgPath); }
-		 * 
-		 * } catch (IOException e1) { // TODO Auto-generated catch block
-		 * e1.printStackTrace(); }
-		 */
-
 		if (ddcHyxhSsdw.getId() == null) {
 			// 帐号重复验证
 			String message = iCompanyService.queryIsSame(ddcHyxhSsdw);
 			if (message.equals("success")) {
 				try {
-					ddcHyxhSsdw.setTotalPe(ddcHyxhSsdw.getTotalPe());
+					/* ddcHyxhSsdw.setTotalPe(ddcHyxhSsdw.getTotalPe()); */
 					ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 					ddcHyxhSsdw.setTranDate(new Date());
 					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe());
