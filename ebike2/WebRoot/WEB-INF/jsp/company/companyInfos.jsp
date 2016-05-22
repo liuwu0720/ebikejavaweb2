@@ -40,12 +40,6 @@ $(document).ready(function(){
 		width:w,
 		loadMsg:'正在加载,请稍等...',
 		columns : [ [{
-			field : 'id',
-			title : 'ID',
-			checkbox : true,
-			align:'center',
-			width : 120
-		},{
 			field : 'dwmc',
 			title : '单位名称',
 			align:'center',
@@ -64,22 +58,22 @@ $(document).ready(function(){
 			field : 'lxr',
 			title : '联系人',
 			align:'center',
-			width : 120
+			width : 50
 		},{
 			field : 'lxdh',
 			title : '联系电话',
 			align:'center',
-			width : 120
+			width : 80
 		},{
 			field : 'dwpe',
 			title : '单位剩余配额',
 			align:'center',
-			width : 120
+			width : 50
 		},{
 			field : 'totalPe',
 			title : '单位总配额',
 			align:'center',
-			width : 120
+			width : 50
 		},{
 			field : 'sqrq',
 			title : '申请时间',
@@ -93,7 +87,7 @@ $(document).ready(function(){
 			field : 'zt',
 			title : '状态',
 			align:'center',
-			width : 120,
+			width : 50,
 			formatter:function(value,index){
 				if(value == 0){
 					return "<p style='color:red'>禁用</p>";

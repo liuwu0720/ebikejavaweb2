@@ -1,7 +1,9 @@
+<%@page import="com.node.util.SystemConstants"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+Object sessionUser  = request.getSession().getAttribute(SystemConstants.SESSION_USER);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -26,6 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   <script type="text/javascript" src="<%=basePath %>static/js/jquery-1.7.2.min.js"></script>
   <script type="text/javascript">
+
+  
   function reloadImage(url) {
 		var img = document.getElementById("codeImage");
 		img.src = url + "?Code=" + Math.random();
@@ -121,7 +125,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label>验证码</label>
                     <div class="form-inline">
                         <input type="text" id="code" maxlength="4" placeholder="">
-                        <img  onclick="javascript:reloadImage('makeCodePic.jsp');" src="makeCodePic.jsp" id="codeImage">
+                        <img  onclick="javascript:reloadImage('<%=basePath %>userAction/makecode');" src="<%=basePath %>userAction/makecode" id="codeImage">
                     </div>
                 </div>
                 <div class="form-item">

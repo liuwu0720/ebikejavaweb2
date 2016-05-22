@@ -1,6 +1,7 @@
 package com.node.filter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.node.util.SingleOnline;
 import com.node.util.SystemConstants;
 
 /**
@@ -49,12 +51,20 @@ public class SysFilter implements Filter {
 			chain.doFilter(request, response);
 			return;
 		} else if (session.getAttribute(SystemConstants.SESSION_USER) != null) {
-			chain.doFilter(request, response);
-			return;
+			String sessionUserName = (String) request.getSession().getAttribute(SystemConstants.SESSION_USER_NAME);
+			boolean flag = SingleOnline.isValidUser(sessionUserName, request.getSession().getId());
+			if(flag){
+				chain.doFilter(request, response);
+				return;
+			}
+		
 		}
-		response.getWriter().println(
-				"<script>window.top.location.replace('" + path
-						+ "/index.jsp')</script>");
+		PrintWriter out = response.getWriter();
+		out.println("<script>window.parent.location.replace('"
+				+ request.getContextPath() + "/userAction/index')</script>");
+		out.flush();
+		out.close();
+		
 	}
 
 	/**

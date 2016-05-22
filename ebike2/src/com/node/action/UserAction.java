@@ -38,6 +38,7 @@ import com.node.service.ICompanyService;
 import com.node.service.IUserService;
 import com.node.util.AjaxUtil;
 import com.node.util.ScaleImage;
+import com.node.util.SingleOnline;
 import com.node.util.SystemConstants;
 
 /**
@@ -66,11 +67,30 @@ public class UserAction {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年3月1日 下午4:49:30
+	 * @throws IOException 
 	 */
 	@RequestMapping("/index")
-	public String index() {
-
-		return "index";
+	public String index(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		Object object = request.getSession().getAttribute(SystemConstants.SESSION_USER);
+		String sessionUserName = (String) request.getSession().getAttribute(SystemConstants.SESSION_USER_NAME);
+		boolean flag = SingleOnline.isValidUser(sessionUserName, request.getSession().getId());
+		if(object==null&&StringUtils.isEmpty(sessionUserName)||!flag){
+			return "index";
+		}else {
+			PrintWriter out = response.getWriter();
+			out.println("<script>window.parent.location.replace('"
+					+ request.getContextPath() + "/userAction/loginToMain')</script>");
+			out.flush();
+			out.close();
+			return null;
+		}
+		
+	
+	}
+	
+	@RequestMapping("/makecode")
+	public String makecode(){
+		return "makeCodePic";
 	}
 
 	@RequestMapping("/checkUser")
@@ -99,11 +119,24 @@ public class UserAction {
 				AjaxUtil.rendJson(response, false, "用户名或密码错误！");
 				return;
 			} else {
-				request.getSession().removeAttribute(
-						SystemConstants.SESSION_USER);
-				request.getSession().setAttribute(SystemConstants.SESSION_USER,
-						ddcHyxhBase);
-				AjaxUtil.rendJson(response, true, "验证通过");
+				SingleOnline.addUser(cuser, request.getSession().getId());
+				if (!SingleOnline.isValidUser(cuser, request.getSession()
+						.getId())) {
+					request.getSession().invalidate();
+					SingleOnline.removeValidUser(cuser);
+					AjaxUtil.rendJson(response, false,
+							"您的账户在其它地方登录，对方已被踢掉请重新登录");
+				} else {
+					request.getSession().removeAttribute(
+							SystemConstants.SESSION_USER);
+					request.getSession().setAttribute(
+							SystemConstants.SESSION_USER_NAME,
+							ddcHyxhBase.getHyxhzh());
+					request.getSession().setAttribute(
+							SystemConstants.SESSION_USER, ddcHyxhBase);
+					AjaxUtil.rendJson(response, true, "验证通过");
+				}
+
 			}
 		}
 		if (role.equals(SystemConstants.ROLE_SSDW)) {
@@ -114,11 +147,24 @@ public class UserAction {
 				AjaxUtil.rendJson(response, false, "用户名或密码错误！");
 				return;
 			} else {
-				request.getSession().removeAttribute(
-						SystemConstants.SESSION_USER);
-				request.getSession().setAttribute(SystemConstants.SESSION_USER,
-						ddcHyxhSsdw);
-				AjaxUtil.rendJson(response, true, "验证通过");
+				SingleOnline.addUser(cuser, request.getSession().getId());
+				if (!SingleOnline.isValidUser(cuser, request.getSession()
+						.getId())) {
+					request.getSession().invalidate();
+					SingleOnline.removeValidUser(cuser);
+					AjaxUtil.rendJson(response, false,
+							"您的账户在其它地方登录，对方已被踢掉请重新登录");
+				} else {
+					request.getSession().removeAttribute(
+							SystemConstants.SESSION_USER);
+					request.getSession().setAttribute(
+							SystemConstants.SESSION_USER, ddcHyxhSsdw);
+					request.getSession().setAttribute(
+							SystemConstants.SESSION_USER_NAME,
+							ddcHyxhSsdw.getUserCode());
+					AjaxUtil.rendJson(response, true, "验证通过");
+				}
+
 			}
 		}
 
@@ -155,9 +201,10 @@ public class UserAction {
 	public String loginout(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		request.getSession().removeAttribute(SystemConstants.SESSION_USER);
+		request.getSession().invalidate();
 		PrintWriter out = response.getWriter();
 		out.println("<script>window.parent.location.replace('"
-				+ request.getContextPath() + "/index.jsp')</script>");
+				+ request.getContextPath() + "/userAction/index')</script>");
 		out.flush();
 		out.close();
 		return null;

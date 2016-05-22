@@ -208,4 +208,14 @@ public class CompanyServiceImp implements ICompanyService {
 
 	}
 
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ICompanyService#getDdcHyxhSsdwById(long)
+		 */
+	@Override
+	public DdcHyxhSsdw getDdcHyxhSsdwById(long dId) {
+		// TODO Auto-generated method stub
+		return iDdcHyxhSsdwDao.get(dId);
+	}
+
 }

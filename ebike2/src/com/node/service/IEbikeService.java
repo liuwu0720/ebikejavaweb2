@@ -14,6 +14,7 @@ import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcDriver;
 import com.node.model.DdcFlow;
+import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
@@ -187,5 +188,35 @@ public interface IEbikeService {
 	 * @version: 2016年4月25日 下午12:02:10
 	 */
 	void updateDdcDriver(DdcDriver ddcDriver);
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcHyxhBase 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年5月22日 下午1:25:35
+	  */
+	void saveDdcHyxhBase(DdcHyxhBase ddcHyxhBase);
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcHyxhBase 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年5月22日 下午1:27:01
+	  */
+	void updateDdchyxhBase(DdcHyxhBase ddcHyxhBase);
+
+	
+	/**
+	  * 方法描述：
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年5月22日 下午1:28:17
+	  */
+	List<DdcHyxhBase> getAllDDcHyxhBase();
 
 }

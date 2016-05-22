@@ -155,4 +155,15 @@ public interface ICompanyService {
 	 */
 	DdcHyxhBase getHyxhZhByCode(String hyxhzh);
 
+	
+	/**
+	  * 方法描述：
+	  * @param dId
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年5月22日 下午1:23:04
+	  */
+	DdcHyxhSsdw getDdcHyxhSsdwById(long dId);
+
 }

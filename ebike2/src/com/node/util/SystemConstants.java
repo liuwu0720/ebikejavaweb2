@@ -71,6 +71,7 @@ public class SystemConstants {
 	 * 行业协会角色session
 	 */
 	public static final String SESSION_USER = "sessionuser";
+	public static final String SESSION_USER_NAME = "sessionusername";
 	/**
 	 * 所属单位
 	 */
@@ -137,6 +138,7 @@ public class SystemConstants {
 	public static final Integer EXCEL_PATH = 2;
 	public static final String DAXXB_TABLE = "DDC_DAXXB";
 	public static final String DDCFLOW_TABLE = "DDC_FLOW";
+	
 
 	public static void main(String[] args) {
 		String codeString = "13366665555";

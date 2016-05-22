@@ -13,6 +13,5 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<http pattern="/static/image/**" security="none" />
 	<http pattern="/phone/**" security="none" />
 	<http pattern="/api-docs/**" security="none" />
-	<http pattern="/index.jsp" security="none" />
-	
+	<http pattern="/userAction/makecode" security="none" />
 </beans:beans>  

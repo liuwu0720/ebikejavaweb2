@@ -27,6 +27,7 @@ import com.node.model.DdcDaxxb;
 import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcDriver;
 import com.node.model.DdcFlow;
+import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.service.IEbikeService;
 import com.node.util.HqlHelper;
@@ -246,6 +247,36 @@ public class EbikeServiceImp implements IEbikeService {
 	public void updateDdcDriver(DdcDriver ddcDriver) {
 		// TODO Auto-generated method stub
 		iDdcDriverDao.updateCleanBefore(ddcDriver);
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#saveDdcHyxhBase(com.node.model.DdcHyxhBase)
+		 */
+	@Override
+	public void saveDdcHyxhBase(DdcHyxhBase ddcHyxhBase) {
+		// TODO Auto-generated method stub
+		iDdcHyxhBaseDao.save(ddcHyxhBase);
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#updateDdchyxhBase(com.node.model.DdcHyxhBase)
+		 */
+	@Override
+	public void updateDdchyxhBase(DdcHyxhBase ddcHyxhBase) {
+		// TODO Auto-generated method stub
+		iDdcHyxhBaseDao.updateCleanBefore(ddcHyxhBase);
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#getAllDDcHyxhBase()
+		 */
+	@Override
+	public List<DdcHyxhBase> getAllDDcHyxhBase() {
+		// TODO Auto-generated method stub
+		return iDdcHyxhBaseDao.findAll();
 	}
 
 }
