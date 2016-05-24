@@ -232,19 +232,19 @@ function updateSaveData(){
 				</tr>
 				<tr>
 					<th>单位名称:</th>
-					<td><input  name="dwmc" class="easyui-validatebox" data-options="required:true" style="height: 32px;" >  
+					<td><input  name="dwmc" class="easyui-validatebox"  style="height: 32px;" >  
 					</td>
 				<tr>
 					<th>联系人：</th>
-					<td><input name="lxr" type="text" class="easyui-validatebox" data-options="required:true"></td>
+					<td><input name="lxr" type="text" class="easyui-validatebox" ></td>
 				</tr>
 				<tr>
 					<th>单位地址：</th>
-					<td><input name="zsdz" type="text" class="easyui-validatebox" data-options="required:true"></td>
+					<td><input name="zsdz" type="text" class="easyui-validatebox" ></td>
 				</tr>
 				<tr>
 					<th>组织机构代码：</th>
-					<td><input name="zzjgdmzh" type="text" class="easyui-validatebox" data-options="required:true"></td>
+					<td><input name="zzjgdmzh" type="text" class="easyui-validatebox" ></td>
 				</tr>
 				<tr>
 					<th>备注：</th>
@@ -255,7 +255,7 @@ function updateSaveData(){
 					<tr>
 					<th>总配额</th>
 					<td>
-					<input   class="easyui-numberspinner" name="totalPe"
+					<input   class="easyui-numberspinner" name="totalPe" readonly="readonly"
 						data-options="increment:1,required:true,validType:'number'"  min="0"
 						style="width:120px;height:30px;"></input>
 					</td>

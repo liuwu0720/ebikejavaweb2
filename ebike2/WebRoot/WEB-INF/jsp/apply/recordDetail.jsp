@@ -12,8 +12,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>备案详情</title>
     
 	<%@include file="../common/common.jsp"%>	
+	<script type="text/javascript"
+	src="<%=basePath%>static/js/jquery-barcode.min.js"></script>	
 	<script type="text/javascript">
-
+	$(document).ready(function(){
+		$("#barcode").barcode('${ddcHyxhSsdwclsb.lsh }',"code39");
+	});
 	function sureState(state){
 		//拒绝
 		if(state == 1){
@@ -142,6 +146,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
 	function exportPage() {
+		$("#audittable").hide();
 		$("#main").css('width', '650px');
 		var bdhtml=window.document.body.innerHTML;
 		var startStr="<!--startprint-->";//设置打印开始区域 
@@ -157,15 +162,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+    
   <div  class="maindiv">
-    <form action="">
-    	<h2>车辆备案申报详情</h2>
+   
+    	
+  
+    <h2>车辆备案申报详情</h2>
+    <center>
+    	<div id="barcode"></div>
+    </center>
     <!--startprint-->
     	<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
     		
     		<tr>
-    			<th>流水号</th>
-    			<td>${ddcHyxhSsdwclsb.lsh }</td>
+    			<th>所属协会</th>
+    			<td>${hyxhName }</td>
     			
     			<th>单位名称</th>
     			<td>${ddcHyxhSsdwclsb.ssdwName }</td>
@@ -331,9 +342,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<img   src="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }"/>
 					</a></div>
 				</td>
-			</tr>		
+			</tr>	
     	</table>
-    	<!--endprint-->		
+   <!--endprint-->		
+   <div  id="audittable"> 
     	<table class="table table-condensed">
 				<caption style="text-align: center">审批人及审批意见</caption>
 				<tr>
@@ -370,9 +382,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</c:if>	
 			<button type="button" class="btn" onclick="history.back()">返回</button>
 			</div>
-    </form>
+		</div> 	
   </div>  
-    <!-- 点退办时弹出的表单 -->
 	<div id="dgformDiv" class="easyui-dialog"
 		style="width:550px;padding:10px 20px 20px 20px;"
 		closed="true" buttons="#dlg-buttons2">

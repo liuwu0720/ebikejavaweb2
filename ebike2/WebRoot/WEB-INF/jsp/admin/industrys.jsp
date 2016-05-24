@@ -339,7 +339,7 @@ function updateSaveData(){
 				</tr>
 				<tr>
 					<th>协会名称:</th>
-					<td><input  name="hyxhmc" class="easyui-validatebox" data-options="required:true" style="height: 32px;" >  
+					<td><input  name="hyxhmc" class="easyui-validatebox"  style="height: 32px;" >  
 					</td>
 				<tr>
 					<th>协会账号：</th>
@@ -353,7 +353,7 @@ function updateSaveData(){
 				<tr>
 					<th>总配额</th>
 					<td>
-					<input   class="easyui-numberspinner" name="totalPe"
+					<input   class="easyui-numberspinner" name="totalPe" readonly="readonly"
 						data-options="increment:1,required:true,validType:'number'"  min="0"
 						style="width:120px;height:30px;"></input>
 					</td>
@@ -376,7 +376,7 @@ function updateSaveData(){
 					<th>负责人电话</th>
 					<td>
 						<input class="easyui-validatebox" type="text" 
-						data-options="required:true,validType:'phoneNum'" name="hyxhfzrdh"
+						data-options="validType:'phoneNum'" name="hyxhfzrdh"
 						style="height: 32px;"></input>
 					</td>
 				</tr>

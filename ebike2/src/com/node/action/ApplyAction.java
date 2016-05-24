@@ -825,7 +825,8 @@ public class ApplyAction {
 				.getDdcHyxhSsdwclsbById(dId);
 		String cysyName = iApplyService.findByProPerties("CSYS",
 				ddcHyxhSsdwclsb.getCysy());
-
+		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER);
 		ddcHyxhSsdwclsb.setCysyName(cysyName);// 车身颜色
 		String xsqyName = iApplyService.findByProPerties("SSQY",
 				ddcHyxhSsdwclsb.getXsqy());
@@ -878,6 +879,7 @@ public class ApplyAction {
 		request.setAttribute("ddcHyxhSsdwclsb", ddcHyxhSsdwclsb);
 		request.setAttribute("dbyyDdcSjzds", dbyyDdcSjzds);
 		request.setAttribute("slzList", slzList);
+		request.setAttribute("hyxhName", ddcHyxhBase.getHyxhmc());
 		if (StringUtils.isNotBlank(type)) {
 			request.setAttribute("type", type);
 		}
