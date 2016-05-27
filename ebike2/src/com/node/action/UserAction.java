@@ -200,8 +200,11 @@ public class UserAction {
 	@RequestMapping("/loginout")
 	public String loginout(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		String userName = (String) request.getSession().getAttribute(SystemConstants.SESSION_USER_NAME);
+		SingleOnline.removeValidUser(userName);
 		request.getSession().removeAttribute(SystemConstants.SESSION_USER);
 		request.getSession().invalidate();
+		
 		PrintWriter out = response.getWriter();
 		out.println("<script>window.parent.location.replace('"
 				+ request.getContextPath() + "/userAction/index')</script>");
