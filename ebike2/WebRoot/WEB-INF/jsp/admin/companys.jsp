@@ -276,6 +276,11 @@ function updateSaveData(){
 				<input type="hidden" name="vcPicPath">
 				<input type="hidden" name="shbm">
 				<input type="hidden" name="hyxhzh">
+				<input type="hidden" name="userCode">
+				<input type="hidden" name="passWord">
+				<input type="hidden" name="shFlag">
+				<input type="hidden" name="synFlag">
+				<input type="hidden" name="zt">
 		</form>
 		<div id="dlg-buttons">
 		<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"
