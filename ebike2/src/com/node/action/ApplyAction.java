@@ -825,8 +825,7 @@ public class ApplyAction {
 				.getDdcHyxhSsdwclsbById(dId);
 		String cysyName = iApplyService.findByProPerties("CSYS",
 				ddcHyxhSsdwclsb.getCysy());
-		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
+		DdcHyxhBase ddcHyxhBase = iCompanyService.getHyxhZhByCode(ddcHyxhSsdwclsb.getHyxhzh());
 		ddcHyxhSsdwclsb.setCysyName(cysyName);// 车身颜色
 		String xsqyName = iApplyService.findByProPerties("SSQY",
 				ddcHyxhSsdwclsb.getXsqy());

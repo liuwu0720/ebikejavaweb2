@@ -30,6 +30,7 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 	private Long id;
 	private String lsh;
 	private String hyxhzh;
+	private String hyxhzhName;
 	private String ssdwId;// 所属单位ID,对应 DDC_HYXH_SSDW的记录ID
 	private String ssdwName;// 申报单位名称
 	private String cphm;
@@ -715,4 +716,17 @@ public class DdcHyxhSsdwclsb implements java.io.Serializable {
 		this.vcEbikeInvoiceImgShow = vcEbikeInvoiceImgShow;
 	}
 
+	@Transient
+	public String getHyxhzhName() {
+		return hyxhzhName;
+	}
+
+	/**
+	 * @param hyxhzhName : set the property hyxhzhName.
+	 */
+	public void setHyxhzhName(String hyxhzhName) {
+		this.hyxhzhName = hyxhzhName;
+	}
+	
+	
 }
