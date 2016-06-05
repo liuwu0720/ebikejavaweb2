@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +37,6 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +52,6 @@ import com.node.model.DdcHyxhBasb;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
-import com.node.model.DdcHyxhSsdwclsbLog;
 import com.node.model.DdcSjzd;
 import com.node.model.PicPath;
 import com.node.service.IApplyService;
@@ -480,10 +477,10 @@ public class ApplyAction {
 				String seq = object.toString();
 				String md = new SimpleDateFormat("yyMMdd").format(new Date());
 				ddcHyxhSsdwclsb.setLsh("A" + md + seq);
-				saveLog(ddcHyxhSsdwclsb, "新增", request);
+				//saveLog(ddcHyxhSsdwclsb, "新增", request);
 				iApplyService.saveDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			} else {
-				saveLog(ddcHyxhSsdwclsb, "修改", request);
+				//saveLog(ddcHyxhSsdwclsb, "修改", request);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
 			AjaxUtil.rendJson(response, true, "操作成功");
@@ -493,41 +490,7 @@ public class ApplyAction {
 		}
 	}
 
-	/**
-	 * 方法描述：保存操作日志
-	 * 
-	 * @param ddcHyxhSsdwclsb
-	 * @param string
-	 * @param request
-	 * @version: 1.0
-	 * @author: liuwu
-	 * @version: 2016年3月15日 下午4:12:56
-	 */
-	private void saveLog(DdcHyxhSsdwclsb ddcHyxhSsdwclsb, String string,
-			HttpServletRequest request) throws IllegalAccessException,
-			InvocationTargetException {
-		// TODO Auto-generated method stub
-		String ip = request.getHeader("x-forwarded-for");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknow".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
-		DdcHyxhSsdwclsbLog ddcHyxhSsdwclsbLog = new DdcHyxhSsdwclsbLog();
-		BeanUtils.copyProperties(ddcHyxhSsdwclsbLog, ddcHyxhSsdwclsb);
-		ddcHyxhSsdwclsbLog.setSqip(ip);
-		ddcHyxhSsdwclsbLog.setCzbm(ddcHyxhBase.getCjbm());
-		ddcHyxhSsdwclsbLog.setCznr(string);
-		ddcHyxhSsdwclsbLog.setCzrq(new Date());
-		iApplyService.saveDdcHyxhSsdwclsbLog(ddcHyxhSsdwclsbLog);
-	}
-
+	
 	/**
 	 * 方法描述：
 	 * 

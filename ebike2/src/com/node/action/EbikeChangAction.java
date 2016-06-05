@@ -30,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcApproveUser;
 import com.node.model.DdcDaxxb;
-import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
@@ -382,37 +381,6 @@ public class EbikeChangAction {
 		iEbikeService.saveDdcFlow(ddcFlow);
 	}
 
-	/**
-	 * 方法描述：
-	 * 
-	 * @param newDaxxb
-	 * @version: 1.0
-	 * @author: liuwu
-	 * @version: 2016年3月17日 下午7:58:00
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 */
-	private void saveDaxxblog(DdcDaxxb newDaxxb, HttpServletRequest request)
-			throws IllegalAccessException, InvocationTargetException {
-		String ip = request.getHeader("x-forwarded-for");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknow".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
-		DdcDaxxbLog daxxbLog = new DdcDaxxbLog();
-		BeanUtils.copyProperties(daxxbLog, newDaxxb);
-		daxxbLog.setId(null);
-		daxxbLog.setCznr("变更 ; ip=" + ip);
-		daxxbLog.setCzbm(ddcHyxhBase.getHyxhmc());
-		iEbikeService.saveDdcDaxxbLog(daxxbLog);
-	}
 
 	/**
 	 * 方法描述：

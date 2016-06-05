@@ -31,7 +31,6 @@ import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcApprovalUserDao;
 import com.node.dao.IDdcDaxxbDao;
-import com.node.dao.IDdcDaxxbLogDao;
 import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHmdDao;
@@ -65,8 +64,6 @@ public class DataServiceImp implements IDataService {
 	@Autowired
 	IDdcDaxxbDao iDdcDaxxbDao;
 
-	@Autowired
-	IDdcDaxxbLogDao iDdcDaxxbLogDao;
 
 	@Autowired
 	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;

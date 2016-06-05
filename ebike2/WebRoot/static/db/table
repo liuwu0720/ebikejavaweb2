@@ -2224,3 +2224,104 @@ alter table ROLE_MENU enable all triggers;
 set feedback on
 set define on
 prompt Done.
+********************************20160605********************************
+
+-- Create table
+create table DDC_DRIVER_TEMP
+(
+  id          NUMBER not null,
+  vc_username VARCHAR2(50),
+  vc_usercard VARCHAR2(50),
+  vc_telphone VARCHAR2(50)
+)
+;
+-- Add comments to the table 
+comment on table DDC_DRIVER_TEMP
+  is '支付宝实名验证过的人员表';
+-- Add comments to the columns 
+comment on column DDC_DRIVER_TEMP.id
+  is '主键';
+comment on column DDC_DRIVER_TEMP.vc_username
+  is '姓名';
+comment on column DDC_DRIVER_TEMP.vc_usercard
+  is '身份证号码';
+comment on column DDC_DRIVER_TEMP.vc_telphone
+  is '联系电话';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_DRIVER_TEMP
+  add constraint PK_DDC_DRIVER_TEMP primary key (ID)
+  using index 
+  ;
+
+
+DDC_HYXH_SSDWCLSB表
+
+ALTER TABLE DDC_HYXH_SSDWCLSB DROP COLUMN JSRXM3 ;
+ALTER TABLE DDC_HYXH_SSDWCLSB DROP COLUMN XB3 ;
+ALTER TABLE DDC_HYXH_SSDWCLSB DROP COLUMN SFZMHM3 ;
+ALTER TABLE DDC_HYXH_SSDWCLSB DROP COLUMN LXDH3 ;
+ALTER TABLE DDC_HYXH_SSDWCLSB ADD VC_USER1WORKIMG VARCHAR2(100);
+ comment on column DDC_HYXH_SSDWCLSB.VC_USER1WORKIMG  is '驾驶人1居住证或在职证明';
+ ALTER TABLE DDC_HYXH_SSDWCLSB ADD VC_USER2WORKIMG VARCHAR2(100);
+ comment on column DDC_HYXH_SSDWCLSB.VC_USER2WORKIMG  is '驾驶人2居住证或在职证明';
+  ALTER TABLE DDC_HYXH_SSDWCLSB ADD VC_EBIKE_QUALIFIEDIMG VARCHAR2(100);
+ comment on column DDC_HYXH_SSDWCLSB.VC_EBIKE_QUALIFIEDIMG  is '车辆合格证';
+  ALTER TABLE DDC_HYXH_SSDWCLSB ADD VC_EBIKE_INSURANCEIMG VARCHAR2(100);
+ comment on column DDC_HYXH_SSDWCLSB.VC_EBIKE_INSURANCEIMG  is '投保凭证';
+  
+  
+   
+ DDC_DAXXB表
+
+ALTER TABLE DDC_DAXXB DROP COLUMN JSRXM3 ;
+ALTER TABLE DDC_DAXXB DROP COLUMN XB3 ;
+ALTER TABLE DDC_DAXXB DROP COLUMN SFZMHM3 ;
+ALTER TABLE DDC_DAXXB DROP COLUMN LXDH3 ;
+ALTER TABLE DDC_DAXXB ADD VC_USER1WORKIMG VARCHAR2(100);
+ comment on column DDC_DAXXB.VC_USER1WORKIMG  is '驾驶人1居住证或在职证明';
+ ALTER TABLE DDC_DAXXB ADD VC_USER2WORKIMG VARCHAR2(100);
+ comment on column DDC_DAXXB.VC_USER2WORKIMG  is '驾驶人2居住证或在职证明';
+  ALTER TABLE DDC_DAXXB ADD VC_EBIKE_QUALIFIEDIMG VARCHAR2(100);
+ comment on column DDC_DAXXB.VC_EBIKE_QUALIFIEDIMG  is '车辆合格证';
+  ALTER TABLE DDC_DAXXB ADD VC_EBIKE_INSURANCEIMG VARCHAR2(100);
+ comment on column DDC_DAXXB.VC_EBIKE_INSURANCEIMG  is '投保凭证';
+
+  
+  
+ DDC_DAXXB表
+
+ALTER TABLE DDC_FLOW DROP COLUMN JSRXM3 ;
+ALTER TABLE DDC_FLOW DROP COLUMN XB3 ;
+ALTER TABLE DDC_FLOW DROP COLUMN SFZMHM3 ;
+ALTER TABLE DDC_FLOW DROP COLUMN LXDH3 ;
+ALTER TABLE DDC_FLOW ADD VC_USER1WORKIMG VARCHAR2(100);
+ comment on column DDC_FLOW.VC_USER1WORKIMG  is '驾驶人1居住证或在职证明';
+ ALTER TABLE DDC_FLOW ADD VC_USER2WORKIMG VARCHAR2(100);
+ comment on column DDC_FLOW.VC_USER2WORKIMG  is '驾驶人2居住证或在职证明';
+  ALTER TABLE DDC_FLOW ADD VC_EBIKE_QUALIFIEDIMG VARCHAR2(100);
+ comment on column DDC_FLOW.VC_EBIKE_QUALIFIEDIMG  is '车辆合格证';
+  ALTER TABLE DDC_FLOW ADD VC_EBIKE_INSURANCEIMG VARCHAR2(100);
+ comment on column DDC_FLOW.VC_EBIKE_INSURANCEIMG  is '投保凭证';
+  
+ 
+ 
+ DDC_DRIVER司机表
+ 
+ 
+ ALTER TABLE DDC_DRIVER ADD VC_USERWORKIMG VARCHAR2(100);
+ comment on column DDC_DRIVER.VC_USERWORKIMG  is '居住证或在职证明';
+ ALTER TABLE DDC_DRIVER ADD USER_STATUS NUMBER default 0;
+ comment on column DDC_DRIVER.USER_STATUS  is '驾驶人状态0未认证 1实名认证 2星级用户';
+ ALTER TABLE DDC_DRIVER ADD USER_ILLEAGE NUMBER default 0;
+  comment on column DDC_DRIVER.USER_ILLEAGE  is '驾驶人违法次数'; 
+ ALTER TABLE DDC_DRIVER ADD USER_NOTE NUMBER default 0;
+  comment on column DDC_DRIVER.USER_NOTE  is '驾驶人违法备注';  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+

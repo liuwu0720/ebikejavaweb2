@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.node.model.DdcDaxxb;
-import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcDriver;
+import com.node.model.DdcDriverTemp;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
@@ -94,15 +94,6 @@ public interface IEbikeService {
 	 */
 	void update(DdcDaxxb daxxb);
 
-	/**
-	 * 方法描述：
-	 * 
-	 * @param daxxbLog
-	 * @version: 1.0
-	 * @author: liuwu
-	 * @version: 2016年3月17日 下午8:11:46
-	 */
-	void saveDdcDaxxbLog(DdcDaxxbLog daxxbLog);
 
 	/**
 	 * 方法描述：
@@ -218,5 +209,37 @@ public interface IEbikeService {
 	  * @version: 2016年5月22日 下午1:28:17
 	  */
 	List<DdcHyxhBase> getAllDDcHyxhBase();
+
+	
+	/**
+	  * 方法描述：
+	  * @param vcUserName
+	  * @param vcUserCard
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月5日 上午9:47:27
+	  */
+	boolean findDdcDriverTemp(String vcUserName, String vcUserCard);
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriverTemp 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月5日 上午9:52:51
+	  */
+	void saveDriverTemp(DdcDriverTemp ddcDriverTemp);
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriverTemp 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月5日 上午10:19:53
+	  */
+	void updateDriverTemp(DdcDriverTemp ddcDriverTemp);
 
 }

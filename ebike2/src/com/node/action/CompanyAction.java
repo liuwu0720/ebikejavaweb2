@@ -10,7 +10,6 @@ package com.node.action;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +20,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
-import com.node.model.DdcHyxhSsdwLog;
 import com.node.model.PicPath;
 import com.node.service.ICompanyService;
 import com.node.service.IUserService;
@@ -209,7 +206,6 @@ public class CompanyAction {
 					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe());
 					iCompanyService.save(ddcHyxhSsdw);
 					// 保存操作日志
-					saveLog(ddcHyxhSsdw, "新增", request);
 					ddcHyxhBase.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 					ddcHyxhBase.setTranDate(new Date());
 					iUserService.update(ddcHyxhBase);
@@ -247,7 +243,6 @@ public class CompanyAction {
 					ddcHyxhBase.setTranDate(new Date());
 					iUserService.update(ddcHyxhBase);
 					// 保存操作日志
-					saveLog(ddcHyxhSsdw, "修改", request);
 
 					AjaxUtil.rendJson(response, true, "操作成功");
 				} else {
@@ -261,42 +256,6 @@ public class CompanyAction {
 		}
 	}
 
-	/**
-	 * 方法描述：保存操作日志
-	 * 
-	 * @param ddcHyxhSsdw
-	 * @param type
-	 *            操作类型：新增、修改
-	 * @param request
-	 * @version: 1.0
-	 * @author: liuwu
-	 * @version: 2016年3月12日 下午5:50:37
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 */
-	private void saveLog(DdcHyxhSsdw ddcHyxhSsdw, String type,
-			HttpServletRequest request) throws IllegalAccessException,
-			InvocationTargetException {
-		String ip = request.getHeader("x-forwarded-for");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknow".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
-		DdcHyxhSsdwLog ddcHyxhSsdwLog = new DdcHyxhSsdwLog();
-		BeanUtils.copyProperties(ddcHyxhSsdwLog, ddcHyxhSsdw);
-		ddcHyxhSsdwLog.setCznr(type + "  ip=" + ip);// 操作内容
-		ddcHyxhSsdwLog.setCzbm(ddcHyxhBase.getCjbm());
-		ddcHyxhSsdwLog.setCzr(ddcHyxhSsdwLog.getCzr());
-		ddcHyxhSsdwLog.setCzrq(new Date());
-		iCompanyService.saveLog(ddcHyxhSsdwLog);
-	}
 
 	/**
 	 * 方法描述：图片上传

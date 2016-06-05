@@ -138,6 +138,7 @@ public class SystemConstants {
 	public static final Integer EXCEL_PATH = 2;
 	public static final String DAXXB_TABLE = "DDC_DAXXB";
 	public static final String DDCFLOW_TABLE = "DDC_FLOW";
+	public static final String TOKEN_ALIPAY = "DDCGLXT2016";
 	
 
 	public static void main(String[] args) {

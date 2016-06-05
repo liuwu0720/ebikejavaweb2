@@ -10,13 +10,14 @@ package com.node.service.imp;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcApprovalUserDao;
 import com.node.dao.IDdcDaxxbDao;
-import com.node.dao.IDdcDaxxbLogDao;
 import com.node.dao.IDdcDriverDao;
+import com.node.dao.IDdcDriverTempDao;
 import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHyxhBasbDao;
 import com.node.dao.IDdcHyxhBaseDao;
@@ -24,8 +25,8 @@ import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IFileRecordDao;
 import com.node.model.DdcDaxxb;
-import com.node.model.DdcDaxxbLog;
 import com.node.model.DdcDriver;
+import com.node.model.DdcDriverTemp;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
@@ -44,9 +45,6 @@ import com.node.util.Page;
 public class EbikeServiceImp implements IEbikeService {
 	@Autowired
 	IDdcDaxxbDao iDdcDaxxbDao;
-
-	@Autowired
-	IDdcDaxxbLogDao iDdcDaxxbLogDao;
 
 	@Autowired
 	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
@@ -69,6 +67,9 @@ public class EbikeServiceImp implements IEbikeService {
 
 	@Autowired
 	IDdcDriverDao iDdcDriverDao;
+
+	@Autowired
+	IDdcDriverTempDao iDdcDriverTempDao;
 
 	/*
 	 * (non-Javadoc)
@@ -139,19 +140,6 @@ public class EbikeServiceImp implements IEbikeService {
 	public void update(DdcDaxxb daxxb) {
 		// TODO Auto-generated method stub
 		iDdcDaxxbDao.updateCleanBefore(daxxb);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.node.service.IEbikeService#saveDdcDaxxbLog(com.node.model.DdcDaxxbLog
-	 * )
-	 */
-	@Override
-	public void saveDdcDaxxbLog(DdcDaxxbLog daxxbLog) {
-		// TODO Auto-generated method stub
-		iDdcDaxxbLogDao.save(daxxbLog);
 	}
 
 	/*
@@ -249,34 +237,80 @@ public class EbikeServiceImp implements IEbikeService {
 		iDdcDriverDao.updateCleanBefore(ddcDriver);
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#saveDdcHyxhBase(com.node.model.DdcHyxhBase)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#saveDdcHyxhBase(com.node.model.DdcHyxhBase
+	 * )
+	 */
 	@Override
 	public void saveDdcHyxhBase(DdcHyxhBase ddcHyxhBase) {
 		// TODO Auto-generated method stub
 		iDdcHyxhBaseDao.save(ddcHyxhBase);
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#updateDdchyxhBase(com.node.model.DdcHyxhBase)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#updateDdchyxhBase(com.node.model.DdcHyxhBase
+	 * )
+	 */
 	@Override
 	public void updateDdchyxhBase(DdcHyxhBase ddcHyxhBase) {
 		// TODO Auto-generated method stub
 		iDdcHyxhBaseDao.updateCleanBefore(ddcHyxhBase);
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#getAllDDcHyxhBase()
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#getAllDDcHyxhBase()
+	 */
 	@Override
 	public List<DdcHyxhBase> getAllDDcHyxhBase() {
 		// TODO Auto-generated method stub
 		return iDdcHyxhBaseDao.findAll();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#findDdcDriverTemp(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public boolean findDdcDriverTemp(String vcUserName, String vcUserCard) {
+		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
+				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
+						vcUserName, vcUserCard });
+		if(CollectionUtils.isNotEmpty(ddcDriverTemps)){
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#saveDriverTemp(com.node.model.DdcDriverTemp)
+		 */
+	@Override
+	public void saveDriverTemp(DdcDriverTemp ddcDriverTemp) {
+		// TODO Auto-generated method stub
+		iDdcDriverTempDao.save(ddcDriverTemp);
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#updateDriverTemp(com.node.model.DdcDriverTemp)
+		 */
+	@Override
+	public void updateDriverTemp(DdcDriverTemp ddcDriverTemp) {
+		// TODO Auto-generated method stub
+		iDdcDriverTempDao.update(ddcDriverTemp);
 	}
 
 }

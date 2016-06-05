@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
+import com.node.model.DdcDriverTemp;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.PicPath;
@@ -64,6 +65,41 @@ public class AppAction {
 		return "data/apiIndex";
 	}
 
+	
+	@ApiOperation(value = "支付宝验证后提交过来的身份证信息", notes = "支付宝验证后提交过来的身份证信息", position = 5)
+	@RequestMapping(value = "/saveUserInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> saveUserInfo(
+			@ApiParam(value = "用户姓名", required = true) @RequestParam("vcUserName") String vcUserName,
+			@ApiParam(value = "用户身份证号码", required = true) @RequestParam("vcUserCard") String vcUserCard,
+			@ApiParam(value = "用户手机号") @RequestParam(value="vcTelPhone", required = false) String vcTelPhone,
+			@ApiParam(value = "接口访问TOKEN", required = true) @RequestParam("vcToken") String vcToken) {
+		if(StringUtils.isNotBlank(vcToken) && vcToken.equalsIgnoreCase(SystemConstants.TOKEN_ALIPAY)){
+			boolean isNew=iEbikeService.findDdcDriverTemp(vcUserName,vcUserCard);
+			if(isNew){
+				DdcDriverTemp ddcDriverTemp = new DdcDriverTemp();
+				ddcDriverTemp.setVcTelPhone(vcTelPhone);
+				ddcDriverTemp.setVcUserCard(vcUserCard);
+				ddcDriverTemp.setVcUserName(vcUserName);
+				try {
+					iEbikeService.saveDriverTemp(ddcDriverTemp);
+					return AjaxUtil.getMap(true, "保存成功");
+				} catch (Exception e) {
+					e.printStackTrace();
+					return AjaxUtil.getMap(false, "保存失败"+e.getMessage());
+				}
+			}else {
+				DdcDriverTemp ddcDriverTemp = new DdcDriverTemp();
+				ddcDriverTemp.setVcTelPhone(vcTelPhone);
+				ddcDriverTemp.setVcUserCard(vcUserCard);
+				ddcDriverTemp.setVcUserName(vcUserName);
+				iEbikeService.updateDriverTemp(ddcDriverTemp);
+				return AjaxUtil.getMap(true, "该用户已经存在");
+			}
+		}else {
+			return AjaxUtil.getMap(false, "非法访问");
+		}
+	}
 	/**
 	 * 
 	 * 方法描述：

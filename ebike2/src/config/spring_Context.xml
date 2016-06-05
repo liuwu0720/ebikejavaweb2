@@ -27,7 +27,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.OracleDriver" />
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
+		 <property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
 		<property name="user" value="ebikeout" /> 
 		<property name="password" value="ebikeout" /> 
 		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.2.197:1521:ddcxtdb" />
@@ -35,7 +35,7 @@
 		<property name="password" value="ddcxt2016##" />  -->
 
 		<!-- 指定连接数据库连接池的最大连接数 -->
-		<property name="maxPoolSize" value="600" />
+		<property name="maxPoolSize" value="60" />
 		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
 		<property name="idleConnectionTestPeriod" value="60" />
 		<!-- 指定连接数据库连接池的最小连接数 -->
