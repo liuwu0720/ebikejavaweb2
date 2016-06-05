@@ -238,16 +238,16 @@ public class UserAction {
 				request.setAttribute("ddcHyxhBase", ddcHyxhBase);
 			}
 		} else {
-			DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
+			DdcHyxhSsdw ddcHyxhSsdw1 = (DdcHyxhSsdw) request.getSession()
 					.getAttribute(SystemConstants.SESSION_USER);
-
+			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.getDdcHyxhSsdwById(ddcHyxhSsdw1.getId());
 			if (ddcHyxhSsdw != null) {
 				DdcHyxhSsdw newDdcHyxhSsdw = iCompanyService
 						.queryInfoById(ddcHyxhSsdw.getId());
 				String showImg = parseUrl(newDdcHyxhSsdw.getVcPicPath());
 				newDdcHyxhSsdw.setVcShowPath(showImg);
-				if (ddcHyxhSsdw.getShFlag() == 0) {
-					request.setAttribute("message", "您的帐号还没通过审核，请先完善资料!");
+				if (StringUtils.isEmpty(ddcHyxhSsdw.getVcPicPath())) {
+					request.setAttribute("message", "营业执照还没上传!");
 				}
 				request.setAttribute("ddcHyxhSsdw", newDdcHyxhSsdw);
 			}

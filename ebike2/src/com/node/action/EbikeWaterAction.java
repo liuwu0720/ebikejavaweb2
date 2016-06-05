@@ -202,6 +202,10 @@ public class EbikeWaterAction {
 		String vcUser2CardImg1Show = parseUrl(ddcFlow.getVcUser2CardImg1());
 		String vcUser2CardImg2Show = parseUrl(ddcFlow.getVcUser2CardImg2());
 		String vcEbikeInvoiceImgShow = parseUrl(ddcFlow.getVcEbikeInvoiceImg());
+		String vcUser1WorkImgShow = parseUrl(ddcFlow.getVcUser1WorkImg());
+		String vcUser2WorkImgShow = parseUrl(ddcFlow.getVcUser2WorkImg());
+		String vcQualifiedImgShow = parseUrl(ddcFlow.getVcQualifiedImg());
+		String vcEbikeInsuranceImgShow = parseUrl(ddcFlow.getVcEbikeInsuranceImg());
 		ddcFlow.setVcShowEbikeImg(showEbikeImg);
 		ddcFlow.setVcShowUser1Img(showUser1Img);
 		ddcFlow.setVcShowUser2Img(showUser2Img);
@@ -210,6 +214,10 @@ public class EbikeWaterAction {
 		ddcFlow.setVcUser2CardImg1Show(vcUser2CardImg1Show);
 		ddcFlow.setVcUser2CardImg2Show(vcUser2CardImg2Show);
 		ddcFlow.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
+		ddcFlow.setVcUser1WorkImgShow(vcUser1WorkImgShow);
+		ddcFlow.setVcUser2WorkImgShow(vcUser2WorkImgShow);
+		ddcFlow.setVcQualifiedImgShow(vcQualifiedImgShow);
+		ddcFlow.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
 		request.setAttribute("ddcFlow", ddcFlow);
 		request.setAttribute("slzlDdcSjzds", slzlDdcSjzds);
 		request.setAttribute("tbyyDdcSjzds", tbyyDdcSjzds);

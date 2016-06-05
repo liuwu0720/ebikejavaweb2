@@ -89,11 +89,6 @@ public class AppAction {
 					return AjaxUtil.getMap(false, "保存失败"+e.getMessage());
 				}
 			}else {
-				DdcDriverTemp ddcDriverTemp = new DdcDriverTemp();
-				ddcDriverTemp.setVcTelPhone(vcTelPhone);
-				ddcDriverTemp.setVcUserCard(vcUserCard);
-				ddcDriverTemp.setVcUserName(vcUserName);
-				iEbikeService.updateDriverTemp(ddcDriverTemp);
 				return AjaxUtil.getMap(true, "该用户已经存在");
 			}
 		}else {

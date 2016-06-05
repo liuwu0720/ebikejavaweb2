@@ -169,6 +169,11 @@ public class DataAction {
 			 */
 			WritableSheet ws7 = wwb.createSheet("ddc_hyxh_ssdwclsb", 6);
 			iDataService.createDdcHyxhSsdwClSb(wcfFC, wcfFC2, ws7);
+			/**
+			 * 外网只新增数据
+			 */
+			WritableSheet ws8 = wwb.createSheet("ddc_driver", 7);
+			iDataService.createDdcDriver(wcfFC, wcfFC2, ws8);
 
 			FileRecord fileRecord = new FileRecord();
 			fileRecord.setFilePath(outPath);

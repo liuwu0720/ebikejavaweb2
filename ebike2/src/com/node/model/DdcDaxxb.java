@@ -100,9 +100,7 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String vcEbikeInsuranceImgShow;//投保凭证
 	
 
-	/**
-	 * @return vcUser1WorkImgShow : return the property vcUser1WorkImgShow.
-	 */
+	@Transient
 	public String getVcUser1WorkImgShow() {
 		return vcUser1WorkImgShow;
 	}
@@ -114,9 +112,7 @@ public class DdcDaxxb implements java.io.Serializable {
 		this.vcUser1WorkImgShow = vcUser1WorkImgShow;
 	}
 
-	/**
-	 * @return vcUser2WorkImgShow : return the property vcUser2WorkImgShow.
-	 */
+	@Transient
 	public String getVcUser2WorkImgShow() {
 		return vcUser2WorkImgShow;
 	}
@@ -128,9 +124,7 @@ public class DdcDaxxb implements java.io.Serializable {
 		this.vcUser2WorkImgShow = vcUser2WorkImgShow;
 	}
 
-	/**
-	 * @return vcQualifiedImgShow : return the property vcQualifiedImgShow.
-	 */
+	@Transient
 	public String getVcQualifiedImgShow() {
 		return vcQualifiedImgShow;
 	}
@@ -142,9 +136,7 @@ public class DdcDaxxb implements java.io.Serializable {
 		this.vcQualifiedImgShow = vcQualifiedImgShow;
 	}
 
-	/**
-	 * @return vcEbikeInsuranceImgShow : return the property vcEbikeInsuranceImgShow.
-	 */
+	@Transient
 	public String getVcEbikeInsuranceImgShow() {
 		return vcEbikeInsuranceImgShow;
 	}

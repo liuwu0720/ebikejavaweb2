@@ -97,7 +97,7 @@ function exportPage() {
 					<td>无</td>
 					</c:if>
 					<th>行驶区域</th>
-					<td>${ddcDaxxb.xsqyName }</td>
+					<td>全市范围(${ddcDaxxb.xsqyName }交警大队备案)</td>
 					<th>车身颜色</th>
     				<td>${ddcDaxxb.cysyName }</td>
 				</tr>

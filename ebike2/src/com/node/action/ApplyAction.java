@@ -817,6 +817,10 @@ public class ApplyAction {
 				.getVcUser2CardImg2());
 		String vcEbikeInvoiceImgShow = parseUrl(ddcHyxhSsdwclsb
 				.getVcEbikeInvoiceImg());
+		String vcUser1WorkImgShow = parseUrl(ddcHyxhSsdwclsb.getVcUser1WorkImg());
+		String vcUser2WorkImgShow = parseUrl(ddcHyxhSsdwclsb.getVcUser2WorkImg());
+		String vcQualifiedImgShow = parseUrl(ddcHyxhSsdwclsb.getVcQualifiedImg());
+		String vcEbikeInsuranceImgShow = parseUrl(ddcHyxhSsdwclsb.getVcEbikeInsuranceImg());
 		ddcHyxhSsdwclsb.setVcShowEbikeImg(showEbikeImg);
 		ddcHyxhSsdwclsb.setVcShowUser1Img(showUser1Img);
 		ddcHyxhSsdwclsb.setVcShowUser2Img(showUser2Img);
@@ -825,6 +829,10 @@ public class ApplyAction {
 		ddcHyxhSsdwclsb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
 		ddcHyxhSsdwclsb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
 		ddcHyxhSsdwclsb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
+		ddcHyxhSsdwclsb.setVcUser1WorkImgShow(vcUser1WorkImgShow);
+		ddcHyxhSsdwclsb.setVcUser2WorkImgShow(vcUser2WorkImgShow);
+		ddcHyxhSsdwclsb.setVcQualifiedImgShow(vcQualifiedImgShow);
+		ddcHyxhSsdwclsb.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
 		String approveTableName = SystemConstants.RECORDSBTABLE;
 		List<DdcApproveUser> approveUsers = iApplyService
 				.findApproveUsersByProperties(approveTableName,
@@ -899,6 +907,10 @@ public class ApplyAction {
 				.getVcUser2CardImg2());
 		String vcEbikeInvoiceImgShow = parseUrl(ddcHyxhSsdwclsb
 				.getVcEbikeInvoiceImg());
+		String vcUser1WorkImgShow = parseUrl(ddcHyxhSsdwclsb.getVcUser1WorkImg());
+		String vcUser2WorkImgShow = parseUrl(ddcHyxhSsdwclsb.getVcUser2WorkImg());
+		String vcQualifiedImgShow = parseUrl(ddcHyxhSsdwclsb.getVcQualifiedImg());
+		String vcEbikeInsuranceImgShow = parseUrl(ddcHyxhSsdwclsb.getVcEbikeInsuranceImg());
 		ddcHyxhSsdwclsb.setVcShowEbikeImg(showEbikeImg);
 		ddcHyxhSsdwclsb.setVcShowUser1Img(showUser1Img);
 		ddcHyxhSsdwclsb.setVcShowUser2Img(showUser2Img);
@@ -907,6 +919,10 @@ public class ApplyAction {
 		ddcHyxhSsdwclsb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
 		ddcHyxhSsdwclsb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
 		ddcHyxhSsdwclsb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
+		ddcHyxhSsdwclsb.setVcUser1WorkImgShow(vcUser1WorkImgShow);
+		ddcHyxhSsdwclsb.setVcUser2WorkImgShow(vcUser2WorkImgShow);
+		ddcHyxhSsdwclsb.setVcQualifiedImgShow(vcQualifiedImgShow);
+		ddcHyxhSsdwclsb.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
 		String approveTableName = SystemConstants.RECORDSBTABLE;
 		List<DdcApproveUser> approveUsers = iApplyService
 				.findApproveUsersByProperties(approveTableName,

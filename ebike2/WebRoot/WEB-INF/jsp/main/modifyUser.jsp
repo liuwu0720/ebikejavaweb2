@@ -214,6 +214,7 @@
 			<input  type="hidden" name="hyxhzh" value="${ddcHyxhSsdw.hyxhzh }"></input>
 			<input  type="hidden" name="vcPicPath" value="${ddcHyxhSsdw.vcPicPath }"></input>
 			<input  type="hidden" name="totalPe" value="${ddcHyxhSsdw.totalPe }"></input>
+			<input  type="hidden" name="dwpe" value="${ddcHyxhSsdw.dwpe }"></input>
 			<div class="table-btndiv">
 				<button type="button" onclick="updateModify2()">修改</button>
 				<button type="button" onclick="backHome()">返回</button>

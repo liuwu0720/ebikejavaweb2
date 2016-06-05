@@ -11,6 +11,8 @@ import java.io.InputStream;
 
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 import com.node.model.FileRecord;
 
@@ -137,4 +139,19 @@ public interface IDataService {
 	 * @version: 2016年4月21日 下午4:52:28
 	 */
 	String updateReadExcel(InputStream inputStream);
+
+	
+	/**
+	  * 方法描述：
+	  * @param wcfFC
+	  * @param wcfFC2
+	  * @param ws7 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月5日 下午5:23:00
+	 * @throws WriteException 
+	 * @throws RowsExceededException 
+	  */
+	void createDdcDriver(WritableCellFormat wcfFC, WritableCellFormat wcfFC2,
+			WritableSheet ws7) throws RowsExceededException, WriteException;
 }

@@ -61,8 +61,7 @@ function CheckFileSize(obj){
 			$('#dgform').form('submit', {
 					url : "<%=basePath%>ssdwAction/saveOrUpdateBaClSb",
 					onSubmit : function() {
-						var isValid = $("#dgform").form('enableValidation').form(
-								'validate');
+						var isValid = $("#dgform").form('enableValidation').form('validate');
 
 						if (!isValid) {
 							$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
@@ -93,7 +92,7 @@ function CheckFileSize(obj){
 
 <body>
 	<div class="maindiv">
-		<form  id="dgform" class="easyui-form" enctype="multipart/form-data"
+		<form id="dgform" class="easyui-form" enctype="multipart/form-data"
 			method="post">
 			<h2>修改车辆备案申报</h2>
 			<!--startprint-->
@@ -103,11 +102,11 @@ function CheckFileSize(obj){
 				<tr>
 					<th>品牌型号</th>
 					<td><input id="ppxh" class="easyui-validatebox" type="text"
-						value="${ddcHyxhSsdwclsb.ppxh }" data-options="required:true"
+						value="${ddcHyxhSsdwclsb.ppxh }" 
 						name="ppxh"></td>
 					<th>电机号</th>
 					<td><input id="ppxh" class="easyui-validatebox" type="text"
-						value="${ddcHyxhSsdwclsb.djh }" data-options="required:true"
+						value="${ddcHyxhSsdwclsb.djh }" 
 						name="djh"></td>
 					<th>车身颜色</th>
 					<td><input id="cysy" style="height: 32px;" name="cysy">
@@ -168,48 +167,45 @@ function CheckFileSize(obj){
 					</select></td>
 					<th>身份证号码2</th>
 					<td><input class="easyui-validatebox" type="text"
-						value="${ddcHyxhSsdwclsb.sfzmhm2 }" data-options="validType:'idcard'"
-						name="sfzmhm2"></input></td>
+						value="${ddcHyxhSsdwclsb.sfzmhm2 }"
+						data-options="validType:'idcard'" name="sfzmhm2"></input></td>
 					<th>联系电话2</th>
 					<td><input class="easyui-validatebox" type="text"
-						value="${ddcHyxhSsdwclsb.lxdh2 }" data-options="validType:'phoneNum'"
-						name="lxdh2" style="height: 32px"></td>
+						value="${ddcHyxhSsdwclsb.lxdh2 }"
+						data-options="validType:'phoneNum'" name="lxdh2"
+						style="height: 32px"></td>
 				</tr>
 
 				<tr>
 					<th>申请备注</th>
-					<td colspan="7">
-					<textarea rows="5" cols="22" name="bz" >${ddcHyxhSsdwclsb.bz }</textarea>
+					<td colspan="7"><textarea rows="5" cols="22" name="bz">${ddcHyxhSsdwclsb.bz }</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="file" id="headimg_jsr1"
-						name="headimg_jsr1" onchange="CheckFileSize(this);"
-						 /></td>
-					<td colspan="2"><input type="file" id="headimg_jsr2"
-						name="headimg_jsr2" onchange="CheckFileSize(this);"
-						 /></td>
-					<td colspan="2"><input id="ebike_img" type="file"
-						name="ebike_img" onchange="CheckFileSize(this);"
-						 /></td>
-					<td colspan="2"><input id="ebike_img" type="file"
-						name="ebike_invoice_img" onchange="CheckFileSize(this);"
-						/></td>		
+					<td colspan="2"><input type="file" name=vcQualifiedImgfile
+						onchange="CheckFileSize(this);" /></td>
+					<td colspan="2"><input type="file" name="vcEbikeInsuranceImgfile"
+						onchange="CheckFileSize(this);" /></td>
+					<td colspan="2"><input type="file" name="ebike_img"
+						onchange="CheckFileSize(this);" /></td>
+					<td colspan="2"><input type="file" name="ebike_invoice_img"
+						onchange="CheckFileSize(this);" /></td> 
 				</tr>
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
-							<p>驾驶人1照片</p>
-							<a href="${ddcHyxhSsdwclsb.vcShowUser1Img }" target="_blank"> <img
-								src="${ddcHyxhSsdwclsb.vcShowUser1Img }" />
+							<p>车辆合格证</p>
+							<a href="${ddcHyxhSsdwclsb.vcQualifiedImgShow }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcQualifiedImgShow }" />
 							</a>
 						</div>
 					</td>
 					<td colspan="2">
 						<div class="imgdiv">
-							<p>驾驶人2照片</p>
-							<a href="${ddcHyxhSsdwclsb.vcShowUser2Img }" target="_blank"> <img
-								src="${ddcHyxhSsdwclsb.vcShowUser2Img }" />
+							<p>投保凭证</p>
+							<a href="${ddcHyxhSsdwclsb.vcEbikeInsuranceImgShow }"
+								target="_blank"> <img
+								src="${ddcHyxhSsdwclsb.vcEbikeInsuranceImgShow }" />
 							</a>
 						</div>
 					</td>
@@ -220,8 +216,8 @@ function CheckFileSize(obj){
 								<img src="${ddcHyxhSsdwclsb.vcShowEbikeImg }" />
 							</div>
 					</a></td>
-					<td colspan="2"><a href="${ddcHyxhSsdwclsb.vcEbikeInvoiceImgShow }"
-						target="_blank">
+					<td colspan="2"><a
+						href="${ddcHyxhSsdwclsb.vcEbikeInvoiceImgShow }" target="_blank">
 							<div class="imgdiv">
 								<p>购车发票</p>
 								<img src="${ddcHyxhSsdwclsb.vcEbikeInvoiceImgShow }" />
@@ -229,54 +225,100 @@ function CheckFileSize(obj){
 					</a></td>
 				</tr>
 				<tr>
+					<td colspan="2"><input type="file" name="headimg_jsr1"
+						onchange="CheckFileSize(this);" /></td>
+					<td colspan="2"><input type="file" name="card1img_jsr1"
+						onchange="CheckFileSize(this);" /></td>
 
-					<td colspan="2"><input type="file" id="card1img_jsr1"
-						name="card1img_jsr1" onchange="CheckFileSize(this);" /></td>
+					<td colspan="2"><input type="file" name="card2img_jsr1"
+						onchange="CheckFileSize(this);" /></td>
 
-					<td colspan="2"><input type="file" id="card2img_jsr1"
-						name="card2img_jsr1" onchange="CheckFileSize(this);"/></td>
-
-					<td colspan="2"><input id="card1img_jsr2" type="file"
-						name="card1img_jsr2" onchange="CheckFileSize(this);"/></td>
-
-					<td colspan="2"><input id="card2img_jsr2" type="file"
-						name="card2img_jsr2" onchange="CheckFileSize(this);"/></td>
+					 <td colspan="2"><input type="file" name="vcUser1WorkImgfile"
+						onchange="CheckFileSize(this);" /></td> 
 
 				</tr>
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
+							<p>驾驶人1头像</p>
+							<a href="${ddcHyxhSsdwclsb.vcShowUser1Img }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcShowUser1Img }" />
+							</a>
+						</div>
+					</td>
+					<td colspan="2">
+						<div class="imgdiv">
 							<p>驾驶人1身份证正面</p>
-							<a href="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }" target="_blank"> <img
-								src="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }" />
+							<a href="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcUser1CardImg1Show }" />
 							</a>
 						</div>
 					</td>
 					<td colspan="2">
 						<div class="imgdiv">
 							<p>驾驶人1身份证反面</p>
-							<a href="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }" target="_blank"> <img
-								src="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }" />
+							<a href="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcUser1CardImg2Show }" />
+							</a>
+						</div>
+					</td>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人1居住证或在职证明</p>
+							<a href="${ddcHyxhSsdwclsb.vcUser1WorkImgShow }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcUser1WorkImgShow }" />
+							</a>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2"><input type="file" name="headimg_jsr2"
+						onchange="CheckFileSize(this);" /></td>
+					<td colspan="2"><input type="file" name="card1img_jsr2"
+						onchange="CheckFileSize(this);" /></td>
+
+					<td colspan="2"><input type="file" name="card2img_jsr2"
+						onchange="CheckFileSize(this);" /></td>
+
+				 	<td colspan="2"><input type="file" name="vcUser2WorkImgfile"
+						onchange="CheckFileSize(this);" /></td> 
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人2头像</p>
+							<a href="${ddcHyxhSsdwclsb.vcShowUser2Img }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcShowUser2Img }" />
 							</a>
 						</div>
 					</td>
 					<td colspan="2">
 						<div class="imgdiv">
 							<p>驾驶人2身份证正面</p>
-							<a href="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }" target="_blank"> <img
-								src="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }" />
+							<a href="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcUser2CardImg1Show }" />
 							</a>
 						</div>
 					</td>
 					<td colspan="2">
 						<div class="imgdiv">
 							<p>驾驶人2身份证反面</p>
-							<a href="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }" target="_blank"> <img
-								src="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }" />
+							<a href="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcUser2CardImg2Show }" />
+							</a>
+						</div>
+					</td>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人2在职证明或居住证</p>
+							<a href="${ddcHyxhSsdwclsb.vcUser2WorkImgShow }" target="_blank">
+								<img src="${ddcHyxhSsdwclsb.vcUser2WorkImgShow }" />
 							</a>
 						</div>
 					</td>
 				</tr>
+
 				<tr>
 					<td colspan="8" height="35" style="text-align:center;"><input
 						type="button" value="修改 " class="btn" id="bgbtn"
@@ -285,22 +327,27 @@ function CheckFileSize(obj){
 						onclick="javascript:window.history.back();"></td>
 				</tr>
 			</table>
-			<input type="hidden" value="${ddcHyxhSsdwclsb.id }" name="id"> <input
-				type="hidden" name="slzllist" id="slzllist"> <input
-				type="hidden" value="${ddcHyxhSsdwclsb.vcEbikeImg }" name="vcEbikeImg">
-			<input type="hidden" value="${ddcHyxhSsdwclsb.vcUser1Img }"
-				name="vcUser1Img"> <input type="hidden"
-				value="${ddcHyxhSsdwclsb.vcUser2Img }" name="vcUser2Img"> <input
-				type="hidden" value="${ddcHyxhSsdwclsb.vcUser1CardImg1 }"
-				name="vcUser1CardImg1"> <input type="hidden"
-				value="${ddcHyxhSsdwclsb.vcUser1CardImg2 }" name="vcUser1CardImg2">
-			<input type="hidden" value="${ddcHyxhSsdwclsb.vcUser2CardImg1 }"
-				name="vcUser2CardImg1"> <input type="hidden"
-				value="${ddcHyxhSsdwclsb.vcUser2CardImg2 }" name="vcUser2CardImg2">
-			<input type="hidden"
-				value="${ddcHyxhSsdwclsb.vcEbikeInvoiceImg }" name="vcEbikeInvoiceImg">
-			<input type="hidden"
+			<input type="hidden" value="${ddcHyxhSsdwclsb.id }" name="id">
+			<input type="hidden" name="slzllist" id="slzllist"> <input
+				type="hidden" value="${ddcHyxhSsdwclsb.vcEbikeImg }"
+				name="vcEbikeImg"> <input type="hidden"
+				value="${ddcHyxhSsdwclsb.vcUser1Img }" name="vcUser1Img"> <input
+				type="hidden" value="${ddcHyxhSsdwclsb.vcUser2Img }"
+				name="vcUser2Img"> <input type="hidden"
+				value="${ddcHyxhSsdwclsb.vcUser1CardImg1 }" name="vcUser1CardImg1">
+			<input type="hidden" value="${ddcHyxhSsdwclsb.vcUser1CardImg2 }"
+				name="vcUser1CardImg2"> <input type="hidden"
+				value="${ddcHyxhSsdwclsb.vcUser2CardImg1 }" name="vcUser2CardImg1">
+			<input type="hidden" value="${ddcHyxhSsdwclsb.vcUser2CardImg2 }"
+				name="vcUser2CardImg2"> <input type="hidden"
+				value="${ddcHyxhSsdwclsb.vcEbikeInvoiceImg }"
+				name="vcEbikeInvoiceImg"> <input type="hidden"
 				value="${ddcHyxhSsdwclsb.lsh }" name="lsh">
+			<input  type="hidden" name="vcUser1WorkImg" value="${ddcHyxhSsdwclsb.vcUser1WorkImg }">
+			<input  type="hidden" name="vcUser2WorkImg"  value="${ddcHyxhSsdwclsb.vcUser2WorkImg }">
+			<input  type="hidden" name="vcQualifiedImg"  value="${ddcHyxhSsdwclsb.vcQualifiedImg }">
+			<input  type="hidden" name="vcEbikeInsuranceImg"  value="${ddcHyxhSsdwclsb.vcEbikeInsuranceImg }">	
+				
 		</form>
 	</div>
 

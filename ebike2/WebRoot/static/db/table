@@ -2312,12 +2312,19 @@ ALTER TABLE DDC_FLOW ADD VC_USER1WORKIMG VARCHAR2(100);
  comment on column DDC_DRIVER.VC_USERWORKIMG  is '居住证或在职证明';
  ALTER TABLE DDC_DRIVER ADD USER_STATUS NUMBER default 0;
  comment on column DDC_DRIVER.USER_STATUS  is '驾驶人状态0未认证 1实名认证 2星级用户';
- ALTER TABLE DDC_DRIVER ADD USER_ILLEAGE NUMBER default 0;
-  comment on column DDC_DRIVER.USER_ILLEAGE  is '驾驶人违法次数'; 
+ ALTER TABLE DDC_DRIVER ADD ILLEAGE_TIMES NUMBER default 0;
+  comment on column DDC_DRIVER.ILLEAGE_TIMES  is '驾驶人违法次数'; 
  ALTER TABLE DDC_DRIVER ADD USER_NOTE NUMBER default 0;
   comment on column DDC_DRIVER.USER_NOTE  is '驾驶人违法备注';  
  
  
+-- Create sequence 
+create sequence SEQ_DDC_DRIVER
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20;
  
  
  

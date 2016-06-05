@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcApprovalUserDao;
 import com.node.dao.IDdcDaxxbDao;
+import com.node.dao.IDdcDriverTempDao;
 import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHmdDao;
 import com.node.dao.IDdcHyxhBasbDao;
@@ -26,6 +28,7 @@ import com.node.dao.IDdcHyxhSsdwclsbLogDao;
 import com.node.dao.IDdcSjzdDao;
 import com.node.model.DdcApproveUser;
 import com.node.model.DdcDaxxb;
+import com.node.model.DdcDriverTemp;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHmd;
 import com.node.model.DdcHyxhBasb;
@@ -75,6 +78,8 @@ public class ApplyServiceImp implements IApplyService {
 
 	@Autowired
 	IDdcDaxxbDao iDdcDaxxbDao;
+	@Autowired
+	IDdcDriverTempDao iDdcDriverTempDao;
 
 	/*
 	 * (non-Javadoc)
@@ -186,8 +191,8 @@ public class ApplyServiceImp implements IApplyService {
 	 */
 	@Override
 	public String findHmd(String man1, String man2) {
-		List<DdcHmd> ddcHmds1 = iDdcHmdDao.findByProperty("sfzhm", man1);
-		List<DdcHmd> ddcHmds2 = iDdcHmdDao.findByProperty("sfzhm", man2);
+		List<DdcHmd> ddcHmds1 = iDdcHmdDao.findByProperty("jsrxm", man1);
+		List<DdcHmd> ddcHmds2 = iDdcHmdDao.findByProperty("jsrxm", man2);
 		if (ddcHmds1 != null && ddcHmds1.size() > 0) {
 			return "身份证【" + man1 + "】在黑名单里，不能申报";
 		} else if (ddcHmds2 != null && ddcHmds2.size() > 0) {
@@ -379,5 +384,37 @@ public class ApplyServiceImp implements IApplyService {
 		// TODO Auto-generated method stub
 		return iDdcApprovalUserDao.findByPropertyOrderBy("lsh", lsh,
 				"approveTime");
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IApplyService#findIsValid(com.node.model.DdcHyxhSsdwclsb)
+		 */
+	@Override
+	public String findIsValid(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
+		String message = "success";
+		List<DdcDriverTemp> ddcDriverTemps1 = iDdcDriverTempDao.findByPropertys(new String[]{
+			"vcUserName","vcUserCard"	
+		}, new Object[]{
+			 ddcHyxhSsdwclsb.getJsrxm1(),ddcHyxhSsdwclsb.getSfzmhm1()	
+		});
+		
+	
+		if(CollectionUtils.isEmpty(ddcDriverTemps1)){
+			message = "驾驶人1姓名【"+ ddcHyxhSsdwclsb.getJsrxm1()+"】和身份证号码【"+ddcHyxhSsdwclsb.getSfzmhm1()+"】未通过实名验证";
+		}
+		if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())){
+			List<DdcDriverTemp> ddcDriverTemps2 = iDdcDriverTempDao.findByPropertys(new String[]{
+					"vcUserName","vcUserCard"	
+				}, new Object[]{
+					 ddcHyxhSsdwclsb.getJsrxm2(),ddcHyxhSsdwclsb.getSfzmhm2()	
+				});
+			if(CollectionUtils.isEmpty(ddcDriverTemps2)){
+				message = "驾驶人2姓名【"+ ddcHyxhSsdwclsb.getJsrxm2()+"】和身份证号码【"+ddcHyxhSsdwclsb.getSfzmhm2()+"】未通过实名验证";
+			}
+		}
+		
+		
+		return message;
 	}
 }

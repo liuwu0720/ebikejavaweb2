@@ -33,6 +33,7 @@ import com.node.model.DdcHyxhSsdw;
 import com.node.service.IEbikeService;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
+import com.node.util.SystemConstants;
 
 /**
  * 类描述：
@@ -311,6 +312,45 @@ public class EbikeServiceImp implements IEbikeService {
 	public void updateDriverTemp(DdcDriverTemp ddcDriverTemp) {
 		// TODO Auto-generated method stub
 		iDdcDriverTempDao.update(ddcDriverTemp);
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#saveDdcDriver(com.node.model.DdcDriver)
+		 */
+	@Override
+	public void saveDdcDriver(DdcDriver ddcDriver2) {
+		List<DdcDriver> oldDdcDrivers = iDdcDriverDao.findByPropertys(new String[]{
+			"jsrxm","sfzhm"	
+		}, new Object[]{
+			ddcDriver2.getJsrxm(),ddcDriver2.getSfzhm()	
+		});
+		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(new String[]{
+				"vcUserName","vcUserCard"	
+			}, new Object[]{
+				ddcDriver2.getJsrxm(),ddcDriver2.getSfzhm()	
+			});
+		if(CollectionUtils.isNotEmpty(ddcDriverTemps)){
+			ddcDriver2.setUserStatus(1);//驾驶人状态0未认证 1实名认证 2星级用户
+		}else {
+			ddcDriver2.setUserStatus(0);
+		}
+		if(CollectionUtils.isNotEmpty(oldDdcDrivers)){
+			ddcDriver2.setId(oldDdcDrivers.get(0).getId());
+			ddcDriver2.setDaid(oldDdcDrivers.get(0).getDaid());
+			ddcDriver2.setDabh(oldDdcDrivers.get(0).getDabh());
+			ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+			ddcDriver2.setUserPassword(oldDdcDrivers.get(0).getUserPassword());
+			ddcDriver2.setIlleagalTimes(oldDdcDrivers.get(0).getIlleagalTimes());
+			ddcDriver2.setUserStatus(oldDdcDrivers.get(0).getUserStatus());
+			/*ddcDriver2.setVcUserImg(oldDdcDrivers.get(0).getVcUserImg());
+			ddcDriver2.setVcUserWorkImg(oldDdcDrivers.get(0).getVcUserWorkImg());*/
+			iDdcDriverDao.updateCleanBefore(ddcDriver2);
+		}else {
+		
+			iDdcDriverDao.save(ddcDriver2);
+		}
+		
 	}
 
 }

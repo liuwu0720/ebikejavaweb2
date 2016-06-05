@@ -127,7 +127,7 @@ function change(){
 					<td>无</td>
 					</c:if>
 					<th>行驶区域</th>
-					<td>${ddcFlow.xsqyName }</td>
+					<td>全市范围(${ddcFlow.xsqyName }交警大队备案)</td>
 					<th>车身颜色</th>
     				<td>${ddcFlow.cysyName }</td>
 				</tr>
@@ -207,21 +207,8 @@ function change(){
     				</td>
     			</tr>
     			</c:if>
-				<tr>
-					<td colspan="2">
-					<div class="imgdiv"> 
-					<p>驾驶人1照片</p>
-					<a href="${ddcFlow.vcShowUser1Img }" target="_blank">
-					<img src="${ddcFlow.vcShowUser1Img }"/>
-					</a></div>
-					</td>
-					<td colspan="2">
-					<div  class="imgdiv">
-					<p>驾驶人2照片</p>
-					<a href="${ddcFlow.vcShowUser2Img }" target="_blank">
-					<img src="${ddcFlow.vcShowUser2Img }"/>
-					</a>
-					</div</td>
+    			
+    			<tr>
 					<td colspan="2">
 					<a href="${ddcFlow.vcShowEbikeImg }" target="_blank">
 					<div  class="imgdiv">
@@ -234,9 +221,32 @@ function change(){
 					<p>购车发票</p>
 					<img   src="${ddcFlow.vcEbikeInvoiceImgShow }"/>
 					</div></a></td>
+						<td colspan="2">
+					<div class="imgdiv"> 
+					<p>车辆合格证照片</p>
+					<a href="${ddcFlow.vcQualifiedImgShow }" target="_blank">
+					<img src="${ddcFlow.vcQualifiedImgShow }"/>
+					</a></div>
+					</td>
+					<td colspan="2">
+					<div  class="imgdiv">
+					<p>投保凭证照片</p>
+					<a href="${ddcFlow.vcEbikeInsuranceImgShow }" target="_blank">
+					<img src="${ddcFlow.vcEbikeInsuranceImgShow }"/>
+					</a>
+					</div</td>
 				</tr>
-			<tr>
-				<td colspan="2">
+    			
+    			
+				<tr>
+					<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人1照片</p>
+					<a href="${ddcFlow.vcShowUser1Img }" target="_blank">
+					<img src="${ddcFlow.vcShowUser1Img }"/>
+					</a></div>
+					</td>
+					<td colspan="2">
 					<div class="imgdiv"> 
 					<p>驾驶人1身份证正面</p>
 					<a href="${ddcFlow.vcUser1CardImg1Show }" target="_blank">
@@ -252,6 +262,22 @@ function change(){
 				</td>
 				<td colspan="2">
 					<div class="imgdiv"> 
+					<p>驾驶人1在职证明或居住证</p>
+					<a href="${ddcFlow.vcUser1WorkImgShow }" target="_blank">
+					<img  src="${ddcFlow.vcUser1WorkImgShow }"/>
+					</a></div>
+				</td>
+				</tr>
+			<tr>
+					<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2照片</p>
+					<a href="${ddcFlow.vcShowUser2Img }" target="_blank">
+					<img src="${ddcFlow.vcShowUser2Img }"/>
+					</a></div>
+					</td>
+					<td colspan="2">
+					<div class="imgdiv"> 
 					<p>驾驶人2身份证正面</p>
 					<a href="${ddcFlow.vcUser2CardImg1Show }" target="_blank">
 					<img   src="${ddcFlow.vcUser2CardImg1Show }"/>
@@ -262,6 +288,13 @@ function change(){
 					<p>驾驶人2身份证反面</p>
 					<a href="${ddcFlow.vcUser2CardImg2Show }" target="_blank">
 					<img  src="${ddcFlow.vcUser2CardImg2Show }"/>
+					</a></div>
+				</td>
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2在职证明或居住证</p>
+					<a href="${ddcFlow.vcUser2WorkImgShow }" target="_blank">
+					<img  src="${ddcFlow.vcUser2WorkImgShow }"/>
 					</a></div>
 				</td>
 			</tr>	

@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,7 +84,7 @@ public class MainAction {
 				.equals(SystemConstants.CLASS_NAME_DDC_HYXHSSDW)) {
 			DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 					.getAttribute(SystemConstants.SESSION_USER);
-			if (ddcHyxhSsdw.getShFlag() == 0) {
+			if (StringUtils.isEmpty(ddcHyxhSsdw.getVcPicPath())) {
 				return "redirect:/userAction/modifyPassword";
 			}
 

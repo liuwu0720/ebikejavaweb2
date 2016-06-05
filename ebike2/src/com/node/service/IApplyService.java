@@ -252,4 +252,15 @@ public interface IApplyService {
 	 */
 	List<DdcApproveUser> findApproveUsersByLsh(String lsh);
 
+	
+	/**
+	  * 方法描述：
+	  * @param ddcHyxhSsdwclsb
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月5日 下午4:51:12
+	  */
+	String findIsValid(DdcHyxhSsdwclsb ddcHyxhSsdwclsb);
+
 }

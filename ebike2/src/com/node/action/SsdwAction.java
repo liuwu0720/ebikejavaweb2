@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcApproveUser;
+import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
@@ -167,15 +168,11 @@ public class SsdwAction {
 			@RequestParam(value = "card1img_jsr2", required = false) MultipartFile card1img_jsr2,
 			@RequestParam(value = "card2img_jsr2", required = false) MultipartFile card2img_jsr2,
 			@RequestParam(value = "ebike_invoice_img", required = false) MultipartFile ebike_invoice_img,
+			@RequestParam(value = "vcUser1WorkImgfile", required = false) MultipartFile vcUser1WorkImgfile,
+			@RequestParam(value = "vcUser2WorkImgfile", required = false) MultipartFile vcUser2WorkImgfile,
+			@RequestParam(value = "vcQualifiedImgfile", required = false) MultipartFile vcQualifiedImgfile,
+			@RequestParam(value = "vcEbikeInsuranceImgfile", required = false) MultipartFile vcEbikeInsuranceImgfile,
 			HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("headimg_jsr1 = " + headimg_jsr1);
-		System.out.println("headimg_jsr2 = " + headimg_jsr2);
-		System.out.println("ebike_img = " + ebike_img);
-		System.out.println("card1img_jsr1 = " + card1img_jsr1);
-		System.out.println("card2img_jsr1 = " + card2img_jsr1);
-		System.out.println("card1img_jsr2 = " + card1img_jsr2);
-		System.out.println("card2img_jsr2 = " + card2img_jsr2);
-		System.out.println("ebike_invoice_img = " + ebike_invoice_img);
 		/**
 		 * 检查黑名单
 		 */
@@ -185,6 +182,12 @@ public class SsdwAction {
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
+		message = iApplyService.findIsValid(ddcHyxhSsdwclsb);//是否通过支付宝验证
+		if (!message.equals("success")) {
+			AjaxUtil.rendJson(response, false, message);
+			return;
+		}
+		
 		/**
 		 * 新增时检查单位配额
 		 */
@@ -279,7 +282,39 @@ public class SsdwAction {
 				ddcHyxhSsdwclsb.setVcEbikeInvoiceImg(ddcHyxhSsdwclsb
 						.getVcEbikeInvoiceImg());
 			}
-
+			String vcUser1WorkImg_path = uploadImg(request, vcUser1WorkImgfile,
+					SystemConstants.IMG_INVOICE_WIDTH,
+					SystemConstants.IMG_INVOICE_HEIGHT);// 驾驶人1 在职证明或居住证
+			if(StringUtils.isNotBlank(vcUser1WorkImg_path)){
+				ddcHyxhSsdwclsb.setVcUser1WorkImg(vcUser1WorkImg_path);
+			}else {
+				ddcHyxhSsdwclsb.setVcUser1WorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
+			}
+			String vcUser2WorkImg_path = uploadImg(request, vcUser2WorkImgfile,
+					SystemConstants.IMG_INVOICE_WIDTH,
+					SystemConstants.IMG_INVOICE_HEIGHT);// 驾驶人2 在职证明或居住证
+			if(StringUtils.isNotBlank(vcUser2WorkImg_path)){
+				ddcHyxhSsdwclsb.setVcUser2WorkImg(vcUser2WorkImg_path);
+			}else {
+				ddcHyxhSsdwclsb.setVcUser2WorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
+			}
+			String vcQualifiedImg_path=uploadImg(request, vcQualifiedImgfile,
+					SystemConstants.IMG_INVOICE_WIDTH,
+					SystemConstants.IMG_INVOICE_HEIGHT);// 车辆合格证
+			if(StringUtils.isNotBlank(vcQualifiedImg_path)){
+				ddcHyxhSsdwclsb.setVcQualifiedImg(vcQualifiedImg_path);
+			}else {
+				ddcHyxhSsdwclsb.setVcQualifiedImg(ddcHyxhSsdwclsb.getVcQualifiedImg());
+			}
+			String vcEbikeInsuranceImg_path =uploadImg(request, vcEbikeInsuranceImgfile,
+					SystemConstants.IMG_INVOICE_WIDTH,
+					SystemConstants.IMG_INVOICE_HEIGHT);// 投保凭证
+			if(StringUtils.isNotBlank(vcEbikeInsuranceImg_path)){
+				ddcHyxhSsdwclsb.setVcEbikeInsuranceImg(vcEbikeInsuranceImg_path);
+			}else {
+				ddcHyxhSsdwclsb.setVcEbikeInsuranceImg(ddcHyxhSsdwclsb.getVcEbikeInsuranceImg());
+			}
+			
 			if (ddcHyxhSsdwclsb.getId() == null) {
 				// 生成流水号
 				String sql = "select SEQ_HYXH_SSDWCLSB_XH.nextval from dual";
@@ -287,10 +322,10 @@ public class SsdwAction {
 				String seq = object.toString();
 				String md = new SimpleDateFormat("yyMMdd").format(new Date());
 				ddcHyxhSsdwclsb.setLsh("A" + md + seq);
-
+				saveHasValidDriver(ddcHyxhSsdwclsb);
 				iApplyService.saveDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			} else {
-
+				saveHasValidDriver(ddcHyxhSsdwclsb);	
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
 			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
@@ -305,6 +340,43 @@ public class SsdwAction {
 
 	
 
+	
+	/**
+	  * 方法描述：
+	  * @param ddcHyxhSsdwclsb 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月5日 下午3:18:02
+	  */
+	private void saveHasValidDriver(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
+		// TODO Auto-generated method stub
+		DdcDriver ddcDriver1 = new DdcDriver();
+		ddcDriver1.setJsrxm(ddcHyxhSsdwclsb.getJsrxm1());
+		ddcDriver1.setLxdh(ddcHyxhSsdwclsb.getLxdh1());
+		ddcDriver1.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm1());
+		ddcDriver1.setUserCode(ddcHyxhSsdwclsb.getLxdh1());
+		ddcDriver1.setUserPassword("123456");
+		ddcDriver1.setVcUserImg(ddcHyxhSsdwclsb.getVcUser1Img());
+		ddcDriver1.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
+		if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())){
+			DdcDriver ddcDriver2 = new DdcDriver();
+			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
+			ddcDriver2.setLxdh(ddcHyxhSsdwclsb.getLxdh2());
+			ddcDriver2.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm2());
+			ddcDriver2.setUserCode(ddcHyxhSsdwclsb.getLxdh2());
+			ddcDriver2.setUserPassword("123456");
+			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2Img())){
+				ddcDriver2.setVcUserImg(ddcHyxhSsdwclsb.getVcUser2Img());
+			}
+			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())){
+				ddcDriver2.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
+			}
+			
+			iEbikeService.saveDdcDriver(ddcDriver2);
+		}
+		iEbikeService.saveDdcDriver(ddcDriver1);
+	}
+
 	/**
 	 * 方法描述：
 	 * 
@@ -315,7 +387,7 @@ public class SsdwAction {
 	 * @author: liuwu
 	 * @version: 2016年3月15日 下午3:15:24
 	 */
-	private String uploadImg(HttpServletRequest request, MultipartFile file,
+	private  String uploadImg(HttpServletRequest request, MultipartFile file,
 			int limitWidth, int limitHeight) throws FileNotFoundException,
 			IOException {
 		if (file != null && !file.isEmpty()) {

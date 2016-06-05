@@ -1,10 +1,14 @@
 package com.node.model;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -31,6 +35,9 @@ public class DdcDriver implements java.io.Serializable {
 	private String userPassword;
 	private String sfzhm;
 	private String vcUserImg;// 驾驶人1图片
+	private String vcUserWorkImg;//居住证或在职证明
+	private Integer userStatus;
+	private Integer illeagalTimes;
 	private String vcShowUserImg;
 
 	// Constructors
@@ -40,7 +47,9 @@ public class DdcDriver implements java.io.Serializable {
 	}
 
 	// Property accessors
+	@SequenceGenerator(name = "DDC_DRIVER", sequenceName = "SEQ_DDL_FLOW", allocationSize = 1)
 	@Id
+	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_DRIVER")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
@@ -168,6 +177,42 @@ public class DdcDriver implements java.io.Serializable {
 	 */
 	public void setVcShowUserImg(String vcShowUserImg) {
 		this.vcShowUserImg = vcShowUserImg;
+	}
+
+	@Column(name = "VC_USERWORKIMG")
+	public String getVcUserWorkImg() {
+		return vcUserWorkImg;
+	}
+
+	/**
+	 * @param vcUserWorkImg : set the property vcUserWorkImg.
+	 */
+	public void setVcUserWorkImg(String vcUserWorkImg) {
+		this.vcUserWorkImg = vcUserWorkImg;
+	}
+
+	@Column(name = "USER_STATUS")
+	public Integer getUserStatus() {
+		return userStatus;
+	}
+
+	/**
+	 * @param userStatus : set the property userStatus.
+	 */
+	public void setUserStatus(Integer userStatus) {
+		this.userStatus = userStatus;
+	}
+
+	@Column(name = "ILLEAGE_TIMES", length = 100)
+	public Integer getIlleagalTimes() {
+		return illeagalTimes;
+	}
+
+	/**
+	 * @param illeagalTimes : set the property illeagalTimes.
+	 */
+	public void setIlleagalTimes(Integer illeagalTimes) {
+		this.illeagalTimes = illeagalTimes;
 	}
 
 }

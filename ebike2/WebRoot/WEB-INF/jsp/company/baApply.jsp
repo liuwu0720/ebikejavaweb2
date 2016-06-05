@@ -384,17 +384,25 @@ function exportRowData(){
 					</td>
 				</tr>
 				<tr>
-					<td>车身照片</td>
+					<td>车身照片(400*300)</td>
 					<td><input  type="file"
 						name="ebike_img" /><br /></td>
-					<td>购车发票</td>
+					<td>购车发票(600*400)</td>
 					<td><input  type="file"
 						name="ebike_invoice_img" /><br /></td>
 				</tr>
 				<tr>
+					<td>出厂合格证(600*400)</td>
+					<td><input  type="file"
+						name="vcQualifiedImgfile" /><br /></td>
+					<td>投保证明(600*400)</td>
+					<td><input  type="file"
+						name="vcEbikeInsuranceImgfile" /><br /></td>
+				</tr>
+				<tr>
 					<td>品牌型号</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="ppxh"
+						   name="ppxh"
 						style="height: 32px;"></input></td>
 					<td>车身颜色</td>
 					<td><input id="cysy" name="cysy"  style="height:30px;"></td>
@@ -402,10 +410,10 @@ function exportRowData(){
 				<tr>
 					<td>电机号：</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="djh" style="height: 32px"></input>
+						 name="djh" style="height: 32px"></input>
 					</td>
 					<td>脚踏装置:</td>
-					<td><select id="jtzz" class="easyui-combobox" name="jtzz" data-options="required:true"
+					<td><select id="jtzz" class="easyui-combobox" name="jtzz" 
 						style="height:32px;width: 50px;">
 							<option value="0">有</option>
 							<option value="1">无</option>
@@ -457,30 +465,39 @@ function exportRowData(){
 					</td>
 				</tr>
 				<tr>
-					<td>驾驶人1头像</td>
+					<td>驾驶人1头像(300*400)</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
 						name="headimg_jsr1"" /><br /></td>
-					<td>驾驶人2头像</td>
+					<td>驾驶人2头像(300*400)</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
 						name="headimg_jsr2" /><br /></td>
 				</tr>
 				<tr>
-					<td>驾驶人1身份证正面</td>
+					<td>驾驶人1身份证正面(500*350)</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
 						name="card1img_jsr1"/></td>
-					<td>驾驶人2身份证正面</td>
+					<td>驾驶人2身份证正面(500*350)</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
 						name="card1img_jsr2"/></td>	
 					
 				</tr>
 				<tr>
-					<td>驾驶人1身份证反面</td>
+					<td>驾驶人1身份证反面(500*350)</td>
 					<td><input  type="file"  onchange="CheckFileSize(this);"
 						name="card2img_jsr1" /><br /></td>
-					<td>驾驶人2身份证反面</td>
+					<td>驾驶人2身份证反面(500*350)</td>
 					<td><input  type="file"  onchange="CheckFileSize(this);"
 						name="card2img_jsr2" /><br /></td>
 				</tr>
+				<tr>
+					<td>驾驶人1在职证明或居住证(600*400)</td>
+					<td><input  type="file"  onchange="CheckFileSize(this);"
+						name="vcUser1WorkImgfile" /><br /></td>
+					<td>驾驶人2在职证明或居住证(600*400)</td>
+					<td><input  type="file"  onchange="CheckFileSize(this);"
+						name="vcUser2WorkImgfile" /><br /></td>
+				</tr>
+		
 				<tr>
 					<td>行驶区域</td>
 					<td><input id="xsqy" name="xsqy"  style="height:30px;"></td>
@@ -497,6 +514,10 @@ function exportRowData(){
 			<input type="hidden" name="vcUser2CardImg1">
 			<input type="hidden" name="vcUser2CardImg2">
 			<input  type="hidden" name="lsh">
+			<input  type="hidden" name="vcUser1WorkImg">
+			<input  type="hidden" name="vcUser2WorkImg">
+			<input  type="hidden" name="vcQualifiedImg">
+			<input  type="hidden" name="vcEbikeInsuranceImg">
 		</form>
 		<div class="table-btndiv">
 			<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBtn"

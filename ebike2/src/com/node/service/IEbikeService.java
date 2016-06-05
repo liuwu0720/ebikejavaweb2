@@ -242,4 +242,14 @@ public interface IEbikeService {
 	  */
 	void updateDriverTemp(DdcDriverTemp ddcDriverTemp);
 
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver2 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月5日 下午3:34:59
+	  */
+	void saveDdcDriver(DdcDriver ddcDriver2);
+
 }
