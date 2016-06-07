@@ -182,6 +182,18 @@ public class EbikeChangAction {
 		String vcUser2CardImg1Show = parseUrl(ddcDaxxb.getVcUser2CardImg1());
 		String vcUser2CardImg2Show = parseUrl(ddcDaxxb.getVcUser2CardImg2());
 		String vcEbikeInvoiceImgShow = parseUrl(ddcDaxxb.getVcEbikeInvoiceImg());
+
+		String vcUser1WorkImgShow = parseUrl(ddcDaxxb.getVcUser1WorkImg());
+		String vcUser2WorkImgShow = parseUrl(ddcDaxxb.getVcUser2WorkImg());
+		String vcQualifiedImgShow = parseUrl(ddcDaxxb.getVcQualifiedImg());
+		String vcEbikeInsuranceImgShow = parseUrl(ddcDaxxb
+				.getVcEbikeInsuranceImg());
+
+		ddcDaxxb.setVcUser1WorkImgShow(vcUser1WorkImgShow);
+		ddcDaxxb.setVcUser2WorkImgShow(vcUser2WorkImgShow);
+		ddcDaxxb.setVcQualifiedImgShow(vcQualifiedImgShow);
+		ddcDaxxb.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
+
 		ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
 		ddcDaxxb.setVcShowUser1Img(showUser1Img);
 		ddcDaxxb.setVcShowUser2Img(showUser2Img);
@@ -380,7 +392,6 @@ public class EbikeChangAction {
 		ddcFlow.setSlzl(slzls);
 		iEbikeService.saveDdcFlow(ddcFlow);
 	}
-
 
 	/**
 	 * 方法描述：

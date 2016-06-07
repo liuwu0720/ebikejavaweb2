@@ -58,6 +58,8 @@ function selectJSR(){
 		$('#card2img_jsr1').removeAttr('disabled');
 		$('#card1img_jsr2').removeAttr('disabled');
 		$('#card2img_jsr2').removeAttr('disabled');
+		$('#vcUser1WorkImg_fileid').removeAttr('disabled');
+		$('#vcUser2WorkImg_fileid').removeAttr('disabled');
 		unselectArea();
 	}else{
 		$('#jsrxm1').attr('disabled',true);
@@ -75,6 +77,8 @@ function selectJSR(){
 		$('#card2img_jsr1').attr('disabled',true);
 		$('#card1img_jsr2').attr('disabled',true);
 		$('#card2img_jsr2').attr('disabled',true);
+		$('#vcUser1WorkImg_fileid').attr('disabled',true);
+		$('#vcUser2WorkImg_fileid').attr('disabled',true);
 	}
 }
 function selectArea(){
@@ -370,6 +374,54 @@ function change(){
 					<th>申请备注：</th>
 					<td colspan="7">${ddcDaxxb.bz }</td>
 				</tr>
+				
+				<tr>
+					<td colspan="2"><input type="file" id="vcEbikeInsuranceImg_fileid"
+						name="vcEbikeInsuranceImg_file" onchange="CheckFileSize(this);"
+						disabled="disabled" /></td>
+					<td colspan="2"><input type="file" id="vcQualifiedImg_fileid"
+						name="vcQualifiedImg_file" onchange="CheckFileSize(this);"
+						disabled="disabled" /></td>
+					<td colspan="2"><input id="vcUser1WorkImg_fileid" type="file"
+						name="vcUser1WorkImg_file" onchange="CheckFileSize(this);"
+						disabled="disabled" /></td>
+					<td colspan="2"><input id="vcUser2WorkImg_fileid" type="file"
+						name="vcUser2WorkImg_file" onchange="CheckFileSize(this);"
+						disabled="disabled" /></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>投保凭证照片</p>
+							<a href="${ddcDaxxb.vcEbikeInsuranceImgShow }" target="_blank"> <img
+								src="${ddcDaxxb.vcEbikeInsuranceImgShow }" />
+							</a>
+						</div>
+					</td>
+					<td colspan="2"><a href="${ddcDaxxb.vcQualifiedImgShow }"
+						target="_blank">
+							<div class="imgdiv">
+								<p>车身合格证照片</p>
+								<img src="${ddcDaxxb.vcQualifiedImgShow }" />
+							</div>
+					</a></td>
+					<td colspan="2"><a href="${ddcDaxxb.vcUser1WorkImgShow }"
+						target="_blank">
+							<div class="imgdiv">
+								<p>驾驶人1在职证明或居住证</p>
+								<img src="${ddcDaxxb.vcUser1WorkImgShow }" />
+							</div>
+					</a></td>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人2在职证明或居住证照片</p>
+							<a href="${ddcDaxxb.vcUser2WorkImgShow }" target="_blank"> <img
+								src="${ddcDaxxb.vcUser2WorkImgShow }" />
+							</a>
+						</div>
+					</td>
+				</tr>
+				
 				<tr>
 					<td colspan="2"><input type="file" id="headimg_jsr1"
 						name="headimg_jsr1" onchange="CheckFileSize(this);"
@@ -491,6 +543,16 @@ function change(){
 				value="${ddcDaxxb.vcUser2CardImg2 }" name="vcUser2CardImg2">
 			<input type="hidden"
 				value="${ddcDaxxb.vcEbikeInvoiceImg }" name="vcEbikeInvoiceImg">	
+				
+			<input type="hidden"
+				value="${ddcDaxxb.vcUser1WorkImg }" name="vcUser1WorkImg">
+			<input type="hidden"
+				value="${ddcDaxxb.vcUser2WorkImg }" name="vcUser2WorkImg">
+			<input type="hidden"
+				value="${ddcDaxxb.vcQualifiedImg }" name="vcQualifiedImg">
+			<input type="hidden"
+				value="${ddcDaxxb.vcQualifiedImg }" name="vcQualifiedImg">	
+				
 		  	<input type="text" id="bz" name="note">		
 	<!-- 点变更时弹出的表单 -->
 	<div id="dgformDiv2" class="easyui-dialog"

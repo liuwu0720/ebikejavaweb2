@@ -203,6 +203,18 @@ public class SsdwChangeAction {
 		ddcDaxxb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
 		ddcDaxxb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
 		ddcDaxxb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
+
+		String vcUser1WorkImgShow = parseUrl(ddcDaxxb.getVcUser1WorkImg());
+		String vcUser2WorkImgShow = parseUrl(ddcDaxxb.getVcUser2WorkImg());
+		String vcQualifiedImgShow = parseUrl(ddcDaxxb.getVcQualifiedImg());
+		String vcEbikeInsuranceImgShow = parseUrl(ddcDaxxb
+				.getVcEbikeInsuranceImg());
+
+		ddcDaxxb.setVcUser1WorkImgShow(vcUser1WorkImgShow);
+		ddcDaxxb.setVcUser2WorkImgShow(vcUser2WorkImgShow);
+		ddcDaxxb.setVcQualifiedImgShow(vcQualifiedImgShow);
+		ddcDaxxb.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
+
 		List<DdcSjzd> colorsSjzds = iApplyService.getSjzdByDmlb("CSYS");// 车身颜色
 		List<DdcSjzd> bgDataSjzds = iApplyService.getSjzdByDmlb("BGSQZL");// 变更申请资料
 		List<DdcSjzd> ssqySjzds = iApplyService.getSjzdByDmlb("SSQY");// 所属区域
@@ -243,6 +255,8 @@ public class SsdwChangeAction {
 			@RequestParam(value = "card1img_jsr2", required = false) MultipartFile card1img_jsr2,
 			@RequestParam(value = "card2img_jsr2", required = false) MultipartFile card2img_jsr2,
 			@RequestParam(value = "ebike_invoice_img", required = false) MultipartFile ebike_invoice_img,
+			@RequestParam(value = "vcUser1WorkImg_file", required = false) MultipartFile vcUser1WorkImg_file,
+			@RequestParam(value = "vcUser2WorkImg_file", required = false) MultipartFile vcUser2WorkImg_file,
 			HttpServletResponse response) throws FileNotFoundException,
 			IOException {
 
@@ -327,7 +341,23 @@ public class SsdwChangeAction {
 		} else {
 			newDaxxb.setVcUser2CardImg2(newDaxxb.getVcUser2CardImg2());
 		}
+		String vcUser1WorkImg = uploadImg(request, vcUser1WorkImg_file,
+				SystemConstants.IMG_INVOICE_WIDTH,
+				SystemConstants.IMG_INVOICE_HEIGHT);
+		if(StringUtils.isNotBlank(vcUser1WorkImg)){
+			newDaxxb.setVcUser1WorkImg(vcUser1WorkImg);
+		}else {
+			newDaxxb.setVcUser1WorkImg(newDaxxb.getVcUser1WorkImg());
+		}
 
+		String vcUser2WorkImg = uploadImg(request, vcUser2WorkImg_file,
+				SystemConstants.IMG_INVOICE_WIDTH,
+				SystemConstants.IMG_INVOICE_HEIGHT);
+		if(StringUtils.isNotBlank(vcUser2WorkImg)){
+			newDaxxb.setVcUser2WorkImg(vcUser2WorkImg);
+		}else {
+			newDaxxb.setVcUser2WorkImg(newDaxxb.getVcUser2WorkImg());
+		}
 		try {
 			String type = "B";// 变更
 			newDaxxb.setYwlx(type);
@@ -491,7 +521,6 @@ public class SsdwChangeAction {
 		ddcFlow.setSlIndex(0);
 		iEbikeService.saveDdcFlow(ddcFlow);
 	}
-
 
 	private String uploadImg(HttpServletRequest request, MultipartFile file,
 			int limitWidth, int limitHeight) throws FileNotFoundException,

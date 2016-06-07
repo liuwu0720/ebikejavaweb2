@@ -29,8 +29,8 @@
 		<property name="driverClass" value="oracle.jdbc.OracleDriver" />
 		 <property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
 		<property name="user" value="ebikeout" /> 
-		<property name="password" value="ebikeout" /> 
-		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.2.197:1521:ddcxtdb" />
+		<property name="password" value="ebikeout" />  
+<!-- 		<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.2.197:1521:ddcxtdb" />
 		<property name="user" value="ddcxt" />
 		<property name="password" value="ddcxt2016##" />  -->
 
@@ -107,8 +107,8 @@
 			expression="execution(* com.node.service.imp.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
-	<bean id="SpringContextUtil " class="com.node.util.SpringContextUtil" />
+	<task:annotation-driven />
 
 
-
+	
 </beans>  

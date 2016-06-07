@@ -147,19 +147,20 @@ function exportPage() {
     				<th>归档备注</th>
 					<td  colspan="7">${ddcDaxxb.gdbz }</td
     			</tr>
-				<tr>
+    			
+    			<tr>
 					<td colspan="2">
 					<div class="imgdiv"> 
-					<p>驾驶人1照片</p>
-					<a href="${ddcDaxxb.vcShowUser1Img }" target="_blank">
-					<img src="${ddcDaxxb.vcShowUser1Img }"/>
+					<p>投保凭证照片</p>
+					<a href="${ddcDaxxb.vcEbikeInsuranceImg }" target="_blank">
+					<img src="${ddcDaxxb.vcEbikeInsuranceImg }"/>
 					</a></div>
 					</td>
 					<td colspan="2">
 					<div  class="imgdiv">
-					<p>驾驶人2照片</p>
-					<a href="${ddcDaxxb.vcShowUser2Img }" target="_blank">
-					<img src="${ddcDaxxb.vcShowUser2Img }"/>
+					<p>车辆合格证照片</p>
+					<a href="${ddcDaxxb.vcQualifiedImg }" target="_blank">
+					<img src="${ddcDaxxb.vcQualifiedImg }"/>
 					</a>
 					</div</td>
 					<td colspan="2">
@@ -175,8 +176,16 @@ function exportPage() {
 					<img   src="${ddcDaxxb.vcEbikeInvoiceImgShow }"/>
 					</div></a></td>
 				</tr>
-			<tr>
-				<td colspan="2">
+    			
+				<tr>
+					<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人1照片</p>
+					<a href="${ddcDaxxb.vcShowUser1Img }" target="_blank">
+					<img src="${ddcDaxxb.vcShowUser1Img }"/>
+					</a></div>
+					</td>
+					<td colspan="2">
 					<div class="imgdiv"> 
 					<p>驾驶人1身份证正面</p>
 					<a href="${ddcDaxxb.vcUser1CardImg1Show }" target="_blank">
@@ -192,6 +201,23 @@ function exportPage() {
 				</td>
 				<td colspan="2">
 					<div class="imgdiv"> 
+					<p>驾驶人1在职证明或居住证</p>
+					<a href="${ddcDaxxb.vcUser1WorkImgShow }" target="_blank">
+					<img  src="${ddcDaxxb.vcUser1WorkImgShow }"/>
+					</a></div>
+				</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2照片</p>
+					<a href="${ddcDaxxb.vcShowUser2Img }" target="_blank">
+					<img src="${ddcDaxxb.vcShowUser2Img }"/>
+					</a></div>
+					</td>
+					<td colspan="2">
+					<div class="imgdiv"> 
 					<p>驾驶人2身份证正面</p>
 					<a href="${ddcDaxxb.vcUser2CardImg1Show }" target="_blank">
 					<img   src="${ddcDaxxb.vcUser2CardImg1Show }"/>
@@ -204,7 +230,14 @@ function exportPage() {
 					<img  src="${ddcDaxxb.vcUser2CardImg2Show }"/>
 					</a></div>
 				</td>
-			</tr>	
+				<td colspan="2">
+					<div class="imgdiv"> 
+					<p>驾驶人2在职证明或居住证</p>
+					<a href="${ddcDaxxb.vcUser2WorkImgShow }" target="_blank">
+					<img  src="${ddcDaxxb.vcUser2WorkImgShow }"/>
+					</a></div>
+				</td>
+				</tr>	
 			</table>
 		<!--endprint-->		
 			<div class="btndiv">

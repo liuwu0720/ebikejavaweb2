@@ -182,11 +182,11 @@ public class SsdwAction {
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
-		message = iApplyService.findIsValid(ddcHyxhSsdwclsb);//是否通过支付宝验证
+		/*message = iApplyService.findIsValid(ddcHyxhSsdwclsb);//是否通过支付宝验证
 		if (!message.equals("success")) {
 			AjaxUtil.rendJson(response, false, message);
 			return;
-		}
+		}*/
 		
 		/**
 		 * 新增时检查单位配额
