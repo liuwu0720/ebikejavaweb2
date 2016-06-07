@@ -7,6 +7,7 @@
  */
 package com.node.service.imp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.node.dao.IDdcApprovalUserDao;
 import com.node.dao.IDdcDaxxbDao;
 import com.node.dao.IDdcDriverDao;
+import com.node.dao.IDdcDriverDaxxDao;
 import com.node.dao.IDdcDriverTempDao;
 import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHyxhBasbDao;
@@ -26,6 +28,7 @@ import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IFileRecordDao;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
+import com.node.model.DdcDriverDaxx;
 import com.node.model.DdcDriverTemp;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
@@ -71,6 +74,10 @@ public class EbikeServiceImp implements IEbikeService {
 
 	@Autowired
 	IDdcDriverTempDao iDdcDriverTempDao;
+	
+	@Autowired
+	IDdcDriverDaxxDao iDdcDriverDaxxDao;
+	
 
 	/*
 	 * (non-Javadoc)
@@ -337,8 +344,6 @@ public class EbikeServiceImp implements IEbikeService {
 		}
 		if(CollectionUtils.isNotEmpty(oldDdcDrivers)){
 			ddcDriver2.setId(oldDdcDrivers.get(0).getId());
-			ddcDriver2.setDaid(oldDdcDrivers.get(0).getDaid());
-			ddcDriver2.setDabh(oldDdcDrivers.get(0).getDabh());
 			ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 			ddcDriver2.setUserPassword(oldDdcDrivers.get(0).getUserPassword());
 			ddcDriver2.setIlleagalTimes(oldDdcDrivers.get(0).getIlleagalTimes());
@@ -351,6 +356,20 @@ public class EbikeServiceImp implements IEbikeService {
 			iDdcDriverDao.save(ddcDriver2);
 		}
 		
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#findAllDaxxByDriverId(java.lang.Long)
+		 */
+	@Override
+	public List<Long> findAllDaxxByDriverId(Long id) {
+		List<DdcDriverDaxx> ddcDriverDaxxs = iDdcDriverDaxxDao.findByProperty("driverId", id); 
+		List<Long> driverIds=new ArrayList<Long>();
+		for(DdcDriverDaxx daxx:ddcDriverDaxxs){
+			driverIds.add(daxx.getDaId());
+		}
+		return driverIds;
 	}
 
 }

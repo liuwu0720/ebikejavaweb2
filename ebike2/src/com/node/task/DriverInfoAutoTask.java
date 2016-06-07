@@ -1,30 +1,46 @@
 /**
-  * 文件名：DriverInfoAutoTask.java
-  * 版本信息：Version 1.0
-  * 日期：2016年6月7日
-  * Copyright 结点科技 Corporation 2016 
-  * 版权所有
-  */
+ * 文件名：DriverInfoAutoTask.java
+ * 版本信息：Version 1.0
+ * 日期：2016年6月7日
+ * Copyright 结点科技 Corporation 2016 
+ * 版权所有
+ */
 package com.node.task;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.node.model.DdcDriver;
+import com.node.model.DdcHyxhSsdwclsb;
+import com.node.service.IEbikeService;
+import com.node.service.ITaskService;
 
 /**
  * 类描述：
+ * 
  * @version: 1.0
  * @author: liuwu
- * @version: 2016年6月7日 下午8:40:16 
+ * @version: 2016年6月7日 下午8:40:16
  */
-@Component("driverInfoAutoTask")
+@Component("scheduledTaskManager")
 public class DriverInfoAutoTask {
+	@Autowired
+	ITaskService iTaskService;
+	
+	@Autowired
+	IEbikeService iEbikeService;
+
+	
 	/**
 	 * 
-	 * @Description: void CRON表达式 含义 "0 0 12 * * ?" 每天中午十二点触发 "0 15 10 ? * *"
-	 *               每天早上10：15触发 "0 15 10 * * ?" 每天早上10：15触发 "0 15 10 * * ? *"
-	 *               每天早上10：15触发 "0 15 10 * * ? 2005" 2005年的每天早上10：15触发
-	 *               "0 * 14 * * ?" 每天从下午2点开始到2点59分每分钟一次触发 "0 0/5 14 * * ?"
+	 * @Description: "0 0 12 * * ?" 每天中午十二点触发 "0 15 10 ? * *" 每天早上10：15触发
+	 *               "0 15 10 * * ?" 每天早上10：15触发 "0 15 10 * * ? *" 每天早上10：15触发
+	 *               "0 15 10 * * ? 2005" 2005年的每天早上10：15触发 "0 * 14 * * ?"
+	 *               每天从下午2点开始到2点59分每分钟一次触发 "0 0/5 14 * * ?"
 	 *               每天从下午2点开始到2：55分结束每5分钟一次触发 "0 0/5 14,18 * * ?"
 	 *               每天的下午2点至2：55和6点至6点55分两个时间段内每5分钟一次触发 "0 0-5 14 * * ?"
 	 *               每天14:00至14:05每分钟一次触发 "0 10,44 14 ? 3 WED"
@@ -33,8 +49,49 @@ public class DriverInfoAutoTask {
 	 * @author liuwu
 	 * @create_date 2015-8-17 下午4:16:19
 	 */
-	@Scheduled(fixedRate = 1000 * 3)
-	public void checkDriverInfo(){
-		System.out.println("********************");
+	/** 
+     * 定时卡点计算。每天凌晨 02:00 执行一次  cron = "0 0 2 * * *"
+     */  
+	@Scheduled(cron = "0 35 22 * * *?")
+	public void autoCardCalculate() {
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
+		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
+			saveHasValidDriver(ddcHyxhSsdwclsb);
+		}
+		
+	}
+	
+	/*@Scheduled(fixedRate = 1000 * 1 * 1)
+	public void test(){
+		System.out.println("***********************");
+	}*/
+	
+	private void saveHasValidDriver(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
+		// TODO Auto-generated method stub
+		DdcDriver ddcDriver1 = new DdcDriver();
+		ddcDriver1.setJsrxm(ddcHyxhSsdwclsb.getJsrxm1());
+		ddcDriver1.setLxdh(ddcHyxhSsdwclsb.getLxdh1());
+		ddcDriver1.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm1());
+		ddcDriver1.setUserCode(ddcHyxhSsdwclsb.getLxdh1());
+		ddcDriver1.setUserPassword("123456");
+		ddcDriver1.setVcUserImg(ddcHyxhSsdwclsb.getVcUser1Img());
+		ddcDriver1.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
+		if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())){
+			DdcDriver ddcDriver2 = new DdcDriver();
+			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
+			ddcDriver2.setLxdh(ddcHyxhSsdwclsb.getLxdh2());
+			ddcDriver2.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm2());
+			ddcDriver2.setUserCode(ddcHyxhSsdwclsb.getLxdh2());
+			ddcDriver2.setUserPassword("123456");
+			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2Img())){
+				ddcDriver2.setVcUserImg(ddcHyxhSsdwclsb.getVcUser2Img());
+			}
+			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())){
+				ddcDriver2.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
+			}
+			
+			iEbikeService.saveDdcDriver(ddcDriver2);
+		}
+		iEbikeService.saveDdcDriver(ddcDriver1);
 	}
 }

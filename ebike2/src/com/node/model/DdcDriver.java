@@ -24,8 +24,6 @@ public class DdcDriver implements java.io.Serializable {
 	/* serialVersionUID: serialVersionUID */
 	private static final long serialVersionUID = 7678082016832049336L;
 	private Long id;
-	private String dabh;
-	private Long daid;
 	private String jsrxm;
 	private String xb;
 	private String lxdh;
@@ -59,23 +57,6 @@ public class DdcDriver implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "DABH", length = 50)
-	public String getDabh() {
-		return this.dabh;
-	}
-
-	public void setDabh(String dabh) {
-		this.dabh = dabh;
-	}
-
-	@Column(name = "DAID", precision = 0)
-	public Long getDaid() {
-		return this.daid;
-	}
-
-	public void setDaid(Long daid) {
-		this.daid = daid;
-	}
 
 	@Column(name = "JSRXM", length = 50)
 	public String getJsrxm() {

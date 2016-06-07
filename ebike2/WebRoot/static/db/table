@@ -2327,7 +2327,30 @@ increment by 1
 cache 20;
  
  
- 
+-- Create table
+create table DDC_DRIVER_DAXX
+(
+  id       NUMBER not null,
+  driverid NUMBER,
+  daid     NUMBER
+)
+-- Add comments to the table 
+comment on table DDC_DRIVER_DAXX
+  is '司机与档案信息关联表';
+-- Add comments to the columns 
+comment on column DDC_DRIVER_DAXX.driverid
+  is '司机ID';
+comment on column DDC_DRIVER_DAXX.daid
+  is '档案ID';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DDC_DRIVER_DAXX
+  add constraint PK_DDC_DRIVER_DAXX primary key (ID)
+  using index 
+  tablespace EBIKEOUT_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+
  
  
  

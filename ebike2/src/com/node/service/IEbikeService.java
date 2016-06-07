@@ -252,4 +252,15 @@ public interface IEbikeService {
 	  */
 	void saveDdcDriver(DdcDriver ddcDriver2);
 
+	
+	/**
+	  * 方法描述：根据司机ID找出所有该司机的所有车辆档案
+	  * @param id
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月7日 下午9:57:23
+	  */
+	List<Long> findAllDaxxByDriverId(Long id);
+
 }

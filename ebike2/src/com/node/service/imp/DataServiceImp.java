@@ -881,8 +881,8 @@ public class DataServiceImp implements IDataService {
 				int j = 0;
 				DdcDriver ddcDriver = new DdcDriver();
 				ddcDriver.setId(Long.parseLong(row.getCell(j) + ""));
-				ddcDriver.setDabh(row.getCell(j += 1) + "");
-				ddcDriver.setDaid(Long.parseLong(row.getCell(j += 1) + ""));
+			/*	ddcDriver.setDabh(row.getCell(j += 1) + "");
+				ddcDriver.setDaid(Long.parseLong(row.getCell(j += 1) + ""));*/
 				ddcDriver.setJsrxm(row.getCell(j += 1) + "");
 				ddcDriver.setXb(row.getCell(j += 1) + "");
 				ddcDriver.setLxdh(row.getCell(j += 1) + "");
@@ -1428,8 +1428,6 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(label);
 		int j = 0;
 		ws.addCell(new Label(j, 2, "ID", wcfFC2));
-		ws.addCell(new Label(j += 1, 2, "DABH", wcfFC2));
-		ws.addCell(new Label(j += 1, 2, "DAID", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "JSRXM", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "XB", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "LXDH", wcfFC2));
@@ -1445,8 +1443,6 @@ public class DataServiceImp implements IDataService {
 		for (DdcDriver ddcDriver : ddcDrivers) {
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, ddcDriver.getId() + ""));
-			ws.addCell(new Label(j1 += 1, i, ddcDriver.getDabh() + ""));
-			ws.addCell(new Label(j1 += 1, i, ddcDriver.getDaid() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getJsrxm() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getXb() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getLxdh() + ""));

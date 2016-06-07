@@ -225,8 +225,15 @@ public class AppAction {
 		if (CollectionUtils.isEmpty(ddcDrivers)) {
 			return AjaxUtil.getMapByNotException(false, null);
 		} else {
-			for (DdcDriver ddcDriver : ddcDrivers) {
-				DdcDaxxb ddcDaxxb = iEbikeService.getById(ddcDriver.getDaid());
+			DdcDriver ddcDriver = ddcDrivers.get(0);
+			List<Long> daIds = iEbikeService.findAllDaxxByDriverId(ddcDriver.getId());
+			for (Long daId : daIds) {
+				DdcDaxxb ddcDaxxb = iEbikeService.getById(daId);
+				if(ddcDaxxb == null){
+					return AjaxUtil.getMapByNotException(false, null);
+				
+				}
+				
 				String cysyName = iApplyService.findByProPerties("CSYS",
 						ddcDaxxb.getCysy());
 
