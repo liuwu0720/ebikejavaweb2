@@ -9,6 +9,7 @@ package com.node.task;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -54,17 +55,26 @@ public class DriverInfoAutoTask {
      */  
 	@Scheduled(cron = "0 35 22 * * *?")
 	public void autoCardCalculate() {
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
+		/*List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
 		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
 			saveHasValidDriver(ddcHyxhSsdwclsb);
+		}*/
+		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();//所有未绑定协会单位的司机
+		if(CollectionUtils.isNotEmpty(ddcDrivers)){
+			for(DdcDriver ddcDriver:ddcDrivers){
+				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iTaskService.findClsbByDriver(ddcDriver);
+				if(ddcHyxhSsdwclsb!=null){
+					ddcDriver.setHyxhzh(ddcHyxhSsdwclsb.getHyxhzh());
+					ddcDriver.setSsdwId(Integer.parseInt(ddcHyxhSsdwclsb.getSsdwId()));
+					iEbikeService.saveDdcDriver(ddcDriver);
+				}
+			
+			}
 		}
 		
 	}
 	
-	/*@Scheduled(fixedRate = 1000 * 1 * 1)
-	public void test(){
-		System.out.println("***********************");
-	}*/
+
 	
 	private void saveHasValidDriver(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
 		// TODO Auto-generated method stub

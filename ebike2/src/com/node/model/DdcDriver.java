@@ -37,6 +37,8 @@ public class DdcDriver implements java.io.Serializable {
 	private Integer userStatus;
 	private Integer illeagalTimes;
 	private String vcShowUserImg;
+	private Integer ssdwId;
+	private String hyxhzh;
 
 	// Constructors
 
@@ -45,7 +47,7 @@ public class DdcDriver implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@SequenceGenerator(name = "DDC_DRIVER", sequenceName = "SEQ_DDL_FLOW", allocationSize = 1)
+	@SequenceGenerator(name = "DDC_DRIVER", sequenceName = "seq_ddc_driver", allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_DRIVER")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
@@ -184,7 +186,7 @@ public class DdcDriver implements java.io.Serializable {
 		this.userStatus = userStatus;
 	}
 
-	@Column(name = "ILLEAGE_TIMES", length = 100)
+	@Column(name = "ILLEAGE_TIMES")
 	public Integer getIlleagalTimes() {
 		return illeagalTimes;
 	}
@@ -195,5 +197,31 @@ public class DdcDriver implements java.io.Serializable {
 	public void setIlleagalTimes(Integer illeagalTimes) {
 		this.illeagalTimes = illeagalTimes;
 	}
+
+	@Column(name = "SSDWID")
+	public Integer getSsdwId() {
+		return ssdwId;
+	}
+
+	/**
+	 * @param ssdwId : set the property ssdwId.
+	 */
+	public void setSsdwId(Integer ssdwId) {
+		this.ssdwId = ssdwId;
+	}
+
+	@Column(name = "HYXHZH", length = 20)
+	public String getHyxhzh() {
+		return hyxhzh;
+	}
+
+	/**
+	 * @param hyxhzh : set the property hyxhzh.
+	 */
+	public void setHyxhzh(String hyxhzh) {
+		this.hyxhzh = hyxhzh;
+	}
+	
+	
 
 }

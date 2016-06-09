@@ -66,7 +66,6 @@ public class DataServiceImp implements IDataService {
 	@Autowired
 	IDdcDaxxbDao iDdcDaxxbDao;
 
-
 	@Autowired
 	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
 
@@ -205,7 +204,7 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j += 1, i, daxxb.getVcUser2CardImg1()));
 			ws.addCell(new Label(j += 1, i, daxxb.getVcUser2CardImg2()));
 			ws.addCell(new Label(j += 1, i, daxxb.getVcEbikeInvoiceImg()));
-			
+
 			ws.addCell(new Label(j += 1, i, daxxb.getVcUser1WorkImg()));
 			ws.addCell(new Label(j += 1, i, daxxb.getVcUser2WorkImg()));
 			ws.addCell(new Label(j += 1, i, daxxb.getVcQualifiedImg()));
@@ -327,7 +326,7 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(new Label(j += 1, 2, "TABLENAME", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "TABLEID", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "SL_INDEX", wcfFC2));
-		
+
 		ws.addCell(new Label(j += 1, 2, "vcUser1WorkImg", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "vcUser2WorkImg", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "vcQualifiedImg", wcfFC2));
@@ -396,8 +395,9 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcFlow.getVcUser1WorkImg() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcFlow.getVcUser2WorkImg() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcFlow.getVcQualifiedImg() + ""));
-			ws.addCell(new Label(j1 += 1, i, ddcFlow.getVcEbikeInsuranceImg() + ""));
-			
+			ws.addCell(new Label(j1 += 1, i, ddcFlow.getVcEbikeInsuranceImg()
+					+ ""));
+
 			i++;
 			ddcFlow.setSynFlag(null);
 			iDdcFlowDao.updateCleanBefore(ddcFlow);
@@ -671,7 +671,7 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(new Label(j += 1, 2, "VC_USER2_CARDIMG2", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "ENABLE", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "VC_EBIKE_INVOICE", wcfFC2));
-		
+
 		ws.addCell(new Label(j += 1, 2, "vcUser1WorkImg", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "vcUser2WorkImg", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "vcQualifiedImg", wcfFC2));
@@ -737,7 +737,7 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb.getnEnable() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb
 					.getVcEbikeInvoiceImg()));
-			
+
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb
 					.getVcUser1WorkImg()));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb
@@ -746,7 +746,7 @@ public class DataServiceImp implements IDataService {
 					.getVcQualifiedImg()));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb
 					.getVcEbikeInsuranceImg()));
-			
+
 			i++;
 			ddcHyxhSsdwclsb.setSynFlag(null);
 			iDdcHyxhSsdwclsbDao.updateCleanBefore(ddcHyxhSsdwclsb);
@@ -798,8 +798,10 @@ public class DataServiceImp implements IDataService {
 			Sheet driverSheet = wb.getSheetAt(7);// ddc_driver 内网的数据只修改
 			updateDriver(driverSheet);
 
-			Sheet hmdSheet = wb.getSheetAt(8);// ddc_hmd内网 新增或修改
-			saveUpdateDdchmd(hmdSheet);
+			/*
+			 * Sheet hmdSheet = wb.getSheetAt(8);// ddc_hmd内网 新增或修改
+			 * saveUpdateDdchmd(hmdSheet);
+			 */
 
 		} catch (EncryptedDocumentException | IOException e) {
 			e.printStackTrace();
@@ -881,8 +883,6 @@ public class DataServiceImp implements IDataService {
 				int j = 0;
 				DdcDriver ddcDriver = new DdcDriver();
 				ddcDriver.setId(Long.parseLong(row.getCell(j) + ""));
-			/*	ddcDriver.setDabh(row.getCell(j += 1) + "");
-				ddcDriver.setDaid(Long.parseLong(row.getCell(j += 1) + ""));*/
 				ddcDriver.setJsrxm(row.getCell(j += 1) + "");
 				ddcDriver.setXb(row.getCell(j += 1) + "");
 				ddcDriver.setLxdh(row.getCell(j += 1) + "");
@@ -893,14 +893,32 @@ public class DataServiceImp implements IDataService {
 				ddcDriver.setSfzhm(row.getCell(j += 1) + "");
 				ddcDriver.setVcUserImg(row.getCell(j += 1) + "");
 				ddcDriver.setVcUserWorkImg(row.getCell(j += 1) + "");
-				ddcDriver.setUserStatus(Integer.parseInt(row.getCell(j += 1)+ "") );
-				ddcDriver.setIlleagalTimes(Integer.parseInt(row.getCell(j += 1)+ ""));
+				String status = row.getCell(j += 1)
+						+ "";
+				if(StringUtils.isNotBlank(status)){
+					ddcDriver.setUserStatus(Integer.parseInt(status));
+				}
+				String illeageTimes = row.getCell(j += 1)
+						+ "";
+				if(StringUtils.isNotBlank(illeageTimes)){
+					ddcDriver.setIlleagalTimes(Integer.parseInt(illeageTimes));
+				}
+			
+				
+				String ssdwId = row.getCell(j += 1) + "";
+				if (StringUtils.isNotBlank(ssdwId)) {
+					ddcDriver.setSsdwId(Integer.parseInt(ssdwId));
+				} else {
+					ddcDriver.setSsdwId(null);
+				}
+				ddcDriver.setHyxhzh(row.getCell(j += 1) + "");
 				iDdcDriverDao.update(ddcDriver);
-				/*List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty(
-						"dabh", ddcDriver.getDabh());
-				if (CollectionUtils.isEmpty(ddcDrivers)) {
-					iDdcDriverDao.save(ddcDriver);
-				}*/
+				/*
+				 * List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty(
+				 * "dabh", ddcDriver.getDabh()); if
+				 * (CollectionUtils.isEmpty(ddcDrivers)) {
+				 * iDdcDriverDao.save(ddcDriver); }
+				 */
 			}
 		}
 
@@ -974,7 +992,8 @@ public class DataServiceImp implements IDataService {
 				ddcHyxhSsdwclsb.setVcUser1WorkImg(row.getCell(j += 1) + "");
 				ddcHyxhSsdwclsb.setVcUser2WorkImg(row.getCell(j += 1) + "");
 				ddcHyxhSsdwclsb.setVcQualifiedImg(row.getCell(j += 1) + "");
-				ddcHyxhSsdwclsb.setVcEbikeInsuranceImg(row.getCell(j += 1) + "");
+				ddcHyxhSsdwclsb
+						.setVcEbikeInsuranceImg(row.getCell(j += 1) + "");
 				iDdcHyxhSsdwclsbDao.update(ddcHyxhSsdwclsb);
 
 			}
@@ -1413,13 +1432,17 @@ public class DataServiceImp implements IDataService {
 
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IDataService#createDdcDriver(jxl.write.WritableCellFormat, jxl.write.WritableCellFormat, jxl.write.WritableSheet)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IDataService#createDdcDriver(jxl.write.WritableCellFormat
+	 * , jxl.write.WritableCellFormat, jxl.write.WritableSheet)
+	 */
 	@Override
 	public void createDdcDriver(WritableCellFormat wcfFC,
-			WritableCellFormat wcfFC2, WritableSheet ws) throws RowsExceededException, WriteException {
+			WritableCellFormat wcfFC2, WritableSheet ws)
+			throws RowsExceededException, WriteException {
 		// TODO Auto-generated method stub
 		List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("synFlag",
 				SystemConstants.SYSNFLAG_ADD);
@@ -1437,8 +1460,11 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(new Label(j += 1, 2, "USER_PASSWORD", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "SFZHM", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "VCUSER_IMG", wcfFC2));
+		ws.addCell(new Label(j += 1, 2, "VC_USERWORKIMG", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "userStatus", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "illeagalTimes", wcfFC2));
+		ws.addCell(new Label(j += 1, 2, "SSDWID", wcfFC2));
+		ws.addCell(new Label(j += 1, 2, "HYXHZH", wcfFC2));
 		int i = 3;
 		for (DdcDriver ddcDriver : ddcDrivers) {
 			int j1 = 0;
@@ -1451,12 +1477,15 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getUserPassword() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getSfzhm() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getVcUserImg() + ""));
+			ws.addCell(new Label(j1 += 1, i, ddcDriver.getVcUserWorkImg() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getUserStatus() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getIlleagalTimes() + ""));
+			ws.addCell(new Label(j1 += 1, i, ddcDriver.getSsdwId() + ""));
+			ws.addCell(new Label(j1 += 1, i, ddcDriver.getHyxhzh() + ""));
 			i++;
 			ddcDriver.setSynFlag(null);
 			iDdcDriverDao.updateCleanBefore(ddcDriver);
 		}
-		
+
 	}
 }

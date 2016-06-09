@@ -182,7 +182,7 @@ public class CompanyAction {
 			ddcHyxhSsdw.setPassWord("123456");
 		}
 
-		ddcHyxhSsdw.setZt(SystemConstants.DISENABLE_ZT);
+		ddcHyxhSsdw.setZt(SystemConstants.ENABLE_ZT);
 		/**
 		 * vbg 验证剩余配额数量
 		 */

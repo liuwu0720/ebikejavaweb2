@@ -102,11 +102,11 @@ public class SystemConstants {
 	/**
 	 * 车身照片最大宽度
 	 */
-	public static final int IMG_EBIKE_WITH = 400;
+	public static final int IMG_EBIKE_WITH = 600;
 	/**
 	 * 车身照片最大高度
 	 */
-	public static final int IMG_EBIKE_HEIGHT = 300;
+	public static final int IMG_EBIKE_HEIGHT = 400;
 	/**
 	 * 人员头像最大宽度
 	 */

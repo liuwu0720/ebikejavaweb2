@@ -39,14 +39,17 @@ $(function() {
 						},
 						mobile : {// 验证手机号码
 							validator : function(value) {
-								return /^(13|15|18)\d{9}$/i.test(value);
+								return /^(13|15|18|17|16)\d{9}$/i.test(value);
 							},
 							message : '手机号码格式不正确'
 						},
 						phoneNum : {// 验证手机号码+固定电话
-							validator : function(value) {
+							/*validator : function(value) {
 								return /^(((((010)|(02\d)))[2-8]\d{7})|(0[3-9]\d{2}[2-8]\d{6,7})|(0?(?:147|1[358]\d)\d{8}))$/i
 										.test(value);
+							},*/
+							validator : function(value) {
+								return /^(13|15|18|17|16)\d{9}$/i.test(value);
 							},
 							message : '手机号码或固定电话格式不正确'
 						},

@@ -8,6 +8,7 @@
 package com.node.service.imp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -342,9 +343,10 @@ public class EbikeServiceImp implements IEbikeService {
 		}else {
 			ddcDriver2.setUserStatus(0);
 		}
+		ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+		ddcDriver2.setTranDate(new Date());
 		if(CollectionUtils.isNotEmpty(oldDdcDrivers)){
 			ddcDriver2.setId(oldDdcDrivers.get(0).getId());
-			ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 			ddcDriver2.setUserPassword(oldDdcDrivers.get(0).getUserPassword());
 			ddcDriver2.setIlleagalTimes(oldDdcDrivers.get(0).getIlleagalTimes());
 			ddcDriver2.setUserStatus(oldDdcDrivers.get(0).getUserStatus());

@@ -384,7 +384,7 @@ function exportRowData(){
 					</td>
 				</tr>
 				<tr>
-					<td>车身照片(400*300)</td>
+					<td>车身照片(600*400)</td>
 					<td><input  type="file"
 						name="ebike_img" /><br /></td>
 					<td>购车发票(600*400)</td>

@@ -9,10 +9,13 @@ package com.node.service.imp;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
+import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.service.ITaskService;
 
@@ -27,6 +30,8 @@ import com.node.service.ITaskService;
 public class TaskServiceImp implements ITaskService{
 	@Autowired
 	IDdcHyxhSsdwclsbDao iDdcHyxhSsdwclsbDao;
+	@Autowired
+	IDdcDriverDao iDdcDriverDao;
 	
 		/* (non-Javadoc)
 		 * @see com.node.service.ITaskService#findAllClsbs()
@@ -35,6 +40,34 @@ public class TaskServiceImp implements ITaskService{
 	public List<DdcHyxhSsdwclsb> findAllClsbs() {
 		// TODO Auto-generated method stub
 		return iDdcHyxhSsdwclsbDao.findAll();
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#findAllDriversNotValid()
+		 */
+	@Override
+	public List<DdcDriver> findAllDriversNotValid() {
+		// TODO Auto-generated method stub
+		return iDdcDriverDao.findAll();
+	}
+
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#findClsbByDriver(com.node.model.DdcDriver)
+		 */
+	@Override
+	public DdcHyxhSsdwclsb findClsbByDriver(DdcDriver ddcDriver) {
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByProperty("jsrxm1", ddcDriver.getJsrxm());
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs2 = iDdcHyxhSsdwclsbDao.findByProperty("jsrxm2", ddcDriver.getJsrxm());
+		if(CollectionUtils.isNotEmpty(ddcHyxhSsdwclsbs)){
+			return ddcHyxhSsdwclsbs.get(0);
+		}
+		if(CollectionUtils.isNotEmpty(ddcHyxhSsdwclsbs2)){
+			return ddcHyxhSsdwclsbs2.get(0);
+		}
+		return null;
 	}
 
 }

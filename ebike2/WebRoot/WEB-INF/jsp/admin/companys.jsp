@@ -255,7 +255,7 @@ function updateSaveData(){
 					<tr>
 					<th>总配额</th>
 					<td>
-					<input   class="easyui-numberspinner" name="totalPe" readonly="readonly"
+					<input   class="easyui-numberspinner" name="totalPe" 
 						data-options="increment:1,required:true,validType:'number'"  min="0"
 						style="width:120px;height:30px;"></input>
 					</td>

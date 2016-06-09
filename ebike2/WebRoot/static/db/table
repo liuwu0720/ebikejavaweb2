@@ -2316,7 +2316,11 @@ ALTER TABLE DDC_FLOW ADD VC_USER1WORKIMG VARCHAR2(100);
   comment on column DDC_DRIVER.ILLEAGE_TIMES  is '驾驶人违法次数'; 
  ALTER TABLE DDC_DRIVER ADD USER_NOTE NUMBER default 0;
   comment on column DDC_DRIVER.USER_NOTE  is '驾驶人违法备注';  
- 
+  
+ ALTER TABLE DDC_DRIVER ADD SSDWID NUMBER ; 
+ comment on column DDC_DRIVER.SSDWID  is '所属单位ID';  
+  ALTER TABLE DDC_DRIVER ADD HYXHZH VARCHAR2(20) ;
+  comment on column DDC_DRIVER.HYXHZH  is '所属协会账号'; 
  
 -- Create sequence 
 create sequence SEQ_DDC_DRIVER
@@ -2333,7 +2337,7 @@ create table DDC_DRIVER_DAXX
   id       NUMBER not null,
   driverid NUMBER,
   daid     NUMBER
-)
+);
 -- Add comments to the table 
 comment on table DDC_DRIVER_DAXX
   is '司机与档案信息关联表';
@@ -2346,10 +2350,7 @@ comment on column DDC_DRIVER_DAXX.daid
 alter table DDC_DRIVER_DAXX
   add constraint PK_DDC_DRIVER_DAXX primary key (ID)
   using index 
-  tablespace EBIKEOUT_DATA
-  pctfree 10
-  initrans 2
-  maxtrans 255;
+
 
  
  

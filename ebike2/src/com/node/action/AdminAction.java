@@ -128,9 +128,18 @@ public class AdminAction {
 			String hyxhzh, String dwmc) {
 		Page p = ServiceUtil.getcurrPage(request);
 		HqlHelper hql = new HqlHelper(DdcHyxhSsdw.class);
-
+		if(StringUtils.isNotBlank(hyxhzh)){
+			hql.addEqual("hyxhzh", hyxhzh);
+		}
+		if(StringUtils.isNotBlank(dwmc)){
+			hql.addLike("dwmc", dwmc);
+		}
+		
+		
 		hql.addOrderBy("id", "desc");
 		hql.setQueryPage(p);
+		
+		
 		Map<String, Object> resultMap = iCompanyService.queryByHql(hql);
 
 		List<Map<String, Object>> mapList = (List<Map<String, Object>>) resultMap

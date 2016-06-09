@@ -72,7 +72,7 @@ public class AppAction {
 	public Map<String, Object> saveUserInfo(
 			@ApiParam(value = "用户姓名", required = true) @RequestParam("vcUserName") String vcUserName,
 			@ApiParam(value = "用户身份证号码", required = true) @RequestParam("vcUserCard") String vcUserCard,
-			@ApiParam(value = "用户手机号") @RequestParam(value="vcTelPhone", required = false) String vcTelPhone,
+			@ApiParam(value = "用户手机号") @RequestParam(value="vcTelPhone", required = true) String vcTelPhone,
 			@ApiParam(value = "接口访问TOKEN", required = true) @RequestParam("vcToken") String vcToken) {
 		if(StringUtils.isNotBlank(vcToken) && vcToken.equalsIgnoreCase(SystemConstants.TOKEN_ALIPAY)){
 			boolean isNew=iEbikeService.findDdcDriverTemp(vcUserName,vcUserCard);

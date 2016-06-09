@@ -9,6 +9,7 @@ package com.node.service;
 
 import java.util.List;
 
+import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhSsdwclsb;
 
 
@@ -29,5 +30,27 @@ public interface ITaskService {
 	  * @version: 2016年6月7日 下午9:39:55
 	  */
 	List<DdcHyxhSsdwclsb> findAllClsbs();
+
+	
+	/**
+	  * 方法描述：
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月9日 下午3:12:08
+	  */
+	List<DdcDriver> findAllDriversNotValid();
+
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月9日 下午3:21:49
+	  */
+	DdcHyxhSsdwclsb findClsbByDriver(DdcDriver ddcDriver);
 
 }

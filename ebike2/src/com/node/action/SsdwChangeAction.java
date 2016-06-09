@@ -43,6 +43,7 @@ import com.node.service.IApplyService;
 import com.node.service.ICompanyService;
 import com.node.service.IEbikeService;
 import com.node.util.AjaxUtil;
+import com.node.util.ImgUploadThread;
 import com.node.util.Page;
 import com.node.util.ScaleImage;
 import com.node.util.ServiceUtil;
@@ -284,75 +285,75 @@ public class SsdwChangeAction {
 		newDaxxb.setSfzmhm2(daxxb.getSfzmhm2());
 		newDaxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 		newDaxxb.setTranDate(new Date());
-		// newDaxxb.setBz(note);
-		String ebike_jpgPath = uploadImg(request, ebike_img,
+		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
+		String ebike_jpgPath = uploadImgThread(request, ebike_img,
 				SystemConstants.IMG_EBIKE_WITH,
-				SystemConstants.IMG_EBIKE_HEIGHT);// 上传车身照片
+				SystemConstants.IMG_EBIKE_HEIGHT,imgPath);// 上传车身照片
 		if (StringUtils.isNotBlank(ebike_jpgPath)) {
 			newDaxxb.setVcEbikeImg(ebike_jpgPath);
 		} else {
 			newDaxxb.setVcEbikeImg(daxxb.getVcEbikeImg());
 		}
 
-		String vcUser1_img = uploadImg(request, headimg_jsr1,
-				SystemConstants.IMG_HEAD_WITH, SystemConstants.IMG_HEAD_HEIGHT);// 上传驾驶人1照片
+		String vcUser1_img = uploadImgThread(request, headimg_jsr1,
+				SystemConstants.IMG_HEAD_WITH, SystemConstants.IMG_HEAD_HEIGHT,imgPath);// 上传驾驶人1照片
 		if (StringUtils.isNotBlank(vcUser1_img)) {
 			newDaxxb.setVcUser1Img(vcUser1_img);
 		} else {
 			newDaxxb.setVcUser1Img(daxxb.getVcUser1Img());
 		}
 
-		String vcUser2_img = uploadImg(request, headimg_jsr2,
-				SystemConstants.IMG_HEAD_WITH, SystemConstants.IMG_HEAD_HEIGHT);// 上传驾驶人2照片
+		String vcUser2_img = uploadImgThread(request, headimg_jsr2,
+				SystemConstants.IMG_HEAD_WITH, SystemConstants.IMG_HEAD_HEIGHT,imgPath);// 上传驾驶人2照片
 		if (StringUtils.isNotBlank(vcUser2_img)) {
 			newDaxxb.setVcUser2Img(vcUser2_img);
 		} else {
 			newDaxxb.setVcUser2Img(daxxb.getVcUser2Img());
 		}
-		String vcUser1CardImg1 = uploadImg(request, card1img_jsr1,
+		String vcUser1CardImg1 = uploadImgThread(request, card1img_jsr1,
 				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT);// 上传驾驶人1身份证正面
+				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 上传驾驶人1身份证正面
 		if (StringUtils.isNotBlank(vcUser1CardImg1)) {
 			newDaxxb.setVcUser1CardImg1(vcUser1CardImg1);
 		} else {
 			newDaxxb.setVcUser1CardImg1(newDaxxb.getVcUser1CardImg1());
 		}
-		String vcUser1CardImg2 = uploadImg(request, card2img_jsr1,
+		String vcUser1CardImg2 = uploadImgThread(request, card2img_jsr1,
 				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT);// 上传驾驶人1身份证反面
+				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 上传驾驶人1身份证反面
 		if (StringUtils.isNotBlank(vcUser1CardImg2)) {
 			newDaxxb.setVcUser1CardImg2(vcUser1CardImg2);
 		} else {
 			newDaxxb.setVcUser1CardImg2(newDaxxb.getVcUser1CardImg2());
 		}
-		String vcUser2CardImg1 = uploadImg(request, card1img_jsr2,
+		String vcUser2CardImg1 = uploadImgThread(request, card1img_jsr2,
 				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT);// 驾驶人2身份证正面
+				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 驾驶人2身份证正面
 		if (StringUtils.isNotBlank(vcUser2CardImg1)) {
 			newDaxxb.setVcUser2CardImg1(vcUser2CardImg1);
 		} else {
 			newDaxxb.setVcUser2CardImg1(newDaxxb.getVcUser2CardImg1());
 		}
-		String vcUser2CardImg2 = uploadImg(request, card2img_jsr2,
+		String vcUser2CardImg2 = uploadImgThread(request, card2img_jsr2,
 				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT);// 驾驶人2身份证反面
+				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 驾驶人2身份证反面
 		if (StringUtils.isNotBlank(vcUser2CardImg2)) {
 			newDaxxb.setVcUser2CardImg2(vcUser2CardImg2);
 		} else {
 			newDaxxb.setVcUser2CardImg2(newDaxxb.getVcUser2CardImg2());
 		}
-		String vcUser1WorkImg = uploadImg(request, vcUser1WorkImg_file,
+		String vcUser1WorkImg = uploadImgThread(request, vcUser1WorkImg_file,
 				SystemConstants.IMG_INVOICE_WIDTH,
-				SystemConstants.IMG_INVOICE_HEIGHT);
+				SystemConstants.IMG_INVOICE_HEIGHT,imgPath);
 		if(StringUtils.isNotBlank(vcUser1WorkImg)){
 			newDaxxb.setVcUser1WorkImg(vcUser1WorkImg);
 		}else {
 			newDaxxb.setVcUser1WorkImg(newDaxxb.getVcUser1WorkImg());
 		}
 
-		String vcUser2WorkImg = uploadImg(request, vcUser2WorkImg_file,
+		String vcUser2WorkImg = uploadImgThread(request, vcUser2WorkImg_file,
 				SystemConstants.IMG_INVOICE_WIDTH,
-				SystemConstants.IMG_INVOICE_HEIGHT);
+				SystemConstants.IMG_INVOICE_HEIGHT,imgPath);
 		if(StringUtils.isNotBlank(vcUser2WorkImg)){
 			newDaxxb.setVcUser2WorkImg(vcUser2WorkImg);
 		}else {
@@ -377,6 +378,37 @@ public class SsdwChangeAction {
 			AjaxUtil.rendJson(response, false, "操作失败！系统错误");
 		}
 
+	}
+
+	
+	/**
+	  * 方法描述：
+	  * @param request
+	  * @param vcUser2WorkImg_file
+	  * @param imgInvoiceWidth
+	  * @param imgInvoiceHeight
+	  * @param imgPath
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月9日 下午5:11:15
+	  */
+	private String uploadImgThread(HttpServletRequest request,
+			MultipartFile file, int with,
+			int height, PicPath imgPath) {
+		if(!file.isEmpty()){
+			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
+			String ebike_jpgPath = generateFileName(file
+					.getOriginalFilename());
+			ImgUploadThread iThread = new ImgUploadThread(file,
+					with, height, imgPath,
+					ebike_jpgPath);
+			iThread.run();
+			return format.format(new Date()) + "/" + ebike_jpgPath;
+		}else {
+			return null;
+		}
+		
 	}
 
 	/**
