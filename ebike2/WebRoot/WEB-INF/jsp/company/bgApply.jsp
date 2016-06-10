@@ -208,7 +208,7 @@ function checkValues(){
 	if($("[id='ywyys']:checked").length==0){
 		alert("请选择业务原因！");
 		return false;
-	}else if($("[id='slzls']:checked").length==0){
+	}else if($("[name='slzls']:checked").length==0){
 		alert("请选择受理资料！");
 		return false;
 	}else{
@@ -274,6 +274,15 @@ function queryDetaiList(obj){
 }
 
 
+function selectZlzl(dmz){
+	if($('#'+dmz+"1").attr('checked')=='checked'){
+		$('#'+dmz).attr('disabled',false);
+	}else{
+		$('#'+dmz).attr('disabled',true);
+	}
+		
+	
+}
 </script>
 </head>
 <body class="easyui-layout">
@@ -330,10 +339,17 @@ function queryDetaiList(obj){
 			</li>
 			<li>受理资料：
 				<c:forEach items="${slzls }" var="zl">
-					<p style="margin-left:55px;"><input type="checkbox" id="slzls" name="slzls" value="${zl.dmz}" />${zl.dmms1}</p>
+					<p style="margin-left:55px;"><input type="checkbox"  name="slzls" id="${zl.dmz }1" value="${zl.dmz}" onclick="selectZlzl(${zl.dmz})"/>${zl.dmms1}</p>
 				</c:forEach>
 			</li>
-			<li>受理备注：<textarea name="slbz" cols="63" rows="5"></textarea></li>
+			<c:forEach items="${slzls }" var="zl">
+			<li>上传附件:
+				
+				<input type="file" id="${zl.dmz }" disabled="disabled" name="file${zl.dmz }">
+				
+			</li>
+			</c:forEach>
+			<li>受理备注：</li><textarea name="slbz" cols="63" rows="5"></textarea>
 		</ul>
 		</div>
 		<div style="text-align: center;padding-top:25px;">

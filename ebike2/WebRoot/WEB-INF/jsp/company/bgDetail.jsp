@@ -553,7 +553,7 @@ function change(){
 			<input type="hidden"
 				value="${ddcDaxxb.vcQualifiedImg }" name="vcQualifiedImg">	
 				
-		  	<input type="text" id="bz" name="note">		
+		  	<input type="hidden" id="bz" name="note">		
 	<!-- 点变更时弹出的表单 -->
 	<div id="dgformDiv2" class="easyui-dialog"
 		style="width:550px;height:300px;padding:10px 20px 20px 10px;top:500px;"

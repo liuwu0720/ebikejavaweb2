@@ -173,6 +173,11 @@ public class EbikeChangAction {
 		// 受理资料
 		List<DdcSjzd> selectSlzls = iApplyService.getDbyyList(
 				ddcDaxxb.getSlzl(), "BASQZL");
+		
+		String jsr1State=iCompanyService.getjsrStateBySfzhm(ddcDaxxb.getSfzmhm1());
+		String jsr2State = iCompanyService.getjsrStateBySfzhm(ddcDaxxb.getSfzmhm2());
+		ddcDaxxb.setVcJsr1State(jsr1State);
+		ddcDaxxb.setVcJsr2State(jsr2State);
 
 		String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
 		String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
