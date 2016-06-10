@@ -103,7 +103,7 @@ function exportPage() {
 				</tr>
 				<tr>
 					<th>驾驶人姓名1</th>
-					<td>${ddcDaxxb.jsrxm1 }</td>	
+					<td>${ddcDaxxb.jsrxm1 }(${ddcDaxxb.vcJsr1State })</td>	
 					<th>驾驶人性别1</th>
 					<c:if test="${ddcDaxxb.xb1 == 0 }">
 					<td>男</td>
@@ -118,7 +118,7 @@ function exportPage() {
 				</tr>
 				<tr>
 					<th>驾驶人姓名2</th>
-					<td>${ddcDaxxb.jsrxm2 }</td>
+					<td>${ddcDaxxb.jsrxm2 }(${ddcDaxxb.vcJsr2State })</td>
 					<th>驾驶人性别2</th>
 					<td>
 					<c:if test="${ddcDaxxb.xb2 == 0 }">男</c:if>

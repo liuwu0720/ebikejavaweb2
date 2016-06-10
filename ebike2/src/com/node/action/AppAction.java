@@ -137,6 +137,10 @@ public class AppAction {
 			String ztName = iApplyService.findByProPerties("CLZT",
 					ddcDaxxb.getZt());
 			ddcDaxxb.setZtName(ztName);
+			String jsr1State = iCompanyService.getjsrStateBySfzhm(ddcDaxxb.getSfzmhm1());
+			String jsr2State = iCompanyService.getjsrStateBySfzhm(ddcDaxxb.getSfzmhm2());
+			ddcDaxxb.setVcJsr1State(jsr1State);
+			ddcDaxxb.setVcJsr2State(jsr2State);
 			// 申报单位
 			if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
 				DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long

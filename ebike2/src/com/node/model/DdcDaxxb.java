@@ -98,7 +98,33 @@ public class DdcDaxxb implements java.io.Serializable {
 	private String vcUser2WorkImgShow;//驾驶人2 在职证明或居住证
 	private String vcQualifiedImgShow;//车辆合格证
 	private String vcEbikeInsuranceImgShow;//投保凭证
+	private String vcJsr1State;
+	private String vcJsr2State;
 	
+	
+	@Transient
+	public String getVcJsr1State() {
+		return vcJsr1State;
+	}
+
+	/**
+	 * @param vcJsr1State : set the property vcJsr1State.
+	 */
+	public void setVcJsr1State(String vcJsr1State) {
+		this.vcJsr1State = vcJsr1State;
+	}
+
+	@Transient
+	public String getVcJsr2State() {
+		return vcJsr2State;
+	}
+
+	/**
+	 * @param vcJsr2State : set the property vcJsr2State.
+	 */
+	public void setVcJsr2State(String vcJsr2State) {
+		this.vcJsr2State = vcJsr2State;
+	}
 
 	@Transient
 	public String getVcUser1WorkImgShow() {

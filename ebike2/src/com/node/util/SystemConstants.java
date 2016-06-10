@@ -140,6 +140,13 @@ public class SystemConstants {
 	public static final String DDCFLOW_TABLE = "DDC_FLOW";
 	public static final String TOKEN_ALIPAY = "DDCGLXT2016";
 	
+	/**
+	 * 司机状态
+	 */
+	
+	public static final String USER_STATUS_0 = "未认证";
+	public static final String USER_STATUS_1 = "已实名认证";
+	public static final String USER_STATUS_2 = "星级用户";
 
 	public static void main(String[] args) {
 		String codeString = "13366665555";

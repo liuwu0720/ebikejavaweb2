@@ -166,4 +166,15 @@ public interface ICompanyService {
 	  */
 	DdcHyxhSsdw getDdcHyxhSsdwById(long dId);
 
+	
+	/**
+	  * 方法描述：
+	  * @param sfzmhm1
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月10日 上午9:39:10
+	  */
+	String getjsrStateBySfzhm(String sfzmhm1);
+
 }

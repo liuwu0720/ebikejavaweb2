@@ -10,13 +10,16 @@ package com.node.service.imp;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.node.dao.IDcHyxhSsdwLogDao;
+import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcHyxhBaseDao;
 import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IPicPathDao;
+import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwLog;
@@ -24,6 +27,7 @@ import com.node.model.PicPath;
 import com.node.service.ICompanyService;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
+import com.node.util.SystemConstants;
 
 /**
  * 类描述：
@@ -45,7 +49,11 @@ public class CompanyServiceImp implements ICompanyService {
 
 	@Autowired
 	IDdcHyxhBaseDao iDdcHyxhBaseDao;
-
+	
+	@Autowired
+	IDdcDriverDao iDdcDriverDao;
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -216,6 +224,28 @@ public class CompanyServiceImp implements ICompanyService {
 	public DdcHyxhSsdw getDdcHyxhSsdwById(long dId) {
 		// TODO Auto-generated method stub
 		return iDdcHyxhSsdwDao.get(dId);
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ICompanyService#getjsrStateBySfzhm(java.lang.String)
+		 */
+	@Override
+	public String getjsrStateBySfzhm(String sfzmhm1) {
+		List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("sfzhm", sfzmhm1);
+		if(CollectionUtils.isNotEmpty(ddcDrivers)){
+			DdcDriver ddcDriver = ddcDrivers.get(0);
+			if(ddcDriver.getUserStatus()==0){
+				return SystemConstants.USER_STATUS_0;
+			}else if(ddcDriver.getUserStatus()==1){
+				return SystemConstants.USER_STATUS_1;
+			}else {
+				return SystemConstants.USER_STATUS_2;
+			}
+		}else {
+			return SystemConstants.USER_STATUS_0;
+		}
+		
 	}
 
 }

@@ -798,7 +798,11 @@ public class ApplyAction {
 		ddcHyxhSsdwclsb.setCysyName(cysyName);// 车身颜色
 		String xsqyName = iApplyService.findByProPerties("SSQY",
 				ddcHyxhSsdwclsb.getXsqy());
-		ddcHyxhSsdwclsb.setXsqyName(xsqyName);// 行驶区域
+		ddcHyxhSsdwclsb.setXsqyName(xsqyName);// 行驶区域.
+		String jsr1State = iCompanyService.getjsrStateBySfzhm(ddcHyxhSsdwclsb.getSfzmhm1());
+		String jsr2State = iCompanyService.getjsrStateBySfzhm(ddcHyxhSsdwclsb.getSfzmhm2());
+		ddcHyxhSsdwclsb.setVcJsr1State(jsr1State);
+		ddcHyxhSsdwclsb.setVcJsr2State(jsr2State);
 
 		// 申报单位
 		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getSsdwId())) {
