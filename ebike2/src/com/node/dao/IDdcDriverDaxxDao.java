@@ -18,4 +18,7 @@ import com.node.model.DdcDriverDaxx;
  */
 public interface IDdcDriverDaxxDao extends GenericDao<DdcDriverDaxx, Long>  {
 
+	
+	
+
 }

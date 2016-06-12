@@ -44,6 +44,11 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
+			field : 'hyxhzh',
+			title : '行业协会账号',
+			align:'center',
+			width : 120
+		},{
 			field : 'hyxhfzr',
 			title : '行业协会负责人',
 			align:'center',

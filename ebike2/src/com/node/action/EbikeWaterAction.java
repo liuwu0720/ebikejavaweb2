@@ -218,6 +218,12 @@ public class EbikeWaterAction {
 		ddcFlow.setVcUser2WorkImgShow(vcUser2WorkImgShow);
 		ddcFlow.setVcQualifiedImgShow(vcQualifiedImgShow);
 		ddcFlow.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
+		
+		ddcFlow.setVcReportImgShow(parseUrl(ddcFlow.getVcReportImg()));
+		ddcFlow.setVcScrapImgShow(parseUrl(ddcFlow.getVcScrapImg()));
+		ddcFlow.setVcOtherImgShow(parseUrl(ddcFlow.getVcOtherImg()));
+		ddcFlow.setVcDjImgShow(parseUrl(ddcFlow.getVcDjImg()));
+		
 		request.setAttribute("ddcFlow", ddcFlow);
 		request.setAttribute("slzlDdcSjzds", slzlDdcSjzds);
 		request.setAttribute("tbyyDdcSjzds", tbyyDdcSjzds);

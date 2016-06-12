@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,10 +76,9 @@ public class EbikeServiceImp implements IEbikeService {
 
 	@Autowired
 	IDdcDriverTempDao iDdcDriverTempDao;
-	
+
 	@Autowired
 	IDdcDriverDaxxDao iDdcDriverDaxxDao;
-	
 
 	/*
 	 * (non-Javadoc)
@@ -294,84 +294,231 @@ public class EbikeServiceImp implements IEbikeService {
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
 				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
 						vcUserName, vcUserCard });
-		if(CollectionUtils.isNotEmpty(ddcDriverTemps)){
+		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			return false;
-		}else {
+		} else {
 			return true;
 		}
-		
+
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#saveDriverTemp(com.node.model.DdcDriverTemp)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#saveDriverTemp(com.node.model.DdcDriverTemp
+	 * )
+	 */
 	@Override
 	public void saveDriverTemp(DdcDriverTemp ddcDriverTemp) {
 		// TODO Auto-generated method stub
 		iDdcDriverTempDao.save(ddcDriverTemp);
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#updateDriverTemp(com.node.model.DdcDriverTemp)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#updateDriverTemp(com.node.model.DdcDriverTemp
+	 * )
+	 */
 	@Override
 	public void updateDriverTemp(DdcDriverTemp ddcDriverTemp) {
 		// TODO Auto-generated method stub
 		iDdcDriverTempDao.update(ddcDriverTemp);
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#saveDdcDriver(com.node.model.DdcDriver)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#saveDdcDriver(com.node.model.DdcDriver)
+	 */
 	@Override
 	public void saveDdcDriver(DdcDriver ddcDriver2) {
-		List<DdcDriver> oldDdcDrivers = iDdcDriverDao.findByPropertys(new String[]{
-			"jsrxm","sfzhm"	
-		}, new Object[]{
-			ddcDriver2.getJsrxm(),ddcDriver2.getSfzhm()	
-		});
-		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(new String[]{
-				"vcUserName","vcUserCard"	
-			}, new Object[]{
-				ddcDriver2.getJsrxm(),ddcDriver2.getSfzhm()	
-			});
-		if(CollectionUtils.isNotEmpty(ddcDriverTemps)){
-			ddcDriver2.setUserStatus(1);//驾驶人状态0未认证 1实名认证 2星级用户
-		}else {
+		List<DdcDriver> oldDdcDrivers = iDdcDriverDao.findByPropertys(
+				new String[] { "jsrxm", "sfzhm" },
+				new Object[] { ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
+		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
+				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
+						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
+		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
+			ddcDriver2.setUserStatus(1);// 驾驶人状态0未认证 1实名认证 2星级用户
+		} else {
 			ddcDriver2.setUserStatus(0);
 		}
 		ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 		ddcDriver2.setTranDate(new Date());
-		if(CollectionUtils.isNotEmpty(oldDdcDrivers)){
+		if (CollectionUtils.isNotEmpty(oldDdcDrivers)) {
 			ddcDriver2.setId(oldDdcDrivers.get(0).getId());
 			ddcDriver2.setUserPassword(oldDdcDrivers.get(0).getUserPassword());
-			ddcDriver2.setIlleagalTimes(oldDdcDrivers.get(0).getIlleagalTimes());
+			ddcDriver2
+					.setIlleagalTimes(oldDdcDrivers.get(0).getIlleagalTimes());
 			ddcDriver2.setUserStatus(oldDdcDrivers.get(0).getUserStatus());
-			/*ddcDriver2.setVcUserImg(oldDdcDrivers.get(0).getVcUserImg());
-			ddcDriver2.setVcUserWorkImg(oldDdcDrivers.get(0).getVcUserWorkImg());*/
+			/*
+			 * ddcDriver2.setVcUserImg(oldDdcDrivers.get(0).getVcUserImg());
+			 * ddcDriver2
+			 * .setVcUserWorkImg(oldDdcDrivers.get(0).getVcUserWorkImg());
+			 */
 			iDdcDriverDao.updateCleanBefore(ddcDriver2);
-		}else {
-		
+		} else {
+
 			iDdcDriverDao.save(ddcDriver2);
 		}
-		
+
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#findAllDaxxByDriverId(java.lang.Long)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#findAllDaxxByDriverId(java.lang.Long)
+	 */
 	@Override
 	public List<Long> findAllDaxxByDriverId(Long id) {
-		List<DdcDriverDaxx> ddcDriverDaxxs = iDdcDriverDaxxDao.findByProperty("driverId", id); 
-		List<Long> driverIds=new ArrayList<Long>();
-		for(DdcDriverDaxx daxx:ddcDriverDaxxs){
+		List<DdcDriverDaxx> ddcDriverDaxxs = iDdcDriverDaxxDao.findByProperty(
+				"driverId", id);
+		List<Long> driverIds = new ArrayList<Long>();
+		for (DdcDriverDaxx daxx : ddcDriverDaxxs) {
 			driverIds.add(daxx.getDaId());
 		}
 		return driverIds;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#updateDdcDriverDaxxb(com.node.model.DdcDaxxb
+	 * )
+	 */
+	@Override
+	public void updateDdcDriverDaxxb(DdcDaxxb newDaxxb, DdcDaxxb oldDaxxb) {
+		List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("sfzhm",
+				newDaxxb.getSfzmhm1());
+		List<DdcDriver> oldDdcDrivers = iDdcDriverDao.findByProperty("sfzhm",
+				oldDaxxb.getSfzmhm1());
+		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
+			List<DdcDriverDaxx> ddcDriverDaxxs = iDdcDriverDaxxDao
+					.findByPropertys(
+							new String[] { "driverId", "daId" },
+							new Object[] { oldDdcDrivers.get(0).getId(), newDaxxb.getId() });
+			if(CollectionUtils.isNotEmpty(ddcDriverDaxxs)){
+				DdcDriverDaxx newDdcDriverDaxx = new DdcDriverDaxx();
+				newDdcDriverDaxx.setId(ddcDriverDaxxs.get(0).getId());
+				newDdcDriverDaxx.setDaId(newDaxxb.getId());
+				newDdcDriverDaxx.setDriverId(ddcDrivers.get(0).getId());
+				newDdcDriverDaxx.setSysFlag(SystemConstants.SYSNFLAG_UPDATE);
+				iDdcDriverDaxxDao.update(newDdcDriverDaxx);
+			}
+		}
+		
+		
+		if(StringUtils.isNotBlank(newDaxxb.getSfzmhm2())){
+			List<DdcDriver> ddcDrivers2 = iDdcDriverDao.findByProperty("sfzhm",
+					newDaxxb.getSfzmhm2());
+			List<DdcDriver> oldDdcDrivers2 = iDdcDriverDao.findByProperty("sfzhm",
+					oldDaxxb.getSfzmhm2());
+			if (CollectionUtils.isNotEmpty(ddcDrivers2)) {
+				DdcDriver ddcDriver2 = ddcDrivers2.get(0);
+				if(CollectionUtils.isNotEmpty(oldDdcDrivers2)){
+					List<DdcDriverDaxx> ddcDriverDaxxs2 = iDdcDriverDaxxDao
+							.findByPropertys(
+									new String[] { "driverId", "daId" },
+									new Object[] { oldDdcDrivers2.get(0).getId(), newDaxxb.getId() });
+					if(CollectionUtils.isNotEmpty(ddcDriverDaxxs2)){
+						DdcDriverDaxx newDdcDriverDaxx = new DdcDriverDaxx();
+						newDdcDriverDaxx.setId(ddcDriverDaxxs2.get(0).getId());
+						newDdcDriverDaxx.setDaId(newDaxxb.getId());
+						newDdcDriverDaxx.setDriverId(ddcDriver2.getId());
+						newDdcDriverDaxx.setSysFlag(SystemConstants.SYSNFLAG_UPDATE);
+						iDdcDriverDaxxDao.update(newDdcDriverDaxx);
+					}
+				}
+				
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#saveUpdateDriver(com.node.model.DdcDaxxb)
+	 */
+	@Override
+	public void saveUpdateDriver(DdcDaxxb newDaxxb) {
+		List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("sfzhm",
+				newDaxxb.getSfzmhm1());
+		if (CollectionUtils.isEmpty(ddcDrivers)) {
+			DdcDriver ddcDriver = new DdcDriver();
+			ddcDriver.setHyxhzh(newDaxxb.getHyxhzh());
+			ddcDriver.setIlleagalTimes(0);
+			ddcDriver.setJsrxm(newDaxxb.getJsrxm1());
+			ddcDriver.setLxdh(newDaxxb.getLxdh1());
+			ddcDriver.setSfzhm(newDaxxb.getSfzmhm1());
+			ddcDriver.setSsdwId(Integer.parseInt(newDaxxb.getSsdwId()));
+			ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+			ddcDriver.setTranDate(new Date());
+			ddcDriver.setUserCode(ddcDriver.getLxdh());
+			ddcDriver.setUserPassword("123456");
+			ddcDriver.setUserStatus(1);
+			ddcDriver.setVcUserImg(newDaxxb.getVcUser1Img());
+			ddcDriver.setVcUserWorkImg(newDaxxb.getVcUser1WorkImg());
+			ddcDriver.setXb(newDaxxb.getXb1());
+			ddcDriver.setVcUserCardImg1(newDaxxb.getVcUser1CardImg1());
+			ddcDriver.setVcUserCardImg2(newDaxxb.getVcUser1CardImg2());
+			iDdcDriverDao.save(ddcDriver);
+		}else {
+			for(DdcDriver ddcDriver:ddcDrivers){
+				ddcDriver.setLxdh(newDaxxb.getLxdh1());
+				ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+				ddcDriver.setVcUserImg(newDaxxb.getVcUser1Img());
+				ddcDriver.setVcUserWorkImg(newDaxxb.getVcUser1WorkImg());
+				ddcDriver.setXb(newDaxxb.getXb1());
+				ddcDriver.setVcUserCardImg1(newDaxxb.getVcUser1CardImg1());
+				ddcDriver.setVcUserCardImg2(newDaxxb.getVcUser1CardImg2());
+				iDdcDriverDao.update(ddcDriver);
+			}
+		}
+		
+		
+		if(StringUtils.isNotBlank(newDaxxb.getSfzmhm2())){
+			List<DdcDriver> ddcDrivers2 = iDdcDriverDao.findByProperty("sfzhm",
+					newDaxxb.getSfzmhm2());
+			if (CollectionUtils.isEmpty(ddcDrivers2)) {
+				DdcDriver ddcDriver = new DdcDriver();
+				ddcDriver.setHyxhzh(newDaxxb.getHyxhzh());
+				ddcDriver.setIlleagalTimes(0);
+				ddcDriver.setJsrxm(newDaxxb.getJsrxm2());
+				ddcDriver.setLxdh(newDaxxb.getLxdh2());
+				ddcDriver.setSfzhm(newDaxxb.getSfzmhm2());
+				ddcDriver.setSsdwId(Integer.parseInt(newDaxxb.getSsdwId()));
+				ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+				ddcDriver.setTranDate(new Date());
+				ddcDriver.setUserCode(ddcDriver.getLxdh());
+				ddcDriver.setUserPassword("123456");
+				ddcDriver.setUserStatus(1);
+				ddcDriver.setVcUserImg(newDaxxb.getVcUser2Img());
+				ddcDriver.setVcUserWorkImg(newDaxxb.getVcUser2WorkImg());
+				ddcDriver.setXb(newDaxxb.getXb1());
+				ddcDriver.setVcUserCardImg1(newDaxxb.getVcUser2CardImg1());
+				ddcDriver.setVcUserCardImg2(newDaxxb.getVcUser2CardImg2());
+				iDdcDriverDao.save(ddcDriver);
+			}else {
+				for(DdcDriver ddcDriver:ddcDrivers){
+					ddcDriver.setLxdh(newDaxxb.getLxdh2());
+					ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+					ddcDriver.setVcUserImg(newDaxxb.getVcUser2Img());
+					ddcDriver.setVcUserWorkImg(newDaxxb.getVcUser2WorkImg());
+					ddcDriver.setXb(newDaxxb.getXb2());
+					ddcDriver.setVcUserCardImg1(newDaxxb.getVcUser2CardImg1());
+					ddcDriver.setVcUserCardImg2(newDaxxb.getVcUser2CardImg2());
+					iDdcDriverDao.update(ddcDriver);
+				}
+			}
+		}
+		
+
 	}
 
 }

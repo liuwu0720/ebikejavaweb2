@@ -44,6 +44,11 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
+			field : 'userCode',
+			title : '单位账号',
+			align:'center',
+			width : 120
+		},{
 			field : 'lxr',
 			title : '联系人',
 			align:'center',
@@ -88,15 +93,6 @@ $(document).ready(function(){
 				}else{
 					return "启用";
 				}
-			}
-		},{
-			field : 'null',
-			title:'操作',
-			align:'center',
-			width : 120,
-			formatter:function(value,row,index){
-				var del = "<a    onclick='deleteRow("+row.id+")'>禁用</a>&nbsp;&nbsp;&nbsp;";
-				return del;	
 			}
 		}
 

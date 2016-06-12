@@ -59,8 +59,8 @@ public class TaskServiceImp implements ITaskService{
 		 */
 	@Override
 	public DdcHyxhSsdwclsb findClsbByDriver(DdcDriver ddcDriver) {
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByProperty("jsrxm1", ddcDriver.getJsrxm());
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs2 = iDdcHyxhSsdwclsbDao.findByProperty("jsrxm2", ddcDriver.getJsrxm());
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByProperty("sfzmhm1", ddcDriver.getSfzhm());
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs2 = iDdcHyxhSsdwclsbDao.findByProperty("sfzmhm2", ddcDriver.getSfzhm());
 		if(CollectionUtils.isNotEmpty(ddcHyxhSsdwclsbs)){
 			return ddcHyxhSsdwclsbs.get(0);
 		}

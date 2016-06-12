@@ -263,4 +263,27 @@ public interface IEbikeService {
 	  */
 	List<Long> findAllDaxxByDriverId(Long id);
 
+	
+	/**
+	  * 方法描述：
+	  * @param newDaxxb 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月11日 下午6:19:38
+	 * @param oldDaxxb 
+	 * @param ddcDriver 
+	  */
+	void updateDdcDriverDaxxb(DdcDaxxb newDaxxb, DdcDaxxb oldDaxxb);
+
+	
+	/**
+	  * 方法描述：
+	  * @param newDaxxb 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月11日 下午6:28:37
+	 * @return 
+	  */
+	void saveUpdateDriver(DdcDaxxb newDaxxb);
+
 }

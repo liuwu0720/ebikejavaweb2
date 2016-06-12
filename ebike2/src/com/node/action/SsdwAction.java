@@ -388,6 +388,8 @@ public class SsdwAction extends Thread {
 		ddcDriver1.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
 		ddcDriver1.setHyxhzh(ddcHyxhSsdwclsb.getHyxhzh());
 		ddcDriver1.setSsdwId(Integer.parseInt(ddcHyxhSsdwclsb.getSsdwId()));
+		ddcDriver1.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser1CardImg1());
+		ddcDriver1.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser1CardImg2());
 		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())) {
 			DdcDriver ddcDriver2 = new DdcDriver();
 			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
@@ -404,6 +406,8 @@ public class SsdwAction extends Thread {
 				ddcDriver2
 						.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
 			}
+			ddcDriver2.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser2CardImg1());
+			ddcDriver2.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser2CardImg2());
 
 			iEbikeService.saveDdcDriver(ddcDriver2);
 		}

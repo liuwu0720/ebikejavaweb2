@@ -270,11 +270,11 @@ public class SsdwChangeAction {
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
-
+		
 		String slzls = request.getParameter("slzllist");// 重组变更资料字符串
 		long daId = daxxb.getId();
 		DdcDaxxb newDaxxb = iEbikeService.getById(daId);
-		// newDaxxb.setSlzl(slzls);
+		DdcDaxxb oldDaxxb = newDaxxb;
 		newDaxxb.setJsrxm1(daxxb.getJsrxm1());
 		newDaxxb.setJsrxm2(daxxb.getJsrxm2());
 		newDaxxb.setXb1(daxxb.getXb1());
@@ -285,6 +285,14 @@ public class SsdwChangeAction {
 		newDaxxb.setSfzmhm2(daxxb.getSfzmhm2());
 		newDaxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 		newDaxxb.setTranDate(new Date());
+		//检查支付宝验证
+		message = iApplyService.findIsValidByDaxxb(newDaxxb);
+		if(!message.equalsIgnoreCase("success")){
+			AjaxUtil.rendJson(response, false, message);
+			return;
+		}
+		
+		
 		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
 		String ebike_jpgPath = uploadImgThread(request, ebike_img,
 				SystemConstants.IMG_EBIKE_WITH,
@@ -370,8 +378,9 @@ public class SsdwChangeAction {
 
 			// 保存日志
 			// saveDaxxblog(newDaxxb, request);
-
+			iEbikeService.saveUpdateDriver(newDaxxb);
 			iEbikeService.update(newDaxxb);
+			iEbikeService.updateDdcDriverDaxxb(newDaxxb,oldDaxxb);
 			AjaxUtil.rendJson(response, true, "操作成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -380,35 +389,32 @@ public class SsdwChangeAction {
 
 	}
 
-	
 	/**
-	  * 方法描述：
-	  * @param request
-	  * @param vcUser2WorkImg_file
-	  * @param imgInvoiceWidth
-	  * @param imgInvoiceHeight
-	  * @param imgPath
-	  * @return 
-	  * @version: 1.0
-	  * @author: liuwu
-	  * @version: 2016年6月9日 下午5:11:15
-	  */
+	 * 方法描述：
+	 * 
+	 * @param request
+	 * @param vcUser2WorkImg_file
+	 * @param imgInvoiceWidth
+	 * @param imgInvoiceHeight
+	 * @param imgPath
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年6月9日 下午5:11:15
+	 */
 	private String uploadImgThread(HttpServletRequest request,
-			MultipartFile file, int with,
-			int height, PicPath imgPath) {
-		if(!file.isEmpty()){
+			MultipartFile file, int with, int height, PicPath imgPath) {
+		if (!file.isEmpty()) {
 			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
-			String ebike_jpgPath = generateFileName(file
-					.getOriginalFilename());
-			ImgUploadThread iThread = new ImgUploadThread(file,
-					with, height, imgPath,
-					ebike_jpgPath);
+			String ebike_jpgPath = generateFileName(file.getOriginalFilename());
+			ImgUploadThread iThread = new ImgUploadThread(file, with, height,
+					imgPath, ebike_jpgPath);
 			iThread.run();
 			return format.format(new Date()) + "/" + ebike_jpgPath;
-		}else {
+		} else {
 			return null;
 		}
-		
+
 	}
 
 	/**
@@ -472,7 +478,8 @@ public class SsdwChangeAction {
 	 * @throws IllegalAccessException
 	 */
 	@RequestMapping("/zhuxiao")
-	public void zhuxiao(HttpServletRequest request,
+	public void zhuxiao(
+			HttpServletRequest request,
 			@RequestParam(value = "file1", required = false) MultipartFile file1,
 			@RequestParam(value = "file2", required = false) MultipartFile file2,
 			@RequestParam(value = "file3", required = false) MultipartFile file3,
@@ -480,42 +487,42 @@ public class SsdwChangeAction {
 			HttpServletResponse response, String id, String slbz)
 			throws IllegalAccessException, InvocationTargetException {
 		DdcFlow ddcFlow = new DdcFlow();
-		
+
 		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
-		if(file1 != null){
+		if (file1 != null) {
 			String vcReportImg = uploadImgThread(request, file1,
 					SystemConstants.IMG_EBIKE_WITH,
 					SystemConstants.IMG_EBIKE_HEIGHT, imgPath);
-			if(StringUtils.isNotBlank(vcReportImg)){
+			if (StringUtils.isNotBlank(vcReportImg)) {
 				ddcFlow.setVcReportImg(vcReportImg);
 			}
-			
+
 		}
-		if(file2!=null){
+		if (file2 != null) {
 			String vcScrapImg = uploadImgThread(request, file2,
 					SystemConstants.IMG_EBIKE_WITH,
 					SystemConstants.IMG_EBIKE_HEIGHT, imgPath);
-			if(StringUtils.isNotBlank(vcScrapImg)){
+			if (StringUtils.isNotBlank(vcScrapImg)) {
 				ddcFlow.setVcScrapImg(vcScrapImg);
 			}
 		}
-		if(file3!=null){
+		if (file3 != null) {
 			String vcOtherImg = uploadImgThread(request, file3,
 					SystemConstants.IMG_EBIKE_WITH,
 					SystemConstants.IMG_EBIKE_HEIGHT, imgPath);
-			if(StringUtils.isNotBlank(vcOtherImg)){
+			if (StringUtils.isNotBlank(vcOtherImg)) {
 				ddcFlow.setVcOtherImg(vcOtherImg);
 			}
 		}
-		if(file4!=null){
+		if (file4 != null) {
 			String vcDjImg = uploadImgThread(request, file4,
 					SystemConstants.IMG_EBIKE_WITH,
 					SystemConstants.IMG_EBIKE_HEIGHT, imgPath);
-			if(StringUtils.isNotBlank(vcDjImg)){
+			if (StringUtils.isNotBlank(vcDjImg)) {
 				ddcFlow.setVcDjImg(vcDjImg);
 			}
 		}
-		
+
 		long daId = Long.parseLong(id);
 		String[] ywyys = request.getParameterValues("ywyys");
 		String[] slzllist = request.getParameterValues("slzls");
@@ -546,7 +553,7 @@ public class SsdwChangeAction {
 			daxxb.setYwlx(type);
 			daxxb.setSlyj(null);// 审批中
 			// daxxb.setGdyj(null);
-			saveDdcFlowZhuXiao(ddcFlow,type, daxxb, newSlzl, newYwyy, slbz);
+			saveDdcFlowZhuXiao(ddcFlow, type, daxxb, newSlzl, newYwyy, slbz);
 			// saveDaxxblog(daxxb, request);
 			iEbikeService.update(daxxb);
 			AjaxUtil.rendJson(response, true, "操作成功！");
@@ -556,22 +563,22 @@ public class SsdwChangeAction {
 
 	}
 
-	
 	/**
-	  * 方法描述：
-	  * @param ddcFlow
-	  * @param type
-	  * @param daxxb
-	  * @param newSlzl
-	  * @param newYwyy
-	  * @param slbz 
-	  * @version: 1.0
-	  * @author: liuwu
-	  * @version: 2016年6月10日 上午11:21:28
-	  */
-	private void saveDdcFlowZhuXiao(DdcFlow ddcFlow ,String ywlxType, DdcDaxxb newDaxxb, String slzls,
-			String newYwyy, String note) throws IllegalAccessException,
-			InvocationTargetException {
+	 * 方法描述：
+	 * 
+	 * @param ddcFlow
+	 * @param type
+	 * @param daxxb
+	 * @param newSlzl
+	 * @param newYwyy
+	 * @param slbz
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年6月10日 上午11:21:28
+	 */
+	private void saveDdcFlowZhuXiao(DdcFlow ddcFlow, String ywlxType,
+			DdcDaxxb newDaxxb, String slzls, String newYwyy, String note)
+			throws IllegalAccessException, InvocationTargetException {
 		// TODO Auto-generated method stub
 		BeanUtils.copyProperties(ddcFlow, newDaxxb);
 		// 生成流水号

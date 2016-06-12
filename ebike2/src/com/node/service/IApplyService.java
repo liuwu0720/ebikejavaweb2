@@ -263,4 +263,15 @@ public interface IApplyService {
 	  */
 	String findIsValid(DdcHyxhSsdwclsb ddcHyxhSsdwclsb);
 
+	
+	/**
+	  * 方法描述：
+	  * @param newDaxxb
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月11日 下午6:24:57
+	  */
+	String findIsValidByDaxxb(DdcDaxxb newDaxxb);
+
 }

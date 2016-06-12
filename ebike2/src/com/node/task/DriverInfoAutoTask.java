@@ -55,10 +55,10 @@ public class DriverInfoAutoTask {
      */  
 	@Scheduled(cron = "0 35 22 * * *?")
 	public void autoCardCalculate() {
-		/*List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
 		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
 			saveHasValidDriver(ddcHyxhSsdwclsb);
-		}*/
+		}
 		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();//所有未绑定协会单位的司机
 		if(CollectionUtils.isNotEmpty(ddcDrivers)){
 			for(DdcDriver ddcDriver:ddcDrivers){
@@ -86,6 +86,8 @@ public class DriverInfoAutoTask {
 		ddcDriver1.setUserPassword("123456");
 		ddcDriver1.setVcUserImg(ddcHyxhSsdwclsb.getVcUser1Img());
 		ddcDriver1.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
+		ddcDriver1.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser1CardImg1());
+		ddcDriver1.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser1CardImg2());
 		if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())){
 			DdcDriver ddcDriver2 = new DdcDriver();
 			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
@@ -99,6 +101,13 @@ public class DriverInfoAutoTask {
 			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())){
 				ddcDriver2.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
 			}
+			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg1())){
+				ddcDriver2.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser2CardImg1());
+			}
+			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg2())){
+				ddcDriver2.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser2CardImg2());
+			}
+			
 			
 			iEbikeService.saveDdcDriver(ddcDriver2);
 		}

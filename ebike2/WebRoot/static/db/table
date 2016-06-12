@@ -2328,6 +2328,11 @@ ALTER TABLE DDC_FLOW ADD VC_USER1WORKIMG VARCHAR2(100);
  comment on column DDC_DRIVER.SSDWID  is '所属单位ID';  
   ALTER TABLE DDC_DRIVER ADD HYXHZH VARCHAR2(20) ;
   comment on column DDC_DRIVER.HYXHZH  is '所属协会账号'; 
+  
+ ALTER TABLE DDC_DRIVER ADD VC_USER_CARDIMG1 VARCHAR2(100);
+ comment on column DDC_DRIVER.VC_USER_CARDIMG1  is '身份证正面';  
+  ALTER TABLE DDC_DRIVER ADD VC_USER_CARDIMG2 VARCHAR2(100);
+ comment on column DDC_DRIVER.VC_USER_CARDIMG2  is '身份证反面';  
  
 -- Create sequence 
 create sequence SEQ_DDC_DRIVER
@@ -2343,7 +2348,8 @@ create table DDC_DRIVER_DAXX
 (
   id       NUMBER not null,
   driverid NUMBER,
-  daid     NUMBER
+  daid     NUMBER,
+   syn_flag VARCHAR2(20)
 );
 -- Add comments to the table 
 comment on table DDC_DRIVER_DAXX
@@ -2353,11 +2359,22 @@ comment on column DDC_DRIVER_DAXX.driverid
   is '司机ID';
 comment on column DDC_DRIVER_DAXX.daid
   is '档案ID';
+comment on column DDC_DRIVER_DAXX.syn_flag
+  is '同步标志';  
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table DDC_DRIVER_DAXX
   add constraint PK_DDC_DRIVER_DAXX primary key (ID)
   using index 
 
+
+    
+-- Create sequence 
+create sequence SEQ_DDC_DRIVER_DAXX
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20;
 
  
  

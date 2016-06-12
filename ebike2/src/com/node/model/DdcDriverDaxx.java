@@ -33,6 +33,19 @@ public class DdcDriverDaxx implements Serializable{
 	private Long id;
 	private Long driverId;
 	private Long daId;
+	private String sysFlag;
+	
+	
+	@Column(name = "SYN_FLAG", length = 20)
+	public String getSysFlag() {
+		return sysFlag;
+	}
+	/**
+	 * @param sysFlag : set the property sysFlag.
+	 */
+	public void setSysFlag(String sysFlag) {
+		this.sysFlag = sysFlag;
+	}
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
@@ -65,5 +78,6 @@ public class DdcDriverDaxx implements Serializable{
 	public void setDaId(Long daId) {
 		this.daId = daId;
 	}
+	
 	
 }

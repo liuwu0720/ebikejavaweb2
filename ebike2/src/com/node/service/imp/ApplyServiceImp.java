@@ -417,4 +417,36 @@ public class ApplyServiceImp implements IApplyService {
 		
 		return message;
 	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IApplyService#findIsValidByDaxxb(com.node.model.DdcDaxxb)
+		 */
+	@Override
+	public String findIsValidByDaxxb(DdcDaxxb newDaxxb) {
+		String message = "success";
+		List<DdcDriverTemp> ddcDriverTemps1 = iDdcDriverTempDao.findByPropertys(new String[]{
+			"vcUserName","vcUserCard"	
+		}, new Object[]{
+				newDaxxb.getJsrxm1(),newDaxxb.getSfzmhm1()	
+		});
+		
+	
+		if(CollectionUtils.isEmpty(ddcDriverTemps1)){
+			message = "驾驶人1姓名【"+ newDaxxb.getJsrxm1()+"】和身份证号码【"+newDaxxb.getSfzmhm1()+"】未通过实名验证";
+		}
+		if(StringUtils.isNotBlank(newDaxxb.getJsrxm2())){
+			List<DdcDriverTemp> ddcDriverTemps2 = iDdcDriverTempDao.findByPropertys(new String[]{
+					"vcUserName","vcUserCard"	
+				}, new Object[]{
+					newDaxxb.getJsrxm2(),newDaxxb.getSfzmhm2()	
+				});
+			if(CollectionUtils.isEmpty(ddcDriverTemps2)){
+				message = "驾驶人2姓名【"+ newDaxxb.getJsrxm2()+"】和身份证号码【"+newDaxxb.getSfzmhm2()+"】未通过实名验证";
+			}
+		}
+		
+		
+		return message;
+	}
 }

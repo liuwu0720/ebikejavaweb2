@@ -23,4 +23,5 @@ import com.node.model.DdcDriverDaxx;
 public class DdcDriverDaxxDaoImp extends GenericHibernateDao<DdcDriverDaxx, Long>
 implements IDdcDriverDaxxDao{
 
+
 }

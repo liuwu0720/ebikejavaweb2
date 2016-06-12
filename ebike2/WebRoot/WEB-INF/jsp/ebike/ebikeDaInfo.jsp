@@ -152,15 +152,15 @@ function exportPage() {
 					<td colspan="2">
 					<div class="imgdiv"> 
 					<p>投保凭证照片</p>
-					<a href="${ddcDaxxb.vcEbikeInsuranceImg }" target="_blank">
-					<img src="${ddcDaxxb.vcEbikeInsuranceImg }"/>
+					<a href="${ddcDaxxb.vcEbikeInsuranceImgShow }" target="_blank">
+					<img src="${ddcDaxxb.vcEbikeInsuranceImgShow }"/>
 					</a></div>
 					</td>
 					<td colspan="2">
 					<div  class="imgdiv">
 					<p>车辆合格证照片</p>
-					<a href="${ddcDaxxb.vcQualifiedImg }" target="_blank">
-					<img src="${ddcDaxxb.vcQualifiedImg }"/>
+					<a href="${ddcDaxxb.vcQualifiedImgShow }" target="_blank">
+					<img src="${ddcDaxxb.vcQualifiedImgShow }"/>
 					</a>
 					</div</td>
 					<td colspan="2">
