@@ -347,7 +347,7 @@ public class EbikeServiceImp implements IEbikeService {
 		} else {
 			ddcDriver2.setUserStatus(0);
 		}
-		ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+		ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 		ddcDriver2.setTranDate(new Date());
 		if (CollectionUtils.isNotEmpty(oldDdcDrivers)) {
 			ddcDriver2.setId(oldDdcDrivers.get(0).getId());

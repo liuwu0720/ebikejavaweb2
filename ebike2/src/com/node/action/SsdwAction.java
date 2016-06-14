@@ -52,7 +52,7 @@ import com.node.util.SystemConstants;
 @Controller
 @RequestMapping("/ssdwAction")
 @ApiIgnore
-public class SsdwAction extends Thread {
+public class SsdwAction {
 
 	@Autowired
 	ICompanyService iCompanyService;
@@ -172,6 +172,9 @@ public class SsdwAction extends Thread {
 		 */
 		String message = iApplyService.findHmd(ddcHyxhSsdwclsb.getJsrxm1(),
 				ddcHyxhSsdwclsb.getJsrxm2());
+		if(ddcHyxhSsdwclsb.getId()==null){
+			message = iApplyService.findSameDjh(ddcHyxhSsdwclsb.getDjh());
+		}
 		if (!message.equals("success")) {
 			AjaxUtil.rendJson(response, false, message);
 			return;
@@ -181,7 +184,8 @@ public class SsdwAction extends Thread {
 		 * (!message.equals("success")) { AjaxUtil.rendJson(response, false,
 		 * message); return; }
 		 */
-
+		
+		
 		/**
 		 * 新增时检查单位配额
 		 */

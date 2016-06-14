@@ -55,10 +55,10 @@ public class DriverInfoAutoTask {
      */  
 	@Scheduled(cron = "0 35 22 * * *?")
 	public void autoCardCalculate() {
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
+		/*List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
 		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
 			saveHasValidDriver(ddcHyxhSsdwclsb);
-		}
+		}*/
 		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();//所有未绑定协会单位的司机
 		if(CollectionUtils.isNotEmpty(ddcDrivers)){
 			for(DdcDriver ddcDriver:ddcDrivers){

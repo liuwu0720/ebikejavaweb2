@@ -449,4 +449,19 @@ public class ApplyServiceImp implements IApplyService {
 		
 		return message;
 	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IApplyService#findSameDjh(java.lang.String)
+		 */
+	@Override
+	public String findSameDjh(String djh) {
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByProperty("djh", djh);
+		if(CollectionUtils.isEmpty(ddcHyxhSsdwclsbs)){
+			return "success";
+		}else {
+			return "电机号【"+djh+"】已经存在";
+		}
+		
+	}
 }

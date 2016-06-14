@@ -813,11 +813,11 @@ public class DataServiceImp implements IDataService {
 			Sheet ssdwClsbSheet = wb.getSheetAt(6);// DDC_HYXH_SSDWCLSB 内网只修改
 			updateSsdwClsb(ssdwClsbSheet);
 
-			Sheet driverSheet = wb.getSheetAt(7);// ddc_driver 内网的数据只修改
-			updateDriver(driverSheet);
+			//Sheet driverSheet = wb.getSheetAt(7);// ddc_driver 内网的数据只修改
+			//updateDriver(driverSheet);
 			
-			Sheet driverDaxxbSheet = wb.getSheetAt(8);//ddc_driver_daxx内网只新增
-			saveDriverDaxxb(driverDaxxbSheet);
+			//Sheet driverDaxxbSheet = wb.getSheetAt(8);//ddc_driver_daxx内网只新增
+			//saveDriverDaxxb(driverDaxxbSheet);
 
 			/*
 			 * Sheet hmdSheet = wb.getSheetAt(8);// ddc_hmd内网 新增或修改

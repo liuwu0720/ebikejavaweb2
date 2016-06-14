@@ -274,4 +274,15 @@ public interface IApplyService {
 	  */
 	String findIsValidByDaxxb(DdcDaxxb newDaxxb);
 
+	
+	/**
+	  * 方法描述：
+	  * @param djh
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月13日 下午8:38:00
+	  */
+	String findSameDjh(String djh);
+
 }

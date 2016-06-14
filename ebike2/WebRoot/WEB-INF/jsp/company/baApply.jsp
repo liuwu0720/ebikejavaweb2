@@ -466,7 +466,7 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>驾驶人1头像(300*400)</td>
-					<td><input  type="file" onchange="CheckFileSize(this);"
+					<td><input  type="file" onchange="CheckFileSize(this);" data-options="required:true" class="easyui-validatebox"
 						name="headimg_jsr1"" /><br /></td>
 					<td>驾驶人2头像(300*400)</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
@@ -474,7 +474,7 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>驾驶人1身份证正面(500*350)</td>
-					<td><input  type="file" onchange="CheckFileSize(this);"
+					<td><input  type="file" onchange="CheckFileSize(this);"data-options="required:true" class="easyui-validatebox"
 						name="card1img_jsr1"/></td>
 					<td>驾驶人2身份证正面(500*350)</td>
 					<td><input  type="file" onchange="CheckFileSize(this);"
@@ -483,7 +483,7 @@ function exportRowData(){
 				</tr>
 				<tr>
 					<td>驾驶人1身份证反面(500*350)</td>
-					<td><input  type="file"  onchange="CheckFileSize(this);"
+					<td><input  type="file"  onchange="CheckFileSize(this);" data-options="required:true" class="easyui-validatebox"
 						name="card2img_jsr1" /><br /></td>
 					<td>驾驶人2身份证反面(500*350)</td>
 					<td><input  type="file"  onchange="CheckFileSize(this);"
