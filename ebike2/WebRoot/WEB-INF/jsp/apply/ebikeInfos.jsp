@@ -158,7 +158,7 @@ $(document).ready(function(){
 	//加载下拉框
 	$('#ssdw').combobox({    
 	    url:'<%=basePath%>companyAction/getAllCompanyAjax',    
-	    valueField:'id',    
+	    valueField:'dwmc',    
 	    textField:'dwmc'   
 	}); 
 	//行驶区域

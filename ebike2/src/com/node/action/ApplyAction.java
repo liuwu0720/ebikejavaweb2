@@ -230,9 +230,9 @@ public class ApplyAction {
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
 		String sql = "select s.id,s.lsh,s.ppxh,(select d.DMMS1 from ddc_sjzd d where d.dmz = s.cysy and d.dmlb='CSYS' and rownum=1)as csysname,s.ssdwid,"
-				+ " (select dw.DWMC from  DDC_HYXH_SSDW dw where dw.id = s.SSDWID and rownum = 1) as SSDWNAME,"
+				+ "  dw.dwmc as SSDWNAME,"
 				+ "s.JSRXM1,s.djh,(select  d.DMMS1 from ddc_sjzd d where d.dmz = s.xsqy and d.dmlb='SSQY' and rownum=1 )as xsqyname ,s.sqrq,s.sl_index,s.slyj "
-				+ "from DDC_HYXH_SSDWCLSB s where 1=1 and s.ENABLE = 1";
+				+ "from DDC_HYXH_SSDWCLSB s,ddc_hyxh_ssdw dw where 1=1 and s.SSDWID = dw.id and s.ENABLE = 1";
 		sql += " and s.HYXHZH = '" + ddcHyxhBase.getHyxhzh() + "'";
 		if (StringUtils.isNotBlank(zt)) {
 			if (zt.equals("0") || zt.equals("1")) {
@@ -243,7 +243,7 @@ public class ApplyAction {
 
 		}
 		if (StringUtils.isNotBlank(ssdw)) {
-			sql += " and s.SSDWID = " + ssdw;
+			sql += "  and dw.dwmc like  '%" + ssdw+"%'";
 		}
 		if (StringUtils.isNotBlank(dtstart)) {
 			sql += " and s.SQRQ > to_date('" + dtstart + "','yyyy-MM-dd')";

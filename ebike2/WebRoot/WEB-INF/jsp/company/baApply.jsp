@@ -67,6 +67,18 @@ $(document).ready(function(){
 			align:'center',
 			width : 120
 		},{
+			field : 'LXDH1',
+			title : '驾驶人1联系电话',
+			align:'center',
+			width : 120,
+			hidden:true
+		},{
+			field : 'SFZMHM1',
+			title : '驾驶人1身份证号码',
+			align:'center',
+			width : 120,
+			hidden:true
+		},{
 			field : 'XSQYNAME',
 			title : '行驶区域',
 			align:'center',
@@ -123,6 +135,13 @@ $(document).ready(function(){
 			iconCls : 'icon-add',
 			handler : function() {
 				addRowData();
+			}
+		},{
+			id : 'btn3',
+			text : '导出',
+			iconCls : 'icon-print',
+			handler : function() {
+				excelExport();
 			}
 		}],
 		onLoadSuccess:function(){  
@@ -337,6 +356,32 @@ function exportRowData(){
 		});
 	
 	}
+}
+
+function excelExport(){
+	var titleArr = ["流水号","品牌型号","车身颜色","电机号","驾驶人1","驾驶人1电话","驾驶人1身份证号码","行驶区域","申报单位","申请时间","审批状态"]; 
+	var keysArr =["LSH","PPXH","CSYSNAME","DJH","JSRXM1","LXDH1","SFZMHM1","XSQYNAME","SSDWNAME","SQRQ","SLYJ"];
+	var rows = $('#dg').datagrid('getData').rows;
+	for(var i in rows) {
+		if(rows[i]['SLYJ'] == null){
+			if(rows[i]['SL_INDEX']  == 0){
+				rows[i]['SLYJ']= "等待协会审批";
+			}else{
+				rows[i]['SLYJ']=  "等待交警审批";
+			}
+		}else if(rows[i]['SLYJ'] == 0){
+			rows[i]['SLYJ']=  "已审核(同意) ";
+		}else if(rows[i]['SLYJ'] == 1){
+			rows[i]['SLYJ']=  "已审核(拒绝) ";
+		}
+		rows[i]['SQRQ'] = getLocalTime(rows[i]['SQRQ']);
+	}
+	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
+	var fileName="电动车备案申报列表";
+	var content = JSON.stringify(rows);
+	commonExcelExport(titleArr,keysArr,content,actionUrl,fileName); 
+	
+
 }
 
 </script>

@@ -54,6 +54,7 @@ import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.model.FileRecord;
 import com.node.service.IDataService;
+import com.node.util.DateStrUtil;
 import com.node.util.SystemConstants;
 
 /**
@@ -813,8 +814,8 @@ public class DataServiceImp implements IDataService {
 			Sheet ssdwClsbSheet = wb.getSheetAt(6);// DDC_HYXH_SSDWCLSB 内网只修改
 			updateSsdwClsb(ssdwClsbSheet);
 
-			//Sheet driverSheet = wb.getSheetAt(7);// ddc_driver 内网的数据只修改
-			//updateDriver(driverSheet);
+			Sheet driverSheet = wb.getSheetAt(7);// ddc_driver 内网的数据只修改
+			updateDriver(driverSheet);
 			
 			//Sheet driverDaxxbSheet = wb.getSheetAt(8);//ddc_driver_daxx内网只新增
 			//saveDriverDaxxb(driverDaxxbSheet);
@@ -935,7 +936,27 @@ public class DataServiceImp implements IDataService {
 				int j = 0;
 				DdcDriver ddcDriver = new DdcDriver();
 				ddcDriver.setId(Long.parseLong(row.getCell(j) + ""));
-				ddcDriver.setJsrxm(row.getCell(j += 1) + "");
+				String userStatus = row.getCell(j += 1)
+						+ "";
+				if(StringUtils.isNotBlank(userStatus)){
+					ddcDriver.setUserStatus(Integer.parseInt(userStatus));
+				}else {
+					ddcDriver.setUserStatus(0);
+				}
+				ddcDriver.setXjFlag(row.getCell(j += 1) + "");
+				ddcDriver.setXjMsg(row.getCell(j += 1) + "");
+				String xjRq =  row.getCell(j += 1)
+						+ "";
+				if(StringUtils.isNotBlank(xjRq)){
+					ddcDriver.setXjRq(DateStrUtil.toDate(xjRq));
+				}
+			    DdcDriver beforeDdcDriver = iDdcDriverDao.get(ddcDriver.getId());
+			    beforeDdcDriver.setUserStatus(ddcDriver.getUserStatus());
+			    beforeDdcDriver.setXjFlag(ddcDriver.getXjFlag());
+			    beforeDdcDriver.setXjMsg(ddcDriver.getXjMsg());
+			    beforeDdcDriver.setXjRq(ddcDriver.getXjRq());
+			    iDdcDriverDao.updateCleanBefore(beforeDdcDriver);
+				/*ddcDriver.setJsrxm(row.getCell(j += 1) + "");
 				ddcDriver.setXb(row.getCell(j += 1) + "");
 				ddcDriver.setLxdh(row.getCell(j += 1) + "");
 
@@ -955,8 +976,6 @@ public class DataServiceImp implements IDataService {
 				if(StringUtils.isNotBlank(illeageTimes)){
 					ddcDriver.setIlleagalTimes(Integer.parseInt(illeageTimes));
 				}
-			
-				
 				String ssdwId = row.getCell(j += 1) + "";
 				if (StringUtils.isNotBlank(ssdwId)) {
 					ddcDriver.setSsdwId(Integer.parseInt(ssdwId));
@@ -965,8 +984,8 @@ public class DataServiceImp implements IDataService {
 				}
 				ddcDriver.setHyxhzh(row.getCell(j += 1) + "");
 				ddcDriver.setVcUserCardImg1(row.getCell(j += 1) + "");
-				ddcDriver.setVcUserCardImg2(row.getCell(j += 1) + "");
-				iDdcDriverDao.update(ddcDriver);
+				ddcDriver.setVcUserCardImg2(row.getCell(j += 1) + "");*/
+				
 				/*
 				 * List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty(
 				 * "dabh", ddcDriver.getDabh()); if
