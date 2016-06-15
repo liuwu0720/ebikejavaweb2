@@ -381,10 +381,10 @@ function resetPassword(id){
 					<td><input class="easyui-validatebox" type="text" 	name="zzjgdmzh" style="height: 32px"></input>
 					</td>
 				</tr>
-				<tr>
+				<tr id="dwzhtr">
 					<th>单位帐号：</th>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true,validType:'username'" name="userCode"  style="height: 32px;"></input></td>
+						data-options="required:true,validType:'username'" name="userCode"   style="height: 32px;"></input></td>
 				</tr>
 				
 				<tr id="totalPe_tr">

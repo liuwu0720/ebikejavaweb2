@@ -222,7 +222,7 @@ public class CompanyAction {
 				DdcHyxhSsdw beforeDdcHyxhSsdw = iCompanyService
 						.queryInfoById(ddcHyxhSsdw.getId());
 				String message = "success";
-				if (!beforeDdcHyxhSsdw.getDwmc().equals(ddcHyxhSsdw.getDwmc())) {
+				if (!beforeDdcHyxhSsdw.getUserCode().equals(ddcHyxhSsdw.getUserCode())) {
 					message = iCompanyService.queryIsSame(ddcHyxhSsdw);
 				}
 				if (message.equals("success")) {
