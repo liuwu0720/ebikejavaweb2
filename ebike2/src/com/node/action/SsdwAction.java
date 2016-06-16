@@ -391,7 +391,7 @@ public class SsdwAction {
 		ddcDriver1.setVcUserImg(ddcHyxhSsdwclsb.getVcUser1Img());
 		ddcDriver1.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
 		ddcDriver1.setHyxhzh(ddcHyxhSsdwclsb.getHyxhzh());
-		ddcDriver1.setSsdwId(Integer.parseInt(ddcHyxhSsdwclsb.getSsdwId()));
+		ddcDriver1.setSsdwId(Long.parseLong(ddcHyxhSsdwclsb.getSsdwId()));
 		ddcDriver1.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser1CardImg1());
 		ddcDriver1.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser1CardImg2());
 		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())) {
@@ -402,7 +402,7 @@ public class SsdwAction {
 			ddcDriver2.setUserCode(ddcHyxhSsdwclsb.getLxdh2());
 			ddcDriver2.setUserPassword("123456");
 			ddcDriver2.setHyxhzh(ddcHyxhSsdwclsb.getHyxhzh());
-			ddcDriver2.setSsdwId(Integer.parseInt(ddcHyxhSsdwclsb.getSsdwId()));
+			ddcDriver2.setSsdwId(Long.parseLong(ddcHyxhSsdwclsb.getSsdwId()));
 			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2Img())) {
 				ddcDriver2.setVcUserImg(ddcHyxhSsdwclsb.getVcUser2Img());
 			}

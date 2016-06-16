@@ -37,7 +37,7 @@ public class DdcDriver implements java.io.Serializable {
 	private Integer userStatus;
 	private Integer illeagalTimes;
 	private String vcShowUserImg;
-	private Integer ssdwId;
+	private Long ssdwId;
 	private String hyxhzh;
 	
 	private String vcUserCardImg1;//身份证正面
@@ -47,7 +47,49 @@ public class DdcDriver implements java.io.Serializable {
 	private String xjMsg;
 	private Date xjRq;
 	
+	private String vcUserWorkImgShow;
+	private String vcUserCardImg1Show;
+	private String vcUserCardImg2Show;
 	
+	
+	
+	
+
+	@Transient
+	public String getVcUserWorkImgShow() {
+		return vcUserWorkImgShow;
+	}
+
+	/**
+	 * @param vcUserWorkImgShow : set the property vcUserWorkImgShow.
+	 */
+	public void setVcUserWorkImgShow(String vcUserWorkImgShow) {
+		this.vcUserWorkImgShow = vcUserWorkImgShow;
+	}
+
+	@Transient
+	public String getVcUserCardImg1Show() {
+		return vcUserCardImg1Show;
+	}
+
+	/**
+	 * @param vcUserCardImg1Show : set the property vcUserCardImg1Show.
+	 */
+	public void setVcUserCardImg1Show(String vcUserCardImg1Show) {
+		this.vcUserCardImg1Show = vcUserCardImg1Show;
+	}
+
+	@Transient
+	public String getVcUserCardImg2Show() {
+		return vcUserCardImg2Show;
+	}
+
+	/**
+	 * @param vcUserCardImg2Show : set the property vcUserCardImg2Show.
+	 */
+	public void setVcUserCardImg2Show(String vcUserCardImg2Show) {
+		this.vcUserCardImg2Show = vcUserCardImg2Show;
+	}
 
 	@Column(name = "XJ_FLAG", length = 10)
 	public String getXjFlag() {
@@ -268,14 +310,14 @@ public class DdcDriver implements java.io.Serializable {
 	}
 
 	@Column(name = "SSDWID")
-	public Integer getSsdwId() {
+	public Long getSsdwId() {
 		return ssdwId;
 	}
 
 	/**
 	 * @param ssdwId : set the property ssdwId.
 	 */
-	public void setSsdwId(Integer ssdwId) {
+	public void setSsdwId(Long ssdwId) {
 		this.ssdwId = ssdwId;
 	}
 

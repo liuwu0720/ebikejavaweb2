@@ -65,7 +65,7 @@ public class DriverInfoAutoTask {
 				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iTaskService.findClsbByDriver(ddcDriver);
 				if(ddcHyxhSsdwclsb!=null){
 					ddcDriver.setHyxhzh(ddcHyxhSsdwclsb.getHyxhzh());
-					ddcDriver.setSsdwId(Integer.parseInt(ddcHyxhSsdwclsb.getSsdwId()));
+					ddcDriver.setSsdwId(Long.parseLong(ddcHyxhSsdwclsb.getSsdwId()));
 					iEbikeService.saveDdcDriver(ddcDriver);
 				}
 			

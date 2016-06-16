@@ -456,7 +456,7 @@ public class EbikeServiceImp implements IEbikeService {
 			ddcDriver.setJsrxm(newDaxxb.getJsrxm1());
 			ddcDriver.setLxdh(newDaxxb.getLxdh1());
 			ddcDriver.setSfzhm(newDaxxb.getSfzmhm1());
-			ddcDriver.setSsdwId(Integer.parseInt(newDaxxb.getSsdwId()));
+			ddcDriver.setSsdwId(Long.parseLong(newDaxxb.getSsdwId()));
 			ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 			ddcDriver.setTranDate(new Date());
 			ddcDriver.setUserCode(ddcDriver.getLxdh());
@@ -492,7 +492,7 @@ public class EbikeServiceImp implements IEbikeService {
 				ddcDriver.setJsrxm(newDaxxb.getJsrxm2());
 				ddcDriver.setLxdh(newDaxxb.getLxdh2());
 				ddcDriver.setSfzhm(newDaxxb.getSfzmhm2());
-				ddcDriver.setSsdwId(Integer.parseInt(newDaxxb.getSsdwId()));
+				ddcDriver.setSsdwId(Long.parseLong(newDaxxb.getSsdwId()));
 				ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 				ddcDriver.setTranDate(new Date());
 				ddcDriver.setUserCode(ddcDriver.getLxdh());

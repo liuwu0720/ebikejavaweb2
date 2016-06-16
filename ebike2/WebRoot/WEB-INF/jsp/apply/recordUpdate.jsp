@@ -46,9 +46,11 @@ function CheckFileSize(obj){
          var val = obj.value;
          var FileExt=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
          if(AllowExt.indexOf(FileExt+"|") == -1){//判断文件类型是否允许上传
-        	 $.messager.alert('警告','你上传的不是图片文件');    
+        	 $.messager.alert('警告','你上传的不是图片文件');  
+         	obj.value="";
          	return false;
          }
+        	 
 	 }     
 }
 	//保存操作
