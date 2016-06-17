@@ -17,9 +17,11 @@ import org.springframework.stereotype.Service;
 import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcHyxhBaseDao;
 import com.node.dao.IDdcHyxhSsdwDao;
+import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
+import com.node.model.DdcHyxhSsdwclsb;
 import com.node.service.IDriverSerivce;
 import com.node.util.HqlHelper;
 
@@ -41,6 +43,10 @@ public class DriverSerivceImp implements IDriverSerivce{
 	
 	@Autowired
 	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
+	
+	@Autowired
+	IDdcHyxhSsdwclsbDao iDdcHyxhSsdwclsbDao;
+	
 		/* (non-Javadoc)
 		 * @see com.node.service.IDriverSerivce#getAllDrivers()
 		 */
@@ -135,6 +141,42 @@ public class DriverSerivceImp implements IDriverSerivce{
 	public void updateDdcDriver(DdcDriver ddcDriver) {
 		// TODO Auto-generated method stub
 		iDdcDriverDao.updateCleanBefore(ddcDriver);
+	}
+
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IDriverSerivce#updateClsb(com.node.model.DdcDriver)
+		 */
+	@Override
+	public void updateClsb(DdcDriver ddcDriver) {
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs1 = iDdcHyxhSsdwclsbDao.findByProperty("sfzmhm1", ddcDriver.getSfzhm());
+		if(CollectionUtils.isNotEmpty(ddcHyxhSsdwclsbs1)){
+			for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs1){
+				ddcHyxhSsdwclsb.setJsrxm1(ddcDriver.getJsrxm());
+				ddcHyxhSsdwclsb.setSfzmhm1(ddcDriver.getSfzhm());
+				ddcHyxhSsdwclsb.setLxdh1(ddcDriver.getLxdh());
+				ddcHyxhSsdwclsb.setVcUser1CardImg1(ddcDriver.getVcUserCardImg1());
+				ddcHyxhSsdwclsb.setVcUser1CardImg2(ddcDriver.getVcUserCardImg2());
+				ddcHyxhSsdwclsb.setVcUser1Img(ddcDriver.getVcUserImg());
+				ddcHyxhSsdwclsb.setVcUser1WorkImg(ddcDriver.getVcUserWorkImg());
+				iDdcHyxhSsdwclsbDao.updateCleanBefore(ddcHyxhSsdwclsb);
+			}
+		}
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs2= iDdcHyxhSsdwclsbDao.findByProperty("sfzmhm2", ddcDriver.getSfzhm());
+		if(CollectionUtils.isNotEmpty(ddcHyxhSsdwclsbs2)){
+			for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs2){
+				ddcHyxhSsdwclsb.setJsrxm2(ddcDriver.getJsrxm());
+				ddcHyxhSsdwclsb.setSfzmhm2(ddcDriver.getSfzhm());
+				ddcHyxhSsdwclsb.setLxdh2(ddcDriver.getLxdh());
+				ddcHyxhSsdwclsb.setVcUser2CardImg1(ddcDriver.getVcUserCardImg1());
+				ddcHyxhSsdwclsb.setVcUser2CardImg2(ddcDriver.getVcUserCardImg2());
+				ddcHyxhSsdwclsb.setVcUser2Img(ddcDriver.getVcUserImg());
+				ddcHyxhSsdwclsb.setVcUser2WorkImg(ddcDriver.getVcUserWorkImg());
+				iDdcHyxhSsdwclsbDao.updateCleanBefore(ddcHyxhSsdwclsb);
+			}
+		}
+		
 	}
 	
 }

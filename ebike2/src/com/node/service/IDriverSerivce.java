@@ -113,4 +113,15 @@ public interface IDriverSerivce {
 	  */
 	void updateDdcDriver(DdcDriver ddcDriver);
 
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月17日 上午8:56:11
+	  */
+	void updateClsb(DdcDriver ddcDriver);
+
 }

@@ -172,7 +172,7 @@ public class DriverAction {
 			} else {
 				iDriverSerivce.updateDdcDriver(ddcDriver);
 				iEbikeService.saveDdcDriver(ddcDriver);
-				
+				iDriverSerivce.updateClsb(ddcDriver);
 			}
 			AjaxUtil.rendJson(response, true, "操作成功");
 		} catch (Exception e) {
