@@ -17,38 +17,33 @@ import java.awt.image.BufferedImage;
  * @version: 2016年4月1日 下午3:08:13
  */
 public class ScaleImage {
-	private int width;
+	private int width=0;
 
-	private int height;
+	private int height=0;
 
-	private int scaleWidth;
+	private int scaleWidth=0;
 
 	private double support = (double) 3.0;
 
 	private double PI = (double) 3.14159265358978;
 
-	private double[] contrib;
+	private double[] contrib=null;
 
-	private double[] normContrib;
+	private double[] normContrib=null;
 
-	private double[] tmpContrib;
+	private double[] tmpContrib=null;
 
-	private int nDots;
+	private int nDots=0;
 
-	private int nHalfDots;
+	private int nHalfDots=0;
 
 	/**
 	 * Start: Use Lanczos filter to replace the original algorithm for image
 	 * scaling. Lanczos improves quality of the scaled image modify by :blade
 	 */
-	private static ScaleImage instance = new ScaleImage();
+	
 
-	private ScaleImage() {
-	};
 
-	public static ScaleImage getInstance() {
-		return instance;
-	}
 
 	public BufferedImage imageZoomOut(BufferedImage srcBufferImage, int w, int h) {
 		width = srcBufferImage.getWidth();
@@ -62,6 +57,50 @@ public class ScaleImage {
 		BufferedImage pbOut = HorizontalFiltering(srcBufferImage, w);
 		BufferedImage pbFinalOut = VerticalFiltering(pbOut, h);
 		return pbFinalOut;
+	}
+
+	
+	
+	/**
+	  * 类的构造方法
+	  * 创建一个新的实例 ScaleImage.
+	  * @param 
+	  */
+	public ScaleImage() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	/**
+	  * 类的构造方法
+	  * 创建一个新的实例 ScaleImage.
+	  * @param 
+	  * @param width
+	  * @param height
+	  * @param scaleWidth
+	  * @param support
+	  * @param pI
+	  * @param contrib
+	  * @param normContrib
+	  * @param tmpContrib
+	  * @param nDots
+	  * @param nHalfDots
+	  */
+	public ScaleImage(int width, int height, int scaleWidth, double support,
+			double pI, double[] contrib, double[] normContrib,
+			double[] tmpContrib, int nDots, int nHalfDots) {
+		super();
+		this.width = width;
+		this.height = height;
+		this.scaleWidth = scaleWidth;
+		this.support = support;
+		PI = pI;
+		this.contrib = contrib;
+		this.normContrib = normContrib;
+		this.tmpContrib = tmpContrib;
+		this.nDots = nDots;
+		this.nHalfDots = nHalfDots;
 	}
 
 	/**

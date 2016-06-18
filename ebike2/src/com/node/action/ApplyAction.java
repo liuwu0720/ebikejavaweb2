@@ -540,7 +540,7 @@ public class ApplyAction {
 			// file.transferTo(pathFile);
 			BufferedImage srcBufferImage = ImageIO.read(file.getInputStream());
 			BufferedImage scaledImage;
-			ScaleImage scaleImage = ScaleImage.getInstance();
+			ScaleImage scaleImage = new ScaleImage();
 			int yw = srcBufferImage.getWidth();
 			int yh = srcBufferImage.getHeight();
 			int w = 800, h = 600;

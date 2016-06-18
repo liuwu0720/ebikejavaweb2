@@ -125,7 +125,14 @@ public class ImgUploadThread implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		uploadImg();
+		
+		try {
+			Thread.sleep(10000);
+			uploadImg();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -135,7 +142,7 @@ public class ImgUploadThread implements Runnable{
 	  * @author: liuwu
 	  * @version: 2016年6月9日 下午4:06:30
 	  */
-	private synchronized  void  uploadImg() {
+	private   void  uploadImg() {
 		if (file != null && !file.isEmpty()) {
 			String source = imgPath.getVcAddpath();// 图片保存路径
 			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
@@ -168,7 +175,7 @@ public class ImgUploadThread implements Runnable{
 			try {
 				srcBufferImage = ImageIO.read(file.getInputStream());
 				BufferedImage scaledImage;
-				ScaleImage scaleImage = ScaleImage.getInstance();
+				ScaleImage scaleImage = new ScaleImage();
 				int yw = srcBufferImage.getWidth();
 				int yh = srcBufferImage.getHeight();
 				int w = limitWidth, h = limitHeight;

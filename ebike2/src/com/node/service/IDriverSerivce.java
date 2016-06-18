@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.node.model.DdcDriver;
+import com.node.model.DdcHyxhSsdwclsb;
 import com.node.util.HqlHelper;
 
 
@@ -123,5 +124,40 @@ public interface IDriverSerivce {
 	  * @version: 2016年6月17日 上午8:56:11
 	  */
 	void updateClsb(DdcDriver ddcDriver);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcHyxhSsdwclsb 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月18日 下午2:05:20
+	  */
+	void updateClsbByDriver(DdcHyxhSsdwclsb ddcHyxhSsdwclsb);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月18日 下午2:25:52
+	  */
+	String findIfdelete(DdcDriver ddcDriver);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月18日 下午2:31:35
+	  */
+	String updateClsbDeleteByDriver(DdcDriver ddcDriver);
 
 }

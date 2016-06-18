@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.node.util.SingleOnline;
 import com.node.util.SystemConstants;
 
 /**
@@ -51,12 +50,14 @@ public class SysFilter implements Filter {
 			chain.doFilter(request, response);
 			return;
 		} else if (session.getAttribute(SystemConstants.SESSION_USER) != null) {
-			String sessionUserName = (String) request.getSession().getAttribute(SystemConstants.SESSION_USER_NAME);
+			/*String sessionUserName = (String) request.getSession().getAttribute(SystemConstants.SESSION_USER_NAME);
 			boolean flag = SingleOnline.isValidUser(sessionUserName, request.getSession().getId());
 			if(flag){
 				chain.doFilter(request, response);
 				return;
-			}
+			}*/
+			chain.doFilter(request, response);
+			return;
 		
 		}
 		PrintWriter out = response.getWriter();

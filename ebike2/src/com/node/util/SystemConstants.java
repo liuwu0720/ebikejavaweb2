@@ -126,11 +126,11 @@ public class SystemConstants {
 	/**
 	 * 发票最大宽度
 	 */
-	public static final int IMG_INVOICE_WIDTH = 600;
+	public static final int IMG_INVOICE_WIDTH = 1200;
 	/**
 	 * 发票最大高度
 	 */
-	public static final int IMG_INVOICE_HEIGHT = 400;
+	public static final int IMG_INVOICE_HEIGHT = 800;
 	/**
 	 * 测试帐号
 	 */

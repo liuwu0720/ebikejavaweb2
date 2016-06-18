@@ -30,7 +30,6 @@ public class SingleOnline {
 		if (!mapOnline.containsKey(userCode)){
 			mapOnline.put(userCode, sessionId);
 		}
-			
 		
 	}
 

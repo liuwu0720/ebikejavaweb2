@@ -7,12 +7,18 @@
  */
 package com.node.action;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +40,7 @@ import com.node.util.AjaxUtil;
 import com.node.util.HqlHelper;
 import com.node.util.ImgUploadThread;
 import com.node.util.Page;
+import com.node.util.ScaleImage;
 import com.node.util.ServiceUtil;
 import com.node.util.SystemConstants;
 
@@ -79,6 +86,8 @@ public class DriverAction {
 		}
 		if (userStatus != null) {
 			hql.addEqual("userStatus", userStatus);
+		}else {
+			hql.addGreatThan("userStatus", -1);
 		}
 
 		hql.addOrderBy("id", "desc");
@@ -132,38 +141,42 @@ public class DriverAction {
 		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
 		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
 
-		String vcUser1_img = uploadImg(request, headimg_jsr1,
-				SystemConstants.IMG_HEAD_WITH, SystemConstants.IMG_HEAD_HEIGHT,
-				imgPath);// 上传驾驶人1照片
-		if (StringUtils.isNotBlank(vcUser1_img)) {
-			ddcDriver.setVcUserImg(vcUser1_img);
-		} else {
-			ddcDriver.setVcUserImg(ddcDriver.getVcUserImg());
-		}
-
-		String vcUser1CardImg1 = uploadImg(request, card1img_jsr1,
-				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT, imgPath);// 上传驾驶人1身份证正面
-		if (StringUtils.isNotBlank(vcUser1CardImg1)) {
-			ddcDriver.setVcUserCardImg1(vcUser1CardImg1);
-		} else {
-			ddcDriver.setVcUserCardImg1(ddcDriver.getVcUserCardImg1());
-		}
-		String vcUser1CardImg2 = uploadImg(request, card2img_jsr1,
-				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT, imgPath);// 上传驾驶人1身份证反面
-		if (StringUtils.isNotBlank(vcUser1CardImg2)) {
-			ddcDriver.setVcUserCardImg2(vcUser1CardImg2);
-		} else {
-			ddcDriver.setVcUserCardImg2(ddcDriver.getVcUserCardImg2());
-		}
-		String vcUser1WorkImg_path = uploadImg(request, vcUser1WorkImgfile,
-				SystemConstants.IMG_INVOICE_WIDTH,
-				SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人1 在职证明或居住证
-		if (StringUtils.isNotBlank(vcUser1WorkImg_path)) {
-			ddcDriver.setVcUserWorkImg(vcUser1WorkImg_path);
-		} else {
-			ddcDriver.setVcUserWorkImg(ddcDriver.getVcUserWorkImg());
+		try {
+			String vcUser1_img = uploadImg(request, headimg_jsr1,
+					SystemConstants.IMG_HEAD_WITH,
+					SystemConstants.IMG_HEAD_HEIGHT, imgPath);// 上传驾驶人1照片
+			if (StringUtils.isNotBlank(vcUser1_img)) {
+				ddcDriver.setVcUserImg(vcUser1_img);
+			} else {
+				ddcDriver.setVcUserImg(ddcDriver.getVcUserImg());
+			}
+			String vcUser1CardImg1 = uploadImg(request, card1img_jsr1,
+					SystemConstants.IMG_IDCARD_WIDTH,
+					SystemConstants.IMG_IDCARD_HEIGHT, imgPath);// 上传驾驶人1身份证正面
+			if (StringUtils.isNotBlank(vcUser1CardImg1)) {
+				ddcDriver.setVcUserCardImg1(vcUser1CardImg1);
+			} else {
+				ddcDriver.setVcUserCardImg1(ddcDriver.getVcUserCardImg1());
+			}
+			String vcUser1CardImg2 = uploadImg(request, card2img_jsr1,
+					SystemConstants.IMG_IDCARD_WIDTH,
+					SystemConstants.IMG_IDCARD_HEIGHT, imgPath);// 上传驾驶人1身份证反面
+			if (StringUtils.isNotBlank(vcUser1CardImg2)) {
+				ddcDriver.setVcUserCardImg2(vcUser1CardImg2);
+			} else {
+				ddcDriver.setVcUserCardImg2(ddcDriver.getVcUserCardImg2());
+			}
+			String vcUser1WorkImg_path = uploadImg(request, vcUser1WorkImgfile,
+					SystemConstants.IMG_INVOICE_WIDTH,
+					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人1 在职证明或居住证
+			if (StringUtils.isNotBlank(vcUser1WorkImg_path)) {
+				ddcDriver.setVcUserWorkImg(vcUser1WorkImg_path);
+			} else {
+				ddcDriver.setVcUserWorkImg(ddcDriver.getVcUserWorkImg());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			AjaxUtil.rendJson(response, false, "图片上传失败，请重试!");
 		}
 		try {
 			if (ddcDriver.getId() == null) {
@@ -241,7 +254,40 @@ public class DriverAction {
 		request.setAttribute("ddcDriver", ddcDriver);
 		return "driver/driverupdate";
 	}
-
+	/**
+	 * 
+	  * 方法描述：
+	  * @param id
+	  * @param request
+	  * @param response 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月18日 下午2:15:33
+	 */
+	@RequestMapping("/deleteRow")
+	public void deleteRow(String id,HttpServletRequest request,HttpServletResponse response){
+		long driverId = Long.parseLong(id);
+		DdcDriver ddcDriver = iDriverSerivce.getDriverById(driverId);
+		ddcDriver.setUserStatus(-1);
+		
+		String message = iDriverSerivce.findIfdelete(ddcDriver);//查询该司机下面是否有档案表
+		message = iDriverSerivce.updateClsbDeleteByDriver(ddcDriver);//该司机下面的车辆申报也将删除
+		if (!message.equals("success")) {
+			AjaxUtil.rendJson(response, false, message);
+			return;
+		}else {
+			try {
+				iDriverSerivce.updateDdcDriver(ddcDriver);
+				AjaxUtil.rendJson(response, true, "删除成功");
+			} catch (Exception e) {
+				AjaxUtil.rendJson(response, false, "删除失败");
+			}
+		}
+		
+		
+	}
+	
+	
 	private String parseUrl(String vcPicPath) {
 		if (StringUtils.isNotBlank(vcPicPath)) {
 			PicPath picPath = iCompanyService
@@ -257,7 +303,7 @@ public class DriverAction {
 
 	}
 
-	private String uploadImg(HttpServletRequest request,
+	private String uploadImg2(HttpServletRequest request,
 			MultipartFile headimg_jsr1, int imgHeadWith, int imgHeadHeight,
 			PicPath imgPath) {
 		if (!headimg_jsr1.isEmpty()) {
@@ -272,6 +318,64 @@ public class DriverAction {
 			return null;
 		}
 
+	}
+
+	private String uploadImg(HttpServletRequest request, MultipartFile file, int imgHeadWith, int imgHeadHeight,
+			PicPath imgPath)
+			throws FileNotFoundException, IOException {
+		if (!file.isEmpty()) {
+			String source = imgPath.getVcAddpath();// 图片保存路径
+			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
+			source = source + "/" + format.format(new Date());
+			if (!source.endsWith("/")) {
+				source += "/";
+			}
+			if (StringUtils.isBlank(source)) {
+				System.out.println("source路径查不到！");
+				return null;
+			}
+			String getImagePath = source;
+
+			// 得到上传文件的后缀名
+			String uploadName = file.getContentType();
+			System.out.println("图片类型 ------------" + uploadName);
+
+			String lastuploadName = uploadName.substring(
+					uploadName.indexOf("/") + 1, uploadName.length());
+			System.out.println("得到上传文件的后缀名 ------------" + lastuploadName);
+
+			// 得到文件的新名字
+			String fileNewName = generateFileName(file.getOriginalFilename());
+			System.out.println("// 得到文件的新名字 ------------" + fileNewName);
+
+			// 最后返回图片路径
+			String imagePath = source + "/" + fileNewName;
+			System.out.println("        //最后返回图片路径   " + imagePath);
+			File image = new File(getImagePath);
+			if (!image.exists()) {
+				image.mkdir();
+			}
+			// file.transferTo(pathFile);
+			BufferedImage srcBufferImage = ImageIO.read(file.getInputStream());
+			BufferedImage scaledImage;
+			ScaleImage scaleImage = new ScaleImage();
+			int yw = srcBufferImage.getWidth();
+			int yh = srcBufferImage.getHeight();
+			int w = imgHeadWith, h =imgHeadHeight;
+			if (w > yw && h > yh) {
+				File image2 = new File(getImagePath, fileNewName);
+				file.transferTo(image2);
+			} else {
+				scaledImage = scaleImage.imageZoomOut(srcBufferImage, w, h);
+				FileOutputStream out = new FileOutputStream(getImagePath + "/"
+						+ fileNewName);
+				ImageIO.write(scaledImage, "jpeg", out);
+				out.close();
+			}
+			return format.format(new Date()) + "/" + fileNewName;// 将文件夹名和文件名返回
+		} else {
+			return null;
+		}
 	}
 
 	/**

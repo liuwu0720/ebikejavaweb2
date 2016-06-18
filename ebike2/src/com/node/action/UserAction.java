@@ -125,7 +125,7 @@ public class UserAction {
 					request.getSession().invalidate();
 					SingleOnline.removeValidUser(cuser);
 					AjaxUtil.rendJson(response, false,
-							"您的账户在其它地方登录，对方已被踢掉请重新登录");
+							"您的账户在其它地方登录，请重新登录");
 				} else {
 					request.getSession().removeAttribute(
 							SystemConstants.SESSION_USER);
@@ -147,13 +147,13 @@ public class UserAction {
 				AjaxUtil.rendJson(response, false, "用户名或密码错误！");
 				return;
 			} else {
-				SingleOnline.addUser(cuser, request.getSession().getId());
+				/*SingleOnline.addUser(cuser, request.getSession().getId());
 				if (!SingleOnline.isValidUser(cuser, request.getSession()
 						.getId())) {
 					request.getSession().invalidate();
 					SingleOnline.removeValidUser(cuser);
 					AjaxUtil.rendJson(response, false,
-							"您的账户在其它地方登录，对方已被踢掉请重新登录");
+							"您的账户在其它地方登录，请重新登录");
 				} else {
 					request.getSession().removeAttribute(
 							SystemConstants.SESSION_USER);
@@ -163,8 +163,16 @@ public class UserAction {
 							SystemConstants.SESSION_USER_NAME,
 							ddcHyxhSsdw.getUserCode());
 					AjaxUtil.rendJson(response, true, "验证通过");
-				}
-
+				}*/
+				SingleOnline.addUser(cuser, request.getSession().getId());
+				/*request.getSession().removeAttribute(
+						SystemConstants.SESSION_USER);*/
+				request.getSession().setAttribute(
+						SystemConstants.SESSION_USER, ddcHyxhSsdw);
+				request.getSession().setAttribute(
+						SystemConstants.SESSION_USER_NAME,
+						ddcHyxhSsdw.getUserCode());
+				AjaxUtil.rendJson(response, true, "验证通过");
 			}
 		}
 
@@ -393,7 +401,7 @@ public class UserAction {
 			// file.transferTo(pathFile);
 			BufferedImage srcBufferImage = ImageIO.read(file.getInputStream());
 			BufferedImage scaledImage;
-			ScaleImage scaleImage = ScaleImage.getInstance();
+			ScaleImage scaleImage = new ScaleImage();
 			int yw = srcBufferImage.getWidth();
 			int yh = srcBufferImage.getHeight();
 			int w = SystemConstants.IMG_LICENCE_WITH, h = SystemConstants.IMG_LICENCE_HEIGHT;

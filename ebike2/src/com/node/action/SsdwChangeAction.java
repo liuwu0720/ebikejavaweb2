@@ -669,7 +669,7 @@ public class SsdwChangeAction {
 			// file.transferTo(pathFile);
 			BufferedImage srcBufferImage = ImageIO.read(file.getInputStream());
 			BufferedImage scaledImage;
-			ScaleImage scaleImage = ScaleImage.getInstance();
+			ScaleImage scaleImage = new ScaleImage();
 			int yw = srcBufferImage.getWidth();
 			int yh = srcBufferImage.getHeight();
 			int w = limitWidth, h = limitHeight;

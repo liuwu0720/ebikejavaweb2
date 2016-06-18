@@ -161,7 +161,7 @@ function cancelSb(id){
 	$.messager.confirm('警告', '退回后该条记录将删除，请确认', function(r){
 		if (r){
 			
-			$.post("<%=basePath%>baAction/cancelSb", 
+			$.post("<%=basePath%>ssdwAction/cancelSb", 
 					{id:id},    
 					   function (data, textStatus)
 					   {     
@@ -233,6 +233,21 @@ function addRowData(){
 	        {field:'jsrxm',title:'驾驶人姓名',width:40}
 	    ]]    
 	});  
+	
+	$('#sfzmhm2').combogrid({    
+		panelWidth: 400,
+		delay: 500,    
+		mode: 'remote',    
+	    idField:'sfzhm',    
+	    textField:'jsrxm',   
+	    fitColumns: true,
+	    pagination : true,
+	    url:'<%=basePath%>baAction/getDriverList',    
+	    columns:[[    
+	        {field:'sfzhm',title:'身份证号码',width:60},    
+	        {field:'jsrxm',title:'驾驶人姓名',width:40}
+	    ]]    
+	}); 
 }
 //查看备案审批详情
 function queryRow(id){
