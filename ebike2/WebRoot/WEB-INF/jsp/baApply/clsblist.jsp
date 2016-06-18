@@ -215,21 +215,31 @@ function addRowData(){
 		    textField:'dmms1',
 		    value:"440303"   //默认选中的值       
 	})
-	
-	$('#xb1,#xb2').combobox({
-		value:-1
-	});
 	$('#jtzz').combobox({
 		value:0
 	});
 	
+	$('#sfzmhm1').combogrid({    
+		panelWidth: 400,
+		delay: 500,    
+		mode: 'remote',    
+	    idField:'sfzhm',    
+	    textField:'jsrxm',   
+	    fitColumns: true,
+	    pagination : true,
+	    url:'<%=basePath%>baAction/getDriverList',    
+	    columns:[[    
+	        {field:'sfzhm',title:'身份证号码',width:60},    
+	        {field:'jsrxm',title:'驾驶人姓名',width:40}
+	    ]]    
+	});  
 }
 //查看备案审批详情
 function queryRow(id){
 	$.messager.progress({
 		text:"正在处理，请稍候..."
 	});
-	window.location.href="<%=basePath%>baAction/queryRecordApprovalInfoById?id="+id;
+	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id;
 }
 //修改申报详情
 function updateRow(id){
@@ -465,89 +475,17 @@ function excelExport(){
 					</select></td>
 				</tr>
 				<tr>
-					<td>驾驶人姓名1</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true" name="jsrxm1" style="height: 32px"></td>
-
-					<td>驾驶人姓名2</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:false" name="jsrxm2" style="height: 32px"></td>
-				</tr>
-				<tr>
-					<td>驾驶人性别1</td>
-					<td><select id="xb1" class="easyui-combobox" name="xb1" data-options="required:true" 
-						style="height:32px;width: 100px;">
-						    <option value="-1">--请选择--</option>
-							<option value="0">男</option>
-							<option value="1">女</option>
-					</select></td>
-					<td>驾驶人性别2</td>
-					<td><select id="xb2" class="easyui-combobox" name="xb2" data-options="required:false" 
-						style="height:32px;width: 100px;">
-						    <option value="-1">--请选择--</option>
-							<option value="0">男</option>
-							<option value="1">女</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>身份证号码1</td>
-					<td><input class="easyui-validatebox" type="text" id="sfzmhm1"
-						data-options="required:true,validType:'idcard'" name="sfzmhm1" style="height: 32px">
-					</td>
-					<td>身份证号码2</td>
-					<td><input class="easyui-validatebox" type="text"  validType="notequals['#sfzmhm1']" 
-					  name="sfzmhm2" style="height: 32px">
-					</td>
-				</tr>
-				<tr>
-					<td>联系电话1</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true,validType:'phoneNum'" name="lxdh1" style="height: 32px">
-					</td>
-					<td>联系电话2</td>
-					<td><input class="easyui-validatebox" type="text"
-						data-options="required:false,validType:'phoneNum'" name="lxdh2" style="height: 32px">
-					</td>
-				</tr>
-				<tr>
-					<td>驾驶人1头像(300*400)</td>
-					<td><input  type="file" onchange="CheckFileSize(this);" data-options="required:true" class="easyui-validatebox"
-						name="headimg_jsr1"" /><br /></td>
-					<td>驾驶人2头像(300*400)</td>
-					<td><input  type="file" onchange="CheckFileSize(this);"
-						name="headimg_jsr2" /><br /></td>
-				</tr>
-				<tr>
-					<td>驾驶人1身份证正面(500*350)</td>
-					<td><input  type="file" onchange="CheckFileSize(this);"data-options="required:true" class="easyui-validatebox"
-						name="card1img_jsr1"/></td>
-					<td>驾驶人2身份证正面(500*350)</td>
-					<td><input  type="file" onchange="CheckFileSize(this);"
-						name="card1img_jsr2"/></td>	
-					
-				</tr>
-				<tr>
-					<td>驾驶人1身份证反面(500*350)</td>
-					<td><input  type="file"  onchange="CheckFileSize(this);" data-options="required:true" class="easyui-validatebox"
-						name="card2img_jsr1" /><br /></td>
-					<td>驾驶人2身份证反面(500*350)</td>
-					<td><input  type="file"  onchange="CheckFileSize(this);"
-						name="card2img_jsr2" /><br /></td>
-				</tr>
-				<tr>
-					<td>驾驶人1在职证明或居住证(600*400)</td>
-					<td><input  type="file"  onchange="CheckFileSize(this);"
-						name="vcUser1WorkImgfile" /><br /></td>
-					<td>驾驶人2在职证明或居住证(600*400)</td>
-					<td><input  type="file"  onchange="CheckFileSize(this);"
-						name="vcUser2WorkImgfile" /><br /></td>
-				</tr>
-		
-				<tr>
 					<td>行驶区域</td>
 					<td><input id="xsqy" name="xsqy"  style="height:30px;"></td>
 					<td>备注</td>
 					<td><textarea rows="5" cols="25" name="bz"></textarea></td>
+				</tr>
+				<tr>
+					<td>驾驶人姓名1</td>
+					<td><input id="sfzmhm1" name="sfzmhm1" value="01" /> </td>
+
+					<td>驾驶人姓名2</td>
+					<td><input id="sfzmhm2" name="sfzmhm2" value="01" /> </td>
 				</tr>
 				
 			</table>

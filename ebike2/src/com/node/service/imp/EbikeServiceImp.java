@@ -349,11 +349,13 @@ public class EbikeServiceImp implements IEbikeService {
 		}
 		ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 		ddcDriver2.setTranDate(new Date());
+		ddcDriver2
+		.setIlleagalTimes(0);
 		if (CollectionUtils.isNotEmpty(oldDdcDrivers)) {
 			ddcDriver2.setId(oldDdcDrivers.get(0).getId());
 			ddcDriver2.setUserPassword(oldDdcDrivers.get(0).getUserPassword());
 			ddcDriver2
-					.setIlleagalTimes(oldDdcDrivers.get(0).getIlleagalTimes());
+					.setIlleagalTimes(0);
 			ddcDriver2.setUserStatus(oldDdcDrivers.get(0).getUserStatus());
 			/*
 			 * ddcDriver2.setVcUserImg(oldDdcDrivers.get(0).getVcUserImg());

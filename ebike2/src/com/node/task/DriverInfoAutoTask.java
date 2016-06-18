@@ -81,6 +81,7 @@ public class DriverInfoAutoTask {
 		DdcDriver ddcDriver1 = new DdcDriver();
 		ddcDriver1.setJsrxm(ddcHyxhSsdwclsb.getJsrxm1());
 		ddcDriver1.setLxdh(ddcHyxhSsdwclsb.getLxdh1());
+		ddcDriver1.setXb(ddcHyxhSsdwclsb.getXb1());
 		ddcDriver1.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm1());
 		ddcDriver1.setUserCode(ddcHyxhSsdwclsb.getLxdh1());
 		ddcDriver1.setUserPassword("123456");
@@ -92,6 +93,7 @@ public class DriverInfoAutoTask {
 			DdcDriver ddcDriver2 = new DdcDriver();
 			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
 			ddcDriver2.setLxdh(ddcHyxhSsdwclsb.getLxdh2());
+			ddcDriver2.setXb(ddcHyxhSsdwclsb.getXb1());
 			ddcDriver2.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm2());
 			ddcDriver2.setUserCode(ddcHyxhSsdwclsb.getLxdh2());
 			ddcDriver2.setUserPassword("123456");

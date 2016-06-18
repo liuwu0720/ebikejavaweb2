@@ -116,7 +116,7 @@ public class DriverAction {
 		} else {
 			DdcDriver beforedriver = iDriverSerivce.getDriverById(ddcDriver
 					.getId());
-			if (!beforedriver.getSfzhm().equals(ddcDriver.getSfzhm())) {
+			if (StringUtils.isNotBlank(beforedriver.getSfzhm())&&!beforedriver.getSfzhm().equals(ddcDriver.getSfzhm())) {
 				message = iDriverSerivce.findSameSfzhm(ddcDriver.getSfzhm());
 			}
 		}

@@ -1562,8 +1562,17 @@ public class DataServiceImp implements IDataService {
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getSfzhm()));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getVcUserImg()));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getVcUserWorkImg() ));
-			ws.addCell(new Label(j1 += 1, i, ddcDriver.getUserStatus() + ""));
-			ws.addCell(new Label(j1 += 1, i, ddcDriver.getIlleagalTimes() + ""));
+			if(ddcDriver.getUserStatus()==null){
+				ws.addCell(new Label(j1 += 1, i, null));
+			}else {
+				ws.addCell(new Label(j1 += 1, i, ddcDriver.getUserStatus() + ""));
+			}
+			if(ddcDriver.getIlleagalTimes()==null){
+				ws.addCell(new Label(j1 += 1, i, null));
+			}else {
+				ws.addCell(new Label(j1 += 1, i, ddcDriver.getIlleagalTimes() + ""));
+			}
+			
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getSsdwId() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getHyxhzh()));
 			

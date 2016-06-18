@@ -175,9 +175,9 @@ function deleteRow(id){
 function doSearch(){
 	
 	 $('#dg').datagrid('load',{
-		 sfzhm: $('#sfzhm').combobox('getValue'),
+		 sfzhm: $('#sfzhm').val(),
 		 jsrxm: $('#jsrxm').val(),
-		 userStatus:$('#userStatus').datebox('getValue')
+		 userStatus:$('#userStatus').combobox('getValue')
 	}); 
 }
 
@@ -231,7 +231,8 @@ function updateSaveData(){
 							title : '提示',
 							msg : data.message
 						});
-						window.location.href='<%=basePath%>driverAction/getAllBa';
+						$("#dg").datagrid('reload');
+						$('#dgform').form('clear');
 					}else{
 						alert(data.message);
 					}
@@ -268,7 +269,7 @@ function CheckFileSize(obj){
 				<span>姓名:</span>
 				<input id="jsrxm" class="easyui-validatebox">
 				<span>状态</span>	
-					<select class="easyui-combobox" style="width:100px;height:32px; " id="userStatus">
+				<select class="easyui-combobox" style="width:100px;height:32px; " id="userStatus">
 					<option value="">所有</option>
 					<option value="0">未认证</option>
 					<option value="1">实名认证</option>

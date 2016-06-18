@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	$(document).ready(function(){
 		$('#xb').combobox({
-			value:${ddcDriver.xb }
+			value:'${ddcDriver.xb }'
 		});
 	});
 	
@@ -65,8 +65,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								title : '提示',
 								msg : data.message
 							});
-							window.location.href="<%=basePath%>driverAction/getAll"
-									} else {
+							history.go(-1);
+							//window.location.href="<%=basePath%>driverAction/getAll"
+							} else {
 										alert(data.message);
 									}
 									$.messager.progress('close'); // 如果提交成功则隐藏进度条

@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					已星级认证
 				</c:if>	
 				</td>
-				<th>星级认证</th>
+				<th>星级认证日期</th>
 				<td><fmt:formatDate value="${ddcDriver.xjRq }"
 						pattern="yyyy-MM-dd" /></td>
 			</tr>
