@@ -303,7 +303,7 @@ public class DriverAction {
 
 	}
 
-	private String uploadImg2(HttpServletRequest request,
+	private String uploadImg(HttpServletRequest request,
 			MultipartFile headimg_jsr1, int imgHeadWith, int imgHeadHeight,
 			PicPath imgPath) {
 		if (!headimg_jsr1.isEmpty()) {
@@ -320,7 +320,7 @@ public class DriverAction {
 
 	}
 
-	private String uploadImg(HttpServletRequest request, MultipartFile file, int imgHeadWith, int imgHeadHeight,
+	private String uploadImg2(HttpServletRequest request, MultipartFile file, int imgHeadWith, int imgHeadHeight,
 			PicPath imgPath)
 			throws FileNotFoundException, IOException {
 		if (!file.isEmpty()) {

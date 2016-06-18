@@ -127,7 +127,7 @@ public class ImgUploadThread implements Runnable{
 		// TODO Auto-generated method stub
 		
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(3000);
 			uploadImg();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -142,7 +142,7 @@ public class ImgUploadThread implements Runnable{
 	  * @author: liuwu
 	  * @version: 2016年6月9日 下午4:06:30
 	  */
-	private   void  uploadImg() {
+	private synchronized  void  uploadImg() {
 		if (file != null && !file.isEmpty()) {
 			String source = imgPath.getVcAddpath();// 图片保存路径
 			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");

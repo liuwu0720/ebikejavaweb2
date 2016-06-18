@@ -165,8 +165,8 @@ public class UserAction {
 					AjaxUtil.rendJson(response, true, "验证通过");
 				}*/
 				SingleOnline.addUser(cuser, request.getSession().getId());
-				/*request.getSession().removeAttribute(
-						SystemConstants.SESSION_USER);*/
+				request.getSession().removeAttribute(
+						SystemConstants.SESSION_USER);
 				request.getSession().setAttribute(
 						SystemConstants.SESSION_USER, ddcHyxhSsdw);
 				request.getSession().setAttribute(
