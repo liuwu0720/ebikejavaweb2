@@ -310,5 +310,55 @@ public class DriverSerivceImp implements IDriverSerivce{
 		// TODO Auto-generated method stub
 		iDdcDriverDao.deleteByKey(driverId);
 	}
+
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IDriverSerivce#updateDdcDaxxbByDriver(com.node.model.DdcDaxxb)
+		 */
+	@Override
+	public void updateDdcDaxxbByDriver(DdcDaxxb daxxb) {
+		List<DdcDriver> ddcDrivers1 = iDdcDriverDao.findByProperty("sfzhm", daxxb.getSfzmhm1());
+		List<DdcDriver> ddcDrivers2 = iDdcDriverDao.findByProperty("sfzhm", daxxb.getSfzmhm2());
+		if(CollectionUtils.isNotEmpty(ddcDrivers1)){
+			DdcDriver driver1 = ddcDrivers1.get(0);
+			daxxb.setJsrxm1(driver1.getJsrxm());
+			daxxb.setLxdh1(driver1.getLxdh());
+			daxxb.setSfzmhm1(driver1.getSfzhm());
+			daxxb.setXb1(driver1.getXb());
+			daxxb.setVcUser1CardImg1(driver1.getVcUserCardImg1());
+			daxxb.setVcUser1CardImg2(driver1.getVcUserCardImg2());
+			daxxb.setVcUser1Img(driver1.getVcUserImg());
+			daxxb.setVcUser1WorkImg(driver1.getVcUserWorkImg());
+		}else {
+			daxxb.setJsrxm1(null);
+			daxxb.setSfzmhm1(null);
+			daxxb.setLxdh1(null);
+			daxxb.setVcUser1CardImg1(null);
+			daxxb.setVcUser1CardImg2(null);
+			daxxb.setVcUser1Img(null);
+			daxxb.setVcUser1WorkImg(null);
+		}
+		if(CollectionUtils.isNotEmpty(ddcDrivers2)){
+			DdcDriver driver2 = ddcDrivers2.get(0);
+			daxxb.setJsrxm2(driver2.getJsrxm());
+			daxxb.setLxdh2(driver2.getLxdh());
+			daxxb.setSfzmhm2(driver2.getSfzhm());
+			daxxb.setXb2(driver2.getXb());
+			daxxb.setVcUser2CardImg1(driver2.getVcUserCardImg1());
+			daxxb.setVcUser2CardImg2(driver2.getVcUserCardImg2());
+			daxxb.setVcUser2Img(driver2.getVcUserImg());
+			daxxb.setVcUser2WorkImg(driver2.getVcUserWorkImg());
+		}else {
+			daxxb.setJsrxm2(null);
+			daxxb.setSfzmhm2(null);
+			daxxb.setLxdh2(null);
+			daxxb.setVcUser2CardImg1(null);
+			daxxb.setVcUser2CardImg2(null);
+			daxxb.setVcUser2Img(null);
+			daxxb.setVcUser2WorkImg(null);
+		}
+		
+	}
 	
 }

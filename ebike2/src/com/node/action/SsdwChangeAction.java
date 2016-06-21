@@ -41,6 +41,7 @@ import com.node.model.DdcSjzd;
 import com.node.model.PicPath;
 import com.node.service.IApplyService;
 import com.node.service.ICompanyService;
+import com.node.service.IDriverSerivce;
 import com.node.service.IEbikeService;
 import com.node.util.AjaxUtil;
 import com.node.util.ImgUploadThread;
@@ -69,6 +70,9 @@ public class SsdwChangeAction {
 
 	@Autowired
 	ICompanyService iCompanyService;
+	
+	@Autowired
+	IDriverSerivce iDriverSerivce;
 
 	@RequestMapping("/getAllBg")
 	public String getAll(HttpServletRequest request) {
@@ -246,16 +250,6 @@ public class SsdwChangeAction {
 			DdcDaxxb daxxb,
 			String note,
 			HttpServletRequest request,
-			@RequestParam(value = "headimg_jsr1", required = false) MultipartFile headimg_jsr1,
-			@RequestParam(value = "headimg_jsr2", required = false) MultipartFile headimg_jsr2,
-			@RequestParam(value = "ebike_img", required = false) MultipartFile ebike_img,
-			@RequestParam(value = "card1img_jsr1", required = false) MultipartFile card1img_jsr1,
-			@RequestParam(value = "card2img_jsr1", required = false) MultipartFile card2img_jsr1,
-			@RequestParam(value = "card1img_jsr2", required = false) MultipartFile card1img_jsr2,
-			@RequestParam(value = "card2img_jsr2", required = false) MultipartFile card2img_jsr2,
-			@RequestParam(value = "ebike_invoice_img", required = false) MultipartFile ebike_invoice_img,
-			@RequestParam(value = "vcUser1WorkImg_file", required = false) MultipartFile vcUser1WorkImg_file,
-			@RequestParam(value = "vcUser2WorkImg_file", required = false) MultipartFile vcUser2WorkImg_file,
 			HttpServletResponse response) throws FileNotFoundException,
 			IOException {
 
@@ -264,11 +258,15 @@ public class SsdwChangeAction {
 		 */
 		String message = iApplyService.findHmd(daxxb.getJsrxm1(),
 				daxxb.getJsrxm2());
+		if(daxxb.getSfzmhm1().equals(daxxb.getSfzmhm2())){
+			message="两个驾驶人身份证号码不能相同!";
+		}
+		
 		if (!message.equals("success")) {
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
-		
+		iDriverSerivce.updateDdcDaxxbByDriver(daxxb);
 		String slzls = request.getParameter("slzllist");// 重组变更资料字符串
 		long daId = daxxb.getId();
 		DdcDaxxb newDaxxb = iEbikeService.getById(daId);
@@ -281,90 +279,24 @@ public class SsdwChangeAction {
 		newDaxxb.setLxdh2(daxxb.getLxdh2());
 		newDaxxb.setSfzmhm1(daxxb.getSfzmhm1());
 		newDaxxb.setSfzmhm2(daxxb.getSfzmhm2());
+		newDaxxb.setVcUser1CardImg1(daxxb.getVcUser1CardImg1());
+		newDaxxb.setVcUser1CardImg2(daxxb.getVcUser1CardImg2());
+		newDaxxb.setVcUser1Img(daxxb.getVcUser1Img());
+		newDaxxb.setVcUser1WorkImg(daxxb.getVcUser1WorkImg());
+		newDaxxb.setVcUser2CardImg1(daxxb.getVcUser2CardImg1());
+		newDaxxb.setVcUser2CardImg2(daxxb.getVcUser2CardImg2());
+		newDaxxb.setVcUser2Img(daxxb.getVcUser2Img());
+		newDaxxb.setVcUser2WorkImg(daxxb.getVcUser2WorkImg());
 		newDaxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 		newDaxxb.setTranDate(new Date());
+		
 		//检查支付宝验证
-		message = iApplyService.findIsValidByDaxxb(newDaxxb);
+		//message = iApplyService.findIsValidByDaxxb(newDaxxb);
 		if(!message.equalsIgnoreCase("success")){
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
 		
-		
-		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
-		String ebike_jpgPath = uploadImgThread(request, ebike_img,
-				SystemConstants.IMG_EBIKE_WITH,
-				SystemConstants.IMG_EBIKE_HEIGHT,imgPath);// 上传车身照片
-		if (StringUtils.isNotBlank(ebike_jpgPath)) {
-			newDaxxb.setVcEbikeImg(ebike_jpgPath);
-		} else {
-			newDaxxb.setVcEbikeImg(daxxb.getVcEbikeImg());
-		}
-
-		String vcUser1_img = uploadImgThread(request, headimg_jsr1,
-				SystemConstants.IMG_HEAD_WITH, SystemConstants.IMG_HEAD_HEIGHT,imgPath);// 上传驾驶人1照片
-		if (StringUtils.isNotBlank(vcUser1_img)) {
-			newDaxxb.setVcUser1Img(vcUser1_img);
-		} else {
-			newDaxxb.setVcUser1Img(daxxb.getVcUser1Img());
-		}
-
-		String vcUser2_img = uploadImgThread(request, headimg_jsr2,
-				SystemConstants.IMG_HEAD_WITH, SystemConstants.IMG_HEAD_HEIGHT,imgPath);// 上传驾驶人2照片
-		if (StringUtils.isNotBlank(vcUser2_img)) {
-			newDaxxb.setVcUser2Img(vcUser2_img);
-		} else {
-			newDaxxb.setVcUser2Img(daxxb.getVcUser2Img());
-		}
-		String vcUser1CardImg1 = uploadImgThread(request, card1img_jsr1,
-				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 上传驾驶人1身份证正面
-		if (StringUtils.isNotBlank(vcUser1CardImg1)) {
-			newDaxxb.setVcUser1CardImg1(vcUser1CardImg1);
-		} else {
-			newDaxxb.setVcUser1CardImg1(newDaxxb.getVcUser1CardImg1());
-		}
-		String vcUser1CardImg2 = uploadImgThread(request, card2img_jsr1,
-				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 上传驾驶人1身份证反面
-		if (StringUtils.isNotBlank(vcUser1CardImg2)) {
-			newDaxxb.setVcUser1CardImg2(vcUser1CardImg2);
-		} else {
-			newDaxxb.setVcUser1CardImg2(newDaxxb.getVcUser1CardImg2());
-		}
-		String vcUser2CardImg1 = uploadImgThread(request, card1img_jsr2,
-				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 驾驶人2身份证正面
-		if (StringUtils.isNotBlank(vcUser2CardImg1)) {
-			newDaxxb.setVcUser2CardImg1(vcUser2CardImg1);
-		} else {
-			newDaxxb.setVcUser2CardImg1(newDaxxb.getVcUser2CardImg1());
-		}
-		String vcUser2CardImg2 = uploadImgThread(request, card2img_jsr2,
-				SystemConstants.IMG_IDCARD_WIDTH,
-				SystemConstants.IMG_IDCARD_HEIGHT,imgPath);// 驾驶人2身份证反面
-		if (StringUtils.isNotBlank(vcUser2CardImg2)) {
-			newDaxxb.setVcUser2CardImg2(vcUser2CardImg2);
-		} else {
-			newDaxxb.setVcUser2CardImg2(newDaxxb.getVcUser2CardImg2());
-		}
-		String vcUser1WorkImg = uploadImgThread(request, vcUser1WorkImg_file,
-				SystemConstants.IMG_INVOICE_WIDTH,
-				SystemConstants.IMG_INVOICE_HEIGHT,imgPath);
-		if(StringUtils.isNotBlank(vcUser1WorkImg)){
-			newDaxxb.setVcUser1WorkImg(vcUser1WorkImg);
-		}else {
-			newDaxxb.setVcUser1WorkImg(newDaxxb.getVcUser1WorkImg());
-		}
-
-		String vcUser2WorkImg = uploadImgThread(request, vcUser2WorkImg_file,
-				SystemConstants.IMG_INVOICE_WIDTH,
-				SystemConstants.IMG_INVOICE_HEIGHT,imgPath);
-		if(StringUtils.isNotBlank(vcUser2WorkImg)){
-			newDaxxb.setVcUser2WorkImg(vcUser2WorkImg);
-		}else {
-			newDaxxb.setVcUser2WorkImg(newDaxxb.getVcUser2WorkImg());
-		}
 		try {
 			String type = "B";// 变更
 			newDaxxb.setYwlx(type);

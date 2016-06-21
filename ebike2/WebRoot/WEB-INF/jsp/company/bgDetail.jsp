@@ -21,24 +21,6 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	
-	
-	
-	$('[name=ywyys]').each(function(){
-		$(this).click(function(){
-			if($('#cj').attr('checked')=='checked'||$('#hc').attr('checked')=='checked'||$('#jsr').attr('checked')=='checked'){
-				$('#bgbtn').removeAttr('disabled');
-			}else{
-				$('#bgbtn').attr('disabled',true);
-			}
-			if($('#area').attr('checked')=='checked'){
-				$('#jybtn').removeAttr('disabled');
-			}else{
-				$('#jybtn').attr('disabled',true);
-			}
-		});
-	});
-	
 	$('#sfzmhm1').combogrid({    
 		panelWidth: 400,
 		delay: 500,    
@@ -67,14 +49,32 @@ $(document).ready(function(){
 	        {field:'sfzhm',title:'身份证号码',width:60},    
 	        {field:'jsrxm',title:'驾驶人姓名',width:40}
 	    ]]    
-	}); 
+	});
+	
+	
+	$('[name=ywyys]').each(function(){
+		$(this).click(function(){
+			if($('#cj').attr('checked')=='checked'||$('#hc').attr('checked')=='checked'||$('#jsr').attr('checked')=='checked'){
+				$('#bgbtn').removeAttr('disabled');
+			}else{
+				$('#bgbtn').attr('disabled',true);
+			}
+			if($('#area').attr('checked')=='checked'){
+				$('#jybtn').removeAttr('disabled');
+			}else{
+				$('#jybtn').attr('disabled',true);
+			}
+		});
+	});
+	
+	 
 	
 });
 
 function selectJSR(){
 	
 	if($('#jsr').attr('checked')=='checked'){
-		$('#sfzmhm1').removeAttr('disabled');
+		$("#jsrtr").show();
 		/*$('#jsrxm1').removeAttr('disabled');
 		$('#xb1').removeAttr('disabled');
 		$('#sfzmhm1').removeAttr('disabled');
@@ -94,6 +94,7 @@ function selectJSR(){
 		$('#vcUser2WorkImg_fileid').removeAttr('disabled'); */
 		unselectArea();
 	}else{
+		$("#jsrtr").hide();
 		/*$('#jsrxm1').attr('disabled',true);
 		$('#xb1').attr('disabled',true);
 		$('#sfzmhm1').attr('disabled',true);
@@ -116,9 +117,10 @@ function selectJSR(){
 function selectArea(){
 	if($('#area').attr('checked')=='checked'){
 		$('#fxsqy').attr('disabled',false);
-		$('#cj').attr('checked',false);
-		$('#hc').attr('checked',false);
 		$('#jsr').attr('checked',false);
+		/* $('#cj').attr('checked',false);
+		$('#hc').attr('checked',false);
+		$('#jsr').attr('checked',false); */
 		
 		selectJSR();
 	}else{
@@ -233,7 +235,7 @@ function change(){
 
 	}
 
-	var AllowExt = ".jpg|.jpeg|.gif|.bmp|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
+	var AllowExt = ".jpg|.jpeg|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
 	function CheckFileSize(obj) {
 		if (obj.value != "") {
 			//检测类型
@@ -274,7 +276,7 @@ function change(){
 				<tr>
 					<th>变更类型：</th>
 					<td colspan="7" style="font-weight:bold;color:blue;"><input
-						type="checkbox" id="jsr" name="ywyys" value="E"
+						type="checkbox" id="jsr" name="ywyys" value="E" checked="checked"
 						onclick="selectJSR()" />驾驶人 <input type="checkbox" id="area"
 						name="ywyys" value="F" onclick="selectArea()" />行驶区域</td>
 				</tr>
@@ -295,18 +297,16 @@ function change(){
 					<c:if test="${ddcDaxxb.jtzz ==1 }">
 						<td>无</td>
 					</c:if>
-
 				</tr>
 
-				<tr>
+				<tr id="jsrtr">
 					<th>驾驶人姓名1</th>
-					<td><input id="sfzmhm1" name="sfzmhm1" value="${ddcDaxxb.jsrxm1 }" /> </td>
+					<td><input id="sfzmhm1" name="sfzmhm1" value="${ddcDaxxb.sfzmhm1 }" /> </td>
 
 					<th>驾驶人姓名2</th>
-					<td><input id="sfzmhm2" name="sfzmhm2"   value="${ddcDaxxb.jsrxm2 }" /> </td>
+					<td><input id="sfzmhm2" name="sfzmhm2"   value="${ddcDaxxb.sfzmhm2 }" /> </td>
 					<td></td>
 					<td></td>
-
 				</tr>
 				
 				<tr>
@@ -365,21 +365,6 @@ function change(){
 					<th>申请备注：</th>
 					<td colspan="7">${ddcDaxxb.bz }</td>
 				</tr>
-				
-		<!-- 		<tr>
-					<td colspan="2"><input type="file" id="vcEbikeInsuranceImg_fileid"
-						name="vcEbikeInsuranceImg_file" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-					<td colspan="2"><input type="file" id="vcQualifiedImg_fileid"
-						name="vcQualifiedImg_file" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-					<td colspan="2"><input id="vcUser1WorkImg_fileid" type="file"
-						name="vcUser1WorkImg_file" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-					<td colspan="2"><input id="vcUser2WorkImg_fileid" type="file"
-						name="vcUser2WorkImg_file" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-				</tr> -->
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
@@ -412,18 +397,7 @@ function change(){
 						</div>
 					</td>
 				</tr>
-				
-		<!-- 		<tr>
-					<td colspan="2"><input type="file" id="headimg_jsr1"
-						name="headimg_jsr1" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-					<td colspan="2"><input type="file" id="headimg_jsr2"
-						name="headimg_jsr2" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-					<td colspan="4"><input id="ebike_img" type="file"
-						name="ebike_img" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-				</tr> -->
+
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
@@ -456,25 +430,7 @@ function change(){
 							</div>
 					</a></td>
 				</tr>
-				<!-- <tr>
 
-					<td colspan="2"><input type="file" id="card1img_jsr1"
-						name="card1img_jsr1" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-
-					<td colspan="2"><input type="file" id="card2img_jsr1"
-						name="card2img_jsr1" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-
-					<td colspan="2"><input id="card1img_jsr2" type="file"
-						name="card1img_jsr2" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-
-					<td colspan="2"><input id="card2img_jsr2" type="file"
-						name="card2img_jsr2" onchange="CheckFileSize(this);"
-						disabled="disabled" /></td>
-
-				</tr> -->
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
@@ -511,7 +467,7 @@ function change(){
 				</tr>
 				<tr>
 					<td colspan="8" height="35" style="text-align:center;"><input
-						type="button" value=" 变 更 " disabled class="btn" id="bgbtn"
+						type="button" value=" 变 更 "  class="btn" id="bgbtn"
 						onclick="changetype(1);">&nbsp;&nbsp;&nbsp;&nbsp; <input
 						type="button" value=" 转 移 " disabled class="btn" id="jybtn"
 						onclick="changetype(2);">&nbsp;&nbsp;&nbsp;&nbsp; <input

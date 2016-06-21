@@ -10,6 +10,7 @@ package com.node.service;
 import java.util.List;
 import java.util.Map;
 
+import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.util.HqlHelper;
@@ -170,5 +171,16 @@ public interface IDriverSerivce {
 	  * @version: 2016年6月20日 下午6:09:00
 	  */
 	void deleteById(long driverId);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @param daxxb 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月21日 下午5:39:43
+	  */
+	void updateDdcDaxxbByDriver(DdcDaxxb daxxb);
 
 }
