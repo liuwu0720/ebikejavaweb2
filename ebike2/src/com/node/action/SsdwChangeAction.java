@@ -216,10 +216,8 @@ public class SsdwChangeAction {
 		ddcDaxxb.setVcQualifiedImgShow(vcQualifiedImgShow);
 		ddcDaxxb.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
 
-		List<DdcSjzd> colorsSjzds = iApplyService.getSjzdByDmlb("CSYS");// 车身颜色
 		List<DdcSjzd> bgDataSjzds = iApplyService.getSjzdByDmlb("BGSQZL");// 变更申请资料
 		List<DdcSjzd> ssqySjzds = iApplyService.getSjzdByDmlb("SSQY");// 所属区域
-		request.setAttribute("colorsSjzds", colorsSjzds);
 		request.setAttribute("bgDataSjzds", bgDataSjzds);
 		request.setAttribute("ssqySjzds", ssqySjzds);
 		request.setAttribute("ddcDaxxb", ddcDaxxb);

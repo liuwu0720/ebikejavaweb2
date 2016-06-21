@@ -160,4 +160,15 @@ public interface IDriverSerivce {
 	  */
 	String updateClsbDeleteByDriver(DdcDriver ddcDriver);
 
+
+	
+	/**
+	  * 方法描述：
+	  * @param driverId 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月20日 下午6:09:00
+	  */
+	void deleteById(long driverId);
+
 }

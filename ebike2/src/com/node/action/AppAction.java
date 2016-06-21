@@ -83,13 +83,13 @@ public class AppAction {
 				ddcDriverTemp.setVcUserName(vcUserName);
 				try {
 					iEbikeService.saveDriverTemp(ddcDriverTemp);
-					return AjaxUtil.getMap(true, "保存成功");
+					return AjaxUtil.getMap(true, "恭喜！认证成功！您的信息已成功提交至深圳交警。");
 				} catch (Exception e) {
 					e.printStackTrace();
 					return AjaxUtil.getMap(false, "保存失败"+e.getMessage());
 				}
 			}else {
-				return AjaxUtil.getMap(true, "该用户已经存在");
+				return AjaxUtil.getMap(true, "用户已存在：您已经认证过了");
 			}
 		}else {
 			return AjaxUtil.getMap(false, "非法访问");

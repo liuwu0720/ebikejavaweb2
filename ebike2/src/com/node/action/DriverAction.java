@@ -139,6 +139,7 @@ public class DriverAction {
 				.getAttribute(SystemConstants.SESSION_USER);
 		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());
 		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
+		ddcDriver.setTranDate(new Date());
 		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
 
 		try {
@@ -277,7 +278,7 @@ public class DriverAction {
 			return;
 		}else {
 			try {
-				iDriverSerivce.updateDdcDriver(ddcDriver);
+				iDriverSerivce.deleteById(driverId);
 				AjaxUtil.rendJson(response, true, "删除成功");
 			} catch (Exception e) {
 				AjaxUtil.rendJson(response, false, "删除失败");

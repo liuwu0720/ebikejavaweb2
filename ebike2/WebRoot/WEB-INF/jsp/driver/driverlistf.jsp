@@ -244,7 +244,7 @@ function updateSaveData(){
 }
 
 
-var AllowExt=".jpg|.jpeg|.gif|.bmp|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
+var AllowExt=".jpg|.jpeg|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
 function CheckFileSize(obj){
 	 if(obj.value != ""){
          //检测类型

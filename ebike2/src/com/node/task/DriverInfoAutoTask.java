@@ -55,10 +55,10 @@ public class DriverInfoAutoTask {
      */  
 	@Scheduled(cron = "0 35 22 * * *?")
 	public void autoCardCalculate() {
-		/*List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
 		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
 			saveHasValidDriver(ddcHyxhSsdwclsb);
-		}*/
+		}
 		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();//所有未绑定协会单位的司机
 		if(CollectionUtils.isNotEmpty(ddcDrivers)){
 			for(DdcDriver ddcDriver:ddcDrivers){
@@ -93,7 +93,7 @@ public class DriverInfoAutoTask {
 			DdcDriver ddcDriver2 = new DdcDriver();
 			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
 			ddcDriver2.setLxdh(ddcHyxhSsdwclsb.getLxdh2());
-			ddcDriver2.setXb(ddcHyxhSsdwclsb.getXb1());
+			ddcDriver2.setXb(ddcHyxhSsdwclsb.getXb2());
 			ddcDriver2.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm2());
 			ddcDriver2.setUserCode(ddcHyxhSsdwclsb.getLxdh2());
 			ddcDriver2.setUserPassword("123456");

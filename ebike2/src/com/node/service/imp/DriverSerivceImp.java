@@ -299,5 +299,16 @@ public class DriverSerivceImp implements IDriverSerivce{
 		}
 		return message;
 	}
+
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IDriverSerivce#deleteById(long)
+		 */
+	@Override
+	public void deleteById(long driverId) {
+		// TODO Auto-generated method stub
+		iDdcDriverDao.deleteByKey(driverId);
+	}
 	
 }

@@ -38,12 +38,44 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+	$('#sfzmhm1').combogrid({    
+		panelWidth: 400,
+		delay: 500,    
+		mode: 'remote',    
+	    idField:'sfzhm',    
+	    textField:'jsrxm',   
+	    fitColumns: true,
+	    pagination : true,
+	    url:'<%=basePath%>baAction/getDriverList',    
+	    columns:[[    
+	        {field:'sfzhm',title:'身份证号码',width:60},    
+	        {field:'jsrxm',title:'驾驶人姓名',width:40}
+	    ]]    
+	});  
+	
+	$('#sfzmhm2').combogrid({    
+		panelWidth: 400,
+		delay: 500,    
+		mode: 'remote',    
+	    idField:'sfzhm',    
+	    textField:'jsrxm',   
+	    fitColumns: true,
+	    pagination : true,
+	    url:'<%=basePath%>baAction/getDriverList',    
+	    columns:[[    
+	        {field:'sfzhm',title:'身份证号码',width:60},    
+	        {field:'jsrxm',title:'驾驶人姓名',width:40}
+	    ]]    
+	}); 
+	
 });
 
 function selectJSR(){
 	
 	if($('#jsr').attr('checked')=='checked'){
-		$('#jsrxm1').removeAttr('disabled');
+		$('#sfzmhm1').removeAttr('disabled');
+		/*$('#jsrxm1').removeAttr('disabled');
 		$('#xb1').removeAttr('disabled');
 		$('#sfzmhm1').removeAttr('disabled');
 		$('#lxdh1').removeAttr('disabled');
@@ -51,7 +83,7 @@ function selectJSR(){
 		$('#xb2').removeAttr('disabled');
 		$('#sfzmhm2').removeAttr('disabled');
 		$('#lxdh2').removeAttr('disabled');
-		$('#ebike_img').removeAttr('disabled');
+		 $('#ebike_img').removeAttr('disabled');
 		$('#headimg_jsr1').removeAttr('disabled');
 		$('#headimg_jsr2').removeAttr('disabled');
 		$('#card1img_jsr1').removeAttr('disabled');
@@ -59,10 +91,10 @@ function selectJSR(){
 		$('#card1img_jsr2').removeAttr('disabled');
 		$('#card2img_jsr2').removeAttr('disabled');
 		$('#vcUser1WorkImg_fileid').removeAttr('disabled');
-		$('#vcUser2WorkImg_fileid').removeAttr('disabled');
+		$('#vcUser2WorkImg_fileid').removeAttr('disabled'); */
 		unselectArea();
 	}else{
-		$('#jsrxm1').attr('disabled',true);
+		/*$('#jsrxm1').attr('disabled',true);
 		$('#xb1').attr('disabled',true);
 		$('#sfzmhm1').attr('disabled',true);
 		$('#lxdh1').attr('disabled',true);
@@ -70,7 +102,7 @@ function selectJSR(){
 		$('#xb2').attr('disabled',true);
 		$('#sfzmhm2').attr('disabled',true);
 		$('#lxdh2').attr('disabled',true);
-		$('#ebike_img').attr('disabled',true);
+		 $('#ebike_img').attr('disabled',true);
 		$('#headimg_jsr1').attr('disabled',true);
 		$('#headimg_jsr2').attr('disabled',true);
 		$('#card1img_jsr1').attr('disabled',true);
@@ -78,7 +110,7 @@ function selectJSR(){
 		$('#card1img_jsr2').attr('disabled',true);
 		$('#card2img_jsr2').attr('disabled',true);
 		$('#vcUser1WorkImg_fileid').attr('disabled',true);
-		$('#vcUser2WorkImg_fileid').attr('disabled',true);
+		$('#vcUser2WorkImg_fileid').attr('disabled',true); */
 	}
 }
 function selectArea(){
@@ -267,57 +299,16 @@ function change(){
 				</tr>
 
 				<tr>
-					<th>驾驶人1姓名</th>
-					<td><input id="jsrxm1" class="easyui-validatebox" type="text"
-						data-options="required:true" value="${ddcDaxxb.jsrxm1 }"
-						disabled="disabled" name="jsrxm1" style="height: 32px"></td>
-					<th>驾驶人1性别</th>
-					<td><select id="xb1" name="xb1" disabled="true"
-						style="height:32px;width: 100px;">
-							<option value="-1">请选择</option>
-							<option value="0"
-								<c:if test="${ddcDaxxb.xb1==0 }">selected</c:if>>男</option>
-							<option value="1"
-								<c:if test="${ddcDaxxb.xb1==1 }">selected</c:if>>女</option>
-					</select></td>
-					<th>身份证号码1</th>
-					<td><input class="easyui-validatebox" type="text" id="sfzmhm1"
-						data-options="required:true,validType:'idcard'"
-						disabled="disabled" value="${ddcDaxxb.sfzmhm1 }" name="sfzmhm1"
-						style="height: 32px"></td>
-					<th>联系电话1</th>
-					<td><input class="easyui-validatebox"
-						data-options="required:true,validType:'phoneNum'" type="text"
-						id="lxdh1" disabled="disabled" value="${ddcDaxxb.lxdh1 }"
-						name="lxdh1" style="height: 32px"></td>
+					<th>驾驶人姓名1</th>
+					<td><input id="sfzmhm1" name="sfzmhm1" value="${ddcDaxxb.jsrxm1 }" /> </td>
+
+					<th>驾驶人姓名2</th>
+					<td><input id="sfzmhm2" name="sfzmhm2"   value="${ddcDaxxb.jsrxm2 }" /> </td>
+					<td></td>
+					<td></td>
 
 				</tr>
-				<tr>
-					<th>驾驶人2姓名</th>
-					<td><input id="jsrxm2" class="easyui-validatebox" type="text"
-						value="${ddcDaxxb.jsrxm2 }" disabled="disabled" name="jsrxm2"
-						style="height: 32px"></td>
-
-					<th>驾驶人2性别</th>
-					<td><select id="xb2" name="xb2" disabled="true"
-						style="height:32px;width: 100px;">
-							<option value="-1">请选择</option>
-							<option value="0"
-								<c:if test="${ddcDaxxb.xb2==0 }">selected</c:if>>男</option>
-							<option value="1"
-								<c:if test="${ddcDaxxb.xb2==1 }">selected</c:if>>女</option>
-					</select></td>
-					<th>身份证号码2</th>
-					<td><input class="easyui-validatebox" type="text" id="sfzmhm2"
-						validType="notequals['#sfzmhm1']" disabled="disabled"
-						value="${ddcDaxxb.sfzmhm2 }" name="sfzmhm2" style="height: 32px">
-					</td>
-					<th>联系电话2</th>
-					<td><input class="easyui-validatebox"
-						data-options="required:false,validType:'phoneNum'" type="text"
-						id="lxdh2" disabled="disabled" value="${ddcDaxxb.lxdh2 }"
-						name="lxdh2" style="height: 32px"></td>
-				</tr>
+				
 				<tr>
 					<th>行驶区域</th>
 					<td colspan="3"><input id="xsqy" name="xsqy"
@@ -375,7 +366,7 @@ function change(){
 					<td colspan="7">${ddcDaxxb.bz }</td>
 				</tr>
 				
-				<tr>
+		<!-- 		<tr>
 					<td colspan="2"><input type="file" id="vcEbikeInsuranceImg_fileid"
 						name="vcEbikeInsuranceImg_file" onchange="CheckFileSize(this);"
 						disabled="disabled" /></td>
@@ -388,7 +379,7 @@ function change(){
 					<td colspan="2"><input id="vcUser2WorkImg_fileid" type="file"
 						name="vcUser2WorkImg_file" onchange="CheckFileSize(this);"
 						disabled="disabled" /></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
@@ -422,7 +413,7 @@ function change(){
 					</td>
 				</tr>
 				
-				<tr>
+		<!-- 		<tr>
 					<td colspan="2"><input type="file" id="headimg_jsr1"
 						name="headimg_jsr1" onchange="CheckFileSize(this);"
 						disabled="disabled" /></td>
@@ -432,7 +423,7 @@ function change(){
 					<td colspan="4"><input id="ebike_img" type="file"
 						name="ebike_img" onchange="CheckFileSize(this);"
 						disabled="disabled" /></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
@@ -465,7 +456,7 @@ function change(){
 							</div>
 					</a></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 
 					<td colspan="2"><input type="file" id="card1img_jsr1"
 						name="card1img_jsr1" onchange="CheckFileSize(this);"
@@ -483,7 +474,7 @@ function change(){
 						name="card2img_jsr2" onchange="CheckFileSize(this);"
 						disabled="disabled" /></td>
 
-				</tr>
+				</tr> -->
 				<tr>
 					<td colspan="2">
 						<div class="imgdiv">
