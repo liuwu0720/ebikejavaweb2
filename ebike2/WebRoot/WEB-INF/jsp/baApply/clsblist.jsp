@@ -340,7 +340,7 @@ function changeRowData(){
 	
 	
 }
-var AllowExt=".jpg|.jpeg|.gif|.bmp|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
+var AllowExt=".jpg|.jpeg|.png|" //允许上传的文件类型 ŀ为无限制 每个扩展名后边要加一个"|" 小写字母表示
 function CheckFileSize(obj){
 	 if(obj.value != ""){
          //检测类型
@@ -348,6 +348,7 @@ function CheckFileSize(obj){
          var FileExt=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
          if(AllowExt.indexOf(FileExt+"|") == -1){//判断文件类型是否允许上传
         	 $.messager.alert('警告','你上传的不是图片文件');    
+              obj.value="";
          	return false;
          }
 	 }     
@@ -399,7 +400,7 @@ function excelExport(){
 		}else if(rows[i]['SLYJ'] == 1){
 			rows[i]['SLYJ']=  "已审核(拒绝) ";
 		}
-		rows[i]['SQRQ'] = getLocalTime(rows[i]['SQRQ']);
+		rows[i]['SQRQ'] = getLocalDate(rows[i]['SQRQ']);
 	}
 	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
 	var fileName="电动车备案申报列表";

@@ -86,8 +86,6 @@ public class DriverAction {
 		}
 		if (userStatus != null) {
 			hql.addEqual("userStatus", userStatus);
-		}else {
-			hql.addGreatThan("userStatus", -1);
 		}
 
 		hql.addOrderBy("id", "desc");
@@ -120,13 +118,21 @@ public class DriverAction {
 		 * 检查身份证
 		 */
 		String message = "success";
+		
+		ddcDriver.setUserStatus(0);
+		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER);
+		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());
+		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
+		ddcDriver.setTranDate(new Date());
+		ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 		if (ddcDriver.getId() == null) {
-			message = iDriverSerivce.findSameSfzhm(ddcDriver.getSfzhm());
+			message = iDriverSerivce.findSameSfzhm(ddcDriver);
 		} else {
 			DdcDriver beforedriver = iDriverSerivce.getDriverById(ddcDriver
 					.getId());
 			if (StringUtils.isNotBlank(beforedriver.getSfzhm())&&!beforedriver.getSfzhm().equals(ddcDriver.getSfzhm())) {
-				message = iDriverSerivce.findSameSfzhm(ddcDriver.getSfzhm());
+				message = iDriverSerivce.findSameSfzhm(ddcDriver);
 			}
 		}
 
@@ -134,12 +140,7 @@ public class DriverAction {
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
-		ddcDriver.setUserStatus(0);
-		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
-		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());
-		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
-		ddcDriver.setTranDate(new Date());
+		
 		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
 
 		try {
@@ -180,6 +181,7 @@ public class DriverAction {
 			AjaxUtil.rendJson(response, false, "图片上传失败，请重试!");
 		}
 		try {
+			
 			if (ddcDriver.getId() == null) {
 				iDriverSerivce.saveDdcDriver(ddcDriver);
 				iEbikeService.saveDdcDriver(ddcDriver);
@@ -278,9 +280,12 @@ public class DriverAction {
 			return;
 		}else {
 			try {
+				iDriverSerivce.saveDriverLog(ddcDriver);
 				iDriverSerivce.deleteById(driverId);
+				
 				AjaxUtil.rendJson(response, true, "删除成功");
 			} catch (Exception e) {
+				e.printStackTrace();
 				AjaxUtil.rendJson(response, false, "删除失败");
 			}
 		}

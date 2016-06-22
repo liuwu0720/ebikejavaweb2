@@ -13,8 +13,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.node.dao.IDdcDaxxbDao;
 import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
+import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.service.ITaskService;
@@ -32,6 +34,9 @@ public class TaskServiceImp implements ITaskService{
 	IDdcHyxhSsdwclsbDao iDdcHyxhSsdwclsbDao;
 	@Autowired
 	IDdcDriverDao iDdcDriverDao;
+	
+	@Autowired
+	IDdcDaxxbDao iDdcDaxxbDao;
 	
 		/* (non-Javadoc)
 		 * @see com.node.service.ITaskService#findAllClsbs()
@@ -67,6 +72,17 @@ public class TaskServiceImp implements ITaskService{
 		if(CollectionUtils.isNotEmpty(ddcHyxhSsdwclsbs2)){
 			return ddcHyxhSsdwclsbs2.get(0);
 		}
+		return null;
+	}
+
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#getAllNewDaxxb()
+		 */
+	@Override
+	public List<DdcDaxxb> getAllNewDaxxb() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

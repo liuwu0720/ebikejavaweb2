@@ -340,8 +340,8 @@ public class EbikeServiceImp implements IEbikeService {
 				new String[] { "jsrxm", "sfzhm" },
 				new Object[] { ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
-				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
-						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
+				new String[] { "vcUserName", "vcUserCard","vcTelPhone" }, new Object[] {
+						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm(),ddcDriver2.getLxdh() });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			ddcDriver2.setUserStatus(1);// 驾驶人状态0未认证 1实名认证 2星级用户
 		} else {

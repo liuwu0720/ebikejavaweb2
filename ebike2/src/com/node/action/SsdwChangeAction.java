@@ -291,7 +291,7 @@ public class SsdwChangeAction {
 		newDaxxb.setTranDate(new Date());
 		
 		//检查支付宝验证
-		//message = iApplyService.findIsValidByDaxxb(newDaxxb);
+		message = iApplyService.findIsValidByDaxxb(newDaxxb);
 		if(!message.equalsIgnoreCase("success")){
 			AjaxUtil.rendJson(response, false, message);
 			return;

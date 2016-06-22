@@ -1,7 +1,15 @@
+/**
+  * 文件名：DdcDriverLog.java
+  * 版本信息：Version 1.0
+  * 日期：2016年6月21日
+  * Copyright 结点科技 Corporation 2016 
+  * 版权所有
+  */
 package com.node.model;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,17 +20,24 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+
 /**
- * DdcDriver entity. @author MyEclipse Persistence Tools
+ * 类描述：
+ * @version: 1.0
+ * @author: liuwu
+ * @version: 2016年6月21日 下午10:27:27 
  */
 @Entity
-@Table(name = "DDC_DRIVER")
-public class DdcDriver implements java.io.Serializable {
+@Table(name = "DDC_DRIVER_LOG")
+public class DdcDriverLog implements Serializable{
 
 	// Fields
 
+	
+
+	
 	/* serialVersionUID: serialVersionUID */
-	private static final long serialVersionUID = 7678082016832049336L;
+	private static final long serialVersionUID = -808537447002877755L;
 	private Long id;
 	private String jsrxm;
 	private String xb;
@@ -154,13 +169,13 @@ public class DdcDriver implements java.io.Serializable {
 	}
 
 	/** default constructor */
-	public DdcDriver() {
+	public DdcDriverLog() {
 	}
 
 	// Property accessors
-	@SequenceGenerator(name = "DDC_DRIVER", sequenceName = "seq_ddc_driver", allocationSize = 1)
+	@SequenceGenerator(name = "DDC_DRIVERLOG", sequenceName = "seq_ddc_driver_log", allocationSize = 1)
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_DRIVER")
+	@GeneratedValue(strategy = SEQUENCE, generator = "DDC_DRIVERLOG")
 	@Column(name = "ID", unique = true, nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return this.id;
@@ -344,5 +359,4 @@ public class DdcDriver implements java.io.Serializable {
 		this.userNote = userNote;
 	}
 	
-
 }

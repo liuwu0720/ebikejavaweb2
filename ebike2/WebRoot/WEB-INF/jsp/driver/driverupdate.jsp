@@ -115,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th>联系电话</th>
 					<td><input class="easyui-validatebox" type="text"
 						value="${ddcDriver.lxdh }"
-						data-options="required:true,validType:'phoneNum'" name="lxdh"
+						data-options="required:true" name="lxdh"
 						style="height: 32px"></td>
 				 </tr>
 				 

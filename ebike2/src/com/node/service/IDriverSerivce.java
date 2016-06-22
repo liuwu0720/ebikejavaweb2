@@ -85,13 +85,13 @@ public interface IDriverSerivce {
 	
 	/**
 	  * 方法描述：
-	  * @param sfzhm
+	  * @param ddcDriver
 	  * @return 
 	  * @version: 1.0
 	  * @author: liuwu
 	  * @version: 2016年6月16日 下午7:10:42
 	  */
-	String findSameSfzhm(String sfzhm);
+	String findSameSfzhm(DdcDriver ddcDriver);
 
 
 	
@@ -182,5 +182,16 @@ public interface IDriverSerivce {
 	  * @version: 2016年6月21日 下午5:39:43
 	  */
 	void updateDdcDaxxbByDriver(DdcDaxxb daxxb);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月21日 下午10:29:36
+	  */
+	void saveDriverLog(DdcDriver ddcDriver);
 
 }

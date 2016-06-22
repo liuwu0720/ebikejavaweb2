@@ -2382,3 +2382,82 @@ cache 20;
 ALTER TABLE DDC_DRIVER ADD XJ_FLAG VARCHAR2(10); 
 ALTER TABLE DDC_DRIVER ADD XJ_MSG VARCHAR2(200);
 ALTER TABLE DDC_DRIVER ADD XJ_RQ DATE;
+
+
+
+-- Create table
+create table DDC_DRIVER_LOG
+(
+  id               NUMBER not null,
+  jsrxm            VARCHAR2(50),
+  xb               VARCHAR2(50),
+  lxdh             VARCHAR2(50),
+  syn_flag         VARCHAR2(50),
+  tran_date        DATE default sysdate,
+  user_code        VARCHAR2(50),
+  user_password    VARCHAR2(50),
+  sfzhm            VARCHAR2(50),
+  vcuser_img       VARCHAR2(100),
+  vc_userworkimg   VARCHAR2(100),
+  user_status      NUMBER default 0,
+  illeage_times    NUMBER default 0,
+  user_note        VARCHAR2(100),
+  ssdwid           NUMBER,
+  hyxhzh           VARCHAR2(20),
+  vc_user_cardimg1 VARCHAR2(100),
+  vc_user_cardimg2 VARCHAR2(100),
+  xj_flag          VARCHAR2(10),
+  xj_msg           VARCHAR2(200),
+  xj_rq            DATE
+);
+
+-- Add comments to the table 
+comment on table DDC_DRIVER_LOG
+  is '司机表';
+-- Add comments to the columns 
+comment on column DDC_DRIVER_LOG.id
+  is '主键';
+comment on column DDC_DRIVER_LOG.jsrxm
+  is '姓名';
+comment on column DDC_DRIVER_LOG.xb
+  is '性别';
+comment on column DDC_DRIVER_LOG.lxdh
+  is '联系电话';
+comment on column DDC_DRIVER_LOG.syn_flag
+  is '传送标志';
+comment on column DDC_DRIVER_LOG.tran_date
+  is '传送时间';
+comment on column DDC_DRIVER_LOG.user_code
+  is '用户名';
+comment on column DDC_DRIVER_LOG.user_password
+  is '用户密码';
+comment on column DDC_DRIVER_LOG.sfzhm
+  is '身份证号码';
+comment on column DDC_DRIVER_LOG.vcuser_img
+  is '用户头像';
+comment on column DDC_DRIVER_LOG.vc_userworkimg
+  is '居住证或在职证明';
+comment on column DDC_DRIVER_LOG.user_status
+  is '驾驶人状态0未认证 1备案认证 2星级用户';
+comment on column DDC_DRIVER_LOG.illeage_times
+  is '驾驶人违法次数';
+comment on column DDC_DRIVER_LOG.user_note
+  is '驾驶人违法备注';
+comment on column DDC_DRIVER_LOG.ssdwid
+  is '所属单位ID';
+comment on column DDC_DRIVER_LOG.hyxhzh
+  is '所属协会账号';
+comment on column DDC_DRIVER_LOG.vc_user_cardimg1
+  is '身份证正面';
+comment on column DDC_DRIVER_LOG.vc_user_cardimg2
+  is '身份证反面';
+
+
+-- Create sequence 
+create sequence SEQ_DDC_DRIVER_LOG
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20;
+

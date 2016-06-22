@@ -9,6 +9,7 @@ package com.node.service;
 
 import java.util.List;
 
+import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhSsdwclsb;
 
@@ -52,5 +53,16 @@ public interface ITaskService {
 	  * @version: 2016年6月9日 下午3:21:49
 	  */
 	DdcHyxhSsdwclsb findClsbByDriver(DdcDriver ddcDriver);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月22日 下午2:13:57
+	  */
+	List<DdcDaxxb> getAllNewDaxxb();
 
 }

@@ -319,7 +319,7 @@ function CheckFileSize(obj){
 				<tr>
 					<td>联系电话</td>
 					<td><input class="easyui-validatebox" type="text"
-						data-options="required:true,validType:'phoneNum'" name="lxdh" style="height: 32px">
+						data-options="required:true" name="lxdh" style="height: 32px">
 					</td>
 					
 				</tr>

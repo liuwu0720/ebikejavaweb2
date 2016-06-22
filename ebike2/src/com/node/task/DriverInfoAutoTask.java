@@ -59,7 +59,7 @@ public class DriverInfoAutoTask {
 		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
 			saveHasValidDriver(ddcHyxhSsdwclsb);
 		}
-		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();//所有未绑定协会单位的司机
+		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();//所有司机
 		if(CollectionUtils.isNotEmpty(ddcDrivers)){
 			for(DdcDriver ddcDriver:ddcDrivers){
 				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iTaskService.findClsbByDriver(ddcDriver);
@@ -73,6 +73,7 @@ public class DriverInfoAutoTask {
 		}
 		
 	}
+	
 	
 
 	

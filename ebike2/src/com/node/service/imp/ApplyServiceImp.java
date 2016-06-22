@@ -456,7 +456,11 @@ public class ApplyServiceImp implements IApplyService {
 		 */
 	@Override
 	public String findSameDjh(String djh) {
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByProperty("djh", djh);
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByPropertys(new String[]{
+				"djh","nEnable"
+		}, new Object[]{
+				djh,1
+		});
 		if(CollectionUtils.isEmpty(ddcHyxhSsdwclsbs)){
 			return "success";
 		}else {
