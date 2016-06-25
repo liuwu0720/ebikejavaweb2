@@ -53,8 +53,8 @@ public class TaskServiceImp implements ITaskService{
 		 */
 	@Override
 	public List<DdcDriver> findAllDriversNotValid() {
-		// TODO Auto-generated method stub
-		return iDdcDriverDao.findAll();
+		List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("userStatus", 0);
+		return ddcDrivers;
 	}
 
 

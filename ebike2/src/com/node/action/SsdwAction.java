@@ -494,13 +494,10 @@ public class SsdwAction {
 		long dId = Long.parseLong(id);
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
-		String message = iApplyService.findIsValid(ddcHyxhSsdwclsb);// 是否通过支付宝验证
-		if (!message.equals("success")) {
-			AjaxUtil.rendJson(response, false, message);
-			return;
-		}
+		
 
 		if (state.equals("1")) {
+			
 			// 如果行业协会拒绝，则审批流程结束，不提交至内网审批,且申请单位的配额回收
 			ddcHyxhSsdwclsb.setSlr(ddcHyxhBase.getHyxhmc());
 			ddcHyxhSsdwclsb.setSlyj(SystemConstants.NOTAGREE);
@@ -510,9 +507,9 @@ public class SsdwAction {
 			if (StringUtils.isNotBlank(tbyy)) {
 				ddcHyxhSsdwclsb.setTbyy(tbyy);
 			}
-			DdcHyxhSsdw ddcHyxhSsdw = iApplyService
+			/*DdcHyxhSsdw ddcHyxhSsdw = iApplyService
 					.getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
-			ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
+			ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);*/
 
 			// 审批人
 			DdcApproveUser ddcApproveUser = new DdcApproveUser();
@@ -532,7 +529,7 @@ public class SsdwAction {
 			ddcApproveUser.setApproveTime(new Date());
 			ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
 			try {
-				iCompanyService.update(ddcHyxhSsdw);
+				//iCompanyService.update(ddcHyxhSsdw);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 				iApplyService.saveDdcApproveUser(ddcApproveUser);
 				AjaxUtil.rendJson(response, true, "审批成功!");
@@ -541,6 +538,11 @@ public class SsdwAction {
 				AjaxUtil.rendJson(response, false, "审批失败!系统错误");
 			}
 		} else if (state.equals("0")) {
+			String message = iApplyService.findIsValid(ddcHyxhSsdwclsb);// 是否通过支付宝验证
+			if (!message.equals("success")) {
+				AjaxUtil.rendJson(response, false, message);
+				return;
+			}
 			// 同意，审批顺序改变,同步至内网
 			ddcHyxhSsdwclsb.setSlIndex(1);
 			ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);

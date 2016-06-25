@@ -141,17 +141,19 @@ public class BaAction {
 		return map;
 
 	}
+
 	/**
 	 * 
-	  * 方法描述：修改详情
-	  * @param request
-	  * @param type
-	  * @param response
-	  * @param id
-	  * @return 
-	  * @version: 1.0
-	  * @author: liuwu
-	  * @version: 2016年6月18日 下午2:50:36
+	 * 方法描述：修改详情
+	 * 
+	 * @param request
+	 * @param type
+	 * @param response
+	 * @param id
+	 * @return
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年6月18日 下午2:50:36
 	 */
 	@RequestMapping("/updateRecordApprovalInfoById")
 	public String updateRecordApprovalInfoById(HttpServletRequest request,
@@ -191,10 +193,14 @@ public class BaAction {
 				.getVcUser2CardImg2());
 		String vcEbikeInvoiceImgShow = parseUrl(ddcHyxhSsdwclsb
 				.getVcEbikeInvoiceImg());
-		String vcUser1WorkImgShow = parseUrl(ddcHyxhSsdwclsb.getVcUser1WorkImg());
-		String vcUser2WorkImgShow = parseUrl(ddcHyxhSsdwclsb.getVcUser2WorkImg());
-		String vcQualifiedImgShow = parseUrl(ddcHyxhSsdwclsb.getVcQualifiedImg());
-		String vcEbikeInsuranceImgShow = parseUrl(ddcHyxhSsdwclsb.getVcEbikeInsuranceImg());
+		String vcUser1WorkImgShow = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser1WorkImg());
+		String vcUser2WorkImgShow = parseUrl(ddcHyxhSsdwclsb
+				.getVcUser2WorkImg());
+		String vcQualifiedImgShow = parseUrl(ddcHyxhSsdwclsb
+				.getVcQualifiedImg());
+		String vcEbikeInsuranceImgShow = parseUrl(ddcHyxhSsdwclsb
+				.getVcEbikeInsuranceImg());
 		ddcHyxhSsdwclsb.setVcShowEbikeImg(showEbikeImg);
 		ddcHyxhSsdwclsb.setVcShowUser1Img(showUser1Img);
 		ddcHyxhSsdwclsb.setVcShowUser2Img(showUser2Img);
@@ -263,6 +269,21 @@ public class BaAction {
 		return resultMap;
 	}
 
+	/**
+	 * 
+	 * 方法描述：保存 车辆申报
+	 * 
+	 * @param ddcHyxhSsdwclsb
+	 * @param ebike_img
+	 * @param ebike_invoice_img
+	 * @param vcQualifiedImgfile
+	 * @param vcEbikeInsuranceImgfile
+	 * @param request
+	 * @param response
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年6月22日 下午5:57:29
+	 */
 	@RequestMapping("/saveOrUpdateBaClSb")
 	public void saveOrUpdateBaClSb(
 			DdcHyxhSsdwclsb ddcHyxhSsdwclsb,
@@ -279,8 +300,8 @@ public class BaAction {
 		if (ddcHyxhSsdwclsb.getId() == null) {
 			message = iApplyService.findSameDjh(ddcHyxhSsdwclsb.getDjh());
 		}
-		if(ddcHyxhSsdwclsb.getSfzmhm1().equals(ddcHyxhSsdwclsb.getSfzmhm2())){
-			message="两个驾驶人身份证号码不能相同!";
+		if (ddcHyxhSsdwclsb.getSfzmhm1().equals(ddcHyxhSsdwclsb.getSfzmhm2())) {
+			message = "两个驾驶人身份证号码不能相同!";
 		}
 		if (!message.equals("success")) {
 			AjaxUtil.rendJson(response, false, message);
@@ -326,7 +347,6 @@ public class BaAction {
 				ddcHyxhSsdwclsb.setVcEbikeImg(ddcHyxhSsdwclsb.getVcEbikeImg());
 			}
 
-
 			String vcEbikeInvoiceImg = uploadImg(request, ebike_invoice_img,
 					SystemConstants.IMG_INVOICE_WIDTH,
 					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 购车发票
@@ -336,7 +356,7 @@ public class BaAction {
 				ddcHyxhSsdwclsb.setVcEbikeInvoiceImg(ddcHyxhSsdwclsb
 						.getVcEbikeInvoiceImg());
 			}
-			
+
 			String vcQualifiedImg_path = uploadImg(request, vcQualifiedImgfile,
 					SystemConstants.IMG_INVOICE_WIDTH,
 					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 车辆合格证
@@ -366,6 +386,9 @@ public class BaAction {
 				ddcHyxhSsdwclsb.setLsh("A" + md + seq);
 				iApplyService.saveDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			} else {
+				ddcHyxhSsdwclsb.setSlbz(null);
+				ddcHyxhSsdwclsb.setTbyy(null);
+				ddcHyxhSsdwclsb.setSlyj(null);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
 			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
@@ -424,6 +447,7 @@ public class BaAction {
 		String extension = fileName.substring(position);
 		return formatDate + random + extension;
 	}
+
 	/**
 	 * 方法描述：图片显示路径进行解析
 	 * 

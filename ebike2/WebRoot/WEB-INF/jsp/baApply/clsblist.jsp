@@ -121,6 +121,8 @@ $(document).ready(function(){
 				var cancel = "<a  href='javascript:void(0)'  onclick='cancelSb("+row.ID+")'>退回</a>"
 				if(row.SL_INDEX == 0){
 					return query+update+cancel;
+				}else if(row.SLYJ == 1){
+					return query+update;
 				}else{
 					return query;
 				}
