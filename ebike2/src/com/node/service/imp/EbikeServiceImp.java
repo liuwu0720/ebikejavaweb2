@@ -336,23 +336,26 @@ public class EbikeServiceImp implements IEbikeService {
 	 */
 	@Override
 	public void saveDdcDriver(DdcDriver ddcDriver2) {
-		
+
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
 				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
 						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
-			ddcDriver2.setUserStatus(1);// 驾驶人状态0未认证 1实名认证 2星级用户
-			ddcDriver2.setLxdh(ddcDriverTemps.get(0).getVcTelPhone());
-			ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_ADD);
-			ddcDriver2.setUserCode(ddcDriver2.getLxdh());
-			ddcDriver2.setUserPassword("123456");
+			if (StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg1())
+					&& StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg2())
+					&& StringUtils.isNotBlank(ddcDriver2.getVcUserImg())) {
+				ddcDriver2.setUserStatus(1);// 驾驶人状态0未认证 1实名认证 2星级用户
+				ddcDriver2.setLxdh(ddcDriverTemps.get(0).getVcTelPhone());
+				ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+				ddcDriver2.setUserCode(ddcDriver2.getLxdh());
+				ddcDriver2.setUserPassword("123456");
+			}
 		} else {
 			ddcDriver2.setUserStatus(0);
 			ddcDriver2.setSynFlag(null);
 		}
-		
-		ddcDriver2
-		.setIlleagalTimes(0);
+
+		ddcDriver2.setIlleagalTimes(0);
 		iDdcDriverDao.updateCleanBefore(ddcDriver2);
 
 	}
@@ -388,10 +391,10 @@ public class EbikeServiceImp implements IEbikeService {
 				oldDaxxb.getSfzmhm1());
 		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
 			List<DdcDriverDaxx> ddcDriverDaxxs = iDdcDriverDaxxDao
-					.findByPropertys(
-							new String[] { "driverId", "daId" },
-							new Object[] { oldDdcDrivers.get(0).getId(), newDaxxb.getId() });
-			if(CollectionUtils.isNotEmpty(ddcDriverDaxxs)){
+					.findByPropertys(new String[] { "driverId", "daId" },
+							new Object[] { oldDdcDrivers.get(0).getId(),
+									newDaxxb.getId() });
+			if (CollectionUtils.isNotEmpty(ddcDriverDaxxs)) {
 				DdcDriverDaxx newDdcDriverDaxx = new DdcDriverDaxx();
 				newDdcDriverDaxx.setId(ddcDriverDaxxs.get(0).getId());
 				newDdcDriverDaxx.setDaId(newDaxxb.getId());
@@ -400,30 +403,32 @@ public class EbikeServiceImp implements IEbikeService {
 				iDdcDriverDaxxDao.update(newDdcDriverDaxx);
 			}
 		}
-		
-		
-		if(StringUtils.isNotBlank(newDaxxb.getSfzmhm2())){
+
+		if (StringUtils.isNotBlank(newDaxxb.getSfzmhm2())) {
 			List<DdcDriver> ddcDrivers2 = iDdcDriverDao.findByProperty("sfzhm",
 					newDaxxb.getSfzmhm2());
-			List<DdcDriver> oldDdcDrivers2 = iDdcDriverDao.findByProperty("sfzhm",
-					oldDaxxb.getSfzmhm2());
+			List<DdcDriver> oldDdcDrivers2 = iDdcDriverDao.findByProperty(
+					"sfzhm", oldDaxxb.getSfzmhm2());
 			if (CollectionUtils.isNotEmpty(ddcDrivers2)) {
 				DdcDriver ddcDriver2 = ddcDrivers2.get(0);
-				if(CollectionUtils.isNotEmpty(oldDdcDrivers2)){
+				if (CollectionUtils.isNotEmpty(oldDdcDrivers2)) {
 					List<DdcDriverDaxx> ddcDriverDaxxs2 = iDdcDriverDaxxDao
 							.findByPropertys(
 									new String[] { "driverId", "daId" },
-									new Object[] { oldDdcDrivers2.get(0).getId(), newDaxxb.getId() });
-					if(CollectionUtils.isNotEmpty(ddcDriverDaxxs2)){
+									new Object[] {
+											oldDdcDrivers2.get(0).getId(),
+											newDaxxb.getId() });
+					if (CollectionUtils.isNotEmpty(ddcDriverDaxxs2)) {
 						DdcDriverDaxx newDdcDriverDaxx = new DdcDriverDaxx();
 						newDdcDriverDaxx.setId(ddcDriverDaxxs2.get(0).getId());
 						newDdcDriverDaxx.setDaId(newDaxxb.getId());
 						newDdcDriverDaxx.setDriverId(ddcDriver2.getId());
-						newDdcDriverDaxx.setSysFlag(SystemConstants.SYSNFLAG_UPDATE);
+						newDdcDriverDaxx
+								.setSysFlag(SystemConstants.SYSNFLAG_UPDATE);
 						iDdcDriverDaxxDao.update(newDdcDriverDaxx);
 					}
 				}
-				
+
 			}
 		}
 	}
@@ -457,8 +462,8 @@ public class EbikeServiceImp implements IEbikeService {
 			ddcDriver.setVcUserCardImg1(newDaxxb.getVcUser1CardImg1());
 			ddcDriver.setVcUserCardImg2(newDaxxb.getVcUser1CardImg2());
 			iDdcDriverDao.save(ddcDriver);
-		}else {
-			for(DdcDriver ddcDriver:ddcDrivers){
+		} else {
+			for (DdcDriver ddcDriver : ddcDrivers) {
 				ddcDriver.setLxdh(newDaxxb.getLxdh1());
 				ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 				ddcDriver.setVcUserImg(newDaxxb.getVcUser1Img());
@@ -469,9 +474,8 @@ public class EbikeServiceImp implements IEbikeService {
 				iDdcDriverDao.update(ddcDriver);
 			}
 		}
-		
-		
-		if(StringUtils.isNotBlank(newDaxxb.getSfzmhm2())){
+
+		if (StringUtils.isNotBlank(newDaxxb.getSfzmhm2())) {
 			List<DdcDriver> ddcDrivers2 = iDdcDriverDao.findByProperty("sfzhm",
 					newDaxxb.getSfzmhm2());
 			if (CollectionUtils.isEmpty(ddcDrivers2)) {
@@ -493,8 +497,8 @@ public class EbikeServiceImp implements IEbikeService {
 				ddcDriver.setVcUserCardImg1(newDaxxb.getVcUser2CardImg1());
 				ddcDriver.setVcUserCardImg2(newDaxxb.getVcUser2CardImg2());
 				iDdcDriverDao.save(ddcDriver);
-			}else {
-				for(DdcDriver ddcDriver:ddcDrivers){
+			} else {
+				for (DdcDriver ddcDriver : ddcDrivers) {
 					ddcDriver.setLxdh(newDaxxb.getLxdh2());
 					ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 					ddcDriver.setVcUserImg(newDaxxb.getVcUser2Img());
@@ -506,7 +510,6 @@ public class EbikeServiceImp implements IEbikeService {
 				}
 			}
 		}
-		
 
 	}
 
