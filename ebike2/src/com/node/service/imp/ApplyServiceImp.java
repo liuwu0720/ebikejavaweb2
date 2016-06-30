@@ -412,8 +412,25 @@ public class ApplyServiceImp implements IApplyService {
 			if(CollectionUtils.isEmpty(ddcDriverTemps2)){
 				message = "驾驶人2姓名【"+ ddcHyxhSsdwclsb.getJsrxm2()+"】和身份证号码【"+ddcHyxhSsdwclsb.getSfzmhm2()+"】未通过实名验证";
 			}
+			if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())){
+				message="驾驶人2在职证明或居住证为空";
+			}
 		}
-		
+		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeImg())){
+			message="车辆照片为空";
+		}
+		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeInsuranceImg())){
+			message="投保凭证为空";
+		}
+		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeInvoiceImg())){
+			message="购车发票为空";
+		}
+		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcQualifiedImg())){
+			message="车辆合格证为空";
+		}
+		if (StringUtils.isBlank(ddcHyxhSsdwclsb.getVcUser1WorkImg())) {
+			message="驾驶人1 在职证明或居住证为空";
+		}
 		
 		return message;
 	}

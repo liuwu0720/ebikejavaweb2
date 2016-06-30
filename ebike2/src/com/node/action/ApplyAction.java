@@ -604,11 +604,11 @@ public class ApplyAction {
 				if (StringUtils.isBlank(ddcHyxhSsdwclsb.getSynFlag())) {
 					ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 					ddcHyxhSsdwclsb.setTranDate(new Date());
-					/*String message = iApplyService.findIsValid(ddcHyxhSsdwclsb);//是否通过支付宝验证
+					String message = iApplyService.findIsValid(ddcHyxhSsdwclsb);//是否通过支付宝验证
 					if (!message.equals("success")) {
 						AjaxUtil.rendJson(response, false, message);
 						return;
-					}*/
+					}
 					
 					DdcApproveUser ddcApproveUser = new DdcApproveUser();
 

@@ -1,10 +1,10 @@
 /**
-  * 文件名：ImgUploadThread.java
-  * 版本信息：Version 1.0
-  * 日期：2016年6月9日
-  * Copyright 结点科技 Corporation 2016 
-  * 版权所有
-  */
+ * 文件名：ImgUploadThread.java
+ * 版本信息：Version 1.0
+ * 日期：2016年6月9日
+ * Copyright 结点科技 Corporation 2016 
+ * 版权所有
+ */
 package com.node.util;
 
 import java.awt.image.BufferedImage;
@@ -20,32 +20,31 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.node.model.PicPath;
 
-
 /**
  * 类描述：
+ * 
  * @version: 1.0
  * @author: liuwu
- * @version: 2016年6月9日 下午3:54:24 
+ * @version: 2016年6月9日 下午3:54:24
  */
-public class ImgUploadThread implements Runnable{
+public class ImgUploadThread implements Runnable {
 	private MultipartFile file;
 	private int limitWidth;
 	private int limitHeight;
 	private PicPath imgPath;
 	private String newFilePath;
-	
-		
+
 	/**
-	  * 类的构造方法
-	  * 创建一个新的实例 ImgUploadThread.
-	  * @param 
-	  * @param file
-	  * @param limitWidth
-	  * @param limitHeight
-	  * @param imgPath
-	  */
+	 * 类的构造方法 创建一个新的实例 ImgUploadThread.
+	 * 
+	 * @param
+	 * @param file
+	 * @param limitWidth
+	 * @param limitHeight
+	 * @param imgPath
+	 */
 	public ImgUploadThread(MultipartFile file, int limitWidth, int limitHeight,
-			PicPath imgPath,String newFilePath) {
+			PicPath imgPath, String newFilePath) {
 		super();
 		this.file = file;
 		this.limitWidth = limitWidth;
@@ -54,38 +53,35 @@ public class ImgUploadThread implements Runnable{
 		this.newFilePath = newFilePath;
 	}
 
-
-		/**
+	/**
 	 * @return imgPath : return the property imgPath.
 	 */
 	public PicPath getImgPath() {
 		return imgPath;
 	}
 
-
 	/**
-	 * @param imgPath : set the property imgPath.
+	 * @param imgPath
+	 *            : set the property imgPath.
 	 */
 	public void setImgPath(PicPath imgPath) {
 		this.imgPath = imgPath;
 	}
 
-
-		/**
+	/**
 	 * @return file : return the property file.
 	 */
 	public MultipartFile getFile() {
 		return file;
 	}
 
-
 	/**
-	 * @param file : set the property file.
+	 * @param file
+	 *            : set the property file.
 	 */
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-
 
 	/**
 	 * @return limitWidth : return the property limitWidth.
@@ -94,14 +90,13 @@ public class ImgUploadThread implements Runnable{
 		return limitWidth;
 	}
 
-
 	/**
-	 * @param limitWidth : set the property limitWidth.
+	 * @param limitWidth
+	 *            : set the property limitWidth.
 	 */
 	public void setLimitWidth(int limitWidth) {
 		this.limitWidth = limitWidth;
 	}
-
 
 	/**
 	 * @return limitHeight : return the property limitHeight.
@@ -110,39 +105,34 @@ public class ImgUploadThread implements Runnable{
 		return limitHeight;
 	}
 
-
 	/**
-	 * @param limitHeight : set the property limitHeight.
+	 * @param limitHeight
+	 *            : set the property limitHeight.
 	 */
 	public void setLimitHeight(int limitHeight) {
 		this.limitHeight = limitHeight;
 	}
 
-
-	/* (non-Javadoc)
-		 * @see java.lang.Runnable#run()
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
-		try {
-			Thread.sleep(3000);
-			uploadImg();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		uploadImg();
+
 	}
 
-	
 	/**
-	  * 方法描述： 
-	  * @version: 1.0
-	  * @author: liuwu
-	  * @version: 2016年6月9日 下午4:06:30
-	  */
-	private synchronized  void  uploadImg() {
+	 * 方法描述：
+	 * 
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年6月9日 下午4:06:30
+	 */
+	private synchronized void uploadImg() {
 		if (file != null && !file.isEmpty()) {
 			String source = imgPath.getVcAddpath();// 图片保存路径
 			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
@@ -161,7 +151,7 @@ public class ImgUploadThread implements Runnable{
 			System.out.println("得到上传文件的后缀名 ------------" + lastuploadName);
 
 			// 得到文件的新名字
-			String fileNewName =newFilePath;
+			String fileNewName = newFilePath;
 			System.out.println("// 得到文件的新名字 ------------" + fileNewName);
 
 			// 最后返回图片路径
@@ -184,8 +174,8 @@ public class ImgUploadThread implements Runnable{
 					file.transferTo(image2);
 				} else {
 					scaledImage = scaleImage.imageZoomOut(srcBufferImage, w, h);
-					FileOutputStream out = new FileOutputStream(getImagePath + "/"
-							+ fileNewName);
+					FileOutputStream out = new FileOutputStream(getImagePath
+							+ "/" + fileNewName);
 					ImageIO.write(scaledImage, "jpeg", out);
 					out.close();
 				}
@@ -193,10 +183,9 @@ public class ImgUploadThread implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	
-		
-	}
+		}
 
+	}
 
 	/**
 	 * @return newFilePath : return the property newFilePath.
@@ -205,14 +194,12 @@ public class ImgUploadThread implements Runnable{
 		return newFilePath;
 	}
 
-
 	/**
-	 * @param newFilePath : set the property newFilePath.
+	 * @param newFilePath
+	 *            : set the property newFilePath.
 	 */
 	public void setNewFilePath(String newFilePath) {
 		this.newFilePath = newFilePath;
 	}
 
-
-	
 }

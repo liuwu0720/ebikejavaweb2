@@ -125,7 +125,11 @@ public class DriverAction {
 		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());
 		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
 		ddcDriver.setTranDate(new Date());
-		ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+		int userStatus = iDriverSerivce.updateDriverStatus(ddcDriver);
+		if(userStatus == 1){
+			ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+		}
+		ddcDriver.setUserStatus(userStatus);
 		if (ddcDriver.getId() == null) {
 			message = iDriverSerivce.findSameSfzhm(ddcDriver);
 		} else {

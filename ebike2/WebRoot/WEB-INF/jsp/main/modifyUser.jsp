@@ -152,7 +152,7 @@
 				</tr>
 				<tr>
 					<th>单位名称</th>
-					<td><input class="easyui-validatebox" type="text" name="dwmc" 	data-options="required:true" 
+					<td><input class="easyui-validatebox" type="text" name="dwmc"  readonly="readonly"	data-options="required:true" 
 						value="${ddcHyxhSsdw.dwmc }"></input></td>
 				</tr>
 				<tr>

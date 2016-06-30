@@ -260,10 +260,25 @@ function queryRow(id){
 }
 //修改申报详情
 function updateRow(id){
-	$.messager.progress({
-		text:"正在处理，请稍候..."
-	});
-	window.location.href="<%=basePath%>baAction/updateRecordApprovalInfoById?id="+id;
+	
+	$.post("<%=basePath%>baAction/checkStatus", 
+			{id:id},    
+			   function (data, textStatus)
+			   {     
+					
+				if (data.isSuccess) {
+
+					$.messager.progress({
+						text:"正在处理，请稍候..."
+					});
+					window.location.href="<%=basePath%>baAction/updateRecordApprovalInfoById?id="+id;
+				}else{
+					alert(data.message);
+					$("#dg").datagrid('reload');
+				}
+			   }
+		  ,"json");
+	
 
 }
 
@@ -458,7 +473,7 @@ function excelExport(){
 				</tr>
 				<tr>
 					<td>车身照片(600*400)</td>
-					<td><input  type="file"
+					<td><input  type="file" 
 						name="ebike_img" /><br /></td>
 					<td>购车发票(600*400)</td>
 					<td><input  type="file"

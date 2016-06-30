@@ -336,38 +336,24 @@ public class EbikeServiceImp implements IEbikeService {
 	 */
 	@Override
 	public void saveDdcDriver(DdcDriver ddcDriver2) {
-		List<DdcDriver> oldDdcDrivers = iDdcDriverDao.findByPropertys(
-				new String[] { "jsrxm", "sfzhm" },
-				new Object[] { ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
+		
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
 				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
 						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			ddcDriver2.setUserStatus(1);// 驾驶人状态0未认证 1实名认证 2星级用户
 			ddcDriver2.setLxdh(ddcDriverTemps.get(0).getVcTelPhone());
+			ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+			ddcDriver2.setUserCode(ddcDriver2.getLxdh());
+			ddcDriver2.setUserPassword("123456");
 		} else {
 			ddcDriver2.setUserStatus(0);
+			ddcDriver2.setSynFlag(null);
 		}
-		ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_ADD);
-		ddcDriver2.setTranDate(new Date());
+		
 		ddcDriver2
 		.setIlleagalTimes(0);
-		if (CollectionUtils.isNotEmpty(oldDdcDrivers)) {
-			ddcDriver2.setId(oldDdcDrivers.get(0).getId());
-			ddcDriver2.setUserPassword(oldDdcDrivers.get(0).getUserPassword());
-			ddcDriver2
-					.setIlleagalTimes(0);
-			ddcDriver2.setUserStatus(oldDdcDrivers.get(0).getUserStatus());
-			/*
-			 * ddcDriver2.setVcUserImg(oldDdcDrivers.get(0).getVcUserImg());
-			 * ddcDriver2
-			 * .setVcUserWorkImg(oldDdcDrivers.get(0).getVcUserWorkImg());
-			 */
-			iDdcDriverDao.updateCleanBefore(ddcDriver2);
-		} else {
-
-			iDdcDriverDao.save(ddcDriver2);
-		}
+		iDdcDriverDao.updateCleanBefore(ddcDriver2);
 
 	}
 

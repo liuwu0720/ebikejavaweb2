@@ -19,12 +19,14 @@ import org.springframework.stereotype.Service;
 import com.node.dao.IDdcDaxxbDao;
 import com.node.dao.IDdcDriverDao;
 import com.node.dao.IDdcDriverLogDao;
+import com.node.dao.IDdcDriverTempDao;
 import com.node.dao.IDdcHyxhBaseDao;
 import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
 import com.node.model.DdcDriverLog;
+import com.node.model.DdcDriverTemp;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
@@ -58,6 +60,9 @@ public class DriverSerivceImp implements IDriverSerivce {
 
 	@Autowired
 	IDdcDriverLogDao iDdcDriverLogDao;
+	
+	@Autowired
+	IDdcDriverTempDao iDdcDriverTempDao;
 
 	/*
 	 * (non-Javadoc)
@@ -439,6 +444,21 @@ public class DriverSerivceImp implements IDriverSerivce {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IDriverSerivce#updateDriverStatus(com.node.model.DdcDriver)
+		 */
+	@Override
+	public int updateDriverStatus(DdcDriver ddcDriver) {
+		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByProperty("vcUserCard", ddcDriver.getSfzhm());
+		if(CollectionUtils.isNotEmpty(ddcDriverTemps)){
+			return 1;
+		}else {
+			return 0;
+		}
+		
 	}
 
 }

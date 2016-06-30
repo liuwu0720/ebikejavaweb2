@@ -31,11 +31,10 @@ import com.node.service.ITaskService;
 public class DriverInfoAutoTask {
 	@Autowired
 	ITaskService iTaskService;
-	
+
 	@Autowired
 	IEbikeService iEbikeService;
 
-	
 	/**
 	 * 
 	 * @Description: "0 0 12 * * ?" 每天中午十二点触发 "0 15 10 ? * *" 每天早上10：15触发
@@ -50,33 +49,25 @@ public class DriverInfoAutoTask {
 	 * @author liuwu
 	 * @create_date 2015-8-17 下午4:16:19
 	 */
-	/** 
-     * 定时卡点计算。每天凌晨 02:00 执行一次  cron = "0 0 2 * * *"
-     */  
+	/**
+	 * 定时卡点计算。每天凌晨 02:00 执行一次 cron = "0 0 2 * * *"
+	 */
 	@Scheduled(cron = "0 35 22 * * *?")
 	public void autoCardCalculate() {
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
-		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
-			saveHasValidDriver(ddcHyxhSsdwclsb);
-		}
-		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();//所有未验证的司机
-		if(CollectionUtils.isNotEmpty(ddcDrivers)){
-			for(DdcDriver ddcDriver:ddcDrivers){
-				DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iTaskService.findClsbByDriver(ddcDriver);
-				if(ddcHyxhSsdwclsb!=null){
-					ddcDriver.setHyxhzh(ddcHyxhSsdwclsb.getHyxhzh());
-					ddcDriver.setSsdwId(Long.parseLong(ddcHyxhSsdwclsb.getSsdwId()));
-					iEbikeService.saveDdcDriver(ddcDriver);
-				}
-			
+		/*
+		 * List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
+		 * for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
+		 * saveHasValidDriver(ddcHyxhSsdwclsb); }
+		 */
+		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();// 所有未验证的司机
+		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
+			for (DdcDriver ddcDriver : ddcDrivers) {
+				iEbikeService.saveDdcDriver(ddcDriver);
 			}
 		}
-		
-	}
-	
-	
 
-	
+	}
+
 	private void saveHasValidDriver(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
 		// TODO Auto-generated method stub
 		DdcDriver ddcDriver1 = new DdcDriver();
@@ -90,7 +81,7 @@ public class DriverInfoAutoTask {
 		ddcDriver1.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
 		ddcDriver1.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser1CardImg1());
 		ddcDriver1.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser1CardImg2());
-		if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())){
+		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())) {
 			DdcDriver ddcDriver2 = new DdcDriver();
 			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
 			ddcDriver2.setLxdh(ddcHyxhSsdwclsb.getLxdh2());
@@ -98,20 +89,22 @@ public class DriverInfoAutoTask {
 			ddcDriver2.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm2());
 			ddcDriver2.setUserCode(ddcHyxhSsdwclsb.getLxdh2());
 			ddcDriver2.setUserPassword("123456");
-			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2Img())){
+			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2Img())) {
 				ddcDriver2.setVcUserImg(ddcHyxhSsdwclsb.getVcUser2Img());
 			}
-			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())){
-				ddcDriver2.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
+			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())) {
+				ddcDriver2
+						.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
 			}
-			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg1())){
-				ddcDriver2.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser2CardImg1());
+			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg1())) {
+				ddcDriver2.setVcUserCardImg1(ddcHyxhSsdwclsb
+						.getVcUser2CardImg1());
 			}
-			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg2())){
-				ddcDriver2.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser2CardImg2());
+			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg2())) {
+				ddcDriver2.setVcUserCardImg2(ddcHyxhSsdwclsb
+						.getVcUser2CardImg2());
 			}
-			
-			
+
 			iEbikeService.saveDdcDriver(ddcDriver2);
 		}
 		iEbikeService.saveDdcDriver(ddcDriver1);

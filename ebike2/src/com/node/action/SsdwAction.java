@@ -465,7 +465,7 @@ public class SsdwAction {
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 				AjaxUtil.rendJson(response, true, "已取消申报");
 			} else {
-				AjaxUtil.rendJson(response, false, "该申报申请正在审批中，无法修改或取消取消");
+				AjaxUtil.rendJson(response, false, "该申报申请正在审批中，无法修改或取消");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -503,7 +503,7 @@ public class SsdwAction {
 			ddcHyxhSsdwclsb.setSlyj(SystemConstants.NOTAGREE);
 			ddcHyxhSsdwclsb.setSlbz(note);
 			ddcHyxhSsdwclsb.setSlrq(new Date());
-			ddcHyxhSsdwclsb.setSlIndex(1);
+			ddcHyxhSsdwclsb.setSlIndex(0);
 			if (StringUtils.isNotBlank(tbyy)) {
 				ddcHyxhSsdwclsb.setTbyy(tbyy);
 			}

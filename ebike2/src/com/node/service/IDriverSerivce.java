@@ -194,4 +194,16 @@ public interface IDriverSerivce {
 	  */
 	void saveDriverLog(DdcDriver ddcDriver);
 
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月30日 下午8:53:27
+	  */
+	int updateDriverStatus(DdcDriver ddcDriver);
+
 }

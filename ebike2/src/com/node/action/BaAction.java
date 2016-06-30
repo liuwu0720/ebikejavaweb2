@@ -141,6 +141,33 @@ public class BaAction {
 		return map;
 
 	}
+	/**
+	 * 
+	  * 方法描述：修改前的检查申报状态
+	  * @param request
+	  * @param response
+	  * @param id 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年6月26日 下午6:13:20
+	 */
+	@RequestMapping("/checkStatus")
+	public void checkStatus(HttpServletRequest request,
+			HttpServletResponse response, String id) {
+		long dId = Long.parseLong(id);
+		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
+				.getDdcHyxhSsdwclsbById(dId);
+		try {
+			if (ddcHyxhSsdwclsb.getSlIndex() == 0) {
+				AjaxUtil.rendJson(response, true, "成功");
+			} else {
+				AjaxUtil.rendJson(response, false, "该申报申请正在审批中，无法修改或取消");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			AjaxUtil.rendJson(response, false, "系统错误");
+		}
+	}
 
 	/**
 	 * 
@@ -161,7 +188,9 @@ public class BaAction {
 		long dId = Long.parseLong(id);
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
-
+		if (ddcHyxhSsdwclsb.getSlIndex() == 0){
+			
+		}
 		String cysyName = iApplyService.findByProPerties("CSYS",
 				ddcHyxhSsdwclsb.getCysy());
 
@@ -389,6 +418,7 @@ public class BaAction {
 				ddcHyxhSsdwclsb.setSlbz(null);
 				ddcHyxhSsdwclsb.setTbyy(null);
 				ddcHyxhSsdwclsb.setSlyj(null);
+				ddcHyxhSsdwclsb.setSynFlag(null);
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 			}
 			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
