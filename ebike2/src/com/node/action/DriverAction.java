@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.PicPath;
@@ -53,6 +54,7 @@ import com.node.util.SystemConstants;
  */
 @Controller
 @RequestMapping("/driverAction")
+@ApiIgnore
 public class DriverAction {
 
 	@Autowired
