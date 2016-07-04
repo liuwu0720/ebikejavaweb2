@@ -1,23 +1,25 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'driverupdate.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<%@include file="../common/common.jsp"%>
-	<script type="text/javascript">
+<head>
+<base href="<%=basePath%>">
+
+<title>My JSP 'driverupdate.jsp' starting page</title>
+
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<%@include file="../common/common.jsp"%>
+<script type="text/javascript">
 	
 	$(document).ready(function(){
 		$('#xb').combobox({
@@ -52,7 +54,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					url : "<%=basePath%>driverAction/saveOrUpdate",
 					onSubmit : function() {
 						var isValid = $("#dgform").form('enableValidation').form('validate');
-
 						if (!isValid) {
 							$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
 						}
@@ -66,38 +67,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								msg : data.message
 							});
 							history.go(-1);
-							//window.location.href="<%=basePath%>driverAction/getAll"
 							} else {
-										alert(data.message);
-									}
-									$.messager.progress('close'); // 如果提交成功则隐藏进度条
-
-								}
-
-							});
+								alert(data.message);
+							}
+							$.messager.progress('close'); // 如果提交成功则隐藏进度条
+						}
+					});
 		}
 	}
-	
-	</script>
-  </head>
-  
-  <body>
-   <div class="maindiv">
-   		<form id="dgform"  enctype="multipart/form-data"
-			method="post">
+</script>
+</head>
+
+<body>
+	<div class="maindiv">
+		<form id="dgform" enctype="multipart/form-data" method="post">
 			<h2>司机档案详情</h2>
-			<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
+			<table id="main" class="table table-condensed" border="1"
+				cellpadding="0" cellspacing="0" width="98%">
 				<tr style="display: none">
 					<td>id</td>
-					<td><input class="easyui-validatebox" type="text" name="id" value="${ddcDriver.id }"></input>
-					</td>
+					<td><input class="easyui-validatebox" type="text" name="id"
+						value="${ddcDriver.id }"></input></td>
 				</tr>
 				<tr>
-				<th>驾驶人姓名</th>
+					<th>驾驶人姓名</th>
 					<td><input class="easyui-validatebox" type="text"
 						value="${ddcDriver.jsrxm }" data-options="required:true"
 						name="jsrxm"></input></td>
-				<th>驾驶人性别</th>
+					<th>驾驶人性别</th>
 					<td><select id="xb" class="easyui-combobox" name="xb"
 						value="${ddcDriver.xb }" style="height:32px;width: 80px;">
 							<option value="-1">请选择</option>
@@ -105,89 +102,94 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<option value="1">女</option>
 					</select></td>
 				</tr>
-				 
-				 <tr>
-				 	<th>身份证号码</th>
-				 	<td><input class="easyui-validatebox" type="text"
+
+				<tr>
+					<th>身份证号码</th>
+					<td><input class="easyui-validatebox" type="text"
 						value="${ddcDriver.sfzhm }"
 						data-options="required:true,validType:'idcard'" name="sfzhm"></input>
 					</td>
 					<th>联系电话</th>
 					<td><input class="easyui-validatebox" type="text"
-						value="${ddcDriver.lxdh }"
-						data-options="required:true" name="lxdh"
-						style="height: 32px"></td>
-				 </tr>
-				 
-				 <tr>
-				<td colspan="2"><input type="file" name=headimg_jsr1
+						value="${ddcDriver.lxdh }" data-options="required:true"
+						name="lxdh" style="height: 32px"></td>
+				</tr>
+
+				<tr>
+					<td colspan="2"><input type="file" name=headimg_jsr1
 						onchange="CheckFileSize(this);" /></td>
-				<td colspan="2"><input type="file" name="vcUser1WorkImgfile"
+					<td colspan="2"><input type="file" name="vcUser1WorkImgfile"
 						onchange="CheckFileSize(this);" /></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div class="imgdiv">
-						<p>驾驶人头像照片</p>
-						<a href="${ddcDriver.vcShowUserImg }" target="_blank">
-							<img src="${ddcDriver.vcShowUserImg }" />
-						</a>
-					</div>
-				</td>
-				<td colspan="2">
-					<div class="imgdiv">
-						<p>驾驶人居住证或在职证明</p>
-						<a href="${ddcDriver.vcUserWorkImgShow }" target="_blank">
-							<img src="${ddcDriver.vcUserWorkImgShow }" />
-						</a>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="file" name=card1img_jsr1
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人头像照片</p>
+							<a href="${ddcDriver.vcShowUserImg }" target="_blank"> <img
+								src="${ddcDriver.vcShowUserImg }" />
+							</a>
+						</div>
+					</td>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人居住证或在职证明</p>
+							<a href="${ddcDriver.vcUserWorkImgShow }" target="_blank"> <img
+								src="${ddcDriver.vcUserWorkImgShow }" />
+							</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="file" name=card1img_jsr1
 						onchange="CheckFileSize(this);" /></td>
-				<td colspan="2"><input type="file" name="card2img_jsr1"
+					<td colspan="2"><input type="file" name="card2img_jsr1"
 						onchange="CheckFileSize(this);" /></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div class="imgdiv">
-						<p>驾驶人身份证正面</p>
-						<a href="${ddcDriver.vcUserCardImg1Show }" target="_blank">
-							<img src="${ddcDriver.vcUserCardImg1Show }" />
-						</a>
-					</div>
-				</td>
-				<td colspan="2">
-					<div class="imgdiv">
-						<p>驾驶人身份证反面</p>
-						<a href="${ddcDriver.vcUserCardImg2Show }" target="_blank">
-							<img src="${ddcDriver.vcUserCardImg2Show }" />
-						</a>
-					</div>
-				</td>
-			</tr>
-			<tr>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人身份证正面</p>
+							<a href="${ddcDriver.vcUserCardImg1Show }" target="_blank"> <img
+								src="${ddcDriver.vcUserCardImg1Show }" />
+							</a>
+						</div>
+					</td>
+					<td colspan="2">
+						<div class="imgdiv">
+							<p>驾驶人身份证反面</p>
+							<a href="${ddcDriver.vcUserCardImg2Show }" target="_blank"> <img
+								src="${ddcDriver.vcUserCardImg2Show }" />
+							</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
 					<td colspan="8" height="35" style="text-align:center;"><input
 						type="button" value="修改 " class="btn" id="bgbtn"
 						onclick="updateSaveData();">&nbsp;&nbsp;&nbsp;&nbsp; <input
 						type="button" value=" 返 回 " class="btn"
 						onclick="javascript:window.history.back();"></td>
 				</tr>
-			
-				 <input  type="hidden" name="xjFlag" value="${ddcDriver.xjFlag }">
-				  <input  type="hidden" name="xjMsg" value="${ddcDriver.xjMsg }">
-				  <input  type="hidden" name="xjRq" value="${ddcDriver.xjRq }">
-				  <input  type="hidden" name="userCode" value="${ddcDriver.userCode }">
-				   <input  type="hidden" name="userPassword" value="${ddcDriver.userPassword }">
-				   <input  type="hidden" name="illeagalTimes" value="${ddcDriver.illeagalTimes }">
-				    <input  type="hidden" name="vcUserImg" value="${ddcDriver.vcUserImg }">
-				     <input  type="hidden" name="vcUserWorkImg" value="${ddcDriver.vcUserWorkImg }">
-				      <input  type="hidden" name="vcUserCardImg1" value="${ddcDriver.vcUserCardImg1 }">
-				       <input  type="hidden" name="vcUserCardImg2" value="${ddcDriver.vcUserCardImg2 }">
-				   
+
+				<input type="hidden" name="xjFlag" value="${ddcDriver.xjFlag }">
+				<input type="hidden" name="xjMsg" value="${ddcDriver.xjMsg }">
+				<%-- <input type="hidden" name="xjRq" value="${ddcDriver.xjRq }"> --%>
+				<input type="hidden" name="userCode" value="${ddcDriver.userCode }">
+				<input type="hidden" name="userPassword"
+					value="${ddcDriver.userPassword }">
+				<input type="hidden" name="illeagalTimes"
+					value="${ddcDriver.illeagalTimes }">
+				<input type="hidden" name="vcUserImg"
+					value="${ddcDriver.vcUserImg }">
+				<input type="hidden" name="vcUserWorkImg"
+					value="${ddcDriver.vcUserWorkImg }">
+				<input type="hidden" name="vcUserCardImg1"
+					value="${ddcDriver.vcUserCardImg1 }">
+				<input type="hidden" name="vcUserCardImg2"
+					value="${ddcDriver.vcUserCardImg2 }">
+
 			</table>
 		</form>
-</div>
-  </body>
+	</div>
+</body>
 </html>

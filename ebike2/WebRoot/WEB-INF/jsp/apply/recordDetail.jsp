@@ -175,11 +175,11 @@
 			cellpadding="0" cellspacing="0" width="98%">
 
 			<tr>
-				<th>所属协会</th>
-				<td>${hyxhName }</td>
+				<th>车牌号码</th>
+				<td>${ddcHyxhSsdwclsb.cphm }</td>
 
 				<th>单位名称</th>
-				<td>${ddcHyxhSsdwclsb.ssdwName }</td>
+				<td>${ddcHyxhSsdwclsb.ssdwName }(${hyxhName })</td>
 				<th>品牌型号</th>
 				<td>${ddcHyxhSsdwclsb.ppxh }</td>
 				<th>申请日期</th>

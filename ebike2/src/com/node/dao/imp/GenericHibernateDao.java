@@ -270,6 +270,15 @@ public class GenericHibernateDao<T extends Serializable, PK extends Serializable
 		return this.getHibernateTemplate().find(queryString, value);
 
 	}
+	
+	public List<T> findByPropertyOrderByType(String propertyName, Object value,
+			String orderByProPertyName,String type) {
+		String queryString = "from " + getEntityClass().getName()
+				+ " as model where model." + propertyName
+				+ "= ? order by model." + orderByProPertyName+" "+type;
+		return this.getHibernateTemplate().find(queryString, value);
+
+	}
 
 	/**
 	 * 通过多个属性组合查询

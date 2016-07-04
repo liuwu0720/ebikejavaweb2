@@ -213,6 +213,10 @@ public interface GenericDao<T extends Serializable, PK extends Serializable> {
 	 */
 	public abstract List<T> findByPropertyOrderBy(String propertyName,
 			Object value, String orderByProPertyName);
+	
+	
+	public abstract List<T> findByPropertyOrderByType(String propertyName,
+			Object value, String orderByProPertyName,String type);
 
 	/**
 	 * @Description: 通过多个属性查找

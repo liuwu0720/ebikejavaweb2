@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -27,6 +29,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * @version: 2016年6月18日 下午5:26:49
  */
 public class ImgScaleUtil {
+	private static final Logger logger = Logger.getLogger("图片压缩算法");
 	private static void Tosmallerpic(String f, File filelist, String ext,
 			String n, int w, int h, float per) {
 		Image src;
@@ -100,7 +103,8 @@ public class ImgScaleUtil {
 			// encoder.encode(tag); //近JPEG编码
 			newimage.close();
 		} catch (IOException ex) {
-	
+			logger.warn("IO异常************"+ex.getMessage());
+			ex.printStackTrace();
 		}
 	}
 }

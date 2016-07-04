@@ -265,6 +265,7 @@ public class AppAction {
 			return AjaxUtil.getMapByNotException(false, null);
 		} else {
 			DdcDriver ddcDriver = ddcDrivers.get(0);
+			
 			List<Long> daIds = iEbikeService.findAllDaxxByDriverId(ddcDriver.getId());
 			for (Long daId : daIds) {
 				DdcDaxxb ddcDaxxb = iEbikeService.getById(daId);

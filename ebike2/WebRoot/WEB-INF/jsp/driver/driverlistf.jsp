@@ -94,7 +94,12 @@ $(document).ready(function(){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.id+")'>查看</a>&nbsp;&nbsp;&nbsp;"
 				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.id+")'>修改</a>&nbsp;&nbsp;&nbsp;"
 				var cancel = "<a  href='javascript:void(0)'  onclick='deleteRow("+row.id+")'>删除</a>"
-				return query+update+cancel;
+				if(row.userStatus>0){
+					return query+update;
+				}else{
+					return query+update+cancel;
+				}
+			
 			}
 		}
 

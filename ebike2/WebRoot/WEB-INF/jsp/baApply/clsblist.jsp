@@ -208,7 +208,7 @@ function addRowData(){
 		 url:'<%=basePath%>applyAction/getAllColorsAjax',    
 		    valueField:'dmz',    
 		    textField:'dmms1',
-		    value:"1"   //默认选中的值       
+		    value:"3"   //默认选中的值       
 	});
 	//行驶区域
 	$('#xsqy').combobox({
@@ -308,7 +308,8 @@ function updateSaveData(){
 							title : '提示',
 							msg : data.message
 						});
-						window.location.href='<%=basePath%>ssdwAction/getAllBa';
+						$("#dg").datagrid('reload');
+						$('#dgform').form('clear');
 					}else{
 						alert(data.message);
 					}

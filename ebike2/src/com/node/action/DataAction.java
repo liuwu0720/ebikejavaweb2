@@ -29,6 +29,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +62,7 @@ import com.node.util.SystemConstants;
 @RequestMapping("/dataAction")
 @ApiIgnore
 public class DataAction {
-
+	private static final Logger logger = Logger.getLogger("内外网数据同步");
 	@Autowired
 	IUserService iUserService;
 
@@ -192,6 +193,7 @@ public class DataAction {
 			response.getWriter().print(outPath);
 		} catch (Exception e) {
 			message = e.getMessage();
+			logger.warn("导出文件异常>>>>>>>>>>"+e.getMessage());
 			e.printStackTrace();
 			response.getWriter().print("2");
 		}
@@ -270,6 +272,7 @@ public class DataAction {
 						iDataService.saveFileRecord(fileRecord);
 						AjaxUtil.rendJson(response, true, "成功");
 					} catch (Exception e) {
+						logger.warn("导入读取文件异常>>>>>>>>>>"+e.getMessage());
 						e.printStackTrace();
 						AjaxUtil.rendJson(response, false, "失败!系统错误");
 					}

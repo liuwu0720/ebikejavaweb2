@@ -267,7 +267,7 @@ function updateRow(){
 	 $('#dgform').form('clear');
 	 var row = $('#dg').datagrid('getSelected');
 	   if (row){
-		     $('#hyxhlb_tr').hide();
+		    // $('#hyxhlb_tr').hide();
 		     $("#hyxhsjzpe_tr").show();
 	    	 $('#dgformDiv').dialog('open').dialog('setTitle', '编辑信息');
 	    	 $('#dgform').form('load', row);
@@ -346,6 +346,7 @@ function updateSaveData(){
 					<th>协会名称:</th>
 					<td><input  name="hyxhmc" class="easyui-validatebox"  style="height: 32px;" >  
 					</td>
+				</tr>		
 				<tr>
 					<th>协会账号：</th>
 					<td><input name="hyxhzh" type="text" class="easyui-validatebox" data-options="required:true,validType:'english'"></td>

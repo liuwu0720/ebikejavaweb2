@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +64,8 @@ public class DriverAction {
 	ICompanyService iCompanyService;
 	@Autowired
 	IEbikeService iEbikeService;
+	
+	private static final Logger logger = Logger.getLogger("内外网数据同步");
 
 	@RequestMapping("/getAll")
 	public String getAll() {
@@ -77,14 +80,13 @@ public class DriverAction {
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
-
 		HqlHelper hql = new HqlHelper(DdcDriver.class);
 		hql.addEqual("ssdwId", ddcHyxhSsdw.getId());
 		if (StringUtils.isNotBlank(sfzhm)) {
 			hql.addEqual("sfzhm", sfzhm);
 		}
 		if (StringUtils.isNotBlank(jsrxm)) {
-			hql.addEqual("jsrxm", jsrxm);
+			hql.addLike("jsrxm", jsrxm);
 		}
 		if (userStatus != null) {
 			hql.addEqual("userStatus", userStatus);
@@ -120,18 +122,17 @@ public class DriverAction {
 		 * 检查身份证
 		 */
 		String message = "success";
-		
 		ddcDriver.setUserStatus(0);
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());
 		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
 		ddcDriver.setTranDate(new Date());
-		int userStatus = iDriverSerivce.updateDriverStatus(ddcDriver);
+		/*int userStatus = iDriverSerivce.updateDriverStatus(ddcDriver);
 		if(userStatus == 1){
 			ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 		}
-		ddcDriver.setUserStatus(userStatus);
+		ddcDriver.setUserStatus(userStatus);*/
 		if (ddcDriver.getId() == null) {
 			message = iDriverSerivce.findSameSfzhm(ddcDriver);
 		} else {

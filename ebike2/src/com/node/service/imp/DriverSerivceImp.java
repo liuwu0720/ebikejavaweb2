@@ -60,7 +60,7 @@ public class DriverSerivceImp implements IDriverSerivce {
 
 	@Autowired
 	IDdcDriverLogDao iDdcDriverLogDao;
-	
+
 	@Autowired
 	IDdcDriverTempDao iDdcDriverTempDao;
 
@@ -312,7 +312,8 @@ public class DriverSerivceImp implements IDriverSerivce {
 	@Override
 	public String updateClsbDeleteByDriver(DdcDriver ddcDriver) {
 		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs1 = iDdcHyxhSsdwclsbDao
-				.findByPropertys(new String[] { "sfzmhm1", "ssdwId" },
+				.findByPropertys(
+						new String[] { "sfzmhm1", "ssdwId" },
 						new Object[] { ddcDriver.getSfzhm(),
 								ddcDriver.getSsdwId() + "" });
 		String message = "success";
@@ -334,7 +335,8 @@ public class DriverSerivceImp implements IDriverSerivce {
 			}
 		}
 		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs2 = iDdcHyxhSsdwclsbDao
-				.findByPropertys(new String[] { "sfzmhm2", "ssdwId" },
+				.findByPropertys(
+						new String[] { "sfzmhm2", "ssdwId" },
 						new Object[] { ddcDriver.getSfzhm(),
 								ddcDriver.getSsdwId() + "" });
 		if (CollectionUtils.isNotEmpty(ddcHyxhSsdwclsbs2)) {
@@ -446,19 +448,25 @@ public class DriverSerivceImp implements IDriverSerivce {
 		}
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IDriverSerivce#updateDriverStatus(com.node.model.DdcDriver)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IDriverSerivce#updateDriverStatus(com.node.model.DdcDriver
+	 * )
+	 */
 	@Override
 	public int updateDriverStatus(DdcDriver ddcDriver) {
-		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByProperty("vcUserCard", ddcDriver.getSfzhm());
-		if(CollectionUtils.isNotEmpty(ddcDriverTemps)){
+		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
+				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
+						ddcDriver.getJsrxm(), ddcDriver.getSfzhm() });
+		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			return 1;
-		}else {
+			
+		} else {
 			return 0;
 		}
-		
+
 	}
 
 }
