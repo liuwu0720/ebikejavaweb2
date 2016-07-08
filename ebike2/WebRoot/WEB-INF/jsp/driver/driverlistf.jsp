@@ -86,6 +86,11 @@ $(document).ready(function(){
 				}
 			} 
 		},{
+			field : 'userNote',
+			title : '备注',
+			align:'center',
+			width : 120
+		},{
 			field : 'null',
 			title:'操作',
 			align:'center',

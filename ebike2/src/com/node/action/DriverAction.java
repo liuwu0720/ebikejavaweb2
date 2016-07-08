@@ -191,10 +191,10 @@ public class DriverAction {
 			
 			if (ddcDriver.getId() == null) {
 				iDriverSerivce.saveDdcDriver(ddcDriver);
-				iEbikeService.saveDdcDriver(ddcDriver);
+				//iEbikeService.saveDdcDriver(ddcDriver);
 			} else {
 				iDriverSerivce.updateDdcDriver(ddcDriver);
-				iEbikeService.saveDdcDriver(ddcDriver);
+				//iEbikeService.saveDdcDriver(ddcDriver);
 				iDriverSerivce.updateClsb(ddcDriver);
 			}
 			AjaxUtil.rendJson(response, true, "操作成功");

@@ -36,6 +36,7 @@ import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.service.IEbikeService;
+import com.node.util.DateStrUtil;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
 import com.node.util.SystemConstants;
@@ -348,10 +349,12 @@ public class EbikeServiceImp implements IEbikeService {
 				ddcDriver2.setLxdh(ddcDriverTemps.get(0).getVcTelPhone());
 				ddcDriver2.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 				ddcDriver2.setUserCode(ddcDriver2.getLxdh());
+				ddcDriver2.setUserNote("已实名认证");
 				ddcDriver2.setUserPassword("123456");
 			}
 		} else {
 			ddcDriver2.setUserStatus(0);
+			ddcDriver2.setUserNote("身份证和姓名不匹配！或未进行支付宝认证,较验时间:"+DateStrUtil.toString(new Date()));
 			ddcDriver2.setSynFlag(null);
 		}
 

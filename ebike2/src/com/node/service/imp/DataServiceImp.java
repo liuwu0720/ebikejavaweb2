@@ -960,6 +960,7 @@ public class DataServiceImp implements IDataService {
 					beforeDdcDriver.setXjMsg(ddcDriver.getXjMsg());
 					beforeDdcDriver.setXjRq(ddcDriver.getXjRq());
 					beforeDdcDriver.setUserNote(ddcDriver.getUserNote());
+					beforeDdcDriver.setSynFlag(SystemConstants.SYSNFLAG_UPDATE+"_N");
 					iDdcDriverDao.updateCleanBefore(beforeDdcDriver);
 				}
 
