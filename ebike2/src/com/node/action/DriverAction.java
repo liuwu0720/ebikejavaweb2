@@ -122,7 +122,12 @@ public class DriverAction {
 		 * 检查身份证
 		 */
 		String message = "success";
-		ddcDriver.setUserStatus(0);
+		
+		if(ddcDriver.getUserStatus()!=null&&ddcDriver.getUserStatus()>0){
+			ddcDriver.setUserStatus(1);
+		}else {
+			ddcDriver.setUserStatus(0);
+		}
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());

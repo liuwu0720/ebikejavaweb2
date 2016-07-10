@@ -201,17 +201,14 @@ function addRowData(){
 }
 //查看详情
 function queryRow(id){
-	$.messager.progress({
-		text:"正在处理，请稍候..."
-	});
-	window.location.href="<%=basePath%>driverAction/queryInfoById?id="+id;
+	window.open("<%=basePath%>driverAction/queryInfoById?id="+id,"_blank");
+	//window.location.href="<%=basePath%>driverAction/queryInfoById?id="+id;
 }
 //修改详情
 function updateRow(id){
-	$.messager.progress({
-		text:"正在处理，请稍候..."
-	});
-	window.location.href="<%=basePath%>driverAction/updateInfoById?id="+id;
+	
+	window.open("<%=basePath%>driverAction/updateInfoById?id="+id,"_blank");
+	//window.location.href="<%=basePath%>driverAction/updateInfoById?id="+id;
 
 }
 

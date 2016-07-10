@@ -225,7 +225,7 @@ public class ApplyAction {
 	@ResponseBody
 	public Map<String, Object> queryAll(HttpServletRequest request, String zt,
 			String xsqy, String jsrxm1, String ssdw, String djh,
-			String dtstart, String dtend) throws ParseException {
+			String dtstart, String dtend,String lsh) throws ParseException {
 		DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		Page p = ServiceUtil.getcurrPage(request);
@@ -242,6 +242,10 @@ public class ApplyAction {
 			}
 
 		}
+		if(StringUtils.isNotBlank(lsh)){
+			sql+=" and s.lsh like '%"+lsh+"%'";
+		}
+		
 		if (StringUtils.isNotBlank(ssdw)) {
 			sql += "  and dw.dwmc like  '%" + ssdw+"%'";
 		}

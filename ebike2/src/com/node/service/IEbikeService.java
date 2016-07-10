@@ -15,6 +15,7 @@ import com.node.model.DdcDriver;
 import com.node.model.DdcDriverTemp;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhBaseLog;
 import com.node.model.DdcHyxhSsdw;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
@@ -297,5 +298,15 @@ public interface IEbikeService {
 	 * @param lxdh 
 	  */
 	List<DdcDriver> getDriverInfoByProperties(String sfzhm, String lxdh);
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcHyxhBaseLog 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年7月10日 下午1:59:47
+	  */
+	void saveDdcHyxhBaseLog(DdcHyxhBaseLog ddcHyxhBaseLog);
 
 }

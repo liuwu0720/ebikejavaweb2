@@ -115,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 		</table>
 		<div class="btndiv">
-		<button type="button" class="btn" onclick="history.back()">返回</button>
+		<button type="button" class="btn" onclick="window.close()">关闭</button>
 		</div>
 	</div>
 </body>

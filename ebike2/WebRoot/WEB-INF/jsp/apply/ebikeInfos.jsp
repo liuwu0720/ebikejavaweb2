@@ -177,6 +177,7 @@ function doSearch(){
 		dtend:$('#dtend').datebox('getValue'),
 		xsqy:$("#xsqy1").combobox('getValue'),
 		jsrxm1:$("#jsrxm1").val(),
+		lsh:$("#lsh").val(),
 		ssdw:$("#ssdw").combobox('getValue')
 	}); 
 }
@@ -414,6 +415,8 @@ function queryHyxhDwDetail(obj){
 					<option value="0">已同意</option>
 					<option value="1">已拒绝</option>
 				</select><br/>
+				<span>流水号</span>	
+				<input id="lsh" style="height:30px;" >
 				<span>行驶区域</span>	
 				<input id="xsqy1" style="height:30px;" >
 				<span>驾驶人1</span>	

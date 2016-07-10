@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,8 +23,10 @@ public class Util {
 		public static String encodeUri(String s) throws UnsupportedEncodingException
 		{
 			String str="";
+			/*System.out.println("value="+s);
 			str=URLEncoder.encode(s,"UTF-8");
-			return str;
+			System.out.println("str="+str);*/
+			return s;
 		}
 
          /**
@@ -141,7 +142,7 @@ public class Util {
 
                          connection.setDoInput(true);
 
-                         connection.setRequestMethod("GET");
+                         connection.setRequestMethod("POST");
 
                          connection.setUseCaches(false);
                          

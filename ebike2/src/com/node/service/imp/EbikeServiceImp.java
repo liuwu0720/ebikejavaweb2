@@ -25,6 +25,7 @@ import com.node.dao.IDdcDriverTempDao;
 import com.node.dao.IDdcFlowDao;
 import com.node.dao.IDdcHyxhBasbDao;
 import com.node.dao.IDdcHyxhBaseDao;
+import com.node.dao.IDdcHyxhBaseLogDao;
 import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.dao.IFileRecordDao;
@@ -34,6 +35,7 @@ import com.node.model.DdcDriverDaxx;
 import com.node.model.DdcDriverTemp;
 import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhBaseLog;
 import com.node.model.DdcHyxhSsdw;
 import com.node.service.IEbikeService;
 import com.node.util.DateStrUtil;
@@ -80,6 +82,9 @@ public class EbikeServiceImp implements IEbikeService {
 
 	@Autowired
 	IDdcDriverDaxxDao iDdcDriverDaxxDao;
+	
+	@Autowired
+	IDdcHyxhBaseLogDao iDdcHyxhBaseLogDao;
 
 	/*
 	 * (non-Javadoc)
@@ -354,7 +359,7 @@ public class EbikeServiceImp implements IEbikeService {
 			}
 		} else {
 			ddcDriver2.setUserStatus(0);
-			ddcDriver2.setUserNote("身份证和姓名不匹配！或未进行支付宝认证,较验时间:"+DateStrUtil.toString(new Date()));
+			ddcDriver2.setUserNote("未进行支付宝认证或身份证和姓名不匹配！较验时间:"+DateStrUtil.toString(new Date()));
 			ddcDriver2.setSynFlag(null);
 		}
 
@@ -531,6 +536,16 @@ public class EbikeServiceImp implements IEbikeService {
 			return ddcDrivers;
 		}
 		return null;
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#saveDdcHyxhBaseLog(com.node.model.DdcHyxhBaseLog)
+		 */
+	@Override
+	public void saveDdcHyxhBaseLog(DdcHyxhBaseLog ddcHyxhBaseLog) {
+		// TODO Auto-generated method stub
+		iDdcHyxhBaseLogDao.save(ddcHyxhBaseLog);
 	}
 
 }

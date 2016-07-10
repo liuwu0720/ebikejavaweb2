@@ -253,10 +253,8 @@ function addRowData(){
 }
 //查看备案审批详情
 function queryRow(id){
-	$.messager.progress({
-		text:"正在处理，请稍候..."
-	});
-	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id;
+	window.open("<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id,"_blank");
+	//window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id;
 }
 //修改申报详情
 function updateRow(id){
@@ -267,11 +265,9 @@ function updateRow(id){
 			   {     
 					
 				if (data.isSuccess) {
-
-					$.messager.progress({
-						text:"正在处理，请稍候..."
-					});
-					window.location.href="<%=basePath%>baAction/updateRecordApprovalInfoById?id="+id;
+					window.open("<%=basePath%>baAction/updateRecordApprovalInfoById?id="+id,"_blank");
+					
+					//window.location.href="<%=basePath%>baAction/updateRecordApprovalInfoById?id="+id;
 				}else{
 					alert(data.message);
 					$("#dg").datagrid('reload');

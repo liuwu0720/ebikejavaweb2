@@ -99,7 +99,7 @@ function CheckFileSize(obj){
 								title : '提示',
 								msg : data.message
 							});
-							window.history.back()
+							window.location.reload();
 							//window.location.href="<%=basePath%>baAction/getAllBa"
 							} else {
 										alert(data.message);

@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhBaseLog;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.PicPath;
 import com.node.service.ICompanyService;
@@ -239,6 +241,11 @@ public class AdminAction {
 				ddcHyxhBase.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 				ddcHyxhBase.setTranDate(new Date());
 				iEbikeService.updateDdchyxhBase(ddcHyxhBase);
+				DdcHyxhBaseLog ddcHyxhBaseLog = new DdcHyxhBaseLog();
+				BeanUtils.copyProperties(ddcHyxhBaseLog, ddcHyxhBase);
+				ddcHyxhBaseLog.setId(null);
+				ddcHyxhBaseLog.setTranDate(new Date());
+				iEbikeService.saveDdcHyxhBaseLog(ddcHyxhBaseLog);
 				AjaxUtil.rendJson(response, true, "操作成功");
 			} catch (Exception e) {
 				e.printStackTrace();

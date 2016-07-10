@@ -2461,3 +2461,74 @@ start with 1
 increment by 1
 cache 20;
 
+
+
+create table DDC_HYXH_BASE_LOG
+(
+  id        NUMBER not null,
+  hyxhzh    VARCHAR2(20) not null,
+  hyxhmm    VARCHAR2(20),
+  hyxhmc    VARCHAR2(100),
+  hyxhdz    VARCHAR2(200),
+  hyxhfzr   VARCHAR2(50),
+  hyxhfzrdh VARCHAR2(50),
+  hyxhsjzpe NUMBER default 0,
+  bz        VARCHAR2(200),
+  cjr       VARCHAR2(20),
+  cjrq      DATE,
+  cjbm      VARCHAR2(20),
+  hyxhlb    VARCHAR2(10),
+  syn_flag  VARCHAR2(10),
+  tran_flag VARCHAR2(10),
+  tran_date DATE,
+  totalpe   NUMBER,
+  nenable   NUMBER default 1
+);
+
+-- Add comments to the table 
+comment on table DDC_HYXH_BASE_LOG
+  is '行业协会信息基本信息表';
+-- Add comments to the columns 
+comment on column DDC_HYXH_BASE.hyxhzh
+  is '行业协会账户';
+comment on column DDC_HYXH_BASE.hyxhmm
+  is '行业协会密码';
+comment on column DDC_HYXH_BASE.hyxhmc
+  is '行业协会名称';
+comment on column DDC_HYXH_BASE.hyxhdz
+  is '行业协会地址';
+comment on column DDC_HYXH_BASE.hyxhfzr
+  is '行业协会负责人';
+comment on column DDC_HYXH_BASE.hyxhfzrdh
+  is '行业协会负责人电话';
+comment on column DDC_HYXH_BASE.hyxhsjzpe
+  is '行业协会实际剩余配额';
+comment on column DDC_HYXH_BASE.bz
+  is '备注信息';
+comment on column DDC_HYXH_BASE.cjr
+  is '创建人';
+comment on column DDC_HYXH_BASE.cjrq
+  is '创建日期';
+comment on column DDC_HYXH_BASE.cjbm
+  is '创建部门';
+comment on column DDC_HYXH_BASE.hyxhlb
+  is '行业协会类别';
+comment on column DDC_HYXH_BASE.syn_flag
+  is '同步标志';
+comment on column DDC_HYXH_BASE.tran_flag
+  is '传送标志';
+comment on column DDC_HYXH_BASE.tran_date
+  is '传送时间';
+comment on column DDC_HYXH_BASE.totalpe
+  is '总配额（在DDC_HYXH_BASB 支队领导批完并办结去加这个数）';
+comment on column DDC_HYXH_BASE.nenable
+  is '1 禁用 0 启用';
+
+-- Create sequence 
+create sequence SEQ_DDC_HYXH_BASE_LOG
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20;
+

@@ -66,7 +66,7 @@
 								title : '提示',
 								msg : data.message
 							});
-							history.go(-1);
+							window.location.reload();
 							} else {
 								alert(data.message);
 							}
@@ -187,6 +187,8 @@
 					value="${ddcDriver.vcUserCardImg1 }">
 				<input type="hidden" name="vcUserCardImg2"
 					value="${ddcDriver.vcUserCardImg2 }">
+				<input type="hidden" name="userStatus"
+					value="${ddcDriver.userStatus }">	
 
 			</table>
 		</form>

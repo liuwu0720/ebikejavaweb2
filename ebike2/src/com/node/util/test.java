@@ -137,74 +137,27 @@ public class test {
 		String postdate = "<order>" ;	
 		for(int i=0;i<1;i++)
 		{
-			postdate		+= "<orderInfo><out_tid>66666666666666</out_tid><!-- 外部平台编号-->";
-			postdate		+= "<out_order_status>已付款</out_order_status><!-- 外部订单状态（字符串，随意填写）-->";
-			postdate		+= "<storage_id>1</storage_id><!-- 库房ID-->";
-			postdate		+= "<processState></processState><!-- 处理状态（全部   未确认   已财务审核 已归档   已确认   已作废   ）-->";
-			postdate		+= "<mergeStatus></mergeStatus><!-- 合并状态（合并 手拆 自动拆分 正常 ）-->";
-			postdate		+= "<payStatus></payStatus><!-- 付款状态（字符串，随意填写）-->";
-			postdate		+= "<shipStatus>未发货</shipStatus><!-- 发货状态（待退货部分退货  待退货全部退货    退货到货部分退货 退货到货全部退货  未发货   已发货）-->";
-			postdate		+= "<express>申通</express><!-- 快递公司名称-->";
-			postdate		+= "<WuLiu_no>2342325324</WuLiu_no><!--快递单号 -->";
-			postdate		+= "<buyer_id>单反机</buyer_id><!-- 买家ID-->";
-			postdate		+= "<buyer_msg>10</buyer_msg><!-- 买家留言-->";
-			postdate		+= "<seller_remark>2</seller_remark><!-- 客服备注-->";
-			postdate		+= "<pay_date></pay_date><!-- 付款日期-->";
-			postdate		+= "<order_type>正常订单</order_type><!-- 订单类型-->";
-			postdate		+= "<shop_id>112</shop_id><!-- 店铺代码-->";
-			postdate		+= "<orderSource></orderSource><!-- 订单渠道-->";
-			postdate		+= "<express></express><!-- 快递公司名称-->";
-			postdate		+= "<payWay>alipay</payWay><!-- 支付方式-->";
-			postdate		+= "<WuLiu>圆通</WuLiu><!-- 物流公司（线上物流公司）-->";
-			postdate		+= "<in_memo>圆通</in_memo><!-- 内部便签-->";
-			postdate		+= "<other_remark>121212</other_remark><!-- 其他备注-->";
-			postdate		+= "<consignee></consignee><!-- 收货人-->";
-			postdate		+= "<privince></privince><!-- 省-->";
-			postdate		+= "<city></city><!-- 市-->";
-			postdate		+= "<area></area><!-- 区-->";
-			postdate		+= "<product_totalMoney></product_totalMoney><!-- 产品总金额-->";
-			postdate		+= "<order_totalMoney></order_totalMoney><!-- 订单总金额-->";
-			postdate		+= "<actual_RP></actual_RP><!-- 实收金额-->";
-			postdate		+= "<actual_freight_get></actual_freight_get><!--实收运费-->";
-			postdate		+= "<telephone></telephone><!-- 电话-->";
-			postdate		+= "<mobilPhone></mobilPhone><!-- 手机-->";
-			postdate		+= "<buyer_email></buyer_email><!-- 邮件-->";
-			postdate		+= "<order_date>"+new Date()+"</order_date><!-- 订货日期-->";
-			postdate		+= "<invoice_title></invoice_title><!--发票抬头 -->";
-			postdate		+= "<invoice_type></invoice_type><!--发票类型 -->";
-			postdate		+= "<invoice_money></invoice_money><!--发票金额 -->";
-			postdate		+= "<invoice_msg></invoice_msg><!--开票内容 -->";
-			postdate		+= "<is_needInvoice></is_needInvoice><!--是否需要开发票（0：否 1：是）默认：0 -->";
-			postdate		+= "<is_invoiceOpened></is_invoiceOpened><!-- 是否已打印发票（0：否 1：是）-->";
-			postdate		+= "<is_COD></is_COD><!--是否货到付款（0：否 1：是）默认：0 -->";
-			postdate		+= "<serverCost_COD></serverCost_COD><!--货到付款服务费 -->";
-			postdate		+= "<is_scorePay></is_scorePay><!--是否积分换购（0：否 1：是）默认：0 -->";
-			postdate		+= "<pay_score></pay_score><!-- 支付积分-->";
-			postdate		+= "<totalPackage></totalPackage><!-- 总件数-->";
-			postdate		+= "<totalCount></totalCount><!-- 总条数-->";
+			postdate		+= "<orderInfo><out_tid>66666666666666</out_tid>";
+			postdate		+= "<out_order_status>已付款</out_order_status>";
+			postdate		+= "<storage_id>1</storage_id>";
+			postdate		+= "<processState>未确认</processState>";
+			postdate		+= "<express>EMS</express>";
+			
+			/*postdate		+= "<order_date>"+new Date()+"</order_date>";*/
+		
 			postdate		+= "<product_info>";
 			for(int j=0;j<1;j++)
 			{
 				postdate		+= "<product_item>";
-				postdate		+= "<barCode>123</barCode><!--条形码 -->";
-				postdate		+= "<product_title>平底鞋</product_title><!-- 网店品名-->";
-				postdate		+= "<standard>单反数码</standard><!-- 网店规格-->";
-				postdate		+= "<out_price>1153</out_price><!-- 销售价-->";
-				postdate		+= "<favorite_money>2</favorite_money><!-- 优惠金额-->";
-				postdate		+= "<orderGoods_Num>1</orderGoods_Num><!-- 订货数量-->";
-				postdate		+= "<gift_Num></gift_Num><!--赠品数量-->";
-				postdate		+= "<cost_Price></cost_Price><!--成交单价-->";
-				postdate		+= "<product_stockout>0</product_stockout><!--缺货状态（0：否 1：是）默认：0-->";
-				postdate		+= "<is_Book></is_Book><!--是否预订（0：否 1：是）默认：0-->";
-				postdate		+= "<is_presell></is_presell><!--是否预售-->";
-				postdate		+= "<is_Gift></is_Gift><!--是否赠品（0：否 1：是）默认：0-->";
-				postdate		+= "<avg_price></avg_price><!--加权平均单价-->";
-				postdate		+= "<product_freight></product_freight><!--产品运费-->";
-				postdate		+= "<shop_id>1</shop_id><!--店铺编号-->";
-				postdate		+= "<out_tid>66666666666666</out_tid><!--外部平台单号-->";
-				postdate		+= "<out_productId></out_productId><!--外部平台产品Id-->";
-				postdate		+= "<out_barCode></out_barCode><!--外部平台条形码-->";
-				postdate		+= "<product_intro></product_intro><!--产品简介-->";
+				postdate		+= "<barCode>2434343</barCode>";
+				postdate		+= "<product_title>测试数据</product_title>";
+				postdate		+= "<standard>测试规格</standard>";
+				postdate		+= "<out_price>1153</out_price>";
+				postdate		+= "<favorite_money>2</favorite_money>";
+				postdate		+= "<orderGoods_Num>1</orderGoods_Num>";
+				postdate		+= "<product_stockout>0</product_stockout>";
+				postdate		+= "<shop_id>111</shop_id>";
+				postdate		+= "<out_tid>66666666666666</out_tid>";
 				postdate		+= "</product_item>";
 			}
 			postdate		+= "</product_info>";
@@ -214,10 +167,12 @@ public class test {
 		java.text.DateFormat df=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String st = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 		.format(new Date());	
+		System.out.println("postdate = "+postdate);
 		apiparamsMap.put("xmlValues",postdate);
 		//获取数字签名
 		String sign = Util.md5Signature(apiparamsMap, appkey);
-
+			
+		System.out.println("sign="+sign);
 		apiparamsMap.put("sign", sign);
 
 		StringBuilder param = new StringBuilder();
@@ -243,6 +198,7 @@ public class test {
 			}
 		}
 		String PostData="";
+		System.out.println("param = "+param.toString());
 		PostData=param.toString().substring(1);
 		System.out.println(testUrl+"?"+PostData);
 		String result="";
