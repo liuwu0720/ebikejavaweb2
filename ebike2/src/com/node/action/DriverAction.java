@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.node.model.DdcDriver;
+import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.PicPath;
 import com.node.service.ICompanyService;
@@ -64,8 +64,7 @@ public class DriverAction {
 	ICompanyService iCompanyService;
 	@Autowired
 	IEbikeService iEbikeService;
-	
-	private static final Logger logger = Logger.getLogger("内外网数据同步");
+
 
 	@RequestMapping("/getAll")
 	public String getAll() {
@@ -77,11 +76,15 @@ public class DriverAction {
 	public Map<String, Object> queryAll(HttpServletRequest request,
 			HttpServletResponse response, String sfzhm, String jsrxm,
 			Integer userStatus) {
-		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
-				.getAttribute(SystemConstants.SESSION_USER);
+	  
+		Object object =   request.getSession().getAttribute(SystemConstants.SESSION_USER).getClass().getSimpleName();
 		Page p = ServiceUtil.getcurrPage(request);
 		HqlHelper hql = new HqlHelper(DdcDriver.class);
-		hql.addEqual("ssdwId", ddcHyxhSsdw.getId());
+		if(object.equals(SystemConstants.CLASS_NAME_DDC_HYXHSSDW)){
+			DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
+			hql.addEqual("ssdwId", ddcHyxhSsdw.getId());
+		}
 		if (StringUtils.isNotBlank(sfzhm)) {
 			hql.addEqual("sfzhm", sfzhm);
 		}
@@ -91,7 +94,6 @@ public class DriverAction {
 		if (userStatus != null) {
 			hql.addEqual("userStatus", userStatus);
 		}
-
 		hql.addOrderBy("id", "desc");
 		hql.setQueryPage(p);
 		Map<String, Object> resultMap = iDriverSerivce.queryByHql(hql);
@@ -123,27 +125,25 @@ public class DriverAction {
 		 */
 		String message = "success";
 		
-		if(ddcDriver.getUserStatus()!=null&&ddcDriver.getUserStatus()>0){
-			ddcDriver.setUserStatus(1);
-		}else {
-			ddcDriver.setUserStatus(0);
-		}
+
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
 		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());
 		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
 		ddcDriver.setTranDate(new Date());
-		/*int userStatus = iDriverSerivce.updateDriverStatus(ddcDriver);
-		if(userStatus == 1){
-			ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
-		}
-		ddcDriver.setUserStatus(userStatus);*/
+		/*
+		 * int userStatus = iDriverSerivce.updateDriverStatus(ddcDriver);
+		 * if(userStatus == 1){
+		 * ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD); }
+		 * ddcDriver.setUserStatus(userStatus);
+		 */
 		if (ddcDriver.getId() == null) {
 			message = iDriverSerivce.findSameSfzhm(ddcDriver);
 		} else {
 			DdcDriver beforedriver = iDriverSerivce.getDriverById(ddcDriver
 					.getId());
-			if (StringUtils.isNotBlank(beforedriver.getSfzhm())&&!beforedriver.getSfzhm().equals(ddcDriver.getSfzhm())) {
+			if (StringUtils.isNotBlank(beforedriver.getSfzhm())
+					&& !beforedriver.getSfzhm().equals(ddcDriver.getSfzhm())) {
 				message = iDriverSerivce.findSameSfzhm(ddcDriver);
 			}
 		}
@@ -152,7 +152,7 @@ public class DriverAction {
 			AjaxUtil.rendJson(response, false, message);
 			return;
 		}
-		
+
 		PicPath imgPath = iCompanyService.getPathById(SystemConstants.PIC_IMG);
 
 		try {
@@ -182,7 +182,8 @@ public class DriverAction {
 			}
 			String vcUser1WorkImg_path = uploadImg(request, vcUser1WorkImgfile,
 					SystemConstants.IMG_INVOICE_WIDTH,
-					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人1 在职证明或居住证
+					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人1
+																	// 在职证明或居住证
 			if (StringUtils.isNotBlank(vcUser1WorkImg_path)) {
 				ddcDriver.setVcUserWorkImg(vcUser1WorkImg_path);
 			} else {
@@ -193,13 +194,30 @@ public class DriverAction {
 			AjaxUtil.rendJson(response, false, "图片上传失败，请重试!");
 		}
 		try {
-			
+
 			if (ddcDriver.getId() == null) {
+				ddcDriver.setUserStatus(0);
 				iDriverSerivce.saveDdcDriver(ddcDriver);
-				//iEbikeService.saveDdcDriver(ddcDriver);
+				// iEbikeService.saveDdcDriver(ddcDriver);
 			} else {
+				if (ddcDriver.getUserStatus() != null
+						&& ddcDriver.getUserStatus() > 0) {
+					DdcDriver oldDdcDriver = iDriverSerivce
+							.getDriverById(ddcDriver.getId());
+					if (ddcDriver.getJsrxm().equals(oldDdcDriver.getJsrxm())
+							&& ddcDriver.getSfzhm().equals(
+									oldDdcDriver.getSfzhm())) {
+						ddcDriver.setUserStatus(ddcDriver.getUserStatus());
+						ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+					}else {
+						ddcDriver.setUserStatus(0);
+					}
+
+				}else {
+					ddcDriver.setUserStatus(0);
+				}
 				iDriverSerivce.updateDdcDriver(ddcDriver);
-				//iEbikeService.saveDdcDriver(ddcDriver);
+				// iEbikeService.saveDdcDriver(ddcDriver);
 				iDriverSerivce.updateClsb(ddcDriver);
 			}
 			AjaxUtil.rendJson(response, true, "操作成功");
@@ -269,43 +287,59 @@ public class DriverAction {
 		request.setAttribute("ddcDriver", ddcDriver);
 		return "driver/driverupdate";
 	}
+
 	/**
 	 * 
-	  * 方法描述：
-	  * @param id
-	  * @param request
-	  * @param response 
-	  * @version: 1.0
-	  * @author: liuwu
-	  * @version: 2016年6月18日 下午2:15:33
+	 * 方法描述：
+	 * 
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @version: 1.0
+	 * @author: liuwu
+	 * @version: 2016年6月18日 下午2:15:33
 	 */
 	@RequestMapping("/deleteRow")
-	public void deleteRow(String id,HttpServletRequest request,HttpServletResponse response){
+	public void deleteRow(String id, HttpServletRequest request,
+			HttpServletResponse response) {
 		long driverId = Long.parseLong(id);
 		DdcDriver ddcDriver = iDriverSerivce.getDriverById(driverId);
-		ddcDriver.setUserStatus(-1);
-		
-		String message = iDriverSerivce.findIfdelete(ddcDriver);//查询该司机下面是否有档案表
-		message = iDriverSerivce.updateClsbDeleteByDriver(ddcDriver);//该司机下面的车辆申报也将删除
-		if (!message.equals("success")) {
-			AjaxUtil.rendJson(response, false, message);
-			return;
-		}else {
-			try {
-				iDriverSerivce.saveDriverLog(ddcDriver);
-				iDriverSerivce.deleteById(driverId);
-				
+		Object object =   request.getSession().getAttribute(SystemConstants.SESSION_USER).getClass().getSimpleName();
+		if(object.equals(SystemConstants.CLASS_NAME_DDC_HYXHBASE)){
+			DdcHyxhBase ddcHyxhBase =  (DdcHyxhBase) request.getSession().getAttribute(SystemConstants.SESSION_USER);
+			if(ddcHyxhBase.getHyxhzh().equals("cs")){
+				ddcDriver.setUserStatus(1);
+				ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+				iDriverSerivce.updateDdcDriver(ddcDriver);
 				AjaxUtil.rendJson(response, true, "删除成功");
-			} catch (Exception e) {
-				e.printStackTrace();
-				AjaxUtil.rendJson(response, false, "删除失败");
+			}
+			
+		}else {
+			ddcDriver.setUserStatus(-1);
+
+			String message = iDriverSerivce.findIfdelete(ddcDriver);// 查询该司机下面是否有档案表
+			message = iDriverSerivce.updateClsbDeleteByDriver(ddcDriver);// 该司机下面的车辆申报也将删除
+			if (!message.equals("success")) {
+				AjaxUtil.rendJson(response, false, message);
+				return;
+			} else {
+				try {
+					iDriverSerivce.saveDriverLog(ddcDriver);
+					iDriverSerivce.deleteById(driverId);
+
+					AjaxUtil.rendJson(response, true, "删除成功");
+				} catch (Exception e) {
+					e.printStackTrace();
+					AjaxUtil.rendJson(response, false, "删除失败");
+				}
 			}
 		}
 		
 		
+		
+
 	}
-	
-	
+
 	private String parseUrl(String vcPicPath) {
 		if (StringUtils.isNotBlank(vcPicPath)) {
 			PicPath picPath = iCompanyService
@@ -338,8 +372,8 @@ public class DriverAction {
 
 	}
 
-	private String uploadImg2(HttpServletRequest request, MultipartFile file, int imgHeadWith, int imgHeadHeight,
-			PicPath imgPath)
+	private String uploadImg2(HttpServletRequest request, MultipartFile file,
+			int imgHeadWith, int imgHeadHeight, PicPath imgPath)
 			throws FileNotFoundException, IOException {
 		if (!file.isEmpty()) {
 			String source = imgPath.getVcAddpath();// 图片保存路径
@@ -379,7 +413,7 @@ public class DriverAction {
 			ScaleImage scaleImage = new ScaleImage();
 			int yw = srcBufferImage.getWidth();
 			int yh = srcBufferImage.getHeight();
-			int w = imgHeadWith, h =imgHeadHeight;
+			int w = imgHeadWith, h = imgHeadHeight;
 			if (w > yw && h > yh) {
 				File image2 = new File(getImagePath, fileNewName);
 				file.transferTo(image2);

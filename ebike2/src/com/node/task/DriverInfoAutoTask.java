@@ -10,13 +10,13 @@ package com.node.task;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhSsdwclsb;
+import com.node.service.IApplyService;
 import com.node.service.IEbikeService;
 import com.node.service.ITaskService;
 
@@ -34,6 +34,9 @@ public class DriverInfoAutoTask {
 
 	@Autowired
 	IEbikeService iEbikeService;
+	
+	@Autowired
+	IApplyService iApplyService;
 
 	/**
 	 * 
@@ -67,46 +70,27 @@ public class DriverInfoAutoTask {
 		}
 
 	}
-
-	private void saveHasValidDriver(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
-		// TODO Auto-generated method stub
-		DdcDriver ddcDriver1 = new DdcDriver();
-		ddcDriver1.setJsrxm(ddcHyxhSsdwclsb.getJsrxm1());
-		ddcDriver1.setLxdh(ddcHyxhSsdwclsb.getLxdh1());
-		ddcDriver1.setXb(ddcHyxhSsdwclsb.getXb1());
-		ddcDriver1.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm1());
-		ddcDriver1.setUserCode(ddcHyxhSsdwclsb.getLxdh1());
-		ddcDriver1.setUserPassword("123456");
-		ddcDriver1.setVcUserImg(ddcHyxhSsdwclsb.getVcUser1Img());
-		ddcDriver1.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser1WorkImg());
-		ddcDriver1.setVcUserCardImg1(ddcHyxhSsdwclsb.getVcUser1CardImg1());
-		ddcDriver1.setVcUserCardImg2(ddcHyxhSsdwclsb.getVcUser1CardImg2());
-		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())) {
-			DdcDriver ddcDriver2 = new DdcDriver();
-			ddcDriver2.setJsrxm(ddcHyxhSsdwclsb.getJsrxm2());
-			ddcDriver2.setLxdh(ddcHyxhSsdwclsb.getLxdh2());
-			ddcDriver2.setXb(ddcHyxhSsdwclsb.getXb2());
-			ddcDriver2.setSfzhm(ddcHyxhSsdwclsb.getSfzmhm2());
-			ddcDriver2.setUserCode(ddcHyxhSsdwclsb.getLxdh2());
-			ddcDriver2.setUserPassword("123456");
-			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2Img())) {
-				ddcDriver2.setVcUserImg(ddcHyxhSsdwclsb.getVcUser2Img());
-			}
-			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())) {
-				ddcDriver2
-						.setVcUserWorkImg(ddcHyxhSsdwclsb.getVcUser2WorkImg());
-			}
-			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg1())) {
-				ddcDriver2.setVcUserCardImg1(ddcHyxhSsdwclsb
-						.getVcUser2CardImg1());
-			}
-			if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2CardImg2())) {
-				ddcDriver2.setVcUserCardImg2(ddcHyxhSsdwclsb
-						.getVcUser2CardImg2());
-			}
-
-			iEbikeService.saveDdcDriver(ddcDriver2);
+	
+	
+	@Scheduled(cron = "0 15 16 * * *?")
+	public void updateDriverState4() {
+		String sql2 = " update DDC_DRIVER t set t.syn_flag='ADD' where t.USER_STATUS=1 ";
+		iTaskService.updateBySql(sql2);
+	}
+	
+	@Scheduled(cron = "0 15 20 * * *?")
+	public void updateDriverState5() {
+		String sql2 = " update  DDC_DRIVER t set t.user_status=1,t.xj_flag=null,t.xj_rq=null,t.xj_msg=null  where  t.xj_flag = -99";
+		iTaskService.updateBySql(sql2);
+	}
+	
+	@Scheduled(cron = "0 15 22 * * *?")
+	public void updateClsb(){
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iEbikeService.getAllClsb();
+		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
+			int slIndexStatus = iApplyService.getSlStatus(ddcHyxhSsdwclsb);
+			ddcHyxhSsdwclsb.setSlIndex(slIndexStatus);
+			iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 		}
-		iEbikeService.saveDdcDriver(ddcDriver1);
 	}
 }

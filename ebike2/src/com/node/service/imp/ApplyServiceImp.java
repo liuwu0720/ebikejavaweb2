@@ -386,103 +386,133 @@ public class ApplyServiceImp implements IApplyService {
 				"approveTime");
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IApplyService#findIsValid(com.node.model.DdcHyxhSsdwclsb)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IApplyService#findIsValid(com.node.model.DdcHyxhSsdwclsb
+	 * )
+	 */
 	@Override
 	public String findIsValid(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
 		String message = "success";
-		List<DdcDriverTemp> ddcDriverTemps1 = iDdcDriverTempDao.findByPropertys(new String[]{
-			"vcUserName","vcUserCard"	
-		}, new Object[]{
-			 ddcHyxhSsdwclsb.getJsrxm1(),ddcHyxhSsdwclsb.getSfzmhm1()	
-		});
-		
-	
-		if(CollectionUtils.isEmpty(ddcDriverTemps1)){
-			message = "驾驶人1姓名【"+ ddcHyxhSsdwclsb.getJsrxm1()+"】和身份证号码【"+ddcHyxhSsdwclsb.getSfzmhm1()+"】未通过实名验证";
+		List<DdcDriverTemp> ddcDriverTemps1 = iDdcDriverTempDao
+				.findByPropertys(new String[] { "vcUserName", "vcUserCard" },
+						new Object[] { ddcHyxhSsdwclsb.getJsrxm1(),
+								ddcHyxhSsdwclsb.getSfzmhm1() });
+
+		if (CollectionUtils.isEmpty(ddcDriverTemps1)) {
+			message = "驾驶人1姓名【" + ddcHyxhSsdwclsb.getJsrxm1() + "】和身份证号码【"
+					+ ddcHyxhSsdwclsb.getSfzmhm1() + "】未通过实名验证";
 		}
-		if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())){
-			List<DdcDriverTemp> ddcDriverTemps2 = iDdcDriverTempDao.findByPropertys(new String[]{
-					"vcUserName","vcUserCard"	
-				}, new Object[]{
-					 ddcHyxhSsdwclsb.getJsrxm2(),ddcHyxhSsdwclsb.getSfzmhm2()	
-				});
-			if(CollectionUtils.isEmpty(ddcDriverTemps2)){
-				message = "驾驶人2姓名【"+ ddcHyxhSsdwclsb.getJsrxm2()+"】和身份证号码【"+ddcHyxhSsdwclsb.getSfzmhm2()+"】未通过实名验证";
+		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())) {
+			List<DdcDriverTemp> ddcDriverTemps2 = iDdcDriverTempDao
+					.findByPropertys(
+							new String[] { "vcUserName", "vcUserCard" },
+							new Object[] { ddcHyxhSsdwclsb.getJsrxm2(),
+									ddcHyxhSsdwclsb.getSfzmhm2() });
+			if (CollectionUtils.isEmpty(ddcDriverTemps2)) {
+				message = "驾驶人2姓名【" + ddcHyxhSsdwclsb.getJsrxm2() + "】和身份证号码【"
+						+ ddcHyxhSsdwclsb.getSfzmhm2() + "】未通过实名验证";
 			}
-			if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())){
-				message="驾驶人2在职证明或居住证为空";
+			if (StringUtils.isBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())) {
+				message = "驾驶人2在职证明或居住证为空";
 			}
 		}
-		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeImg())){
-			message="车辆照片为空";
+		if (StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeImg())) {
+			message = "车辆照片为空";
 		}
-		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeInsuranceImg())){
-			message="投保凭证为空";
+		if (StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeInsuranceImg())) {
+			message = "投保凭证为空";
 		}
-		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeInvoiceImg())){
-			message="购车发票为空";
+		if (StringUtils.isBlank(ddcHyxhSsdwclsb.getVcEbikeInvoiceImg())) {
+			message = "购车发票为空";
 		}
-		if(StringUtils.isBlank(ddcHyxhSsdwclsb.getVcQualifiedImg())){
-			message="车辆合格证为空";
+		if (StringUtils.isBlank(ddcHyxhSsdwclsb.getVcQualifiedImg())) {
+			message = "车辆合格证为空";
 		}
 		if (StringUtils.isBlank(ddcHyxhSsdwclsb.getVcUser1WorkImg())) {
-			message="驾驶人1 在职证明或居住证为空";
+			message = "驾驶人1 在职证明或居住证为空";
 		}
-		
+
 		return message;
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IApplyService#findIsValidByDaxxb(com.node.model.DdcDaxxb)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IApplyService#findIsValidByDaxxb(com.node.model.DdcDaxxb
+	 * )
+	 */
 	@Override
 	public String findIsValidByDaxxb(DdcDaxxb newDaxxb) {
 		String message = "success";
-		List<DdcDriverTemp> ddcDriverTemps1 = iDdcDriverTempDao.findByPropertys(new String[]{
-			"vcUserName","vcUserCard"	
-		}, new Object[]{
-				newDaxxb.getJsrxm1(),newDaxxb.getSfzmhm1()	
-		});
-		
-	
-		if(CollectionUtils.isEmpty(ddcDriverTemps1)){
-			message = "驾驶人1姓名【"+ newDaxxb.getJsrxm1()+"】和身份证号码【"+newDaxxb.getSfzmhm1()+"】未通过实名验证";
+		List<DdcDriverTemp> ddcDriverTemps1 = iDdcDriverTempDao
+				.findByPropertys(
+						new String[] { "vcUserName", "vcUserCard" },
+						new Object[] { newDaxxb.getJsrxm1(),
+								newDaxxb.getSfzmhm1() });
+
+		if (CollectionUtils.isEmpty(ddcDriverTemps1)) {
+			message = "驾驶人1姓名【" + newDaxxb.getJsrxm1() + "】和身份证号码【"
+					+ newDaxxb.getSfzmhm1() + "】未通过实名验证";
 		}
-		if(StringUtils.isNotBlank(newDaxxb.getJsrxm2())){
-			List<DdcDriverTemp> ddcDriverTemps2 = iDdcDriverTempDao.findByPropertys(new String[]{
-					"vcUserName","vcUserCard"	
-				}, new Object[]{
-					newDaxxb.getJsrxm2(),newDaxxb.getSfzmhm2()	
-				});
-			if(CollectionUtils.isEmpty(ddcDriverTemps2)){
-				message = "驾驶人2姓名【"+ newDaxxb.getJsrxm2()+"】和身份证号码【"+newDaxxb.getSfzmhm2()+"】未通过实名验证";
+		if (StringUtils.isNotBlank(newDaxxb.getJsrxm2())) {
+			List<DdcDriverTemp> ddcDriverTemps2 = iDdcDriverTempDao
+					.findByPropertys(
+							new String[] { "vcUserName", "vcUserCard" },
+							new Object[] { newDaxxb.getJsrxm2(),
+									newDaxxb.getSfzmhm2() });
+			if (CollectionUtils.isEmpty(ddcDriverTemps2)) {
+				message = "驾驶人2姓名【" + newDaxxb.getJsrxm2() + "】和身份证号码【"
+						+ newDaxxb.getSfzmhm2() + "】未通过实名验证";
 			}
 		}
-		
-		
+
 		return message;
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IApplyService#findSameDjh(java.lang.String)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IApplyService#findSameDjh(java.lang.String)
+	 */
 	@Override
 	public String findSameDjh(String djh) {
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByPropertys(new String[]{
-				"djh","nEnable"
-		}, new Object[]{
-				djh,1
-		});
-		if(CollectionUtils.isEmpty(ddcHyxhSsdwclsbs)){
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao
+				.findByPropertys(new String[] { "djh", "nEnable" },
+						new Object[] { djh, 1 });
+		if (CollectionUtils.isEmpty(ddcHyxhSsdwclsbs)) {
 			return "success";
-		}else {
-			return "电机号【"+djh+"】已经存在";
+		} else {
+			return "电机号【" + djh + "】已经存在";
 		}
-		
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IApplyService#getSlStatus(com.node.model.DdcHyxhSsdwclsb
+	 * )
+	 */
+	@Override
+	public int getSlStatus(DdcHyxhSsdwclsb ddcHyxhSsdwclsb) {
+		if (StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm1())
+				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb.getDjh())
+				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb.getPpxh())
+				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcEbikeImg())
+				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb
+						.getVcEbikeInsuranceImg())
+				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb
+						.getVcEbikeInvoiceImg())
+				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcQualifiedImg())) {
+			return 0;
+		} else {
+			return -1;
+		}
+
 	}
 }

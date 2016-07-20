@@ -232,7 +232,7 @@ public class ApplyAction {
 		String sql = "select s.id,s.lsh,s.ppxh,(select d.DMMS1 from ddc_sjzd d where d.dmz = s.cysy and d.dmlb='CSYS' and rownum=1)as csysname,s.ssdwid,"
 				+ "  dw.dwmc as SSDWNAME,"
 				+ "s.JSRXM1,s.djh,(select  d.DMMS1 from ddc_sjzd d where d.dmz = s.xsqy and d.dmlb='SSQY' and rownum=1 )as xsqyname ,s.sqrq,s.sl_index,s.slyj "
-				+ "from DDC_HYXH_SSDWCLSB s,ddc_hyxh_ssdw dw where 1=1 and s.SSDWID = dw.id and s.ENABLE = 1";
+				+ "from DDC_HYXH_SSDWCLSB s,ddc_hyxh_ssdw dw where 1=1 and s.SSDWID = dw.id and s.ENABLE = 1 and s.sl_index>-1";
 		sql += " and s.HYXHZH = '" + ddcHyxhBase.getHyxhzh() + "'";
 		if (StringUtils.isNotBlank(zt)) {
 			if (zt.equals("0") || zt.equals("1")) {

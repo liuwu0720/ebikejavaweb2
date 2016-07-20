@@ -104,7 +104,6 @@ $(document).ready(function(){
 				}else{
 					return query+update+cancel;
 				}
-			
 			}
 		}
 

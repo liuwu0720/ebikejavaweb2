@@ -285,4 +285,15 @@ public interface IApplyService {
 	  */
 	String findSameDjh(String djh);
 
+	
+	/**
+	  * 方法描述：
+	  * @param ddcHyxhSsdwclsb
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年7月19日 下午3:00:08
+	  */
+	int getSlStatus(DdcHyxhSsdwclsb ddcHyxhSsdwclsb);
+
 }

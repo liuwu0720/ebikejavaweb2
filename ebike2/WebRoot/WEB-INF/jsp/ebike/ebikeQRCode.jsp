@@ -1,39 +1,42 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
+<head>
+<base href="<%=basePath%>">
+
 <title>档案详情</title>
 
 <%@include file="../common/common.jsp"%>
 
-<script type="text/javascript" src="<%=basePath%>static/js/qrcode.min.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>static/js/qrcode.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
 	/*生成二维码*/
-	var qrcode = new QRCode(document.getElementById("qrcode"), {
-        width : 150,//设置宽高
-        height : 150
+	 var qrcode = new QRCode(document.getElementById("qrcode"), {
+        width : 90,//设置宽高
+        height : 90
     });
     qrcode.makeCode('${ddcDaxxb.dabh}');
     
     if('${ddcDaxxb.jsrxm2}'){
 	    var qrcode2 = new QRCode(document.getElementById("qrcode2"), {
-	        width : 150,//设置宽高
-	        height : 150
+	        width : 90,//设置宽高
+	        height : 90
 	    });
 	    
 	    qrcode2.makeCode('${ddcDaxxb.dabh}');
     }
     
-  
+    <%--
 	if('${ddcDaxxb.vcShowEbikeImg}'==''){
 		 $("#img_0").attr("src","<%=basePath%>static/images/iconfont-wu.png");
 	}else{
@@ -48,7 +51,7 @@ $(document).ready(function(){
 		 $("#img1_1").attr("src","<%=basePath%>static/images/iconfont-wu.png");
 	}else{
 		$("#img1_1").attr("src",'${ddcDaxxb.vcShowUser1Img}');
-	} 
+	}  --%>
 })
 
 function exportPage() {
@@ -63,84 +66,107 @@ function exportPage() {
 }
 </script>
 
-  </head>
-  
-  <body>
-    	<!--startprint-->
-    	
-  <div id="ebikeQRCode">		
-  <div class="content"  >
-	  <div class="contentLeft" >
-		    <div  class="photo">
-		    <img id="img1_1"  src="<%=basePath%>static/images/iconfont-wu.png"/>
-		    </div>
-		    <div  class="qrcode" >
-		      <div id="qrcode">
-		      </div>
-		      <span>二维码仅供公安扫描有效</span>
-		    </div>
-	   </div>
-	   <div class="contentRight">
-		    <div style="display:inline-block;width:330px;height:400px;">
-		   <ul>
-		        <li><label>人员姓名&nbsp;:&nbsp;</label> ${ddcDaxxb.jsrxm1 }</li>
-		        <li><label>联系电话&nbsp;:&nbsp;</label>${ddcDaxxb.lxdh1 }</li>
-		        <li><label>性别&nbsp;:&nbsp;</label>	<c:if test="${ddcDaxxb.xb1 == 0 }">男</c:if>
-					<c:if test="${ddcDaxxb.xb1 == 1 }">女</c:if></li>
-		    	<li><label>所属单位&nbsp;:&nbsp;</label> ${ddcDaxxb.ssdwName }</li>
-		    	<li><label>所属协会&nbsp;:&nbsp;</label>${ddcDaxxb.hyxhzhName }</li> 
-		    	<li><label>品牌型号&nbsp;:&nbsp;</label>${ddcDaxxb.ppxh }</li>
-		    	<li><label>电机号&nbsp;:&nbsp;</label>${ddcDaxxb.djh }</li>
-		    	<li><label>车身颜色&nbsp;:&nbsp;</label> ${ddcDaxxb.cysyName }</li>
-		    	<li><label>行驶区域&nbsp;:&nbsp;</label> ${ddcDaxxb.xsqyName }</li>
-		    	<li><label>车辆状态&nbsp;:&nbsp;</label>${ddcDaxxb.ztName }</li>
-		    	<li><label>档案编号&nbsp;:&nbsp;</label>${ddcDaxxb.dabh}</li>
-		    	<li><label>车牌号码&nbsp;:&nbsp;</label>${ddcDaxxb.cphm}</li>
-		    </ul>	 
-		     </div>
-	   </div>   
-   </div>
-   
- 
-   	<c:if test="${null != ddcDaxxb.jsrxm2}">
-   	<div class="content">
-	<div class="contentLeft">
-	<div  class="photo">
-	<img id="img2_2"  src="<%=basePath%>static/images/iconfont-wu.png"/>
+</head>
+
+<body>
+	<div>
+	<!--startprint-->
+		<div class="idCard">
+			<div class="idCard-title">
+				<p>电动自行车二维码工作证</p>
+			</div>
+
+			<div class="idCard-middle">
+				<div class="idCard-headimg-div">
+					<img alt="" src="${ddcDaxxb.vcShowUser1Img}" class="idCard-headimg">
+				</div>
+				<div class="idCard-middle-msg">
+					<ul>
+						<li>人员姓名:<span>${ddcDaxxb.jsrxm1}</span></li>
+						<li>联系电话:<span>${ddcDaxxb.lxdh1}</span></li>
+						<c:if test="${ddcDaxxb.xb1 == 0}">
+							<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<span>男</span></li>
+						</c:if>
+						<c:if test="${ddcDaxxb.xb1 == 1}">
+							<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<span>女</span></li>
+						</c:if>
+						<li>所属单位:<span>${ddcDaxxb.ssdwName }</span></li>
+						<li>所属协会:<span>${ddcDaxxb.hyxhzhName }</span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="idCard-foot">
+				<ul>
+					<li>品牌型号:<span>${ddcDaxxb.ppxh}</span></li>
+					<li>电&nbsp;机&nbsp;号:<span>${ddcDaxxb.djh}</span></li>
+					<li>车身颜色:<span>${ddcDaxxb.cysyName}</span></li>
+					<li>行驶区域:<span>${ddcDaxxb.xsqyName}</span></li>
+					<li>车辆状态:<span>${ddcDaxxb.ztName}</span></li>
+					<li>档案编号:<span>${ddcDaxxb.dabh}</span></li>
+				</ul>
+
+			</div>
+
+			<div class="idCard-qrcode">
+				<p>二维码仅供交警扫描</p>
+				<div id="qrcode" class="idCard-qrcode-img"></div>
+			</div>
+
+		</div>
+
+
+		<!-- 第二张 -->
+		<c:if test="${ddcDaxxb.jsrxm2!=null}">
+			<div class="idCard">
+				<div class="idCard-title">
+					<p>电动自行车二维码工作证</p>
+				</div>
+
+				<div class="idCard-middle">
+					<div class="idCard-headimg-div">
+						<img alt="" src="${ddcDaxxb.vcShowUser2Img}"
+							class="idCard-headimg">
+					</div>
+					<div class="idCard-middle-msg">
+						<ul>
+							<li>人员姓名:<span>${ddcDaxxb.jsrxm2}</span></li>
+							<li>联系电话:<span>${ddcDaxxb.lxdh2}</span></li>
+							<c:if test="${ddcDaxxb.xb2 == 0}">
+								<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<span>男</span></li>
+							</c:if>
+							<c:if test="${ddcDaxxb.xb2 == 1}">
+								<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<span>女</span></li>
+							</c:if>
+							<li>所属单位:<span>${ddcDaxxb.ssdwName }</span></li>
+							<li>所属协会:<span>${ddcDaxxb.hyxhzhName }</span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="idCard-foot">
+					<ul>
+						<li>品牌型号:<span>${ddcDaxxb.ppxh}</span></li>
+						<li>电&nbsp;机&nbsp;号:<span>${ddcDaxxb.djh}</span></li>
+						<li>车身颜色:<span>${ddcDaxxb.cysyName}</span></li>
+						<li>行驶区域:<span>${ddcDaxxb.xsqyName}</span></li>
+						<li>车辆状态:<span>${ddcDaxxb.ztName}</span></li>
+						<li>档案编号:<span>${ddcDaxxb.dabh}</span></li>
+					</ul>
+
+				</div>
+
+				<div class="idCard-qrcode">
+					<p>二维码仅供交警扫描</p>
+					<div id="qrcode2" class="idCard-qrcode-img"></div>
+				</div>
+
+			</div>
+		</c:if>
+		<!--endprint-->
+		
+			<div class="btndiv">
+		<button type="button" onclick="exportPage()" class="btn">打印</button>
+		<button type="button" class="btn" onclick="history.back()">返回</button>
+		</div>
 	</div>
-	<div  class="qrcode">
-	<div id="qrcode2">
-	</div>
-	<span class="warm" style="text-align:center">二维码仅供公安扫描有效</span>
-	</div>
-	</div>
-	<div class="contentRight">
-	<div style="display:inline-block;width:330px;">
-	<ul>
-	<li><label>人员姓名&nbsp;:&nbsp;</label> ${ddcDaxxb.jsrxm2 }</li>
-	<li><label>联系电话&nbsp;:&nbsp;</label>${ddcDaxxb.lxdh2 }</li>
-	 <li><label>性别&nbsp;:&nbsp;</label>	<c:if test="${ddcDaxxb.xb2 == 0 }">男</c:if>
-					<c:if test="${ddcDaxxb.xb2 == 1 }">女</c:if></li>
-	<li><label>所属单位&nbsp;:&nbsp;</label> ${ddcDaxxb.ssdwName }</li>
-		    	<li><label>所属协会&nbsp;:&nbsp;</label>${ddcDaxxb.hyxhzhName }</li> 
-	<li><label>品牌型号&nbsp;:&nbsp;</label>${ddcDaxxb.ppxh }</li>
-	<li><label>电机号&nbsp;:&nbsp;</label>${ddcDaxxb.djh }</li>
-	<li><label>车身颜色&nbsp;:&nbsp;</label> ${ddcDaxxb.cysyName }</li>
-	<li><label>行驶区域&nbsp;:&nbsp;</label> ${ddcDaxxb.xsqyName }</li>
-	<li><label>车辆状态&nbsp;:&nbsp;</label>${ddcDaxxb.ztName }</li>
-	<li><label>档案编号&nbsp;:&nbsp;</label>${ddcDaxxb.dabh}</li>
-	<li><label>车牌号码&nbsp;:&nbsp;</label>${ddcDaxxb.cphm}</li>
-	</ul>
-	</div>
-	</div>
-	</div>
-	</c:if>
-	<!--endprint-->	
-	   <div  style="margin: 0 auto;">
-				<button type="button" onclick="exportPage()" class="btn_primary">打印</button>
-				<button type="button" class="btn_default" onclick="history.back()">返回</button>
-	   </div>
-</div>  
-	   
-  </body>
+</body>
 </html>

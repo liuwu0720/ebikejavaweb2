@@ -78,9 +78,9 @@ public class AppAction {
 			boolean isNew=iEbikeService.findDdcDriverTemp(vcUserName,vcUserCard);
 			if(isNew){
 				DdcDriverTemp ddcDriverTemp = new DdcDriverTemp();
-				ddcDriverTemp.setVcTelPhone(vcTelPhone);
-				ddcDriverTemp.setVcUserCard(vcUserCard);
-				ddcDriverTemp.setVcUserName(vcUserName);
+				ddcDriverTemp.setVcTelPhone(vcTelPhone.trim());
+				ddcDriverTemp.setVcUserCard(vcUserCard.trim());
+				ddcDriverTemp.setVcUserName(vcUserName.trim());
 				try {
 					iEbikeService.saveDriverTemp(ddcDriverTemp);
 					return AjaxUtil.getMap(true, "恭喜！认证成功！您的信息已成功提交至深圳交警。");

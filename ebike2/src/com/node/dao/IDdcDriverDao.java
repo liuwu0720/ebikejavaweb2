@@ -18,4 +18,14 @@ import com.node.model.DdcDriver;
  */
 public interface IDdcDriverDao extends GenericDao<DdcDriver, Long> {
 
+	
+	/**
+	  * 方法描述：
+	  * @param sql2 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年7月12日 上午8:39:41
+	  */
+	void updateBySql(String sql2);
+
 }

@@ -37,6 +37,7 @@ import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhBaseLog;
 import com.node.model.DdcHyxhSsdw;
+import com.node.model.DdcHyxhSsdwclsb;
 import com.node.service.IEbikeService;
 import com.node.util.DateStrUtil;
 import com.node.util.HqlHelper;
@@ -344,8 +345,8 @@ public class EbikeServiceImp implements IEbikeService {
 	public void saveDdcDriver(DdcDriver ddcDriver2) {
 
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
-				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
-						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm() });
+				new String[] { "vcUserName", "vcUserCard","vcTelPhone" }, new Object[] {
+						ddcDriver2.getJsrxm().trim(), ddcDriver2.getSfzhm().trim(),ddcDriver2.getLxdh() });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			if (StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg1())
 					&& StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg2())
@@ -546,6 +547,16 @@ public class EbikeServiceImp implements IEbikeService {
 	public void saveDdcHyxhBaseLog(DdcHyxhBaseLog ddcHyxhBaseLog) {
 		// TODO Auto-generated method stub
 		iDdcHyxhBaseLogDao.save(ddcHyxhBaseLog);
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#getAllClsb()
+		 */
+	@Override
+	public List<DdcHyxhSsdwclsb> getAllClsb() {
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByProperty("slIndex", 0);
+		return ddcHyxhSsdwclsbs;
 	}
 
 }

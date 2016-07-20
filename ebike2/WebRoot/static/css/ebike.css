@@ -584,10 +584,10 @@ table td[class*="col-"],table th[class*="col-"] {
 
 #ebikeQRCode .content {
 	margin: 1px auto;
-    height: 375px;
-    width: 528px;
-    border: 1px solid red;
-    padding-top: 10px;
+	height: 375px;
+	width: 528px;
+	border: 1px solid red;
+	padding-top: 10px;
 }
 
 #ebikeQRCode .content .contentLeft {
@@ -610,3 +610,84 @@ table td[class*="col-"],table th[class*="col-"] {
 	bottom: 10px;
 	right: 43%
 }
+
+.idCard {
+	border: solid 1px #9c7474;
+	height: 540px;
+	width: 400px;
+	margin: 20px auto;
+}
+
+.idCard-title {
+	background-color: #bdb3b3;
+	height: 60px;
+	padding-top: 18px;
+}
+
+.idCard-title p {
+	text-align: center;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 20px;
+	font-weight: 800;
+}
+
+.idCard-headimg-div {
+	margin: 10px;
+	float: left;
+}
+
+.idCard-headimg {
+	width: 120px;
+	height: 150px;
+}
+
+.idCard-middle-msg {
+	left: 20px;
+	top: 5px;
+	position: relative;
+}
+
+.idCard-middle-msg li > span {
+	color: #916ce6;
+}
+
+.idCard-middle-msg li {
+	padding: 5px;
+    color: #373748c9;
+    font-weight: bold;
+}
+
+.idCard-foot{
+	position: absolute;
+    margin-top: 58px;
+    margin-left: 10px;
+}
+.idCard-foot li > span {
+	color: #916ce6;
+}
+
+.idCard-foot li {
+	padding: 5px;
+    color: #373748c9;
+    font-weight: bold;
+}
+.idCard-qrcode{
+	background-color: #5c5cc7;
+    height: 120px;
+    margin-top: 222px;
+}
+.idCard-qrcode p{
+	font-family: "微软雅黑", "黑体", "宋体";
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: 36px;
+    padding: 29px;
+}
+.idCard-qrcode-img{
+	position: relative;
+    float: right;
+    margin-right: 50px;
+    margin-top: -67px;
+}
+

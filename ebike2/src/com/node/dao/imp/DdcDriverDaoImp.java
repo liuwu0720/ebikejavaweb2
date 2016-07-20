@@ -7,6 +7,8 @@
  */
 package com.node.dao.imp;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.node.dao.IDdcDriverDao;
@@ -22,5 +24,18 @@ import com.node.model.DdcDriver;
 @Repository
 public class DdcDriverDaoImp extends GenericHibernateDao<DdcDriver, Long>
 		implements IDdcDriverDao {
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+		/* (non-Javadoc)
+		 * @see com.node.dao.IDdcDriverDao#updateBySql(java.lang.String)
+		 */
+	@Override
+	public void updateBySql(String sql2) {
+		// TODO Auto-generated method stub
+		  int row=	jdbcTemplate.update(sql2);
+		  System.out.println("row="+row);
+		
+	}
 
 }

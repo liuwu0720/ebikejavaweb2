@@ -17,6 +17,7 @@ import com.node.model.DdcFlow;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhBaseLog;
 import com.node.model.DdcHyxhSsdw;
+import com.node.model.DdcHyxhSsdwclsb;
 import com.node.util.HqlHelper;
 import com.node.util.Page;
 
@@ -308,5 +309,15 @@ public interface IEbikeService {
 	  * @version: 2016年7月10日 下午1:59:47
 	  */
 	void saveDdcHyxhBaseLog(DdcHyxhBaseLog ddcHyxhBaseLog);
+
+	
+	/**
+	  * 方法描述：
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年7月20日 下午12:22:26
+	  */
+	List<DdcHyxhSsdwclsb> getAllClsb();
 
 }

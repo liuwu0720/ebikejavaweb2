@@ -293,7 +293,7 @@ public class BaAction {
 		if (StringUtils.isNotBlank(jsrxm)) {
 			hql.addLike("jsrxm", jsrxm);
 		}
-
+		hql.addEqual("userStatus", 1);
 		hql.addOrderBy("id", "desc");
 		hql.setQueryPage(page);
 		Map<String, Object> resultMap = iDriverSerivce.queryByHql(hql);
@@ -334,6 +334,7 @@ public class BaAction {
 		if (ddcHyxhSsdwclsb.getSfzmhm1().equals(ddcHyxhSsdwclsb.getSfzmhm2())) {
 			message = "两个驾驶人身份证号码不能相同!";
 		}
+		
 		if (!message.equals("success")) {
 			AjaxUtil.rendJson(response, false, message);
 			return;
@@ -407,6 +408,8 @@ public class BaAction {
 				ddcHyxhSsdwclsb.setVcEbikeInsuranceImg(ddcHyxhSsdwclsb
 						.getVcEbikeInsuranceImg());
 			}
+			int slIndexStatus = iApplyService.getSlStatus(ddcHyxhSsdwclsb);
+			ddcHyxhSsdwclsb.setSlIndex(slIndexStatus);
 
 			if (ddcHyxhSsdwclsb.getId() == null) {
 				// 生成流水号

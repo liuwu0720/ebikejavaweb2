@@ -236,10 +236,9 @@ function queryRow(id){
 
 //修改
 function updateRow(id){
-	$.messager.progress({
-		text:"正在处理，请稍候..."
-	});
-	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+1;
+	
+	<%-- window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+1; --%>
+	window.open("<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+1,"_blank");
 }
 
 //保存操作

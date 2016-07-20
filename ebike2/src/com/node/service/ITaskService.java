@@ -65,4 +65,15 @@ public interface ITaskService {
 	  */
 	List<DdcDaxxb> getAllNewDaxxb();
 
+
+	
+	/**
+	  * 方法描述：
+	  * @param sql2 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年7月12日 上午8:38:35
+	  */
+	void updateBySql(String sql2);
+
 }

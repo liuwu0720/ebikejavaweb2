@@ -86,4 +86,15 @@ public class TaskServiceImp implements ITaskService{
 		return null;
 	}
 
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#updateBySql(java.lang.String)
+		 */
+	@Override
+	public void updateBySql(String sql2) {
+		// TODO Auto-generated method stub
+		iDdcDriverDao.updateBySql(sql2);
+	}
+
 }
