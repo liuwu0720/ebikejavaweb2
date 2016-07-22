@@ -101,8 +101,10 @@ $(document).ready(function(){
 				if(value == null){
 					if(row.SL_INDEX == 0){
 						return "等待协会审批";
-					}else{
+					}else if(row.SL_INDEX >= 1){
 						return "等待交警审批";
+					}else if(row.SL_INDEX == -1){
+						return "等待协会审批(资料不全)";
 					}
 				}else if(value == 0){
 					return "已审核(同意) ";
@@ -119,7 +121,7 @@ $(document).ready(function(){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;"
 				var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>修改</a>&nbsp;&nbsp;&nbsp;"
 				var cancel = "<a  href='javascript:void(0)'  onclick='cancelSb("+row.ID+")'>退回</a>"
-				if(row.SL_INDEX == 0){
+				if(row.SL_INDEX <= 0){
 					return query+update+cancel;
 				}else if(row.SLYJ == 1){
 					return query+update;

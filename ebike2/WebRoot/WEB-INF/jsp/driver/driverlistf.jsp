@@ -77,12 +77,12 @@ $(document).ready(function(){
 			align:'center',
 			width : 120,
 			formatter:function(value,index){
-				if(value == 0){
-					return "未认证";
+				if(value == 2){
+					return "星级认证";
 				}else if(value == 1){
 					return "已实名认证";
 				}else{
-					return "星级用户";
+					return "未认证";
 				}
 			} 
 		},{
@@ -193,7 +193,7 @@ function doSearch(){
 //新增弹出
 function addRowData(){
 	$('#dgform').form('clear');
-	$('#dgformDiv').dialog('open').dialog('setTitle', '新增车辆申报');		
+	$('#dgformDiv').dialog('open').dialog('setTitle', '新增司机');		
 	$('#xb').combobox({
 		value:0
 	});
@@ -348,7 +348,7 @@ function CheckFileSize(obj){
 				</tr>
 				<tr>
 					<td>驾驶人在职证明或居住证(600*400)</td>
-					<td><input  type="file"  onchange="CheckFileSize(this);"
+					<td><input  type="file"  onchange="CheckFileSize(this);"  data-options="required:true" class="easyui-validatebox"
 						name="vcUser1WorkImgfile" /><br /></td>
 				</tr>
 		

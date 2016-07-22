@@ -160,7 +160,7 @@ public class BaAction {
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
 		try {
-			if (ddcHyxhSsdwclsb.getSlIndex() == 0) {
+			if (ddcHyxhSsdwclsb.getSlIndex() == 0||ddcHyxhSsdwclsb.getSlIndex()==-1) {
 				AjaxUtil.rendJson(response, true, "成功");
 			} else {
 				AjaxUtil.rendJson(response, false, "该申报申请正在审批中，无法修改或取消");
@@ -293,7 +293,7 @@ public class BaAction {
 		if (StringUtils.isNotBlank(jsrxm)) {
 			hql.addLike("jsrxm", jsrxm);
 		}
-		hql.addEqual("userStatus", 1);
+		hql.addNotEqual("userStatus", 0);
 		hql.addOrderBy("id", "desc");
 		hql.setQueryPage(page);
 		Map<String, Object> resultMap = iDriverSerivce.queryByHql(hql);

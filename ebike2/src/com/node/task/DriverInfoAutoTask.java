@@ -10,6 +10,8 @@ package com.node.task;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -37,6 +39,8 @@ public class DriverInfoAutoTask {
 	
 	@Autowired
 	IApplyService iApplyService;
+	
+	private static final Logger logger = Logger.getLogger("定时任务.............");
 
 	/**
 	 * 
@@ -55,22 +59,72 @@ public class DriverInfoAutoTask {
 	/**
 	 * 定时卡点计算。每天凌晨 02:00 执行一次 cron = "0 0 2 * * *"
 	 */
-	@Scheduled(cron = "0 35 22 * * *?")
+	@Scheduled(cron = "0 57 23 * * *?")
 	public void autoCardCalculate() {
-		/*
-		 * List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iTaskService.findAllClsbs();
-		 * for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
-		 * saveHasValidDriver(ddcHyxhSsdwclsb); }
-		 */
 		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();// 所有未验证的司机
+		logger.warn("未认证人数:"+ddcDrivers.size());
+		int index = 0;
 		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
+			
 			for (DdcDriver ddcDriver : ddcDrivers) {
+				index ++;
+				if(index == 1000){
+					break;
+				}
 				iEbikeService.saveDdcDriver(ddcDriver);
 			}
 		}
+	}
 
+	@Scheduled(fixedRate=1000 *60*30)
+	public void  task2() {
+		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();// 所有未验证的司机
+		logger.warn("task2 未认证人数:"+ddcDrivers.size());
+		int index = 0;
+		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
+			
+			for (DdcDriver ddcDriver : ddcDrivers) {
+				if(ddcDriver.getUserNote()=="0"){
+					ddcDriver.setUserNote(null);
+				}
+				if(StringUtils.isBlank(ddcDriver.getUserNote())){
+					index ++;
+					if(index == 500){
+						break;
+					}
+					iEbikeService.saveDdcDriver(ddcDriver);
+				}
+				
+			}
+		}
 	}
 	
+	@Scheduled(fixedRate=1000 *60*120)
+	public void  task3() {
+		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();// 所有未验证的司机
+		logger.warn("task3 未认证人数:"+ddcDrivers.size());
+		int index = 0;
+		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
+			
+			for (DdcDriver ddcDriver : ddcDrivers) {
+				if(StringUtils.isNotBlank(ddcDriver.getUserNote())){
+					index ++;
+					if(index == 500){
+						break;
+					}
+					iEbikeService.saveDdcDriver(ddcDriver);
+				}
+				
+			}
+		}
+	}
+	
+	
+	@Scheduled(cron = "0 15 10 * * *?")
+	public void updateDriverState6() {
+		String sql2 = " update  DDC_DRIVER t set t.user_status=0  where  t.user_status is null";
+		iTaskService.updateBySql(sql2);
+	}
 	
 	@Scheduled(cron = "0 15 16 * * *?")
 	public void updateDriverState4() {
@@ -84,10 +138,15 @@ public class DriverInfoAutoTask {
 		iTaskService.updateBySql(sql2);
 	}
 	
-	@Scheduled(cron = "0 15 22 * * *?")
+	@Scheduled(cron = "0 15 19 * * *?")
 	public void updateClsb(){
 		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iEbikeService.getAllClsb();
+		int index = 0;
 		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
+			index ++;
+			if(index == 1000){
+				break;
+			}
 			int slIndexStatus = iApplyService.getSlStatus(ddcHyxhSsdwclsb);
 			ddcHyxhSsdwclsb.setSlIndex(slIndexStatus);
 			iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);

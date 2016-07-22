@@ -246,7 +246,12 @@ public class DataServiceImp implements IDataService {
 		int i = 3;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		int index = 0;
 		for (DdcApproveUser ddcApproveUser : ddcApproveUsers) {
+			index ++;
+			if(index == 2000){
+				break;
+			}
 			int j = 0;
 			ws.addCell(new Label(j, i, ddcApproveUser.getUserName()));
 			ws.addCell(new Label(j += 1, i, ddcApproveUser.getUserOrgname()));
@@ -346,7 +351,12 @@ public class DataServiceImp implements IDataService {
 		int i = 3;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		int index = 0;
 		for (DdcFlow ddcFlow : ddcFlows) {
+			index ++;
+			if(index == 2000){
+				break;
+			}
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, ddcFlow.getLsh()));
 			ws.addCell(new Label(j1 += 1, i, ddcFlow.getYwlx()));
@@ -698,7 +708,12 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(new Label(j += 1, 2, "vcEbikeInsuranceImg", wcfFC2));
 		int i = 3;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		int index = 0;
 		for (DdcHyxhSsdwclsb ddcHyxhSsdwclsb : ddcHyxhSsdwclsbs) {
+			index ++;
+			if(index == 2000){
+				break;
+			}
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, ddcHyxhSsdwclsb.getId() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcHyxhSsdwclsb.getLsh()));
@@ -1558,7 +1573,12 @@ public class DataServiceImp implements IDataService {
 		ws.addCell(new Label(j += 1, 2, "XJ_RQ", wcfFC2));
 		ws.addCell(new Label(j += 1, 2, "USER_NOTE", wcfFC2));
 		int i = 3;
+		int index = 0;
 		for (DdcDriver ddcDriver : ddcDrivers) {
+			index ++;
+			if(index == 2000){
+				break;
+			}
 			int j1 = 0;
 			ws.addCell(new Label(j1, i, ddcDriver.getId() + ""));
 			ws.addCell(new Label(j1 += 1, i, ddcDriver.getJsrxm()));

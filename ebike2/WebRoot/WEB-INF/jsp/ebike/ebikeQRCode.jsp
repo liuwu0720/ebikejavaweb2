@@ -68,8 +68,8 @@ function exportPage() {
 
 </head>
 
-<body>
-	<div>
+<body style="font:12px Tahoma;margin:0px;background:#FFF;">
+	<div class="idCard-main">
 	<!--startprint-->
 		<div class="idCard">
 			<div class="idCard-title">

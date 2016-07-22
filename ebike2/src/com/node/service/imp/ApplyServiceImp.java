@@ -508,8 +508,18 @@ public class ApplyServiceImp implements IApplyService {
 						.getVcEbikeInsuranceImg())
 				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb
 						.getVcEbikeInvoiceImg())
+						&& StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser1WorkImg())
 				&& StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcQualifiedImg())) {
+			if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getJsrxm2())){
+				if(StringUtils.isNotBlank(ddcHyxhSsdwclsb.getVcUser2WorkImg())){
+					return 0;
+				}else{
+					return -1;
+				}
+			}
 			return 0;
+			
+			
 		} else {
 			return -1;
 		}

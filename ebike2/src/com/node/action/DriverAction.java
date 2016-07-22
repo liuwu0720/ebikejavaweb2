@@ -309,6 +309,7 @@ public class DriverAction {
 			DdcHyxhBase ddcHyxhBase =  (DdcHyxhBase) request.getSession().getAttribute(SystemConstants.SESSION_USER);
 			if(ddcHyxhBase.getHyxhzh().equals("cs")){
 				ddcDriver.setUserStatus(1);
+				ddcDriver.setUserNote(null);
 				ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 				iDriverSerivce.updateDdcDriver(ddcDriver);
 				AjaxUtil.rendJson(response, true, "删除成功");

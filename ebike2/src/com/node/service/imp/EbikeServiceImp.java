@@ -345,8 +345,8 @@ public class EbikeServiceImp implements IEbikeService {
 	public void saveDdcDriver(DdcDriver ddcDriver2) {
 
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
-				new String[] { "vcUserName", "vcUserCard","vcTelPhone" }, new Object[] {
-						ddcDriver2.getJsrxm().trim(), ddcDriver2.getSfzhm().trim(),ddcDriver2.getLxdh() });
+				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
+						ddcDriver2.getJsrxm().trim(), ddcDriver2.getSfzhm().trim() });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			if (StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg1())
 					&& StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg2())

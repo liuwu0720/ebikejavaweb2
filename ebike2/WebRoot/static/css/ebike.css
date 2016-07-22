@@ -611,10 +611,14 @@ table td[class*="col-"],table th[class*="col-"] {
 	right: 43%
 }
 
+.idCard-main{
+	width:100%;
+}
+
 .idCard {
 	border: solid 1px #9c7474;
-	height: 540px;
-	width: 400px;
+	height: 520px;
+	width: 380px;
 	margin: 20px auto;
 }
 
@@ -673,8 +677,10 @@ table td[class*="col-"],table th[class*="col-"] {
 }
 .idCard-qrcode{
 	background-color: #5c5cc7;
-    height: 120px;
-    margin-top: 222px;
+    height: 98px;
+    margin-top: 216px;
+    width: 100%;
+    border: solid 1px #5f4848;
 }
 .idCard-qrcode p{
 	font-family: "微软雅黑", "黑体", "宋体";
@@ -688,6 +694,6 @@ table td[class*="col-"],table th[class*="col-"] {
 	position: relative;
     float: right;
     margin-right: 50px;
-    margin-top: -67px;
+    margin-top: -76px;
 }
 
