@@ -611,15 +611,17 @@ table td[class*="col-"],table th[class*="col-"] {
 	right: 43%
 }
 
-.idCard-main{
-	width:100%;
+.idCard-main {
+	width: 100%;
+	position: absolute;
 }
 
 .idCard {
 	border: solid 1px #9c7474;
-	height: 520px;
+	height: 480px;
 	width: 380px;
-	margin: 20px auto;
+	margin-left:10px;
+	float:left;
 }
 
 .idCard-title {
@@ -651,49 +653,52 @@ table td[class*="col-"],table th[class*="col-"] {
 	position: relative;
 }
 
-.idCard-middle-msg li > span {
+.idCard-middle-msg li>span {
 	color: #916ce6;
 }
 
 .idCard-middle-msg li {
 	padding: 5px;
-    color: #373748c9;
-    font-weight: bold;
+	color: #373748c9;
+	font-weight: bold;
 }
 
-.idCard-foot{
-	position: absolute;
-    margin-top: 58px;
-    margin-left: 10px;
+.idCard-foot {
+	position: relative;
+	margin-top: 58px;
+	margin-left: 10px;
 }
-.idCard-foot li > span {
+
+.idCard-foot li>span {
 	color: #916ce6;
 }
 
 .idCard-foot li {
 	padding: 5px;
-    color: #373748c9;
-    font-weight: bold;
-}
-.idCard-qrcode{
-	background-color: #5c5cc7;
-    height: 98px;
-    margin-top: 216px;
-    width: 100%;
-    border: solid 1px #5f4848;
-}
-.idCard-qrcode p{
-	font-family: "微软雅黑", "黑体", "宋体";
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    margin-left: 36px;
-    padding: 29px;
-}
-.idCard-qrcode-img{
-	position: relative;
-    float: right;
-    margin-right: 50px;
-    margin-top: -76px;
+	color: #373748c9;
+	font-weight: bold;
 }
 
+.idCard-qrcode {
+	background-color: #5c5cc7;
+	height: 98px;
+	margin-top: 8px;
+	width: 100%;
+	border: solid 1px #5f4848;
+}
+
+.idCard-qrcode p {
+	font-family: "微软雅黑", "黑体", "宋体";
+	color: white;
+	font-weight: bold;
+	font-size: 16px;
+	margin-left: 36px;
+	padding: 29px;
+}
+
+.idCard-qrcode-img {
+	position: relative;
+	float: right;
+	margin-right: 50px;
+	margin-top: -76px;
+}

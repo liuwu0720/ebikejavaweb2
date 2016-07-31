@@ -65,7 +65,6 @@ public class DriverAction {
 	@Autowired
 	IEbikeService iEbikeService;
 
-
 	@RequestMapping("/getAll")
 	public String getAll() {
 		return "driver/driverlistf";
@@ -76,11 +75,13 @@ public class DriverAction {
 	public Map<String, Object> queryAll(HttpServletRequest request,
 			HttpServletResponse response, String sfzhm, String jsrxm,
 			Integer userStatus) {
-	  
-		Object object =   request.getSession().getAttribute(SystemConstants.SESSION_USER).getClass().getSimpleName();
+
+		Object object = request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER).getClass()
+				.getSimpleName();
 		Page p = ServiceUtil.getcurrPage(request);
 		HqlHelper hql = new HqlHelper(DdcDriver.class);
-		if(object.equals(SystemConstants.CLASS_NAME_DDC_HYXHSSDW)){
+		if (object.equals(SystemConstants.CLASS_NAME_DDC_HYXHSSDW)) {
 			DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 					.getAttribute(SystemConstants.SESSION_USER);
 			hql.addEqual("ssdwId", ddcHyxhSsdw.getId());
@@ -124,7 +125,6 @@ public class DriverAction {
 		 * 检查身份证
 		 */
 		String message = "success";
-		
 
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
@@ -198,7 +198,7 @@ public class DriverAction {
 			if (ddcDriver.getId() == null) {
 				ddcDriver.setUserStatus(0);
 				iDriverSerivce.saveDdcDriver(ddcDriver);
-				// iEbikeService.saveDdcDriver(ddcDriver);
+				iEbikeService.saveDdcDriver(ddcDriver);
 			} else {
 				if (ddcDriver.getUserStatus() != null
 						&& ddcDriver.getUserStatus() > 0) {
@@ -209,15 +209,18 @@ public class DriverAction {
 									oldDdcDriver.getSfzhm())) {
 						ddcDriver.setUserStatus(ddcDriver.getUserStatus());
 						ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
-					}else {
+					} else {
 						ddcDriver.setUserStatus(0);
 					}
 
-				}else {
+				} else {
 					ddcDriver.setUserStatus(0);
 				}
 				iDriverSerivce.updateDdcDriver(ddcDriver);
-				// iEbikeService.saveDdcDriver(ddcDriver);
+				if (ddcDriver.getUserStatus() == 0) {
+					iEbikeService.saveDdcDriver(ddcDriver);
+				}
+
 				iDriverSerivce.updateClsb(ddcDriver);
 			}
 			AjaxUtil.rendJson(response, true, "操作成功");
@@ -304,18 +307,21 @@ public class DriverAction {
 			HttpServletResponse response) {
 		long driverId = Long.parseLong(id);
 		DdcDriver ddcDriver = iDriverSerivce.getDriverById(driverId);
-		Object object =   request.getSession().getAttribute(SystemConstants.SESSION_USER).getClass().getSimpleName();
-		if(object.equals(SystemConstants.CLASS_NAME_DDC_HYXHBASE)){
-			DdcHyxhBase ddcHyxhBase =  (DdcHyxhBase) request.getSession().getAttribute(SystemConstants.SESSION_USER);
-			if(ddcHyxhBase.getHyxhzh().equals("cs")){
+		Object object = request.getSession()
+				.getAttribute(SystemConstants.SESSION_USER).getClass()
+				.getSimpleName();
+		if (object.equals(SystemConstants.CLASS_NAME_DDC_HYXHBASE)) {
+			DdcHyxhBase ddcHyxhBase = (DdcHyxhBase) request.getSession()
+					.getAttribute(SystemConstants.SESSION_USER);
+			if (ddcHyxhBase.getHyxhzh().equals("cs")) {
 				ddcDriver.setUserStatus(1);
 				ddcDriver.setUserNote(null);
 				ddcDriver.setSynFlag(SystemConstants.SYSNFLAG_ADD);
 				iDriverSerivce.updateDdcDriver(ddcDriver);
 				AjaxUtil.rendJson(response, true, "删除成功");
 			}
-			
-		}else {
+
+		} else {
 			ddcDriver.setUserStatus(-1);
 
 			String message = iDriverSerivce.findIfdelete(ddcDriver);// 查询该司机下面是否有档案表
@@ -335,9 +341,6 @@ public class DriverAction {
 				}
 			}
 		}
-		
-		
-		
 
 	}
 

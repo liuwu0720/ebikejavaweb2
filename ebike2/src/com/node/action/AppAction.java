@@ -75,7 +75,7 @@ public class AppAction {
 			@ApiParam(value = "用户手机号") @RequestParam(value="vcTelPhone", required = true) String vcTelPhone,
 			@ApiParam(value = "接口访问TOKEN", required = true) @RequestParam("vcToken") String vcToken) {
 		if(StringUtils.isNotBlank(vcToken) && vcToken.equalsIgnoreCase(SystemConstants.TOKEN_ALIPAY)){
-			boolean isNew=iEbikeService.findDdcDriverTemp(vcUserName,vcUserCard);
+			boolean isNew=iEbikeService.findDdcDriverTemp(vcUserName,vcUserCard,vcTelPhone);
 			if(isNew){
 				DdcDriverTemp ddcDriverTemp = new DdcDriverTemp();
 				ddcDriverTemp.setVcTelPhone(vcTelPhone.trim());

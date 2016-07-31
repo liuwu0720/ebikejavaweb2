@@ -221,8 +221,9 @@ public interface IEbikeService {
 	  * @version: 1.0
 	  * @author: liuwu
 	  * @version: 2016年6月5日 上午9:47:27
+	 * @param vcTelPhone 
 	  */
-	boolean findDdcDriverTemp(String vcUserName, String vcUserCard);
+	boolean findDdcDriverTemp(String vcUserName, String vcUserCard, String vcTelPhone);
 
 	
 	/**

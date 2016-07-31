@@ -36,7 +36,7 @@ $(document).ready(function(){
 		height:h,
 		width:w,
 		loadMsg:'正在加载,请稍等...',
-		
+		pageList:[10,20,30,40,50,500,1000],
 		columns : [ [{
 			field : 'id',
 			title : '',
@@ -89,7 +89,14 @@ $(document).ready(function(){
 			field : 'userNote',
 			title : '备注',
 			align:'center',
-			width : 120
+			width : 120,
+			formatter:function(value,index){
+				if(value == 0){
+					return "";
+				}else{
+					return value;
+				}
+			} 
 		},{
 			field : 'null',
 			title:'操作',

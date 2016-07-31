@@ -76,4 +76,15 @@ public interface ITaskService {
 	  */
 	void updateBySql(String sql2);
 
+
+	
+	/**
+	  * 方法描述：
+	  * @param ddcDriver 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年7月23日 下午8:33:45
+	  */
+	void updateDdcDriver(DdcDriver ddcDriver);
+
 }

@@ -97,4 +97,15 @@ public class TaskServiceImp implements ITaskService{
 		iDdcDriverDao.updateBySql(sql2);
 	}
 
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#updateDdcDriver(com.node.model.DdcDriver)
+		 */
+	@Override
+	public void updateDdcDriver(DdcDriver ddcDriver) {
+		// TODO Auto-generated method stub
+		iDdcDriverDao.update(ddcDriver);
+	}
+
 }

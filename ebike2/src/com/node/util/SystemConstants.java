@@ -7,6 +7,10 @@
  */
 package com.node.util;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.node.model.DdcDriver;
+
 /**
  * 类描述：系統常量
  * 
@@ -149,7 +153,9 @@ public class SystemConstants {
 	public static final String USER_STATUS_2 = "星级用户";
 
 	public static void main(String[] args) {
-		String codeString = "13366665555";
-		System.out.println(codeString.substring(codeString.length() - 6));
+		DdcDriver ddcDriver = new DdcDriver();
+		ddcDriver.setUserNote(null);
+		System.out.println(StringUtils.isBlank(ddcDriver.getUserNote()));
+
 	}
 }

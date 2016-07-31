@@ -297,10 +297,10 @@ public class EbikeServiceImp implements IEbikeService {
 	 * java.lang.String)
 	 */
 	@Override
-	public boolean findDdcDriverTemp(String vcUserName, String vcUserCard) {
+	public boolean findDdcDriverTemp(String vcUserName, String vcUserCard,String vcTelPhone) {
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
-				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
-						vcUserName, vcUserCard });
+				new String[] { "vcUserName", "vcUserCard" ,"vcTelPhone"}, new Object[] {
+						vcUserName, vcUserCard,vcTelPhone });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			return false;
 		} else {
@@ -345,8 +345,8 @@ public class EbikeServiceImp implements IEbikeService {
 	public void saveDdcDriver(DdcDriver ddcDriver2) {
 
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
-				new String[] { "vcUserName", "vcUserCard" }, new Object[] {
-						ddcDriver2.getJsrxm().trim(), ddcDriver2.getSfzhm().trim() });
+				new String[] { "vcUserName", "vcUserCard" ,"vcTelPhone"}, new Object[] {
+						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm(),ddcDriver2.getLxdh() });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			if (StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg1())
 					&& StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg2())
@@ -357,6 +357,11 @@ public class EbikeServiceImp implements IEbikeService {
 				ddcDriver2.setUserCode(ddcDriver2.getLxdh());
 				ddcDriver2.setUserNote("已实名认证");
 				ddcDriver2.setUserPassword("123456");
+			}else {
+				ddcDriver2.setUserNote("有图片为空");
+				ddcDriver2.setUserStatus(0);
+				ddcDriver2.setSynFlag(null);
+				iDdcDriverDao.updateCleanBefore(ddcDriver2);
 			}
 		} else {
 			ddcDriver2.setUserStatus(0);

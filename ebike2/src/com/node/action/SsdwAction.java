@@ -456,7 +456,7 @@ public class SsdwAction {
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
 		try {
-			if (ddcHyxhSsdwclsb.getSlIndex() == 0) {
+			if (ddcHyxhSsdwclsb.getSlIndex() == 0 ||ddcHyxhSsdwclsb.getSlIndex() ==-1 ) {
 				ddcHyxhSsdwclsb.setnEnable(Integer
 						.parseInt(SystemConstants.DISENABLE_ZT));
 				DdcHyxhSsdw ddcHyxhSsdw = iApplyService

@@ -32,6 +32,7 @@ $(document).ready(function(){
 		pagination : true,
 		rownumbers : true,
 		pageSize:size,
+		pageList:[10,20,30,40,50,500,1000],
 		singleSelect : true,//只选中单行
 		height:h,
 		width:w,

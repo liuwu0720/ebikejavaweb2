@@ -17,7 +17,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.node.model.DdcDriver;
-import com.node.model.DdcHyxhSsdwclsb;
 import com.node.service.IApplyService;
 import com.node.service.IEbikeService;
 import com.node.service.ITaskService;
@@ -68,7 +67,7 @@ public class DriverInfoAutoTask {
 			
 			for (DdcDriver ddcDriver : ddcDrivers) {
 				index ++;
-				if(index == 1000){
+				if(index == 2000){
 					break;
 				}
 				iEbikeService.saveDdcDriver(ddcDriver);
@@ -89,7 +88,7 @@ public class DriverInfoAutoTask {
 				}
 				if(StringUtils.isBlank(ddcDriver.getUserNote())){
 					index ++;
-					if(index == 500){
+					if(index == 1000){
 						break;
 					}
 					iEbikeService.saveDdcDriver(ddcDriver);
@@ -99,7 +98,7 @@ public class DriverInfoAutoTask {
 		}
 	}
 	
-	@Scheduled(fixedRate=1000 *60*120)
+	@Scheduled(fixedRate=1000 *60*60)
 	public void  task3() {
 		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();// 所有未验证的司机
 		logger.warn("task3 未认证人数:"+ddcDrivers.size());
@@ -109,7 +108,7 @@ public class DriverInfoAutoTask {
 			for (DdcDriver ddcDriver : ddcDrivers) {
 				if(StringUtils.isNotBlank(ddcDriver.getUserNote())){
 					index ++;
-					if(index == 500){
+					if(index == 1000){
 						break;
 					}
 					iEbikeService.saveDdcDriver(ddcDriver);
@@ -118,7 +117,24 @@ public class DriverInfoAutoTask {
 			}
 		}
 	}
-	
+
+	@Scheduled(fixedRate=1000 *60*120)
+	public void  task4() {
+		List<DdcDriver> ddcDrivers = iTaskService.findAllDriversNotValid();// 所有未验证的司机
+		logger.warn("task3 未认证人数:"+ddcDrivers.size());
+		int index = 0;
+		if (CollectionUtils.isNotEmpty(ddcDrivers)) {
+			
+			for (DdcDriver ddcDriver : ddcDrivers) {
+				index ++;
+				if(index == 1800){
+					break;
+				}
+				ddcDriver.setUserNote(null);
+				iEbikeService.updateDdcDriver(ddcDriver);
+			}
+		}
+	}
 	
 	@Scheduled(cron = "0 15 10 * * *?")
 	public void updateDriverState6() {
@@ -138,18 +154,5 @@ public class DriverInfoAutoTask {
 		iTaskService.updateBySql(sql2);
 	}
 	
-	@Scheduled(cron = "0 15 19 * * *?")
-	public void updateClsb(){
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iEbikeService.getAllClsb();
-		int index = 0;
-		for(DdcHyxhSsdwclsb ddcHyxhSsdwclsb:ddcHyxhSsdwclsbs){
-			index ++;
-			if(index == 1000){
-				break;
-			}
-			int slIndexStatus = iApplyService.getSlStatus(ddcHyxhSsdwclsb);
-			ddcHyxhSsdwclsb.setSlIndex(slIndexStatus);
-			iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
-		}
-	}
+	
 }

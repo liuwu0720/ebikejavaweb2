@@ -68,7 +68,7 @@ function exportPage() {
 
 </head>
 
-<body style="font:12px Tahoma;margin:0px;background:#FFF;">
+<body>
 	<div class="idCard-main">
 	<!--startprint-->
 		<div class="idCard">
@@ -163,7 +163,7 @@ function exportPage() {
 		</c:if>
 		<!--endprint-->
 		
-			<div class="btndiv">
+		<div class="btndiv">
 		<button type="button" onclick="exportPage()" class="btn">打印</button>
 		<button type="button" class="btn" onclick="history.back()">返回</button>
 		</div>
