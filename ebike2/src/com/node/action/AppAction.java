@@ -346,7 +346,7 @@ public class AppAction {
 
 		}
 	}
-
+	
 	private String parseUrl(String vcPicPath) {
 		if (StringUtils.isNotBlank(vcPicPath)) {
 			PicPath picPath = iCompanyService

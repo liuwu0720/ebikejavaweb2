@@ -86,4 +86,18 @@ public class DateStrUtil {
 		Date afDate = afterTime.getTime();
 		return afDate;
 	}
+
+	
+	/**
+	  * 方法描述：
+	  * @param date
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年8月2日 上午11:16:26
+	  */
+	public static String toStringTimeStamp(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		return sdf.format(date);
+	}
 }

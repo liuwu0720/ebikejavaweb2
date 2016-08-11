@@ -77,7 +77,7 @@ $(document).ready(function(){
 			align:'center',
 			width : 120,
 			formatter:function(value,index){
-				if(value == 2){
+				if(value >= 2){
 					return "星级认证";
 				}else if(value == 1){
 					return "已实名认证";
@@ -287,6 +287,7 @@ function CheckFileSize(obj){
 					<option value="0">未认证</option>
 					<option value="1">实名认证</option>
 					<option value="2">星级认证</option>
+					<option value="3">考试通过</option>
 				</select>
 				 <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>

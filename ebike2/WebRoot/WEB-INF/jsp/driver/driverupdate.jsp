@@ -165,7 +165,7 @@
 				</tr>
 				<tr>
 					<td colspan="8" height="35" style="text-align:center;"><input
-						type="button" value="修改 " class="btn" id="bgbtn"
+						type="button" value="保存 " class="btn" id="bgbtn"
 						onclick="updateSaveData();">&nbsp;&nbsp;&nbsp;&nbsp; <input
 						type="button" value=" 返 回 " class="btn"
 						onclick="javascript:window.history.back();"></td>

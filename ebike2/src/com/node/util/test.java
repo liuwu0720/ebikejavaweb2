@@ -9,15 +9,15 @@ import java.util.TreeMap;
 
 public class test {
 	// ����API��ַ
-	protected static String testUrl = "http://qimen.6x86.net:10537/restxin/index.aspx";
+	protected static String testUrl = "http://vip95.edb05.com/rest/index.aspx";
 	// �����appkey
-	public static final String appkey = "c184567b";
+	public static final String appkey = "db0eeac5";
 	// �����secret
-	public static final String secret = "90353b57f17a4bf6a11263f0545ddbdc";
+	public static final String secret = "ac0372f94e96435bb8cdec95fdb5fd26";
 	// �����token
-	public static final String token = "e6513e432b724720ae6b6ab4155e6ccb";
+	public static final String token = "1bf6e95f37294209bf77ac0ac0c4b6ee";
 	// ���ʺ�
-	public static final String dbhost = "edb_a99999";
+	public static final String dbhost = "edb_a80711";
 	// ���ظ�ʽ
 	public static final String format = "json";
 
@@ -52,7 +52,7 @@ public class test {
 		apiparamsMap.put("dbhost", dbhost);// 添加请求参数——主帐号
 
 		apiparamsMap.put("page_no", "1");// 分页
-		apiparamsMap.put("page_size", "10");// 页数量
+		apiparamsMap.put("page_size", "1000");// 页数量
 		apiparamsMap.put("sort_no", "晨");
 		// 获取数字签名
 		String sign = Util.md5Signature(apiparamsMap, appkey);

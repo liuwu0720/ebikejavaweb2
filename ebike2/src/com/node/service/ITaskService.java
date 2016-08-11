@@ -73,8 +73,9 @@ public interface ITaskService {
 	  * @version: 1.0
 	  * @author: liuwu
 	  * @version: 2016年7月12日 上午8:38:35
+	 * @return 
 	  */
-	void updateBySql(String sql2);
+	int updateBySql(String sql2);
 
 
 	
@@ -86,5 +87,19 @@ public interface ITaskService {
 	  * @version: 2016年7月23日 下午8:33:45
 	  */
 	void updateDdcDriver(DdcDriver ddcDriver);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年8月8日 上午10:04:41
+	  */
+	List<DdcDriver> findAllStartDrivers();
+
+
+
 
 }

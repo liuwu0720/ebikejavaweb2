@@ -55,7 +55,6 @@ function exportPage() {
     <!--startprint-->
     	<h2>备案车辆详情</h2>
     	<table id="main" class="table table-condensed"  border="1" cellpadding="0" cellspacing="0" width="98%">
-    		
 				<tr>
 					<th>所属单位</th>
 					<td>${ddcDaxxb.ssdwName }</td>					
@@ -244,6 +243,34 @@ function exportPage() {
 		<button type="button" onclick="exportPage()" class="btn">打印</button>
 		<button type="button" class="btn" onclick="history.back()">返回</button>
 		</div>
+		<!-- 违法信息 -->
+		<c:if test="${trafficMsgs!=null }">
+		<table class="table table-condensed">
+				<caption style="text-align: center">答题详情</caption>
+				<tr>
+					<td>缴款编号</td>
+					<td>车辆所有人</td>
+					<td>车牌号</td>
+					<td>违法日期</td>
+					<td>违法地点</td>
+					<td>违法行为</td>
+					<td>罚款金额</td>
+					<td>罚分</td>
+				</tr>
+				<c:forEach items="${trafficMsgs }" var="traffic">
+					<tr>
+						<td>${traffic.billNo }</td>
+						<td>${traffic.carOwner }</td>
+						<td>${traffic.licensePlateNo }</td>
+						<td>${traffic.illegalTime }</td>
+						<td>${traffic.illegalAddr }</td>
+						<td>${traffic.illegalDesc }</td>
+						<td>${traffic.punishAmt }</td>
+						<td>${traffic.punishScore }</td>
+					</tr>
+				</c:forEach>
+			</table>
+			</c:if>
     </div>		
   </body>
 </html>

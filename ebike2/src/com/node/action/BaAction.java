@@ -105,7 +105,7 @@ public class BaAction {
 	@ResponseBody
 	public Map<String, Object> queryBaList(HttpServletRequest request,
 			String djh, String dtStart, String dtend, String xsqy, String zt,
-			String jsrxm1, HttpServletResponse response) {
+			String jsrxm1, HttpServletResponse response,String lsh) {
 		Page page = ServiceUtil.getcurrPage(request);
 		DdcHyxhSsdw ddcHyxhSsdw = (DdcHyxhSsdw) request.getSession()
 				.getAttribute(SystemConstants.SESSION_USER);
@@ -135,6 +135,9 @@ public class BaAction {
 		}
 		if (StringUtils.isNotBlank(jsrxm1)) {
 			sql += " and s.jsrxm1 like '%" + jsrxm1 + "%'";
+		}
+		if(StringUtils.isNotBlank(lsh)){
+			sql+=" and s.lsh  like '"+lsh+"'";
 		}
 
 		sql += " order by s.id desc";

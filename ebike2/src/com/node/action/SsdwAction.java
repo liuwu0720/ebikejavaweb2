@@ -172,7 +172,7 @@ public class SsdwAction {
 		 */
 		String message = iApplyService.findHmd(ddcHyxhSsdwclsb.getJsrxm1(),
 				ddcHyxhSsdwclsb.getJsrxm2());
-		if(ddcHyxhSsdwclsb.getId()==null){
+		if (ddcHyxhSsdwclsb.getId() == null) {
 			message = iApplyService.findSameDjh(ddcHyxhSsdwclsb.getDjh());
 		}
 		if (!message.equals("success")) {
@@ -184,8 +184,7 @@ public class SsdwAction {
 		 * (!message.equals("success")) { AjaxUtil.rendJson(response, false,
 		 * message); return; }
 		 */
-		
-		
+
 		/**
 		 * 新增时检查单位配额
 		 */
@@ -283,7 +282,8 @@ public class SsdwAction {
 			}
 			String vcUser1WorkImg_path = uploadImg(request, vcUser1WorkImgfile,
 					SystemConstants.IMG_INVOICE_WIDTH,
-					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人1 在职证明或居住证
+					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人1
+																	// 在职证明或居住证
 			if (StringUtils.isNotBlank(vcUser1WorkImg_path)) {
 				ddcHyxhSsdwclsb.setVcUser1WorkImg(vcUser1WorkImg_path);
 			} else {
@@ -292,7 +292,8 @@ public class SsdwAction {
 			}
 			String vcUser2WorkImg_path = uploadImg(request, vcUser2WorkImgfile,
 					SystemConstants.IMG_INVOICE_WIDTH,
-					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人2 在职证明或居住证
+					SystemConstants.IMG_INVOICE_HEIGHT, imgPath);// 驾驶人2
+																	// 在职证明或居住证
 			if (StringUtils.isNotBlank(vcUser2WorkImg_path)) {
 				ddcHyxhSsdwclsb.setVcUser2WorkImg(vcUser2WorkImg_path);
 			} else {
@@ -357,19 +358,18 @@ public class SsdwAction {
 	private String uploadImg(HttpServletRequest request,
 			MultipartFile headimg_jsr1, int imgHeadWith, int imgHeadHeight,
 			PicPath imgPath) {
-		if(!headimg_jsr1.isEmpty()){
+		if (!headimg_jsr1.isEmpty()) {
 			SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
 			String ebike_jpgPath = generateFileName(headimg_jsr1
 					.getOriginalFilename());
 			ImgUploadThread iThread = new ImgUploadThread(headimg_jsr1,
-					imgHeadWith, imgHeadHeight, imgPath,
-					ebike_jpgPath);
+					imgHeadWith, imgHeadHeight, imgPath, ebike_jpgPath);
 			iThread.run();
 			return format.format(new Date()) + "/" + ebike_jpgPath;
-		}else {
+		} else {
 			return null;
 		}
-		
+
 	}
 
 	/**
@@ -418,8 +418,6 @@ public class SsdwAction {
 		iEbikeService.saveDdcDriver(ddcDriver1);
 	}
 
-	
-
 	/**
 	 * 方法描述：
 	 * 
@@ -456,7 +454,8 @@ public class SsdwAction {
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
 		try {
-			if (ddcHyxhSsdwclsb.getSlIndex() == 0 ||ddcHyxhSsdwclsb.getSlIndex() ==-1 ) {
+			if (ddcHyxhSsdwclsb.getSlIndex() == 0
+					|| ddcHyxhSsdwclsb.getSlIndex() == -1) {
 				ddcHyxhSsdwclsb.setnEnable(Integer
 						.parseInt(SystemConstants.DISENABLE_ZT));
 				DdcHyxhSsdw ddcHyxhSsdw = iApplyService
@@ -494,87 +493,92 @@ public class SsdwAction {
 		long dId = Long.parseLong(id);
 		DdcHyxhSsdwclsb ddcHyxhSsdwclsb = iApplyService
 				.getDdcHyxhSsdwclsbById(dId);
-		
+		if (ddcHyxhSsdwclsb.getSlIndex() == 1) {
+			AjaxUtil.rendJson(response, false, "已经审批过了，请刷新重试！");
+		} else {
+			if (state.equals("1")) {
 
-		if (state.equals("1")) {
-			
-			// 如果行业协会拒绝，则审批流程结束，不提交至内网审批,且申请单位的配额回收
-			ddcHyxhSsdwclsb.setSlr(ddcHyxhBase.getHyxhmc());
-			ddcHyxhSsdwclsb.setSlyj(SystemConstants.NOTAGREE);
-			ddcHyxhSsdwclsb.setSlbz(note);
-			ddcHyxhSsdwclsb.setSlrq(new Date());
-			ddcHyxhSsdwclsb.setSlIndex(0);
-			if (StringUtils.isNotBlank(tbyy)) {
-				ddcHyxhSsdwclsb.setTbyy(tbyy);
-			}
-			/*DdcHyxhSsdw ddcHyxhSsdw = iApplyService
-					.getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
-			ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);*/
+				// 如果行业协会拒绝，则审批流程结束，不提交至内网审批,且申请单位的配额回收
+				ddcHyxhSsdwclsb.setSlr(ddcHyxhBase.getHyxhmc());
+				ddcHyxhSsdwclsb.setSlyj(SystemConstants.NOTAGREE);
+				ddcHyxhSsdwclsb.setSlbz(note);
+				ddcHyxhSsdwclsb.setSlrq(new Date());
+				ddcHyxhSsdwclsb.setSlIndex(0);
+				if (StringUtils.isNotBlank(tbyy)) {
+					ddcHyxhSsdwclsb.setTbyy(tbyy);
+				}
+				/*
+				 * DdcHyxhSsdw ddcHyxhSsdw = iApplyService
+				 * .getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
+				 * ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
+				 */
 
-			// 审批人
-			DdcApproveUser ddcApproveUser = new DdcApproveUser();
-			String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
-			Object object = iApplyService.getDateBySQL(sql);
-			String seq = object.toString();
-			String md = new SimpleDateFormat("yyMMdd").format(new Date());
-			String approveNo = "W" + md + seq;// 生成审批号
-			ddcApproveUser.setApproveNo(approveNo);
-			ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
-			ddcApproveUser.setUserRoleName("行业协会");
-			ddcApproveUser.setApproveIndex(1);
-			ddcApproveUser.setApproveNote(note);
-			ddcApproveUser.setApproveState(Integer.parseInt(state));
-			ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
-			ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
-			ddcApproveUser.setApproveTime(new Date());
-			ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
-			try {
-				//iCompanyService.update(ddcHyxhSsdw);
-				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
-				iApplyService.saveDdcApproveUser(ddcApproveUser);
-				AjaxUtil.rendJson(response, true, "审批成功!");
-			} catch (Exception e) {
-				e.printStackTrace();
-				AjaxUtil.rendJson(response, false, "审批失败!系统错误");
-			}
-		} else if (state.equals("0")) {
-			String message = iApplyService.findIsValid(ddcHyxhSsdwclsb);// 是否通过支付宝验证
-			if (!message.equals("success")) {
-				AjaxUtil.rendJson(response, false, message);
-				return;
-			}
-			// 同意，审批顺序改变,同步至内网
-			ddcHyxhSsdwclsb.setSlIndex(1);
-			ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
-			ddcHyxhSsdwclsb.setTranDate(new Date());
-			// 审批人
-			DdcApproveUser ddcApproveUser = new DdcApproveUser();
-			String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
-			Object object = iApplyService.getDateBySQL(sql);
-			String seq = object.toString();
-			String md = new SimpleDateFormat("yyMMdd").format(new Date());
-			String approveNo = "W" + md + seq;// 生成审批号
-			ddcApproveUser.setApproveNo(approveNo);
-			ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
-			ddcApproveUser.setUserRoleName("行业协会");
-			ddcApproveUser.setApproveIndex(1);
-			ddcApproveUser.setApproveNote(note);
-			ddcApproveUser.setApproveState(Integer.parseInt(state));
-			ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
-			ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
-			ddcApproveUser.setApproveTime(new Date());
-			ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
-			ddcApproveUser.setTranDate(new Date());
-			ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
-			try {
-				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
-				iApplyService.saveDdcApproveUser(ddcApproveUser);
-				AjaxUtil.rendJson(response, true, "审批成功!");
-			} catch (Exception e) {
-				e.printStackTrace();
-				AjaxUtil.rendJson(response, false, "审批失败!系统错误");
+				// 审批人
+				DdcApproveUser ddcApproveUser = new DdcApproveUser();
+				String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
+				Object object = iApplyService.getDateBySQL(sql);
+				String seq = object.toString();
+				String md = new SimpleDateFormat("yyMMdd").format(new Date());
+				String approveNo = "W" + md + seq;// 生成审批号
+				ddcApproveUser.setApproveNo(approveNo);
+				ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
+				ddcApproveUser.setUserRoleName("行业协会");
+				ddcApproveUser.setApproveIndex(1);
+				ddcApproveUser.setApproveNote(note);
+				ddcApproveUser.setApproveState(Integer.parseInt(state));
+				ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
+				ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
+				ddcApproveUser.setApproveTime(new Date());
+				ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
+				try {
+					// iCompanyService.update(ddcHyxhSsdw);
+					iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
+					iApplyService.saveDdcApproveUser(ddcApproveUser);
+					AjaxUtil.rendJson(response, true, "审批成功!");
+				} catch (Exception e) {
+					e.printStackTrace();
+					AjaxUtil.rendJson(response, false, "审批失败!系统错误");
+				}
+			} else if (state.equals("0")) {
+				String message = iApplyService.findIsValid(ddcHyxhSsdwclsb);// 是否通过支付宝验证
+				if (!message.equals("success")) {
+					AjaxUtil.rendJson(response, false, message);
+					return;
+				}
+				// 同意，审批顺序改变,同步至内网
+				ddcHyxhSsdwclsb.setSlIndex(1);
+				ddcHyxhSsdwclsb.setSynFlag(SystemConstants.SYSNFLAG_ADD);
+				ddcHyxhSsdwclsb.setTranDate(new Date());
+				// 审批人
+				DdcApproveUser ddcApproveUser = new DdcApproveUser();
+				String sql = "select SEQ_DDC_APPROVE_USER.nextval from dual";
+				Object object = iApplyService.getDateBySQL(sql);
+				String seq = object.toString();
+				String md = new SimpleDateFormat("yyMMdd").format(new Date());
+				String approveNo = "W" + md + seq;// 生成审批号
+				ddcApproveUser.setApproveNo(approveNo);
+				ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
+				ddcApproveUser.setUserRoleName("行业协会");
+				ddcApproveUser.setApproveIndex(1);
+				ddcApproveUser.setApproveNote(note);
+				ddcApproveUser.setApproveState(Integer.parseInt(state));
+				ddcApproveUser.setApproveTable(SystemConstants.RECORDSBTABLE);
+				ddcApproveUser.setApproveTableid(ddcHyxhSsdwclsb.getId());
+				ddcApproveUser.setApproveTime(new Date());
+				ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+				ddcApproveUser.setTranDate(new Date());
+				ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
+				try {
+					iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
+					iApplyService.saveDdcApproveUser(ddcApproveUser);
+					AjaxUtil.rendJson(response, true, "审批成功!");
+				} catch (Exception e) {
+					e.printStackTrace();
+					AjaxUtil.rendJson(response, false, "审批失败!系统错误");
+				}
 			}
 		}
+
 	}
 
 	/**

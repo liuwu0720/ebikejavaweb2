@@ -157,10 +157,10 @@ function CheckFileSize(obj){
 				</tr>
 				<tr>
 					<th>驾驶人姓名1</th>
-					<td><input id="sfzmhm1" name="sfzmhm1" value="${ddcHyxhSsdwclsb.jsrxm1 }"/> </td>
+					<td><input id="sfzmhm1" name="sfzmhm1" value="${ddcHyxhSsdwclsb.sfzmhm1 }"/> </td>
 
 					<th>驾驶人姓名2</th>
-					<td><input id="sfzmhm2" name="sfzmhm2"   value="${ddcHyxhSsdwclsb.jsrxm2 }"/> </td>
+					<td><input id="sfzmhm2" name="sfzmhm2"   value="${ddcHyxhSsdwclsb.sfzmhm2 }"/> </td>
 					<td></td>
 					<td></td>
 					<td></td>

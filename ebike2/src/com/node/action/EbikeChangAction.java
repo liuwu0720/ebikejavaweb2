@@ -10,6 +10,7 @@ package com.node.action;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +36,7 @@ import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcSjzd;
 import com.node.model.PicPath;
+import com.node.obj.TrafficMsg;
 import com.node.service.IApplyService;
 import com.node.service.ICompanyService;
 import com.node.service.IEbikeService;
@@ -42,6 +44,7 @@ import com.node.util.AjaxUtil;
 import com.node.util.Page;
 import com.node.util.ServiceUtil;
 import com.node.util.SystemConstants;
+import com.node.util.TrafficMsgQueryUtil;
 
 /**
  * 类描述：电动车变更审批
@@ -140,9 +143,10 @@ public class EbikeChangAction {
 	 * @version: 1.0
 	 * @author: liuwu
 	 * @version: 2016年4月7日 上午9:47:39
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping("/queryDetailById")
-	public String queryDetailById(String id, HttpServletRequest request) {
+	public String queryDetailById(String id, HttpServletRequest request) throws UnsupportedEncodingException {
 		long sbId = Long.parseLong(id);
 		DdcDaxxb ddcDaxxb = iEbikeService.getById(sbId);
 		String cysyName = iApplyService.findByProPerties("CSYS",
@@ -207,6 +211,10 @@ public class EbikeChangAction {
 		ddcDaxxb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
 		ddcDaxxb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
 		ddcDaxxb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
+		TrafficMsgQueryUtil trafficMsgQueryUtil = new TrafficMsgQueryUtil();
+		//String result = new String(ddcDaxxb.getCphm().getBytes("ISO-8859-1"), "utf-8");
+		List<TrafficMsg> trafficMsgs2 =trafficMsgQueryUtil.postHttp(ddcDaxxb.getCphm());
+		request.setAttribute("trafficMsgs", trafficMsgs2);
 		request.setAttribute("ddcDaxxb", ddcDaxxb);
 		request.setAttribute("selectSlzls", selectSlzls);
 		return "ebike/ebikeDaInfo";

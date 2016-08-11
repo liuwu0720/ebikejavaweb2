@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -35,6 +36,7 @@ import com.node.model.DdcDriver;
 import com.node.model.DdcHyxhBase;
 import com.node.model.DdcHyxhSsdw;
 import com.node.model.PicPath;
+import com.node.obj.ScoreResult;
 import com.node.service.ICompanyService;
 import com.node.service.IDriverSerivce;
 import com.node.service.IEbikeService;
@@ -43,6 +45,7 @@ import com.node.util.HqlHelper;
 import com.node.util.ImgUploadThread;
 import com.node.util.Page;
 import com.node.util.ScaleImage;
+import com.node.util.ScoreQueryUtil;
 import com.node.util.ServiceUtil;
 import com.node.util.SystemConstants;
 
@@ -93,8 +96,14 @@ public class DriverAction {
 			hql.addLike("jsrxm", jsrxm);
 		}
 		if (userStatus != null) {
-			hql.addEqual("userStatus", userStatus);
+			if(userStatus == SystemConstants.INT_USER_STATUS_2){
+				hql.addGreatThan("userStatus",  SystemConstants.INT_USER_STATUS_1);
+			}else {
+				hql.addEqual("userStatus", userStatus);
+			}
 		}
+		
+		
 		hql.addOrderBy("id", "desc");
 		hql.setQueryPage(p);
 		Map<String, Object> resultMap = iDriverSerivce.queryByHql(hql);
@@ -257,6 +266,8 @@ public class DriverAction {
 		ddcDriver
 				.setVcUserCardImg2Show(parseUrl(ddcDriver.getVcUserCardImg2()));
 		ddcDriver.setVcUserWorkImgShow(parseUrl(ddcDriver.getVcUserWorkImg()));
+		List<ScoreResult> scoreResultes = ScoreQueryUtil.scoreResults(ddcDriver.getSfzhm(), ddcDriver.getLxdh());
+		request.setAttribute("scoreResultes", scoreResultes);
 		request.setAttribute("ddcDriver", ddcDriver);
 		return "driver/driverinfo";
 	}

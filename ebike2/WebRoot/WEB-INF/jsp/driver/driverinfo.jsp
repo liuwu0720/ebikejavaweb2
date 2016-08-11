@@ -21,9 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <div class="maindiv">
-
-
-
 		<h2>司机档案详情</h2>
 		<!--startprint-->
 		<table id="main" class="table table-condensed" border="1"
@@ -65,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<c:if test="${ddcDriver.userStatus==1 }">
 					已实名认证
 				</c:if>	
-				<c:if test="${ddcDriver.userStatus==2 }">
+				<c:if test="${ddcDriver.userStatus>=2 }">
 					已星级认证
 				</c:if>	
 				</td>
@@ -114,6 +111,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</td>
 			</tr>
 		</table>
+		
+		<div id="audittable">
+			<table class="table table-condensed">
+				<caption style="text-align: center">答题详情</caption>
+				<tr>
+					<td>答对题数</td>
+					<td>答题批次</td>
+					<td>答题结果</td>
+					<td>答题日期</td>
+				</tr>
+				<c:forEach items="${scoreResultes }" var="score">
+					<tr>
+						<td>${score.ddts }</td>
+						<td>${score.dtpc }</td>
+						<td>${score.dtjg }</td>
+						<td>${score.dtrq }</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+		
 		<div class="btndiv">
 		<button type="button" class="btn" onclick="window.close()">关闭</button>
 		</div>

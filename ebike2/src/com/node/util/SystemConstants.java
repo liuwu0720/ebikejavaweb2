@@ -7,9 +7,6 @@
  */
 package com.node.util;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.node.model.DdcDriver;
 
 /**
  * 类描述：系統常量
@@ -151,11 +148,33 @@ public class SystemConstants {
 	public static final String USER_STATUS_0 = "未认证";
 	public static final String USER_STATUS_1 = "已实名认证";
 	public static final String USER_STATUS_2 = "星级用户";
-
-	public static void main(String[] args) {
-		DdcDriver ddcDriver = new DdcDriver();
-		ddcDriver.setUserNote(null);
-		System.out.println(StringUtils.isBlank(ddcDriver.getUserNote()));
-
-	}
+	public static final String USER_STATUS_3 = "星级考试合格";
+	
+	public static final Integer INT_USER_STATUS_0=0;
+	public static final Integer INT_USER_STATUS_1=1;
+	public static final Integer INT_USER_STATUS_2=2;
+	public static final Integer INT_USER_STATUS_3=3;
+	
+	/**
+	 * 考试结果查询接口密钥等
+	 */
+	public static final String SERVICE_KEY="mMnwKKRPrAPLrG5sY01DDGmt";
+	public static final String SERVICE_URL = "http://app.stc.gov.cn:9080/xxfbpt/services/xxfbptservice";//正式端口9080  测试端口9082
+	public static final String SERVICE_REQUEST_IP ="192.168.2.197";//正式192.168.2.197
+	public static final String SERVICE_YWLY="D";
+	public static final String SERVICE_YWLX="BA";
+	public static final String SERVICE_JK_ID="DDC1003";
+	public static final String SERVICE_USER_ID="dzcgs";
+	public static final String SERVICE_USER_PWD="343667632@qq";
+	public static final String SERVICE_JK_NAME="xxptSchuding";
+	public static final String SERVICE_FHZ1="1";
+	public static final String SERVICE_FHZ0="0";
+	/**
+	 * 违法查询接口参数
+	 */
+	public static final String ILLEGAL_URL="http://120.197.101.170:9181/ysth-traffic-front/partnerService/trafficIllegalQuerySync.do";
+	public static final String ILLEGAL_KEY="1234567890123456";
+	public static final String ILLEGAL_CODE="P008";
+	public static final String ILLEGAL_USER_ID="感识";
+	
 }

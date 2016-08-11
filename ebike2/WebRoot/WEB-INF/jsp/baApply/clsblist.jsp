@@ -197,7 +197,8 @@ function doSearch(){
 		dtStart:$('#dd').datebox('getValue'),
 		dtend:$('#dtend').datebox('getValue'),
 		xsqy:$("#xsqy1").combobox('getValue'),
-		jsrxm1:$("#jsrxm1").val()
+		jsrxm1:$("#jsrxm1").val(),
+		lsh:$("#lsh").val()
 	}); 
 }
 
@@ -449,6 +450,8 @@ function excelExport(){
 				<input id="xsqy1" style="height:30px;" >
 				<span>驾驶人1</span>	
 				<input id="jsrxm1" style="height:30px;" >
+				<span>流水号</span>	
+				<input id="lsh" style="height:30px;" >
 				 <a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 				<div class="searchspan">	

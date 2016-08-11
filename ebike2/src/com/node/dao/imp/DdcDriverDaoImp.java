@@ -31,11 +31,11 @@ public class DdcDriverDaoImp extends GenericHibernateDao<DdcDriver, Long>
 		 * @see com.node.dao.IDdcDriverDao#updateBySql(java.lang.String)
 		 */
 	@Override
-	public void updateBySql(String sql2) {
+	public int updateBySql(String sql2) {
 		// TODO Auto-generated method stub
 		  int row=	jdbcTemplate.update(sql2);
 		  System.out.println("row="+row);
-		
+		 return row;
 	}
 
 }

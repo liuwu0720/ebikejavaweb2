@@ -92,9 +92,10 @@ public class TaskServiceImp implements ITaskService{
 		 * @see com.node.service.ITaskService#updateBySql(java.lang.String)
 		 */
 	@Override
-	public void updateBySql(String sql2) {
+	public int updateBySql(String sql2) {
 		// TODO Auto-generated method stub
-		iDdcDriverDao.updateBySql(sql2);
+	   int row=	iDdcDriverDao.updateBySql(sql2);
+	   return row;
 	}
 
 
@@ -107,5 +108,25 @@ public class TaskServiceImp implements ITaskService{
 		// TODO Auto-generated method stub
 		iDdcDriverDao.update(ddcDriver);
 	}
+
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#findAllStartDrivers()
+		 */
+	@Override
+	public List<DdcDriver> findAllStartDrivers() {
+		List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("userStatus", 2);
+		//List<DdcDriver> ddcDrivers2 = iDdcDriverDao.findByProperty("userStatus", 3);
+		//List<DdcDriver> ddcDrivers3 = new ArrayList<DdcDriver>();
+		//ddcDrivers3.addAll(ddcDrivers);
+		//ddcDrivers3.addAll(ddcDrivers2);
+		return ddcDrivers;
+	}
+
+
+	
+
+
 
 }
