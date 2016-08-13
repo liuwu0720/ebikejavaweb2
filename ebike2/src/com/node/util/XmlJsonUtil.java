@@ -47,9 +47,9 @@ public class XmlJsonUtil {
 		}else if(JSON.parseObject(bodyString).containsKey("examresultlist")){
 			String examresultlist = JSON.parseObject(bodyString).getString("examresultlist");
 			// {"pxhgsj":"2016-07-18","pxjg":"合格"}
-			System.out.println("examresultlist = "+examresultlist);
-			String result= JSON.parseObject(examresultlist).getString("pxjg");
-			resultMap.put(fhzString, result);
+			//System.out.println("examresultlist = "+examresultlist);
+			//String result= JSON.parseObject(examresultlist).getString("pxjg");
+			resultMap.put(fhzString, examresultlist);
 		}else{
 			return null;
 		}

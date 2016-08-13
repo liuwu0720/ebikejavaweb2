@@ -126,7 +126,8 @@ function doSearch(){
 		djh: $('#djh').val(),
 		cphm:$("#cphm").val(),
 		dtstart:$('#dtstart').datebox('getValue'),// 获取日期输入框的值
-		dtend:$('#dtend').datebox('getValue')
+		dtend:$('#dtend').datebox('getValue'),
+		lsh:$("#lsh").val()
 	}); 
 }
 
@@ -159,7 +160,8 @@ function queryRow(id){
 					class="easyui-validatebox" type="text" > 
 				<span>电机号:</span> <input id="djh" 
 					class="easyui-validatebox" type="text" >	
-				
+				<span>流水号:</span> <input id="lsh" 
+					class="easyui-validatebox" type="text" >
 				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
 					iconCls="icon-search">查询 </a>
 			</div>

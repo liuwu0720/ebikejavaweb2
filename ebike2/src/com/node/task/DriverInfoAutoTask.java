@@ -77,16 +77,11 @@ public class DriverInfoAutoTask {
 
 	
 
-	@Scheduled(cron = "0 15 10 * * *?")
-	public void updateDriverState6() {
-		String sql2 = " update  DDC_DRIVER t set t.user_status=0  where  t.user_status is null";
-		iTaskService.updateBySql(sql2);
-	}
-
 	@Scheduled(cron = "0 15 16 * * *?")
 	public void updateDriverState4() {
 		String sql2 = " update DDC_DRIVER t set t.syn_flag='ADD' where t.USER_STATUS=1 ";
-		iTaskService.updateBySql(sql2);
+		int row = iTaskService.updateBySql(sql2);
+		logger.warn("updateDriverState4修改条数："+row);
 	}
 
 	@Scheduled(cron = "0 15 20 * * *?")
@@ -96,9 +91,16 @@ public class DriverInfoAutoTask {
 	}
 	@Scheduled(cron = "0 15 21 * * *?")
 	public void updateDriverState7() {
-		String sql2 = " update  DDC_DRIVER t set t.user_status=1 where t.xj_rq  is null and t.user_status=2";
+		String sql2 = " update  DDC_DRIVER t set t.user_status=1,t.syn_flag='ADD' where t.xj_rq  is null and t.user_status=2";
 		int row= iTaskService.updateBySql(sql2);
 		logger.warn("updateDriverState7修改条数："+row);
+	}
+	
+	@Scheduled(cron = "0 15 23 * * *?")
+	public void updateDriverState8() {
+		String sql2 = "update  DDC_DRIVER t set t.USER_NOTE=null,t.syn_flag='ADD' where t.USER_NOTE like '找不到%'";
+		int row= iTaskService.updateBySql(sql2);
+		logger.warn("updateDriverState8修改条数："+row);
 	}
 
 	/**

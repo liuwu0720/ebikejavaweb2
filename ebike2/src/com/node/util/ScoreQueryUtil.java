@@ -81,7 +81,7 @@ public class ScoreQueryUtil {
 			return json;
 			
 		} catch (Exception e) {
-			logger.warn("接口调用失败："+e.getMessage());
+			logger.warn("接口调用失败："+e.getMessage()+",司机信息:"+sfzhm+"------"+sjh);
 			e.printStackTrace();
 		}
 		return null;

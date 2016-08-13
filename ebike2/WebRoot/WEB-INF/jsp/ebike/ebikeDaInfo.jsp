@@ -265,7 +265,7 @@ function exportPage() {
 						<td>${traffic.illegalTime }</td>
 						<td>${traffic.illegalAddr }</td>
 						<td>${traffic.illegalDesc }</td>
-						<td>${traffic.punishAmt }</td>
+						<td>${traffic.punishAmt/100 }</td>
 						<td>${traffic.punishScore }</td>
 					</tr>
 				</c:forEach>

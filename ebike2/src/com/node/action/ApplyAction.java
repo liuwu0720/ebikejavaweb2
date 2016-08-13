@@ -623,7 +623,6 @@ public class ApplyAction {
 							.format(new Date());
 					String approveNo = "W" + md + seq;// 生成审批号
 					ddcApproveUser.setSysFlag(SystemConstants.SYSNFLAG_ADD);
-					ddcApproveUser.setTranDate(new Date());
 					ddcApproveUser.setApproveNo(approveNo);
 					ddcApproveUser.setApproveIndex(1);
 					ddcApproveUser
@@ -633,6 +632,8 @@ public class ApplyAction {
 					ddcApproveUser.setApproveTime(new Date());
 					ddcApproveUser.setUserName(ddcHyxhBase.getHyxhmc());
 					ddcApproveUser.setUserRoleName("行业协会");
+					ddcApproveUser.setLsh(ddcHyxhSsdwclsb.getLsh());
+					ddcApproveUser.setApproveTime(new Date());
 					iApplyService.saveDdcApproveUser(ddcApproveUser);
 				}
 

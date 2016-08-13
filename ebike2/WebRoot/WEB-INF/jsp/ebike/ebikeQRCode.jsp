@@ -90,7 +90,11 @@ function exportPage() {
 						<c:if test="${ddcDaxxb.xb1 == 1}">
 							<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<span>女</span></li>
 						</c:if>
-						<li>所属单位:<span>${ddcDaxxb.ssdwName }</span></li>
+						<li>
+						所属单位:
+						<span>
+							${ddcDaxxb.ssdwName }
+						</span></li>
 						<li>所属协会:<span>${ddcDaxxb.hyxhzhName }</span></li>
 					</ul>
 				</div>

@@ -613,7 +613,7 @@ public class SsdwAction {
 	@RequestMapping("/queryFlowList")
 	@ResponseBody
 	public Map<String, Object> queryFlowList(HttpServletRequest request,
-			String dabh, String ssdw, String ywlx, String djh, String cphm,
+			String dabh, String ssdw, String ywlx, String djh, String cphm,String lsh,
 			String dtstart, String dtend) {
 		Page p = ServiceUtil.getcurrPage(request);
 		Object object = request.getSession().getAttribute(
@@ -660,6 +660,9 @@ public class SsdwAction {
 		}
 		if (StringUtils.isNotBlank(dabh)) {
 			sql += " and a.dabh = '" + dabh + "'";
+		}
+		if(StringUtils.isNotBlank(lsh)){
+			sql +=" and a.lsh = '"+lsh+"'";
 		}
 
 		sql += " order by a.id desc";

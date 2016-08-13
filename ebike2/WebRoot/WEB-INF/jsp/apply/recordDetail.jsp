@@ -219,7 +219,7 @@
 			</tr>
 			<tr>
 				<th>驾驶人姓名2</th>
-				<td>${ddcHyxhSsdwclsb.jsrxm2 }(${ddcHyxhSsdwclsb.vcJsr2State })</td>
+				<td>${ddcHyxhSsdwclsb.jsrxm2 }<c:if test="${ddcHyxhSsdwclsb.jsrxm2!=null }">(${ddcHyxhSsdwclsb.vcJsr2State })</c:if></td>
 				<th>身份证号码2</th>
 				<td>${ddcHyxhSsdwclsb.sfzmhm2 }</td>
 				<th>驾驶人2性别</th>
@@ -419,7 +419,7 @@
 				<c:if test="${type == 2 }">
 					<button type="button" class="btn" onclick="exportPage()">打印</button>
 				</c:if>
-				<button type="button" class="btn" onclick="history.back()">返回</button>
+				<button type="button" class="btn" onclick="window.close()">关闭</button>
 			</div>
 		</div>
 	</div>
