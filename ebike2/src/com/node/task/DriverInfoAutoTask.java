@@ -136,6 +136,9 @@ public class DriverInfoAutoTask {
 		for(DdcHyxhSsdw ddcHyxhSsdw:ddcHyxhSsdws){
 			String sql="select count(1) as count from DDC_HYXH_SSDWCLSB t where t.ssdwid="+ddcHyxhSsdw.getId()+" and t.ENABLE=1";
 			int usePe= iTaskService.getObjectBySql(sql); //已使用掉的配额
+			if(usePe!=ddcHyxhSsdw.getTotalPe()-ddcHyxhSsdw.getDwpe()){
+				logger.warn("单位【"+ddcHyxhSsdw.getDwmc()+"】配额异常!");
+			}
 			ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe()-usePe);
 			iEbikeService.updateDdcHyxhSsdw(ddcHyxhSsdw);
 		}
@@ -146,6 +149,9 @@ public class DriverInfoAutoTask {
 		for(DdcHyxhBase ddcHyxhBase:ddcHyxhBases){
 			String sql2="select sum(d.totalpe) as total from ddc_hyxh_ssdw d where d.hyxhzh='"+ddcHyxhBase.getHyxhzh()+"'";
 			int usePe=iTaskService.getObjectBySql(sql2);
+			if(usePe!=ddcHyxhBase.getTotalPe()-ddcHyxhBase.getHyxhsjzpe()){
+				logger.warn("协会【"+ddcHyxhBase.getHyxhmc()+"】配额异常!");
+			}
 			ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getTotalPe()-usePe);
 			iEbikeService.updateDdchyxhBase(ddcHyxhBase);
 		}

@@ -246,7 +246,7 @@ function exportPage() {
 		<!-- 违法信息 -->
 		<c:if test="${trafficMsgs!=null }">
 		<table class="table table-condensed">
-				<caption style="text-align: center">答题详情</caption>
+				<caption style="text-align: center">违法详情</caption>
 				<tr>
 					<td>缴款编号</td>
 					<td>车辆所有人</td>
