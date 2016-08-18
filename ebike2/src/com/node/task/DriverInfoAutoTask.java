@@ -18,6 +18,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.node.model.DdcDriver;
+import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhSsdw;
 import com.node.service.IApplyService;
 import com.node.service.IEbikeService;
 import com.node.service.ITaskService;
@@ -114,6 +116,7 @@ public class DriverInfoAutoTask {
 	@Scheduled(cron = "0 15 01 * * *?")
 	public void queryScore() {
 		List<DdcDriver> ddcDrivers = iTaskService.findAllStartDrivers();
+		logger.warn("queryScore未考试星级用户："+ddcDrivers.size());
 		for (DdcDriver ddcDriver : ddcDrivers) {
 			Map<String, Object> reMap = ScoreQueryUtil.queryTestResult(
 					ddcDriver.getSfzhm(), ddcDriver.getLxdh());
@@ -126,5 +129,25 @@ public class DriverInfoAutoTask {
 			
 		}
 	}
-
+	
+	@Scheduled(cron = "0 17 22 * * *?")
+	public void checkDwPe(){
+		List<DdcHyxhSsdw> ddcHyxhSsdws = iTaskService.getAllDdcHyxhSsdws();
+		for(DdcHyxhSsdw ddcHyxhSsdw:ddcHyxhSsdws){
+			String sql="select count(1) as count from DDC_HYXH_SSDWCLSB t where t.ssdwid="+ddcHyxhSsdw.getId()+" and t.ENABLE=1";
+			int usePe= iTaskService.getObjectBySql(sql); //已使用掉的配额
+			ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe()-usePe);
+			iEbikeService.updateDdcHyxhSsdw(ddcHyxhSsdw);
+		}
+	}
+	@Scheduled(cron = "0 37 22 * * *?")
+	public void checkXhPe(){
+		List<DdcHyxhBase> ddcHyxhBases = iTaskService.getAllDdcHyxh();
+		for(DdcHyxhBase ddcHyxhBase:ddcHyxhBases){
+			String sql2="select sum(d.totalpe) as total from ddc_hyxh_ssdw d where d.hyxhzh='"+ddcHyxhBase.getHyxhzh()+"'";
+			int usePe=iTaskService.getObjectBySql(sql2);
+			ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getTotalPe()-usePe);
+			iEbikeService.updateDdchyxhBase(ddcHyxhBase);
+		}
+	}
 }

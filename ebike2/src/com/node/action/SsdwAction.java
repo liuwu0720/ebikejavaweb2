@@ -460,7 +460,11 @@ public class SsdwAction {
 						.parseInt(SystemConstants.DISENABLE_ZT));
 				DdcHyxhSsdw ddcHyxhSsdw = iApplyService
 						.getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
-				ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
+				if(ddcHyxhSsdw.getDwpe()>0){
+					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
+				}else {
+					ddcHyxhSsdw.setDwpe(0);
+				}
 				iApplyService.updateDdcHyxhSsdwclsb(ddcHyxhSsdwclsb);
 				AjaxUtil.rendJson(response, true, "已取消申报");
 			} else {

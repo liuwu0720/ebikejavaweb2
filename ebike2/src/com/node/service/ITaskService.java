@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
+import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
 
 
@@ -98,6 +100,40 @@ public interface ITaskService {
 	  * @version: 2016年8月8日 上午10:04:41
 	  */
 	List<DdcDriver> findAllStartDrivers();
+
+
+	
+	/**
+	  * 方法描述：
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年8月18日 下午10:00:00
+	  */
+	List<DdcHyxhSsdw> getAllDdcHyxhSsdws();
+
+
+	
+	/**
+	  * 方法描述：
+	  * @param sql
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年8月18日 下午10:10:49
+	  */
+	int getObjectBySql(String sql);
+
+
+	
+	/**
+	  * 方法描述：
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年8月18日 下午10:28:33
+	  */
+	List<DdcHyxhBase> getAllDdcHyxh();
 
 
 

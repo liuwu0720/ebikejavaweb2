@@ -613,6 +613,12 @@ public class ApplyAction {
 						AjaxUtil.rendJson(response, false, message);
 						return;
 					}
+					DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.getDdcHyxhSsdwById(Integer.parseInt(ddcHyxhSsdwclsb.getSsdwId()));
+					if(ddcHyxhSsdw.getDwpe()<0){
+						String errorString="单位【"+ddcHyxhSsdw.getDwmc()+"】已超出配额申报,剩余配额为负数";
+						AjaxUtil.rendJson(response, false, errorString);
+						return;
+					}
 					
 					DdcApproveUser ddcApproveUser = new DdcApproveUser();
 

@@ -656,10 +656,10 @@ table td[class*="col-"],table th[class*="col-"] {
 .idCard-middle-msg li>span {
 	color: #916ce6;
     word-break: break-all;
-    width: 169px;
+    width: 136px;
     display: block;
     position: absolute;
-    right: 13px;
+    right: 37px;
     top: 5px;
 }
 
@@ -672,9 +672,9 @@ table td[class*="col-"],table th[class*="col-"] {
 }
 
 .idCard-foot {
-	position: relative;
-	margin-top: 58px;
-	margin-left: 10px;
+position: relative;
+    margin-top: 37px;
+    margin-left: 10px;
 }
 
 .idCard-foot li>span {
@@ -724,3 +724,10 @@ table td[class*="col-"],table th[class*="col-"] {
 	word-break:break-all;
 	padding-left:54px;
 }
+.lastli{
+	padding-top:10px;
+}
+.lastli > span{
+	 padding-top:5px;
+}
+

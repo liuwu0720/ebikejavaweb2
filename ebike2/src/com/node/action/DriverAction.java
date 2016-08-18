@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,14 +97,14 @@ public class DriverAction {
 			hql.addLike("jsrxm", jsrxm);
 		}
 		if (userStatus != null) {
-			if(userStatus == SystemConstants.INT_USER_STATUS_2){
-				hql.addGreatThan("userStatus",  SystemConstants.INT_USER_STATUS_1);
-			}else {
+			if (userStatus == SystemConstants.INT_USER_STATUS_2) {
+				hql.addGreatThan("userStatus",
+						SystemConstants.INT_USER_STATUS_1);
+			} else {
 				hql.addEqual("userStatus", userStatus);
 			}
 		}
-		
-		
+
 		hql.addOrderBy("id", "desc");
 		hql.setQueryPage(p);
 		Map<String, Object> resultMap = iDriverSerivce.queryByHql(hql);
@@ -206,6 +207,8 @@ public class DriverAction {
 
 			if (ddcDriver.getId() == null) {
 				ddcDriver.setUserStatus(0);
+				ddcDriver.setJsrxm(ddcDriver.getJsrxm().trim());
+				ddcDriver.setSfzhm(ddcDriver.getSfzhm().trim());
 				iDriverSerivce.saveDdcDriver(ddcDriver);
 				iEbikeService.saveDdcDriver(ddcDriver);
 			} else {
@@ -225,6 +228,8 @@ public class DriverAction {
 				} else {
 					ddcDriver.setUserStatus(0);
 				}
+				ddcDriver.setJsrxm(ddcDriver.getJsrxm().trim());
+				ddcDriver.setSfzhm(ddcDriver.getSfzhm().trim());
 				iDriverSerivce.updateDdcDriver(ddcDriver);
 				if (ddcDriver.getUserStatus() == 0) {
 					iEbikeService.saveDdcDriver(ddcDriver);
@@ -266,7 +271,23 @@ public class DriverAction {
 		ddcDriver
 				.setVcUserCardImg2Show(parseUrl(ddcDriver.getVcUserCardImg2()));
 		ddcDriver.setVcUserWorkImgShow(parseUrl(ddcDriver.getVcUserWorkImg()));
-		List<ScoreResult> scoreResultes = ScoreQueryUtil.scoreResults(ddcDriver.getSfzhm(), ddcDriver.getLxdh());
+		List<ScoreResult> scoreResultes = ScoreQueryUtil.scoreResults(
+				ddcDriver.getSfzhm(), ddcDriver.getLxdh());
+		if (CollectionUtils.isNotEmpty(scoreResultes)) {
+			for (ScoreResult scoreResult : scoreResultes) {
+				if (StringUtils.isNotBlank(scoreResult.getDtjg())
+						&& scoreResult.getDtjg().equals("合格")) {
+					if(ddcDriver.getUserStatus()!=0){
+						ddcDriver.setUserStatus(SystemConstants.INT_USER_STATUS_3);
+						ddcDriver.setUserNote("已通过星级考试");
+						iEbikeService.updateDdcDriver(ddcDriver);
+						break;
+					}
+					
+				}
+			}
+		}
+
 		request.setAttribute("scoreResultes", scoreResultes);
 		request.setAttribute("ddcDriver", ddcDriver);
 		return "driver/driverinfo";

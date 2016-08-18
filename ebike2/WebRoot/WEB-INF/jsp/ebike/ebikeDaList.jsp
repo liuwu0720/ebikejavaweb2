@@ -14,8 +14,7 @@
 <title>电动车档案查询</title>
 
 <%@include file="../common/common.jsp"%>
-<script type="text/javascript"
-	src="<%=basePath%>static/js/export.js"></script>
+<script type="text/javascript" src="<%=basePath%>static/js/export.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -27,7 +26,6 @@ $(document).ready(function(){
 	var w = getWidth(400);
 	var randomNu = (new Date().getTime()) ^ Math.random();
 	grid = $("#dg").datagrid({
-
 		url : "<%=basePath%>ebikeQueryAction/queryAll?time=" + randomNu,
 		title :  "电动车档案查询管理",
 		iconCls : 'icon-search',
@@ -38,6 +36,7 @@ $(document).ready(function(){
 		pageSize:20,
 		singleSelect : true,//只选中单行
 		 autoRowHeight:true,
+		 pageList:[10,20,30,40,50,500],
 		 width:w,
 		 height:h, 
 		loadMsg:'正在加载,请稍等...',
@@ -277,49 +276,46 @@ function excelExport(){
 	var rows = $('#dg').datagrid('getData').rows;
 	
 	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';
-	var fileName="电动车档案信息";
-	var content = JSON.stringify(rows);
-	commonExcelExport(titleArr,keysArr,content,actionUrl,fileName); 
-	
+		var fileName = "电动车档案信息";
+		var content = JSON.stringify(rows);
+		commonExcelExport(titleArr, keysArr, content, actionUrl, fileName);
 
-}
+	}
 </script>
 </head>
-<body  class="easyui-layout">
+<body class="easyui-layout">
 
 	<div>
 		<div id="tb" class="searchdiv">
-				<span>档案编号</span>
-				<input id="dabh" type="text" class="easyui-validatebox" name="dabh"style="height:30px;width: 80px;" ></input>
-				<span>电机号:</span> <input id="djh" 
-					class="easyui-validatebox" type="text" style="height:30px;width: 80px;">
-				<span>姓名:</span> <input id="jsrxm1" 
-					class="easyui-validatebox" type="text"style="height:30px;width: 80px;" > 
-				<span>车牌号</span> <input id="cphm" name="cphm"
-					class="easyui-validatebox" type="text" style="height:30px;width: 80px;"><br>	
-				<span>行驶区域</span>	
-				<input id="xsqy1" style="height:30px;width: 80px;" >	
-				<span>公司名称:</span>
-				 <input id="ssdw" style="height: 32px;">
-				<span>车辆状态</span>
-				<input id="zt" style="height: 32px;">	
-				<a class="easyui-linkbutton" plain="true" onclick="doSearch()"
-					iconCls="icon-search">查询 </a>
-			</div>
+			<span>档案编号</span> <input id="dabh" type="text"
+				class="easyui-validatebox" name="dabh"
+				style="height:30px;width: 80px;"></input> <span>电机号:</span> <input
+				id="djh" class="easyui-validatebox" type="text"
+				style="height:30px;width: 80px;"> <span>姓名:</span> <input
+				id="jsrxm1" class="easyui-validatebox" type="text"
+				style="height:30px;width: 80px;"> <span>车牌号</span> <input
+				id="cphm" name="cphm" class="easyui-validatebox" type="text"
+				style="height:30px;width: 80px;"><br> <span>行驶区域</span>
+			<input id="xsqy1" style="height:30px;width: 80px;"> <span>公司名称:</span>
+			<input id="ssdw" style="height: 32px;"> <span>车辆状态</span> <input
+				id="zt" style="height: 32px;"> <a class="easyui-linkbutton"
+				plain="true" onclick="doSearch()" iconCls="icon-search">查询 </a>
+		</div>
 		<table id="dg" style="width:90%;">
 		</table>
 	</div>
-	
-	
-	
+
+
+
 	<!--注销  -->
 	<div id="dgformDiv3" class="easyui-dialog"
 		style="width:550px;height:400px;padding:10px 20px 20px 20px;"
-		closed="true" >
+		closed="true">
 		<div>
-		<form id="dgform3" class="easyui-form" enctype="multipart/form-data"
-			method="post">
-			<input type="hidden" name="id" id="daId'>
+			<form id="dgform3" class="easyui-form" enctype="multipart/form-data"
+				method="post">
+				<input type="hidden" name="id"
+					id="daId'>
 			<input type="text"  name="slzllist" id="slzllist">
 		<ul>
 			<li>业务原因：

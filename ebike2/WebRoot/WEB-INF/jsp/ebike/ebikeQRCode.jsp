@@ -70,7 +70,7 @@ function exportPage() {
 
 <body>
 	<div class="idCard-main">
-	<!--startprint-->
+		<!--startprint-->
 		<div class="idCard">
 			<div class="idCard-title">
 				<p>电动自行车二维码工作证</p>
@@ -90,12 +90,9 @@ function exportPage() {
 						<c:if test="${ddcDaxxb.xb1 == 1}">
 							<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<span>女</span></li>
 						</c:if>
-						<li>
-						所属单位:
-						<span>
-							${ddcDaxxb.ssdwName }
-						</span></li>
-						<li>所属协会:<span>${ddcDaxxb.hyxhzhName }</span></li>
+						<li>所属单位: <span> ${ddcDaxxb.ssdwName } </span></li>
+						<li style="padding-top: 10px;">所属协会:<span
+							style="padding-top: 5px;">${ddcDaxxb.hyxhzhName }</span></li>
 					</ul>
 				</div>
 			</div>
@@ -142,7 +139,8 @@ function exportPage() {
 								<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<span>女</span></li>
 							</c:if>
 							<li>所属单位:<span>${ddcDaxxb.ssdwName }</span></li>
-							<li>所属协会:<span>${ddcDaxxb.hyxhzhName }</span></li>
+							<li style="padding-top: 10px;">所属协会:<span
+								style="padding-top: 5px;">${ddcDaxxb.hyxhzhName }</span></li>
 						</ul>
 					</div>
 				</div>
@@ -166,10 +164,10 @@ function exportPage() {
 			</div>
 		</c:if>
 		<!--endprint-->
-		
+
 		<div class="btndiv">
-		<button type="button" onclick="exportPage()" class="btn">打印</button>
-		<button type="button" class="btn" onclick="history.back()">返回</button>
+			<button type="button" onclick="exportPage()" class="btn">打印</button>
+			<button type="button" class="btn" onclick="history.back()">返回</button>
 		</div>
 	</div>
 </body>

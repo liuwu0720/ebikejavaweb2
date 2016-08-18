@@ -35,7 +35,7 @@ $(document).ready(function(){
 		pagination : true,
 		rownumbers : true,
 		pageSize:size,
-		//singleSelect : true,//只选中单行
+		 pageList:[10,20,30,40,50,500],
 		striped:true,  //striped  是否显示斑马线效果。
 		height:h,
 		width:w,

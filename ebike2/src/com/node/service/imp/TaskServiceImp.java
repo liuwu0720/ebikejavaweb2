@@ -15,11 +15,16 @@ import org.springframework.stereotype.Service;
 
 import com.node.dao.IDdcDaxxbDao;
 import com.node.dao.IDdcDriverDao;
+import com.node.dao.IDdcHyxhBaseDao;
+import com.node.dao.IDdcHyxhSsdwDao;
 import com.node.dao.IDdcHyxhSsdwclsbDao;
 import com.node.model.DdcDaxxb;
 import com.node.model.DdcDriver;
+import com.node.model.DdcHyxhBase;
+import com.node.model.DdcHyxhSsdw;
 import com.node.model.DdcHyxhSsdwclsb;
 import com.node.service.ITaskService;
+import com.node.util.SystemConstants;
 
 
 /**
@@ -37,6 +42,10 @@ public class TaskServiceImp implements ITaskService{
 	
 	@Autowired
 	IDdcDaxxbDao iDdcDaxxbDao;
+	@Autowired
+	IDdcHyxhSsdwDao iDdcHyxhSsdwDao;
+	@Autowired
+	IDdcHyxhBaseDao iDdcHyxhBaseDao;
 	
 		/* (non-Javadoc)
 		 * @see com.node.service.ITaskService#findAllClsbs()
@@ -126,7 +135,39 @@ public class TaskServiceImp implements ITaskService{
 
 
 	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#getAllDdcHyxhSsdws()
+		 */
+	@Override
+	public List<DdcHyxhSsdw> getAllDdcHyxhSsdws() {
+		List<DdcHyxhSsdw> ddcHyxhSsdws = iDdcHyxhSsdwDao.findByProperty("zt",SystemConstants.ENABLE_ZT);
+		return ddcHyxhSsdws;
+	}
 
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#getObjectBySql(java.lang.String)
+		 */
+	@Override
+	public int getObjectBySql(String sql) {
+		Object object =  iDdcHyxhSsdwclsbDao.getDateBySQL(sql);
+		if(object!=null){
+			return Integer.parseInt(object.toString());
+		}
+		return 0;
+	}
+
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.ITaskService#getAllDdcHyxh()
+		 */
+	@Override
+	public List<DdcHyxhBase> getAllDdcHyxh() {
+		List<DdcHyxhBase> ddcHyxhBases = iDdcHyxhBaseDao.findAll();
+		return ddcHyxhBases;
+	}
 
 
 }
