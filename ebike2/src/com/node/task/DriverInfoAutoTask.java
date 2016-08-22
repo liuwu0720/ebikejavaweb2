@@ -88,8 +88,9 @@ public class DriverInfoAutoTask {
 
 	@Scheduled(cron = "0 15 20 * * *?")
 	public void updateDriverState5() {
-		String sql2 = " update  DDC_DRIVER t set t.user_status=1,t.xj_flag=null,t.xj_rq=null,t.xj_msg=null  where  t.xj_flag = -99";
-		iTaskService.updateBySql(sql2);
+		String sql = "update  DDC_DRIVER t set t.user_status=2  where t.xj_flag is not null and t.xj_flag != -99 and t.user_status=1";
+		int row = iTaskService.updateBySql(sql);
+		logger.warn("updateDriverState5修改条数："+row);
 	}
 	@Scheduled(cron = "0 15 21 * * *?")
 	public void updateDriverState7() {

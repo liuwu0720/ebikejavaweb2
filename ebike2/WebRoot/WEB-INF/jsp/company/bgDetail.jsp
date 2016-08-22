@@ -207,8 +207,7 @@ function change(){
 			url : "<%=basePath%>ssdwChangeAction/changeData",
 						onSubmit : function() {
 
-							isValid = $("#dgform").form('enableValidation')
-									.form('validate');
+							isValid = $("#dgform").form('enableValidation').form('validate');
 
 							if (!isValid) {
 								$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
@@ -490,7 +489,8 @@ function change(){
 				value="${ddcDaxxb.vcUser2CardImg2 }" name="vcUser2CardImg2">
 			<input type="hidden"
 				value="${ddcDaxxb.vcEbikeInvoiceImg }" name="vcEbikeInvoiceImg">	
-				
+			<input type="hidden"
+				value="${ddcDaxxb.ssdwId }" name="ssdwId">		
 			<input type="hidden"
 				value="${ddcDaxxb.vcUser1WorkImg }" name="vcUser1WorkImg">
 			<input type="hidden"

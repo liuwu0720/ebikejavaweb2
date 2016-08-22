@@ -613,6 +613,10 @@ public class ApplyAction {
 						AjaxUtil.rendJson(response, false, message);
 						return;
 					}
+					if (ddcHyxhSsdwclsb.getSlIndex() == 1) {
+						AjaxUtil.rendJson(response, false, "已经审批过了，请刷新重试！");
+						return;
+					} 
 					DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.getDdcHyxhSsdwById(Integer.parseInt(ddcHyxhSsdwclsb.getSsdwId()));
 					if(ddcHyxhSsdw.getDwpe()<0){
 						String errorString="单位【"+ddcHyxhSsdw.getDwmc()+"】已超出配额申报,剩余配额为负数";

@@ -460,7 +460,7 @@ public class SsdwAction {
 						.parseInt(SystemConstants.DISENABLE_ZT));
 				DdcHyxhSsdw ddcHyxhSsdw = iApplyService
 						.getDdcHyxhSsdwById(ddcHyxhSsdwclsb.getSsdwId());
-				if(ddcHyxhSsdw.getDwpe()>0){
+				if(ddcHyxhSsdw.getDwpe()>=0){
 					ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getDwpe() + 1);
 				}else {
 					ddcHyxhSsdw.setDwpe(0);

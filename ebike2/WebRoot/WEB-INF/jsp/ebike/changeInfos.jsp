@@ -141,7 +141,7 @@ function zhuanyi(){
 			text:"正在处理，请稍候..."
 		});
 		$('#dgform').form('submit', {
-			url : "<%=basePath%>ebikeChangeAction/zhuanyi",
+			url : "<%=basePath%>ssdwChangeAction/zhuanyi",
 			onSubmit : function() {
 				var isValid = $("#dgform").form('enableValidation').form(
 						'validate');
@@ -180,7 +180,7 @@ function change(){
 			text:"正在处理，请稍候..."
 		});
 		$('#dgform').form('submit', {
-			url : "<%=basePath%>ebikeChangeAction/changeData",
+			url : "<%=basePath%>ssdwChangeAction/changeData",
 			onSubmit : function() {
 				
 				

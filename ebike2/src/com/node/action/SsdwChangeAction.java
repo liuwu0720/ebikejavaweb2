@@ -252,7 +252,6 @@ public class SsdwChangeAction {
 			HttpServletRequest request,
 			HttpServletResponse response) throws FileNotFoundException,
 			IOException {
-
 		/**
 		 * 检查黑名单
 		 */
