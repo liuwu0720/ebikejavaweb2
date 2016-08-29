@@ -79,5 +79,4 @@ public class DdcDriverDaxx implements Serializable{
 		this.daId = daId;
 	}
 	
-	
 }

@@ -321,4 +321,25 @@ public interface IEbikeService {
 	  */
 	List<DdcHyxhSsdwclsb> getAllClsb();
 
+	
+	/**
+	  * 方法描述：
+	  * @param newDaxxb 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年8月25日 下午2:19:45
+	  */
+	void updateNewDdcDaxxb(DdcDaxxb newDaxxb);
+
+	
+	/**
+	  * 方法描述：
+	  * @param sfzhm
+	  * @return 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年8月25日 下午5:15:09
+	  */
+	List<DdcDaxxb> findAllDaxxByDriverSfzhm(String sfzhm);
+
 }

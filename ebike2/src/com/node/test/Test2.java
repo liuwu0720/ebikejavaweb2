@@ -1,27 +1,41 @@
 package com.node.test;
 
-import java.util.TreeMap;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-public class  Test2 {
-
+public class Test2 {
+    
 	/**
 	 * @param args
+	 * @throws IOException
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		TreeMap<String, Object> map = new TreeMap<String, Object>();
-		 map.put("name","18912345678");
-		 map.put("pwd","123456");
-		 String desString = "password";
-		 System.out.println("加密前："+desString);
-		 String desinfo = MathUtils.encryptAsString(desString,
-		 MathUtils.COMMON_KEY);
-		 System.out.println("加密后："+desinfo);
-
-		// 解密
-		MathUtils.desEncryptAsString(desString, MathUtils.COMMON_KEY);
- 
+	public static String getJSon() throws IOException {
+		String fileName = "J:/data.json";
+		BufferedReader reader = null;
+		String laststr = "";
+		try {
+			// System.out.println("以行为单位读取文件内容，一次读一整行：");
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName),"GBK"));
+			String tempString = null;
+			// 一次读入一行，直到读入null为文件结束
+			while ((tempString = reader.readLine()) != null) {
+				// 显示行号
+				laststr = laststr + tempString;
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e1) {
+				}
+			}
+		}
+		System.out.println("laststr="+laststr);
+		return laststr;
 	}
-
 }

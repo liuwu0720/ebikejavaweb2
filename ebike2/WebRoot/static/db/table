@@ -2532,3 +2532,8 @@ start with 1
 increment by 1
 cache 20;
 
+
+ 
+ ALTER TABLE DDC_DRIVER_DAXX ADD ENABLE NUMBER default 0;
+ comment on column DDC_DRIVER_DAXX.ENABLE  is '0有效 1无效';
+commit;

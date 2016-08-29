@@ -264,48 +264,46 @@ public class AppAction {
 		if (CollectionUtils.isEmpty(ddcDrivers)) {
 			return AjaxUtil.getMapByNotException(false, null);
 		} else {
-			DdcDriver ddcDriver = ddcDrivers.get(0);
-			
-			List<Long> daIds = iEbikeService.findAllDaxxByDriverId(ddcDriver.getId());
-			for (Long daId : daIds) {
-				DdcDaxxb ddcDaxxb = iEbikeService.getById(daId);
-				if(ddcDaxxb == null){
-					return AjaxUtil.getMapByNotException(false, null);
-				
-				}
-				
-				String cysyName = iApplyService.findByProPerties("CSYS",
-						ddcDaxxb.getCysy());
+			for(DdcDriver ddcDriver:ddcDrivers){
+				List<DdcDaxxb> ddcDaxxbs = iEbikeService.findAllDaxxByDriverSfzhm(ddcDriver.getSfzhm());
+				for (DdcDaxxb ddcDaxxb : ddcDaxxbs) {
+					if(ddcDaxxb!=null){
+						String cysyName = iApplyService.findByProPerties("CSYS",
+								ddcDaxxb.getCysy());
 
-				ddcDaxxb.setCysyName(cysyName);// 车身颜色
-				String xsqyName = iApplyService.findByProPerties("SSQY",
-						ddcDaxxb.getXsqy());
-				ddcDaxxb.setXsqyName(xsqyName);// 所属区域
+						ddcDaxxb.setCysyName(cysyName);// 车身颜色
+						String xsqyName = iApplyService.findByProPerties("SSQY",
+								ddcDaxxb.getXsqy());
+						ddcDaxxb.setXsqyName(xsqyName);// 所属区域
 
-				String ztName = iApplyService.findByProPerties("CLZT",
-						ddcDaxxb.getZt());
-				ddcDaxxb.setZtName(ztName);
-				// 申报单位
-				if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
-					DdcHyxhSsdw ddcHyxhSsdw = iCompanyService
-							.queryInfoById(Long.parseLong(ddcDaxxb.getSsdwId()));
-					if (ddcHyxhSsdw != null) {
-						ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
-					} else {
-						ddcDaxxb.setSsdwName(null);
+						String ztName = iApplyService.findByProPerties("CLZT",
+								ddcDaxxb.getZt());
+						ddcDaxxb.setZtName(ztName);
+						// 申报单位
+						if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
+							DdcHyxhSsdw ddcHyxhSsdw = iCompanyService
+									.queryInfoById(Long.parseLong(ddcDaxxb.getSsdwId()));
+							if (ddcHyxhSsdw != null) {
+								ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
+							} else {
+								ddcDaxxb.setSsdwName(null);
+							}
+						}
+						DdcHyxhBase ddcHyxhBase = iCompanyService
+								.getHyxhZhByCode(ddcDaxxb.getHyxhzh());
+						ddcDaxxb.setHyxhzhName(ddcHyxhBase.getHyxhmc());
+						String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
+						String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
+						String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
+						ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
+						ddcDaxxb.setVcShowUser1Img(showUser1Img);
+						ddcDaxxb.setVcShowUser2Img(showUser2Img);
+						daxxbs.add(ddcDaxxb);
 					}
+					
 				}
-				DdcHyxhBase ddcHyxhBase = iCompanyService
-						.getHyxhZhByCode(ddcDaxxb.getHyxhzh());
-				ddcDaxxb.setHyxhzhName(ddcHyxhBase.getHyxhmc());
-				String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
-				String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
-				String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
-				ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
-				ddcDaxxb.setVcShowUser1Img(showUser1Img);
-				ddcDaxxb.setVcShowUser2Img(showUser2Img);
-				daxxbs.add(ddcDaxxb);
 			}
+			
 			return AjaxUtil.getMapByNotException(true, daxxbs);
 		}
 

@@ -141,6 +141,7 @@ public class DriverInfoAutoTask {
 				logger.warn("单位【"+ddcHyxhSsdw.getDwmc()+"】配额异常!");
 			}
 			ddcHyxhSsdw.setDwpe(ddcHyxhSsdw.getTotalPe()-usePe);
+			ddcHyxhSsdw.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 			iEbikeService.updateDdcHyxhSsdw(ddcHyxhSsdw);
 		}
 	}
@@ -154,6 +155,7 @@ public class DriverInfoAutoTask {
 				logger.warn("协会【"+ddcHyxhBase.getHyxhmc()+"】配额异常!");
 			}
 			ddcHyxhBase.setHyxhsjzpe(ddcHyxhBase.getTotalPe()-usePe);
+			ddcHyxhBase.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 			iEbikeService.updateDdchyxhBase(ddcHyxhBase);
 		}
 	}

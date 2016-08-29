@@ -248,8 +248,8 @@ public class DataServiceImp implements IDataService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		int index = 0;
 		for (DdcApproveUser ddcApproveUser : ddcApproveUsers) {
-			index ++;
-			if(index == 2000){
+			index++;
+			if (index == 2000) {
 				break;
 			}
 			int j = 0;
@@ -353,8 +353,8 @@ public class DataServiceImp implements IDataService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		int index = 0;
 		for (DdcFlow ddcFlow : ddcFlows) {
-			index ++;
-			if(index == 2000){
+			index++;
+			if (index == 2000) {
 				break;
 			}
 			int j1 = 0;
@@ -710,8 +710,8 @@ public class DataServiceImp implements IDataService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		int index = 0;
 		for (DdcHyxhSsdwclsb ddcHyxhSsdwclsb : ddcHyxhSsdwclsbs) {
-			index ++;
-			if(index == 2000){
+			index++;
+			if (index == 2000) {
 				break;
 			}
 			int j1 = 0;
@@ -975,7 +975,8 @@ public class DataServiceImp implements IDataService {
 					beforeDdcDriver.setXjMsg(ddcDriver.getXjMsg());
 					beforeDdcDriver.setXjRq(ddcDriver.getXjRq());
 					beforeDdcDriver.setUserNote(ddcDriver.getUserNote());
-					beforeDdcDriver.setSynFlag(SystemConstants.SYSNFLAG_UPDATE+"_N");
+					beforeDdcDriver.setSynFlag(SystemConstants.SYSNFLAG_UPDATE
+							+ "_N");
 					iDdcDriverDao.updateCleanBefore(beforeDdcDriver);
 				}
 
@@ -1575,8 +1576,8 @@ public class DataServiceImp implements IDataService {
 		int i = 3;
 		int index = 0;
 		for (DdcDriver ddcDriver : ddcDrivers) {
-			index ++;
-			if(index == 2000){
+			index++;
+			if (index == 2000) {
 				break;
 			}
 			int j1 = 0;

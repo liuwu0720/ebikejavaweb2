@@ -228,10 +228,8 @@ function addRowData(){
 }
 //查看备案审批详情
 function queryRow(id){
-	$.messager.progress({
-		text:"正在处理，请稍候..."
-	});
-	window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+2;
+	window.open("<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+2,"_blank");
+	<%-- window.location.href="<%=basePath%>applyAction/queryRecordApprovalInfoById?id="+id+"&&type="+2; --%>
 }
 
 //修改

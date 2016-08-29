@@ -83,7 +83,7 @@ public class EbikeServiceImp implements IEbikeService {
 
 	@Autowired
 	IDdcDriverDaxxDao iDdcDriverDaxxDao;
-	
+
 	@Autowired
 	IDdcHyxhBaseLogDao iDdcHyxhBaseLogDao;
 
@@ -297,10 +297,11 @@ public class EbikeServiceImp implements IEbikeService {
 	 * java.lang.String)
 	 */
 	@Override
-	public boolean findDdcDriverTemp(String vcUserName, String vcUserCard,String vcTelPhone) {
+	public boolean findDdcDriverTemp(String vcUserName, String vcUserCard,
+			String vcTelPhone) {
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
-				new String[] { "vcUserName", "vcUserCard" ,"vcTelPhone"}, new Object[] {
-						vcUserName, vcUserCard,vcTelPhone });
+				new String[] { "vcUserName", "vcUserCard", "vcTelPhone" },
+				new Object[] { vcUserName, vcUserCard, vcTelPhone });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			return false;
 		} else {
@@ -345,8 +346,9 @@ public class EbikeServiceImp implements IEbikeService {
 	public void saveDdcDriver(DdcDriver ddcDriver2) {
 
 		List<DdcDriverTemp> ddcDriverTemps = iDdcDriverTempDao.findByPropertys(
-				new String[] { "vcUserName", "vcUserCard" ,"vcTelPhone"}, new Object[] {
-						ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm(),ddcDriver2.getLxdh() });
+				new String[] { "vcUserName", "vcUserCard", "vcTelPhone" },
+				new Object[] { ddcDriver2.getJsrxm(), ddcDriver2.getSfzhm(),
+						ddcDriver2.getLxdh() });
 		if (CollectionUtils.isNotEmpty(ddcDriverTemps)) {
 			if (StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg1())
 					&& StringUtils.isNotBlank(ddcDriver2.getVcUserCardImg2())
@@ -357,7 +359,7 @@ public class EbikeServiceImp implements IEbikeService {
 				ddcDriver2.setUserCode(ddcDriver2.getLxdh());
 				ddcDriver2.setUserNote("已实名认证");
 				ddcDriver2.setUserPassword("123456");
-			}else {
+			} else {
 				ddcDriver2.setUserNote("有图片为空");
 				ddcDriver2.setUserStatus(0);
 				ddcDriver2.setSynFlag(null);
@@ -365,7 +367,8 @@ public class EbikeServiceImp implements IEbikeService {
 			}
 		} else {
 			ddcDriver2.setUserStatus(0);
-			ddcDriver2.setUserNote("未进行支付宝认证或身份证和姓名不匹配！较验时间:"+DateStrUtil.toString(new Date()));
+			ddcDriver2.setUserNote("未进行支付宝认证或身份证和姓名不匹配！较验时间:"
+					+ DateStrUtil.toString(new Date()));
 			ddcDriver2.setSynFlag(null);
 		}
 
@@ -399,6 +402,7 @@ public class EbikeServiceImp implements IEbikeService {
 	 */
 	@Override
 	public void updateDdcDriverDaxxb(DdcDaxxb newDaxxb, DdcDaxxb oldDaxxb) {
+		String[] strings = {};
 		List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("sfzhm",
 				newDaxxb.getSfzmhm1());
 		List<DdcDriver> oldDdcDrivers = iDdcDriverDao.findByProperty("sfzhm",
@@ -527,41 +531,114 @@ public class EbikeServiceImp implements IEbikeService {
 
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#getDriverInfoBySfzhm(java.lang.String)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#getDriverInfoBySfzhm(java.lang.String)
+	 */
 	@Override
 	public List<DdcDriver> getDriverInfoByProperties(String sfzhm, String lxdh) {
-		if(StringUtils.isNotBlank(sfzhm)){
-			List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("sfzhm", sfzhm);
+		if (StringUtils.isNotBlank(sfzhm)) {
+			List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("sfzhm",
+					sfzhm);
 			return ddcDrivers;
 		}
-		if(StringUtils.isNotBlank(lxdh)){
-			List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("lxdh", lxdh);
+		if (StringUtils.isNotBlank(lxdh)) {
+			List<DdcDriver> ddcDrivers = iDdcDriverDao.findByProperty("lxdh",
+					lxdh);
 			return ddcDrivers;
 		}
 		return null;
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#saveDdcHyxhBaseLog(com.node.model.DdcHyxhBaseLog)
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#saveDdcHyxhBaseLog(com.node.model.
+	 * DdcHyxhBaseLog)
+	 */
 	@Override
 	public void saveDdcHyxhBaseLog(DdcHyxhBaseLog ddcHyxhBaseLog) {
 		// TODO Auto-generated method stub
 		iDdcHyxhBaseLogDao.save(ddcHyxhBaseLog);
 	}
 
-	
-		/* (non-Javadoc)
-		 * @see com.node.service.IEbikeService#getAllClsb()
-		 */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.node.service.IEbikeService#getAllClsb()
+	 */
 	@Override
 	public List<DdcHyxhSsdwclsb> getAllClsb() {
-		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao.findByProperty("slIndex", 0);
+		List<DdcHyxhSsdwclsb> ddcHyxhSsdwclsbs = iDdcHyxhSsdwclsbDao
+				.findByProperty("slIndex", 0);
 		return ddcHyxhSsdwclsbs;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.node.service.IEbikeService#updateNewDdcDaxxb(com.node.model.DdcDaxxb)
+	 */
+	@Override
+	public void updateNewDdcDaxxb(DdcDaxxb newDaxxb) {
+		// TODO Auto-generated method stub
+		List<DdcDriverDaxx> ddcDriverDaxxs = iDdcDriverDaxxDao.findByProperty(
+				"daId", newDaxxb.getId());
+		for (DdcDriverDaxx daxx : ddcDriverDaxxs) {
+			//daxx.setnEnable(1);// 原来的设为无效
+			iDdcDriverDaxxDao.update(daxx);
+		}
+		if (StringUtils.isNotBlank(newDaxxb.getJsrxm1())) {
+			String[] propertyNames = { "sfzhm", "ssdwId" };
+			Object[] values = { newDaxxb.getSfzmhm1(),
+					Integer.parseInt(newDaxxb.getSsdwId()) };
+			List<DdcDriver> ddcDrivers = iDdcDriverDao.findByPropertys(
+					propertyNames, values);
+			if(CollectionUtils.isNotEmpty(ddcDrivers)){
+				DdcDriverDaxx newDaxxDriverDaxx=new DdcDriverDaxx();
+				newDaxxDriverDaxx.setDaId(newDaxxb.getId());
+				newDaxxDriverDaxx.setDriverId(ddcDrivers.get(0).getId());
+				//newDaxxDriverDaxx.setnEnable(0);
+				//newDaxxDriverDaxx.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+				iDdcDriverDaxxDao.save(newDaxxDriverDaxx);
+			}
+		}
+		if (StringUtils.isNotBlank(newDaxxb.getJsrxm2())) {
+			String[] propertyNames = { "sfzhm", "ssdwId" };
+			Object[] values = { newDaxxb.getSfzmhm2(),
+					Integer.parseInt(newDaxxb.getSsdwId()) };
+			List<DdcDriver> ddcDrivers = iDdcDriverDao.findByPropertys(
+					propertyNames, values);
+			if(CollectionUtils.isNotEmpty(ddcDrivers)){
+				DdcDriverDaxx newDaxxDriverDaxx=new DdcDriverDaxx();
+				newDaxxDriverDaxx.setDaId(newDaxxb.getId());
+				newDaxxDriverDaxx.setDriverId(ddcDrivers.get(0).getId());
+				//newDaxxDriverDaxx.setnEnable(0);
+				//newDaxxDriverDaxx.setSysFlag(SystemConstants.SYSNFLAG_ADD);
+				iDdcDriverDaxxDao.save(newDaxxDriverDaxx);
+			}
+		}
+	}
+
+	
+		/* (non-Javadoc)
+		 * @see com.node.service.IEbikeService#findAllDaxxByDriverSfzhm(java.lang.String)
+		 */
+	@Override
+	public List<DdcDaxxb> findAllDaxxByDriverSfzhm(String sfzhm) {
+		List<DdcDaxxb> allDaxxbs = new ArrayList<DdcDaxxb>();
+		List<DdcDaxxb> daxxbs=iDdcDaxxbDao.findByProperty("sfzmhm1", sfzhm);
+		if(CollectionUtils.isNotEmpty(daxxbs)){
+			allDaxxbs.addAll(daxxbs);
+		}
+		List<DdcDaxxb> daxxbs2=iDdcDaxxbDao.findByProperty("sfzmhm2", sfzhm);
+		if(CollectionUtils.isNotEmpty(daxxbs2)){
+			allDaxxbs.addAll(daxxbs2);
+		}
+		return allDaxxbs;
 	}
 
 }

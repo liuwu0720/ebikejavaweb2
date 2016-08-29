@@ -34,23 +34,25 @@ import com.winshines.mac.util.MacUtil;
  */
 public class TrafficIllegalQuery {
 
-	public  List<TrafficMsg> postHttp(String cphm) {
+	public static List<TrafficMsg> postHttp(String cphm) {
 		String partnerCode = SystemConstants.ILLEGAL_CODE;// 合作方代码
 		String partnerUserId = SystemConstants.ILLEGAL_USER_ID;// 唯一标识
 		String serialNo = "";// 通讯流水号，由合作方生成能唯一标识每次请求即可
 		String timeStamp = "";
 		String macAlg = "33";// MD5算法
-		String macKey = SystemConstants.ILLEGAL_KEY;// 对该字段后请求报文的签名值（计算方式见“MAC算法”章节）
+		String macKey = "1234567890123456";// 对该字段后请求报文的签名值（计算方式见“MAC算法”章节）
 
 		String ReqURL = SystemConstants.ILLEGAL_URL;
 
 		timeStamp = DateStrUtil.toStringTimeStamp(new Date());
 		MacUtil macUtil = new MacUtil();
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("licensePlateNo", cphm);
-		jsonObject.put("licensePlateType", "07");
+		jsonObject.put("billNo", "000000000001");
+		
 		String msg = jsonObject.toString();
-		String mac = macUtil.genMsgMac(timeStamp, macKey, macAlg, msg);
+		System.out.println("msg="+msg);
+		String mac = macUtil.genMsgMac("20140515081005", macKey, macAlg, msg);
+		System.out.println("加密后=" + mac);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("partnerCode", partnerCode);
 		params.put("partnerUserId", partnerUserId);
@@ -72,7 +74,7 @@ public class TrafficIllegalQuery {
 
 	}
 
-	private  String sendPost(String url, Map<String, Object> params) {
+	private static String sendPost(String url, Map<String, Object> params) {
 		DataOutputStream out = null;
 		BufferedReader in = null;
 		StringBuilder result = new StringBuilder();
@@ -99,7 +101,7 @@ public class TrafficIllegalQuery {
 			// 发送请求参数
 			if (params != null) {
 				String param = JSONObject.fromObject(params).toString();
-				System.out.println("报文:"+param);
+				System.out.println("报文:" + param);
 				out.write(param.getBytes());
 			}
 			// flush输出流的缓冲
@@ -130,5 +132,8 @@ public class TrafficIllegalQuery {
 		return result.toString();
 	}
 
+	public static void main(String[] args) {
+		postHttp("111111");
+	}
 
 }

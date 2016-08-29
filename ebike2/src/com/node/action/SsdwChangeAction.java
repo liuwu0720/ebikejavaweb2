@@ -307,9 +307,10 @@ public class SsdwChangeAction {
 
 			// 保存日志
 			// saveDaxxblog(newDaxxb, request);
-			iEbikeService.saveUpdateDriver(newDaxxb);
+			//iEbikeService.saveUpdateDriver(newDaxxb);
 			iEbikeService.update(newDaxxb);
-			iEbikeService.updateDdcDriverDaxxb(newDaxxb,oldDaxxb);
+			//iEbikeService.updateDdcDriverDaxxb(newDaxxb,oldDaxxb);
+			//iEbikeService.updateNewDdcDaxxb(newDaxxb);
 			AjaxUtil.rendJson(response, true, "操作成功");
 		} catch (Exception e) {
 			e.printStackTrace();

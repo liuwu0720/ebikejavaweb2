@@ -153,6 +153,10 @@ function excelExport(){
 			rows[i]['userStatus']=  "未认证";
 		}else if(rows[i]['userStatus'] == 1){
 			rows[i]['userStatus']=  "已认证";
+		}else if(rows[i]['userStatus'] == 2){
+			rows[i]['userStatus']=  "星级认证";
+		}else if(rows[i]['userStatus'] == 3){
+			rows[i]['userStatus']=  "考试通过";
 		}
 	}
 	var actionUrl = '<%=basePath%>ebikeQueryAction/exportExcel';

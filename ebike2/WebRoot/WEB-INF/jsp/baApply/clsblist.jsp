@@ -410,7 +410,9 @@ function excelExport(){
 		if(rows[i]['SLYJ'] == null){
 			if(rows[i]['SL_INDEX']  == 0){
 				rows[i]['SLYJ']= "等待协会审批";
-			}else{
+			}else if(rows[i]['SL_INDEX']  == -1){
+				rows[i]['SLYJ']=  "资料不全";
+			}else {
 				rows[i]['SLYJ']=  "等待交警审批";
 			}
 		}else if(rows[i]['SLYJ'] == 0){
