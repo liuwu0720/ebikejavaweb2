@@ -548,4 +548,81 @@ public class EbikeChangAction {
 		}
 
 	}
+	/**
+	 * 
+	  * 方法描述：
+	  * @param id
+	  * @param request
+	  * @return
+	  * @throws UnsupportedEncodingException 
+	  * @version: 1.0
+	  * @author: liuwu
+	  * @version: 2016年9月3日 上午10:43:18
+	 */
+	@RequestMapping("/updateDetailById")
+	public String updateDetailById(String id, HttpServletRequest request) throws UnsupportedEncodingException {
+		long sbId = Long.parseLong(id);
+		DdcDaxxb ddcDaxxb = iEbikeService.getById(sbId);
+		String cysyName = iApplyService.findByProPerties("CSYS",
+				ddcDaxxb.getCysy());
+
+		ddcDaxxb.setCysyName(cysyName);// 车身颜色
+		String xsqyName = iApplyService.findByProPerties("SSQY",
+				ddcDaxxb.getXsqy());
+		ddcDaxxb.setXsqyName(xsqyName);// 所属区域
+
+		String ztName = iApplyService
+				.findByProPerties("CLZT", ddcDaxxb.getZt());
+		ddcDaxxb.setZtName(ztName);
+		// 申报单位
+		if (StringUtils.isNotBlank(ddcDaxxb.getSsdwId())) {
+			DdcHyxhSsdw ddcHyxhSsdw = iCompanyService.queryInfoById(Long
+					.parseLong(ddcDaxxb.getSsdwId()));
+			if (ddcHyxhSsdw != null) {
+				ddcDaxxb.setSsdwName(ddcHyxhSsdw.getDwmc());
+			} else {
+				ddcDaxxb.setSsdwName(null);
+			}
+		}
+		// 业务类型
+		String ywlxName = iApplyService.findByProPerties("YWLX",
+				ddcDaxxb.getYwlx());
+		ddcDaxxb.setYwlxName(ywlxName);
+		
+		String jsr1State=iCompanyService.getjsrStateBySfzhm(ddcDaxxb.getSfzmhm1());
+		String jsr2State = iCompanyService.getjsrStateBySfzhm(ddcDaxxb.getSfzmhm2());
+		ddcDaxxb.setVcJsr1State(jsr1State);
+		ddcDaxxb.setVcJsr2State(jsr2State);
+
+		String showEbikeImg = parseUrl(ddcDaxxb.getVcEbikeImg());
+		String showUser1Img = parseUrl(ddcDaxxb.getVcUser1Img());
+		String showUser2Img = parseUrl(ddcDaxxb.getVcUser2Img());
+		String vcUser1CardImg1Show = parseUrl(ddcDaxxb.getVcUser1CardImg1());
+		String vcUser1CardImg2Show = parseUrl(ddcDaxxb.getVcUser1CardImg2());
+		String vcUser2CardImg1Show = parseUrl(ddcDaxxb.getVcUser2CardImg1());
+		String vcUser2CardImg2Show = parseUrl(ddcDaxxb.getVcUser2CardImg2());
+		String vcEbikeInvoiceImgShow = parseUrl(ddcDaxxb.getVcEbikeInvoiceImg());
+
+		String vcUser1WorkImgShow = parseUrl(ddcDaxxb.getVcUser1WorkImg());
+		String vcUser2WorkImgShow = parseUrl(ddcDaxxb.getVcUser2WorkImg());
+		String vcQualifiedImgShow = parseUrl(ddcDaxxb.getVcQualifiedImg());
+		String vcEbikeInsuranceImgShow = parseUrl(ddcDaxxb
+				.getVcEbikeInsuranceImg());
+
+		ddcDaxxb.setVcUser1WorkImgShow(vcUser1WorkImgShow);
+		ddcDaxxb.setVcUser2WorkImgShow(vcUser2WorkImgShow);
+		ddcDaxxb.setVcQualifiedImgShow(vcQualifiedImgShow);
+		ddcDaxxb.setVcEbikeInsuranceImgShow(vcEbikeInsuranceImgShow);
+
+		ddcDaxxb.setVcShowEbikeImg(showEbikeImg);
+		ddcDaxxb.setVcShowUser1Img(showUser1Img);
+		ddcDaxxb.setVcShowUser2Img(showUser2Img);
+		ddcDaxxb.setVcUser1CardImg1Show(vcUser1CardImg1Show);
+		ddcDaxxb.setVcUser1CardImg2Show(vcUser1CardImg2Show);
+		ddcDaxxb.setVcUser2CardImg1Show(vcUser2CardImg1Show);
+		ddcDaxxb.setVcUser2CardImg2Show(vcUser2CardImg2Show);
+		ddcDaxxb.setVcEbikeInvoiceImgShow(vcEbikeInvoiceImgShow);
+		request.setAttribute("ddcDaxxb", ddcDaxxb);
+		return "ebike/ebikeDaInfoUpdate";
+	}
 }

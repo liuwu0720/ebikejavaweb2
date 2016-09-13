@@ -98,6 +98,11 @@ $(document).ready(function(){
 				}
 			} 
 		},{
+			field : 'xjMsg',
+			title : '星级认证说明',
+			align:'center',
+			width : 120 
+		},{
 			field : 'null',
 			title:'操作',
 			align:'center',

@@ -141,6 +141,9 @@ public class DriverAction {
 		ddcDriver.setSsdwId(ddcHyxhSsdw.getId());
 		ddcDriver.setHyxhzh(ddcHyxhSsdw.getHyxhzh());
 		ddcDriver.setTranDate(new Date());
+		ddcDriver.setJsrxm(ddcDriver.getJsrxm().trim());
+		ddcDriver.setSfzhm(ddcDriver.getSfzhm().trim());
+		ddcDriver.setLxdh(ddcDriver.getLxdh().trim());
 		/*
 		 * int userStatus = iDriverSerivce.updateDriverStatus(ddcDriver);
 		 * if(userStatus == 1){
@@ -207,8 +210,7 @@ public class DriverAction {
 
 			if (ddcDriver.getId() == null) {
 				ddcDriver.setUserStatus(0);
-				ddcDriver.setJsrxm(ddcDriver.getJsrxm().trim());
-				ddcDriver.setSfzhm(ddcDriver.getSfzhm().trim());
+				
 				iDriverSerivce.saveDdcDriver(ddcDriver);
 				iEbikeService.saveDdcDriver(ddcDriver);
 			} else {
@@ -228,8 +230,7 @@ public class DriverAction {
 				} else {
 					ddcDriver.setUserStatus(0);
 				}
-				ddcDriver.setJsrxm(ddcDriver.getJsrxm().trim());
-				ddcDriver.setSfzhm(ddcDriver.getSfzhm().trim());
+				
 				iDriverSerivce.updateDdcDriver(ddcDriver);
 				if (ddcDriver.getUserStatus() == 0) {
 					iEbikeService.saveDdcDriver(ddcDriver);

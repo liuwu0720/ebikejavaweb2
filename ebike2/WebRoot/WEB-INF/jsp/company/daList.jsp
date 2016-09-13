@@ -109,7 +109,8 @@ $(document).ready(function(){
 			width : 80,
 			formatter:function(value,row,index){
 				var query = "<a  href='javascript:void(0)'  onclick='queryRow("+row.ID+")'>查看</a>&nbsp;&nbsp;&nbsp;";
-				var print = "<a  href='javascript:void(0)'  onclick='queryQRCode("+row.ID+")'>打印</a>";
+				var print = "<a  href='javascript:void(0)'  onclick='queryQRCode("+row.ID+")'>打印</a>&nbsp;&nbsp;&nbsp;";
+				//var update = "<a  href='javascript:void(0)'  onclick='updateRow("+row.ID+")'>更正</a>";
 				return query+print;	
 			
 			}
@@ -147,73 +148,7 @@ $(document).ready(function(){
 		}]
 	})
 });
-//注销
-function deleteRow(id){
-	$('#dgformDiv3').dialog('open').dialog('setTitle', '详情信息');
-	 $('#dgform3').form('load',{
-		 id:id
-	 } );
-	
-}
-function zhuxiaoSure(){
-	var flag = checkValues();
-	
-		if(flag){
-			$.messager.progress({
-				text:"正在处理，请稍候..."
-			});
-			$('#dgform3').form('submit', {
-						url : "<%=basePath%>ssdwChangeAction/zhuxiao",
-						onSubmit : function() {
-							
-							var isValid = $("#dgform").form('enableValidation').form(
-									'validate');
 
-							if (!isValid) {
-								$.messager.progress('close'); // 如果表单是无效的则隐藏进度条
-							}
-							return isValid; // 返回false终止表单提交
-						},
-						success : function(data) {
-							var data = eval('(' + data + ')'); // change the JSON
-							if (data.isSuccess) {
-								$.messager.show({ // show error message
-									title : '提示',
-									msg : data.message
-								});
-								$('#dgformDiv3').dialog('close');
-								
-								$("#dg").datagrid('reload');
-							}else{
-								alert(data.message);
-							}
-							$.messager.progress('close'); // 如果提交成功则隐藏进度条
-
-						}
-
-					});
-		}
-		
-	
-}
-
-function checkValues(){
-	if($("[id='ywyys']:checked").length==0){
-		alert("请选择业务原因！");
-		return false;
-	}else if($("[id='slzls']:checked").length==0){
-		alert("请选择受理资料！");
-		return false;
-	}else{
-		var vs="";
-		$('[id=slzls]:checked').each(function(){
-			vs += $(this).val()+',';
-		});
-		vs=vs.substr(0,vs.lastIndexOf(','));
-		$("#slzllist").val(vs);
-		return true;
-	}	
-}
 
 
 
@@ -265,6 +200,10 @@ function queryDetaiList(obj){
 //查看基本信息以及二维码
 function queryQRCode(id){
 	window.location.href="<%=basePath%>ebikeQueryAction/queryQRCodeById?id="+id
+}
+//档案更正
+function updateRow(id){
+	window.location.href="<%=basePath%>ebikeChangeAction/updateDetailById?id="+id;
 }
 
 </script>
