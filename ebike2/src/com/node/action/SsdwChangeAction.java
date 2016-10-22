@@ -474,7 +474,7 @@ public class SsdwChangeAction {
 		}
 		DdcDaxxb daxxb = iEbikeService.getById(daId);
 
-		daxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
+		//daxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 		daxxb.setTranDate(new Date());
 
 		try {

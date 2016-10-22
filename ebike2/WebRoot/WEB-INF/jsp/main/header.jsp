@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
+String url =  request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
@@ -34,12 +35,12 @@ function sessionOut(){
 		</div>
 		<div class="header-tool">
 			<ul>
+			<li class="setting-header"><a href="${url}/1.doc"  title="帮助文档" target="main"> <i
+						class="iconfont header-icon-setting">&#xe619;</i><br><span> 帮助文档</span></a></li>
 				<li class="setting-header"><a href="<%=basePath%>userAction/modifyPassword" title="设置" target="main"> <i
-						class="iconfont header-icon-setting">&#xe601;</i><br> <span>设置</span></li>
+						class="iconfont header-icon-setting">&#xe601;</i><br> <span>设置</span></a></li>
 				<li class="setting-header"></a> <a href="javascript:void(0)" target="_top" title="退出" onclick="sessionOut()"> <i
-						class="iconfont header-icon-setting">&#xe604;</i><br> <span>退出
-					</span>
-				</a></li>
+						class="iconfont header-icon-setting">&#xe604;</i><br> <span>退出</span></a></li>
 			</ul>
 		</div>
 	</div>

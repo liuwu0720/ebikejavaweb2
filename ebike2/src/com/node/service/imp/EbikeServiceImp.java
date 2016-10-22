@@ -238,7 +238,7 @@ public class EbikeServiceImp implements IEbikeService {
 	@Override
 	public List<DdcDriver> findDriverByUserCode(String userCode) {
 		// TODO Auto-generated method stub
-		return iDdcDriverDao.findByProperty("userCode", userCode);
+		return iDdcDriverDao.findByProperty("lxdh", userCode);
 	}
 
 	/*

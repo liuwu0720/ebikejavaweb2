@@ -103,7 +103,7 @@ public class SsdwQueryAction {
 		if (StringUtils.isNotBlank(zt)) {
 			sql += " and a.zt = '" + zt + "'";
 		}
-		sql += " and a.zt!='E'   order by A.ID DESC";// 查出没有注销且变更不在审批中的记录
+		sql += "  order by A.ID DESC";// 查出没有注销且变更不在审批中的记录
 
 		Map<String, Object> resultMap = iEbikeService.queryBySpringSql(sql, p);
 		return resultMap;

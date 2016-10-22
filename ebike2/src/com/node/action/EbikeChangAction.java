@@ -505,6 +505,7 @@ public class EbikeChangAction {
 				if (ddcFlow.getYwlx().equalsIgnoreCase("D")) {
 					// 注销需要内网审批
 					daxxb.setSlyj(null);
+					daxxb.setSynFlag(SystemConstants.SYSNFLAG_UPDATE);
 				}
 
 				try {
